@@ -791,4 +791,27 @@ main div.form-wrapper {
 /* Expand height for multi-select dropdowns (array types) */
 main .form form select[multiple] {
     height: calc(42px + 50px);
+
 }
+
+
+
+
+
+
+
+main .form form .field-wrapper label {
+Font-weight: 600;
+color: darkblue;
+}
+
+
+main .form form .text-wrapper > input {
+border: 1px solid #5b0dd1;
+}
+
+main .form form .field-zipcode > label {
+color: #a600ff;
+}
+
+
