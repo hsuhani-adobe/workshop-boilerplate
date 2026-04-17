@@ -31,7 +31,7 @@ footer .footer p {
   color: #fff;
   text-align: center;
   font-size: 12px;        
-  padding: 24px 16px;  
+  padding: 16px 16px;  
   line-height: 1.6;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
@@ -39,6 +39,9 @@ footer .footer p {
   display: flex;
   align-items: center;
   justify-content: center;
+    position: fixed;      /* add */
+  bottom: 0;            /* add */
+  z-index: 10;   
 }
  
 /* show default text if empty */
