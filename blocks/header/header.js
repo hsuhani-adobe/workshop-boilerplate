@@ -92,7 +92,7 @@ function buildHeaderBar() {
   bar.className = 'header-bar';
 
   const logoImg = document.createElement('img');
-  logoImg.src = '/icons/hdfc.png';        // ← your actual asset path
+  logoImg.src = "https://author-p96753-e1523920.adobeaemcloud.com/ui#/aem/assetdetails.html/content/dam/myhdfc/hdfc-logo.svg";        // ← your actual asset path
   logoImg.alt = 'HDFC Bank';
   logoImg.className = 'header-bar__logo';
   logoImg.width = 130;
@@ -100,7 +100,7 @@ function buildHeaderBar() {
   logoImg.loading = 'eager';
 
   const badgeImg = document.createElement('img');
-  badgeImg.src = '/icons/100hdfc.png'; // ← your actual asset path
+  badgeImg.src = "https://author-p96753-e1523920.adobeaemcloud.com/ui#/aem/assetdetails.html/content/dam/myhdfc/100hdfc.png" // ← your actual asset path
   badgeImg.alt = '100% Safe and Secure';
   badgeImg.className = 'header-bar__badge';
   badgeImg.width = 120;
