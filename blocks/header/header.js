@@ -92,7 +92,7 @@ function buildHeaderBar() {
   bar.className = 'header-bar';
 
   const logoImg = document.createElement('img');
-  logoImg.src = '/content/dam/myhdfc/hdfc.svg';   // ← direct DAM path
+  logoImg.src = '/content/dam/myhdfc/hdfc-logo.svg';   // ← direct DAM path
   logoImg.alt = 'HDFC Bank';
   logoImg.className = 'header-bar__logo';
   logoImg.width = 130;
