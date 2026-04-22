@@ -1,60 +1,280 @@
 /* Accordion styling */
 :root {
-    --color-accordion-legend-background: #F3F6FD;
+    --color-accordion-legend-background: #dde6f7;
     --color-accordion-collapse-icon: #1c3fca;
-    --color-accordion-border: #ecedf3;
+    --color-accordion-border: #e2e8f4;
+    --color-accordion-card-bg: #ffffff;
+    --color-accordion-field-label: #8a96b0;
+    --color-accordion-field-value: #0f172a;
+    --color-accordion-field-border-left: #c8d4ee;
+    --color-accordion-shadow: 0 1px 8px rgba(28, 63, 202, 0.08), 0 0 0 1px #e8eef8;
+    --color-accordion-title: #0f172a;
+    --color-accordion-radius: 14px;
+    --color-accordion-row-divider: #edf1fb;
 }
 
-main .form fieldset.accordion legend.accordion-legend {
-    padding: 24px 32px;
-    background-color: var(--color-accordion-legend-background);
-    position: relative;
+/* ─────────────────────────────────────────────
+   LEVEL 1: outer accordion wrapper
+───────────────────────────────────────────── */
+main .form fieldset.accordion {
+    row-gap: 0;
+    border: none;
+    background: transparent;
+    padding: 0;
     margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-main .form .accordion > fieldset > legend.accordion-legend[data-visible='false'] {
-    display:block !important;
-    color:var(--color-accordion-legend-background);
-    user-select: none;
-}
-
-main .form .accordion > fieldset > legend::after {
-    content: '\221F';
-    color: var(--color-accordion-collapse-icon);
-    font-size: 19px;
-    display: inline;
-    position: absolute;
-    transition: transform 0s;
-    transform: rotate(-45deg);
-    margin-top: -5px;
-    right: 22px;
-    cursor: pointer;
-}
-
-main .form .accordion > fieldset.accordion-collapse > legend::after {
-    transform: rotate(-225deg);
-    margin-top: 0;
-}
-
-main .form fieldset.accordion-collapse > :not(legend) {
-    display: none !important;
-}
-
-
-main .form fieldset.accordion fieldset > :not(legend) {
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
-}
-
-main .form fieldset.accordion > fieldset:not(.checkbox-group-wrapper, .radio-group-wrapper) {
-    border: 1px solid var(--color-accordion-border);
+/* ─────────────────────────────────────────────
+   LEVEL 2: each section card
+───────────────────────────────────────────── */
+main .form fieldset.accordion > fieldset.accordion-collapse {
+    border: none;
+    border-radius: var(--color-accordion-radius);
+    box-shadow: var(--color-accordion-shadow);
+    background: var(--color-accordion-card-bg);
+    overflow: hidden;
+    padding: 0;
     margin: 0;
 }
 
-main .form fieldset.accordion  fieldset.accordion-collapse {
-    border: unset;
+/* ── Section header legend — with transition ── */
+main .form fieldset.accordion > fieldset > legend.accordion-legend {
+    padding: 18px 28px 18px 56px; /* left padding makes room for icon */
+    background: linear-gradient(135deg, #dde6f7 0%, #e8eef8 100%);
+    background-size: 200% 200%;
+    position: relative;
+    margin-bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-accordion-title);
+    letter-spacing: 0.01em;
+    border-bottom: 1px solid var(--color-accordion-border);
+    display: block;
+    cursor: pointer;
+    /* ✦ Smooth background & shadow transition on open/close */
+    transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.2s ease;
 }
 
-main .form fieldset.accordion {
-    row-gap: 0;
+main .form fieldset.accordion > fieldset > legend.accordion-legend:hover {
+    background: linear-gradient(135deg, #cdd9f5 0%, #dce6f6 100%);
+}
+
+/* Expanded state — slightly deeper header tint */
+main .form fieldset.accordion > fieldset:not(.accordion-collapse) > legend.accordion-legend {
+    background: linear-gradient(135deg, #c8d6f4 0%, #dae3f7 100%);
+    box-shadow: 0 2px 0 0 rgba(28, 63, 202, 0.08);
+}
+
+/* ── SVG icon — base (hidden by default, shown per section) ── */
+main .form fieldset.accordion > fieldset > legend.accordion-legend::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.85;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+main .form fieldset.accordion > fieldset > legend.accordion-legend:hover::before {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.08);
+}
+
+/* ── Loan Details icon — rupee bag (matches image 2) ── */
+main .form fieldset.accordion > fieldset.field-loan-details > legend.accordion-legend::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2C9.5 2 8 3.5 8 5c0 .8.3 1.5.7 2H6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h.1C5.4 13.4 5 14.7 5 16c0 3.3 3.1 6 7 6s7-2.7 7-6c0-1.3-.4-2.6-1.1-3.6V11H20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-2.7c.4-.5.7-1.2.7-2C18 3.5 16.5 2 14 2h-2z'/%3E%3Cpath d='M9 12h6M9 15h3.5a1.5 1.5 0 0 0 0-3H9'/%3E%3C/svg%3E");
+}
+
+/* ── Personal Details icon — person profile (matches image 2) ── */
+main .form fieldset.accordion > fieldset.field-personal-details > legend.accordion-legend::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='4'/%3E%3Ccircle cx='12' cy='9' r='3'/%3E%3Cpath d='M6.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5'/%3E%3C/svg%3E");
+}
+
+/* ── Chevron up when expanded ── */
+main .form fieldset.accordion > fieldset > legend.accordion-legend::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    border-right: 2px solid var(--color-accordion-collapse-icon);
+    border-bottom: 2px solid var(--color-accordion-collapse-icon);
+    width: 9px;
+    height: 9px;
+    transform: translateY(-35%) rotate(-135deg);
+    transition: transform 0.3s ease;
+}
+
+/* ── Chevron down when collapsed ── */
+main .form fieldset.accordion > fieldset.accordion-collapse > legend.accordion-legend::after {
+    transform: translateY(-65%) rotate(45deg);
+}
+
+/* ── Collapsed: hide content ── */
+main .form fieldset.accordion > fieldset.accordion-collapse > :not(legend) {
+    display: none !important;
+}
+
+/* ─────────────────────────────────────────────
+   LEVEL 3: inner panel — grid + fade background
+───────────────────────────────────────────── */
+main .form fieldset.accordion > fieldset > fieldset {
+    border: none;
+    margin: 0;
+    padding: 28px 28px 24px;
+    background: linear-gradient(180deg, #ffffff 0%, #f0f4fc 100%);
+    display: grid !important;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0;
+    align-items: start;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Hide inner panel's structural legend */
+main .form fieldset.accordion > fieldset > fieldset > legend {
+    display: none !important;
+}
+
+/* ─────────────────────────────────────────────
+   FIELD CELLS
+───────────────────────────────────────────── */
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 20px 18px 16px;
+    border-left: 2px solid var(--color-accordion-field-border-left);
+    border-bottom: 1px solid var(--color-accordion-row-divider);
+    min-width: 0;
+    box-sizing: border-box;
+    background: transparent;
+}
+
+/* Remove bottom border on last row */
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper:nth-last-child(-n+4) {
+    border-bottom: none;
+}
+
+/* col spans */
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper.col-3 {
+    grid-column: span 3;
+}
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper.col-4 {
+    grid-column: span 4;
+}
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper.col-6 {
+    grid-column: span 6;
+}
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper.col-12 {
+    grid-column: span 12;
+    border-bottom: 1px solid var(--color-accordion-row-divider);
+}
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper.col-12:last-child {
+    border-bottom: none;
+}
+
+/* ── Field labels ── */
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper label.field-label {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--color-accordion-field-label);
+    letter-spacing: 0.02em;
+    margin-bottom: 2px;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Input — plain text value display ── */
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper input[type="text"],
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper input[type="number"],
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper input[type="email"],
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper input[type="tel"],
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper input[type="date"],
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper select,
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper textarea {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-accordion-field-value);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    line-height: 1.5;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    height: auto;
+    min-height: unset;
+}
+
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper input:focus,
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper select:focus,
+main .form fieldset.accordion > fieldset > fieldset > .field-wrapper textarea:focus {
+    border-bottom: 1.5px solid var(--color-accordion-collapse-icon);
+}
+
+/* ── Link style ── */
+main .form fieldset.accordion a {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-accordion-collapse-icon);
+    text-decoration: none;
+}
+main .form fieldset.accordion a:hover {
+    text-decoration: underline;
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────── */
+@media (max-width: 900px) {
+    main .form fieldset.accordion > fieldset > fieldset {
+        grid-template-columns: repeat(6, 1fr);
+        padding: 20px 16px;
+    }
+    main .form fieldset.accordion > fieldset > fieldset > .field-wrapper.col-3 {
+        grid-column: span 3;
+    }
+    main .form fieldset.accordion > fieldset > fieldset > .field-wrapper.col-12 {
+        grid-column: span 6;
+    }
+    main .form fieldset.accordion > fieldset > fieldset > .field-wrapper:nth-last-child(-n+2) {
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 520px) {
+    main .form fieldset.accordion > fieldset > fieldset {
+        grid-template-columns: 1fr 1fr;
+        padding: 16px;
+    }
+    main .form fieldset.accordion > fieldset > fieldset > .field-wrapper.col-3 {
+        grid-column: span 1;
+    }
+    main .form fieldset.accordion > fieldset > fieldset > .field-wrapper.col-12 {
+        grid-column: span 2;
+    }
+    main .form fieldset.accordion > fieldset > legend.accordion-legend {
+        padding: 16px 18px 16px 52px;
+        font-size: 0.95rem;
+    }
 }
