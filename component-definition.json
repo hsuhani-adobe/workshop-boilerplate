@@ -735,6 +735,25 @@
               }
             }
           }
+        },
+        {
+          "title": "Promo Card",
+          "id": "promo-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/textinput/v1/textinput",
+                "template": {
+                  "jcr:title": "Promo Card",
+                  "fieldType": "text-input",
+                  "fd:viewType": "promo-card",
+                  "smallText": "Open a new",
+                  "title": "Recurring Deposit",
+                  "image": "/icons/image_1.jpeg"
+                }
+              }
+            }
+          }
         }
       ]
     }

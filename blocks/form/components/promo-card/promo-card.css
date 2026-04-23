@@ -1,0 +1,40 @@
+.promo-card-container {
+    background: #f8f3ff;
+    border-radius: 20px;
+    padding: 20px;
+    min-height: 300px;
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+    text-align: center;
+}
+
+.promo-card-container:hover {
+    transform: translateY(-5px);
+}
+
+.promo-card-image {
+    width: 180px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.promo-card-small-text {
+    font-size: 18px;
+    color: #5a3bff;
+    font-weight: 500;
+    margin: 0;
+}
+
+.promo-card-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #001133;
+    margin-top: 8px;
+    line-height: 1.2;
+}

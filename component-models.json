@@ -4854,6 +4854,31 @@
     ]
   },
   {
+    "id": "promo-card",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Basic",
+        "name": "basic"
+      },
+      {
+        "component": "text-input",
+        "name": "smallText",
+        "label": "Small Text"
+      },
+      {
+        "component": "text-input",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text-input",
+        "name": "image",
+        "label": "Image Path"
+      }
+    ]
+  },
+  {
     "id": "range",
     "fields": [
       {
