@@ -48,6 +48,9 @@
         },
         {
           "...": "../blocks/form/components/cards/_cards.json#/definitions"
+        },
+        {
+          "...": "../blocks/form/components/promo-card/_promo-card.json#/definitions"
         }
       ]
     }

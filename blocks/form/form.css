@@ -815,8 +815,483 @@ color: #a600ff;
 }
 
 
+/* ============================================================
+   loan-offer.css
+   ============================================================ */
 
+:root {
+    --lo-primary:       #1c3fca;
+    --lo-orange:        #f97316;
+    --lo-banner-bg:     #eef6ff;
+    --lo-banner-border: #bfdbfe;
+    --lo-card-bg:       #fdf8f0;
+    --lo-card-border:   #e8dcc8;
+    --lo-card-dashed:   #d4c4a8;
+    --lo-text-dark:     #0f172a;
+    --lo-text-mid:      #475569;
+    --lo-text-light:    #94a3b8;
+    --lo-input-border:  #cbd5e1;
+    --lo-divider:       #e8edf6;
+    --lo-radius:        16px;
+    --lo-radius-sm:     10px;
+    --lo-shadow:        0 2px 16px rgba(15, 23, 42, 0.08);
+}
 
+/* ══════════════════════════════════════════
+   OUTER SCREEN — flex column
+══════════════════════════════════════════ */
+.field-loan-offer-screen {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 28px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
 
+.field-loan-offer-screen > legend {
+    display: none !important;
+}
 
+/* ══════════════════════════════════════════
+   BANNER
+══════════════════════════════════════════ */
+.field-loan-offer-banner {
+    background: var(--lo-banner-bg) !important;
+    border: 1.5px solid var(--lo-banner-border) !important;
+    border-radius: var(--lo-radius) !important;
+    padding: 16px 28px 16px 100px !important;
+    position: relative !important;
+    min-height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
 
+.field-loan-offer-banner::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 70px;
+    height: 70px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cellipse cx='26' cy='64' rx='14' ry='9' fill='%23fbbf24'/%3E%3Cellipse cx='42' cy='68' rx='11' ry='7' fill='%23f59e0b'/%3E%3Cpath d='M22 36 C22 20 58 20 58 36 L60 62 C60 68 20 68 20 62 Z' fill='%231c3fca'/%3E%3Cpath d='M28 22 C28 14 52 14 52 22 L54 34 C54 38 26 38 26 34 Z' fill='%232952e3'/%3E%3Ccircle cx='40' cy='14' r='7' fill='%232952e3'/%3E%3Ctext x='40' y='55' text-anchor='middle' font-size='17' fill='white' font-weight='bold' font-family='sans-serif'%3E%E2%82%B9%3C/text%3E%3Ccircle cx='60' cy='24' r='5' fill='%23fbbf24'/%3E%3Ccircle cx='19' cy='30' r='4' fill='%23fbbf24'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.field-loan-offer-banner p {
+    margin: 0 !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: var(--lo-text-dark) !important;
+}
+
+/* ══════════════════════════════════════════
+   CONTENT: two-column grid
+   Left col = sliders, Right col = summary card
+══════════════════════════════════════════ */
+.field-loan-offer-content {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    /* Force two columns regardless of EDS col-* classes */
+    display: grid !important;
+    grid-template-columns: 1fr 360px !important;
+    grid-template-rows: auto !important;
+    gap: 40px !important;
+    align-items: start !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    float: none !important;
+}
+
+.field-loan-offer-content > legend {
+    display: none !important;
+}
+
+/* Force both child panels into their grid columns */
+.field-loan-amount-tenure-panel {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+}
+
+.field-loan-summary-panel {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+}
+
+/* ══════════════════════════════════════════
+   LEFT PANEL — sliders
+══════════════════════════════════════════ */
+.field-loan-amount-tenure-panel {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    float: none !important;
+}
+
+/* "Enter loan amount & tenure" heading */
+.field-loan-amount-tenure-panel > legend {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: var(--lo-text-dark) !important;
+    padding: 0 0 24px 0 !important;
+    margin: 0 !important;
+    float: none !important;
+    width: 100% !important;
+    display: block !important;
+    border: none !important;
+    box-sizing: border-box !important;
+}
+
+/* ── Label + input box in one row ── */
+.field-loan-amount-inr,
+.field-loan-tenure-months {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    float: none !important;
+}
+
+.field-loan-amount-inr label,
+.field-loan-tenure-months label {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: var(--lo-text-dark) !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    /* hide the red asterisk */
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+}
+
+/* Hide required asterisk */
+.field-loan-amount-inr label::after,
+.field-loan-tenure-months label::after,
+.field-loan-amount-inr .field-description,
+.field-loan-tenure-months .field-description {
+    display: none !important;
+}
+
+/* Value display box — right side of the label row */
+.field-loan-amount-inr input[type="number"],
+.field-loan-tenure-months input[type="number"] {
+    width: 155px !important;
+    flex-shrink: 0 !important;
+    text-align: center !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    color: var(--lo-text-dark) !important;
+    background: #fff !important;
+    border: 1.5px solid var(--lo-input-border) !important;
+    border-radius: var(--lo-radius-sm) !important;
+    padding: 10px 12px !important;
+    outline: none !important;
+    transition: border-color 0.2s !important;
+    box-shadow: none !important;
+    height: auto !important;
+    min-height: unset !important;
+    -moz-appearance: textfield !important;
+}
+
+.field-loan-amount-inr input:focus,
+.field-loan-tenure-months input:focus {
+    border-color: var(--lo-primary) !important;
+}
+
+/* Hide spinners */
+.field-loan-amount-inr input::-webkit-outer-spin-button,
+.field-loan-amount-inr input::-webkit-inner-spin-button,
+.field-loan-tenure-months input::-webkit-outer-spin-button,
+.field-loan-tenure-months input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
+/* ── Slider wrappers ── */
+.field-loan-amount-slider,
+.field-loan-tenure-slider {
+    border: none !important;
+    padding: 0 !important;
+    margin: 6px 0 28px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    float: none !important;
+}
+
+.field-loan-amount-slider > label,
+.field-loan-tenure-slider > label {
+    display: none !important;
+}
+
+/* Spacing before tenure row */
+.field-loan-tenure-months {
+    margin-top: 0 !important;
+}
+
+/* ── Proceed button ── */
+.field-proceed-button {
+    border: none !important;
+    padding: 0 !important;
+    margin-top: 16px !important;
+    float: none !important;
+    width: auto !important;
+}
+
+.field-proceed-button button {
+    background: var(--lo-primary) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: var(--lo-radius-sm) !important;
+    padding: 15px 52px !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    letter-spacing: 0.02em !important;
+    box-shadow: 0 4px 16px rgba(28, 63, 202, 0.3) !important;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: auto !important;
+}
+
+.field-proceed-button button::after {
+    content: '›';
+    font-size: 1.4rem;
+    line-height: 1;
+    font-weight: 300;
+}
+
+.field-proceed-button button:hover {
+    background: #1535b0 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(28, 63, 202, 0.4) !important;
+}
+
+/* ══════════════════════════════════════════
+   RIGHT PANEL — summary card
+══════════════════════════════════════════ */
+.field-loan-summary-panel {
+    background: var(--lo-card-bg) !important;
+    border: 1.5px solid var(--lo-card-border) !important;
+    border-radius: var(--lo-radius) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: var(--lo-shadow) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    float: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.field-loan-summary-panel > legend {
+    display: none !important;
+}
+
+/* ── Heading block ── */
+.field-offer-summary-heading {
+    padding: 24px 24px 18px !important;
+    border-bottom: 1.5px dashed var(--lo-card-dashed) !important;
+    margin: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+}
+
+.field-offer-summary-heading p {
+    margin: 0 !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    color: var(--lo-text-mid) !important;
+    line-height: 1.5 !important;
+}
+
+/* Large loan amount span injected by JS */
+.lo-amount-large {
+    display: block !important;
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    color: var(--lo-text-dark) !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1.2 !important;
+    margin-top: 4px !important;
+}
+
+/* ── Fields grid built by JS ── */
+.lo-fields-grid {
+    padding: 20px 24px 8px !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.lo-fields-grid .field-wrapper {
+    padding: 10px 14px 14px !important;
+    border-left: 2.5px solid var(--lo-card-border) !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    margin: 0 !important;
+    background: transparent !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    min-width: 0 !important;
+    float: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Taxes: full width + top divider */
+.lo-fields-grid .field-taxes {
+    grid-column: 1 / -1 !important;
+    padding-top: 14px !important;
+    margin-top: 8px !important;
+    border-top: 1px solid var(--lo-divider) !important;
+}
+
+/* Labels */
+.lo-fields-grid label.field-label {
+    font-size: 0.72rem !important;
+    font-weight: 400 !important;
+    color: var(--lo-text-light) !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+    display: block !important;
+}
+
+/* Value inputs */
+.lo-fields-grid input[type="text"] {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: var(--lo-text-dark) !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    outline: none !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    height: auto !important;
+    min-height: unset !important;
+    pointer-events: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    border-radius: 0 !important;
+    display: block !important;
+}
+
+/* ── Orange warning strip ── */
+.field-principal-offer-note {
+    background: var(--lo-orange) !important;
+    margin: 16px 0 0 0 !important;
+    padding: 16px 18px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-radius: 0 0 calc(var(--lo-radius) - 1px) calc(var(--lo-radius) - 1px) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.field-principal-offer-note::before {
+    content: '';
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Ccircle cx='12' cy='16' r='0.6' fill='white'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.field-principal-offer-note p {
+    margin: 0 !important;
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+    color: #fff !important;
+    line-height: 1.55 !important;
+}
+
+/* ══════════════════════════════════════════
+   KILL EDS FLOAT/WIDTH OVERRIDES
+   EDS uses col-6, col-12 etc. which apply
+   float:left and width:%. We must neutralise
+   these on our containers.
+══════════════════════════════════════════ */
+.field-loan-offer-content.col-12,
+.field-loan-amount-tenure-panel.col-6,
+.field-loan-summary-panel.col-5,
+.field-loan-amount-tenure-panel.col-12,
+.field-loan-summary-panel.col-12 {
+    float: none !important;
+    width: 100% !important;
+    max-width: none !important;
+}
+
+/* Also kill any clearfix rows EDS might insert */
+.field-loan-offer-content::after {
+    display: none !important;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .field-loan-offer-content {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+    }
+
+    .field-loan-amount-tenure-panel,
+    .field-loan-summary-panel {
+        grid-column: 1 !important;
+    }
+
+    .field-loan-summary-panel {
+        grid-row: 2 !important;
+    }
+}
+
+@media (max-width: 540px) {
+    .field-loan-amount-inr,
+    .field-loan-tenure-months {
+        flex-wrap: wrap !important;
+    }
+
+    .field-loan-amount-inr input,
+    .field-loan-tenure-months input {
+        width: 100% !important;
+    }
+
+    .field-loan-offer-banner {
+        padding-left: 88px !important;
+    }
+}

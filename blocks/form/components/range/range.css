@@ -1,51 +1,160 @@
-/** styling for range */
-main .form .range-widget-wrapper.decorated input[type="range"] {
-    margin: unset;
-    padding: unset;
-    appearance: none;
-    height: 5px;
-    border-radius: 5px;
-    border: none;
-    background-image: linear-gradient(to right, var(--button-primary-color) calc(100% * var(--current-steps)/var(--total-steps)), #C5C5C5 calc(100% * var(--current-steps)/var(--total-steps)));
+/* ============================================================
+   range-slider.css
+   Overrides EDS default range widget styles to match the
+   orange-fill + blue-thumb design. Works with the existing
+   EDS decorate() function which uses --current-steps /
+   --total-steps CSS vars for the fill gradient.
+   ============================================================ */
+
+:root {
+    --rs-orange:        #f97316;
+    --rs-blue:          #1c3fca;
+    --rs-track-empty:   #e2e8f0;
+    --rs-track-h:       4px;
+    --rs-thumb-size:    22px;
+    --rs-label-color:   #94a3b8;
+    --rs-label-size:    0.72rem;
 }
- 
+
+/* ── Wrapper: space for bubble above + labels below ── */
+main .form .range-widget-wrapper.decorated {
+    position: relative;
+    display: block;
+    padding: 32px 0 20px;   /* top = bubble height + gap; bottom = label height */
+    width: 100%;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+/* ── Track: uses EDS --current-steps / --total-steps for orange fill ── */
+main .form .range-widget-wrapper.decorated input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: var(--rs-track-h);
+    border-radius: 99px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    min-height: unset;
+    box-shadow: none;
+    /* EDS fills left side via CSS vars — we change the colors */
+    background-image: linear-gradient(
+        to right,
+        var(--rs-orange) calc(100% * var(--current-steps) / var(--total-steps)),
+        var(--rs-track-empty) calc(100% * var(--current-steps) / var(--total-steps))
+    );
+}
+
 main .form .range-widget-wrapper.decorated input[type="range"]:focus {
     outline: none;
 }
- 
-.range-widget-wrapper.decorated input[type="range"]::-webkit-slider-thumb {
+
+/* ── Webkit thumb: solid blue filled circle ── */
+main .form .range-widget-wrapper.decorated input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
     appearance: none;
-    width: 25px;
-    height: 25px;
+    width: var(--rs-thumb-size);
+    height: var(--rs-thumb-size);
     border-radius: 50%;
-    background: #fff;
-    border: 3px solid var(--button-primary-color);
+    background: var(--rs-blue);       /* solid navy fill */
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(28, 63, 202, 0.35);
     cursor: pointer;
-    outline: 3px solid #fff;
-}
- 
-.range-widget-wrapper.decorated input[type="range"]:focus::-webkit-slider-thumb {
-    border-color: var(--button-primary-color);
-}
- 
-.range-widget-wrapper.decorated .range-bubble {
-    color: #17252e;
-    font-size: 20px;
-    line-height: 28px;
+    outline: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
     position: relative;
-    display: inline-block;
-    padding-bottom: 12px;
+    z-index: 2;
 }
- 
-.range-widget-wrapper.decorated .range-min,
-.range-widget-wrapper.decorated .range-max {
-    font-size: 14px;
-    line-height: 22px;
-    color: #494f50;
-    margin-top: 16px;
-    display: inline-block;
+
+main .form .range-widget-wrapper.decorated input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.12);
+    box-shadow: 0 3px 14px rgba(28, 63, 202, 0.45);
 }
- 
-.range-widget-wrapper.decorated .range-max {
-    float: right;
+
+/* ── Firefox thumb ── */
+main .form .range-widget-wrapper.decorated input[type="range"]::-moz-range-thumb {
+    width: var(--rs-thumb-size);
+    height: var(--rs-thumb-size);
+    border-radius: 50%;
+    background: var(--rs-blue);
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(28, 63, 202, 0.35);
+    cursor: pointer;
+}
+
+/* Firefox track */
+main .form .range-widget-wrapper.decorated input[type="range"]::-moz-range-track {
+    height: var(--rs-track-h);
+    background: var(--rs-track-empty);
+    border-radius: 99px;
+}
+
+main .form .range-widget-wrapper.decorated input[type="range"]::-moz-range-progress {
+    height: var(--rs-track-h);
+    background: var(--rs-orange);
+    border-radius: 99px 0 0 99px;
+}
+
+/* ── Bubble: positioned absolutely above thumb by JS ── */
+main .form .range-widget-wrapper.decorated .range-bubble {
+    /* Override EDS relative positioning */
+    position: absolute !important;
+    top: 0 !important;
+    transform: translateX(-50%) !important;
+    display: inline-block !important;
+    padding: 3px 9px !important;
+    background: var(--rs-blue) !important;
+    color: #fff !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    line-height: 1.5 !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
+    pointer-events: none !important;
+    z-index: 10 !important;
+}
+
+/* Bubble arrow pointing down */
+main .form .range-widget-wrapper.decorated .range-bubble::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    border: 5px solid transparent !important;
+    border-top-color: var(--rs-blue) !important;
+}
+
+/* ── Min / Max labels: absolute so they sit below the track ── */
+main .form .range-widget-wrapper.decorated .range-min,
+main .form .range-widget-wrapper.decorated .range-max {
+    position: absolute !important;
+    bottom: 0 !important;
+    font-size: var(--rs-label-size) !important;
+    font-weight: 500 !important;
+    color: var(--rs-label-color) !important;
+    line-height: 1 !important;
+    display: block !important;
+    margin-top: 0 !important;
+    float: none !important;
+}
+
+main .form .range-widget-wrapper.decorated .range-min { left: 0 !important; }
+main .form .range-widget-wrapper.decorated .range-max { right: 0 !important; float: none !important; }
+
+/* ── Mid tick labels injected by loan-offer.js ── */
+main .form .range-widget-wrapper.decorated .rs-tick {
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    font-size: var(--rs-label-size);
+    font-weight: 500;
+    color: var(--rs-label-color);
+    pointer-events: none;
+    line-height: 1;
+    white-space: nowrap;
 }
