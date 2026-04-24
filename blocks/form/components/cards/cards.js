@@ -29,14 +29,16 @@ import { createOptimizedPicture } from '../../../../scripts/aem.js';
 const CARD_DATA = [
   {
     value: '1',
-    imageUrl: 'https://author-p96753-e1523920.adobeaemcloud.com/ui#/aem/assetdetails.html/content/dam/myhdfc/image_1.jpeg',   // ← replace with your image path
+    imageUrl: "https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg"
+            ,   // ← replace with your image path
     imageAlt: 'Recurring Deposit illustration',
     subtitle: 'Open a new',
     title: 'Recurring Deposit',
   },
   {
     value: '2',
-    imageUrl: 'https://author-p96753-e1523920.adobeaemcloud.com/ui#/aem/assetdetails.html/content/dam/myhdfc/image_2.jpeg',    // ← replace with your image path
+    imageUrl: "https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg",
+          // ← replace with your image path
     imageAlt: 'Health Insurance illustration',
     subtitle: 'Buy a new',
     title: 'Health Insurance',
