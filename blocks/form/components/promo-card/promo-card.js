@@ -12,29 +12,27 @@
  */
 /**
  * Decorates Promo Card component
- */
-import { createOptimizedPicture } from '../../../../scripts/aem.js';
+ */import { createOptimizedPicture } from '../../../../scripts/aem.js';
+
 export default async function decorate(fieldDiv, fieldJson) {
-  console.log('⚙️ Decorating promo-card:', fieldJson);
-
   fieldDiv.classList.add('promo-card-container');
-
-  const image = document.createElement('img');
-  image.className = 'promo-card-image';
 
   const titleText = fieldJson?.title || '';
   const lowerTitle = titleText.toLowerCase();
 
+  // ✅ Correct asset URLs — no ui#/aem/assetdetails.html
+  let imageUrl = 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg';
   if (fieldJson?.image) {
-    image.src = fieldJson.image;
+    imageUrl = fieldJson.image;
   } else if (lowerTitle.includes('recurring')) {
-    image.src = '/icons/image_1.jpeg';
+    imageUrl = 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg';
   } else if (lowerTitle.includes('health')) {
-    image.src = '/icons/image_2.jpeg';
-  } else {
-    image.src = '/icons/image_1.jpeg';
+    imageUrl = 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg';
   }
 
+  const image = document.createElement('img');
+  image.className = 'promo-card-image';
+  image.src = imageUrl;
   image.alt = titleText || 'Promo Card';
 
   const smallText = document.createElement('p');
