@@ -800,7 +800,7 @@ main .form form select[multiple] {
 
 
 
-main .form form .field-wrapper label {
+/* main .form form .field-wrapper label {
 Font-weight: 600;
 color: darkblue;
 }
@@ -812,7 +812,7 @@ border: 1px solid #5b0dd1;
 
 main .form form .field-zipcode > label {
 color: #a600ff;
-}
+} */
 
 
 /* ============================================================
