@@ -25,7 +25,7 @@ export default async function decorate(fieldDiv, fieldJson) {
   if (fieldJson?.image) {
     imageUrl = fieldJson.image;
   } else if (lowerTitle.includes('recurring')) {
-    imageUrl = 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg';
+    imageUrl = 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_1.jpeg';
   } else if (lowerTitle.includes('health')) {
     imageUrl = 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg';
   }
