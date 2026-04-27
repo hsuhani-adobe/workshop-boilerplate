@@ -1915,3 +1915,805 @@ color: #a600ff;
     font-size: 1.25rem !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =============================================================
+   HDFC Bank — Personal Loan Offer Panel
+   Corrected version — matches reference screenshot exactly
+   ============================================================= */
+
+
+/* =============================================================
+   GLOBAL RESETS
+   ============================================================= */
+.field-personal-loan-offer-panel,
+.field-personal-loan-offer-panel * {
+  box-sizing: border-box !important;
+}
+
+.field-personal-loan-offer-panel fieldset {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  background: none !important;
+}
+
+/* Reset ALL labels */
+.field-personal-loan-offer-panel label.field-label {
+  color: #374151 !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Reset ALL text inputs */
+.field-personal-loan-offer-panel input[type="text"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: block !important;
+  width: 100% !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  color: #111827 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px !important;
+  padding: 0 14px !important;
+  outline: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: border-color 0.18s, box-shadow 0.18s !important;
+}
+
+.field-personal-loan-offer-panel input[type="text"]:focus {
+  border-color: #1c3fca !important;
+  box-shadow: 0 0 0 3px rgba(28, 63, 202, 0.12) !important;
+}
+
+.field-personal-loan-offer-panel input[type="text"]::placeholder {
+  color: #9ca3af !important;
+}
+
+
+/* =============================================================
+   ROOT PANEL — 12-col grid
+   ============================================================= */
+.field-personal-loan-offer-panel {
+  display: grid !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  grid-auto-rows: auto !important;
+  column-gap: 24px !important;
+  row-gap: 0 !important;
+  padding: 28px 32px 40px !important;
+  border: none !important;
+  margin: 0 !important;
+  background: #ffffff !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  color: #111827 !important;
+  width: 100% !important;
+}
+
+
+/* =============================================================
+   ROW 1 — Heading  col 1–12
+   ============================================================= */
+.field-personal-loan-offer-panel > legend.field-label {
+  grid-column: 1 / -1 !important;
+  grid-row: 1 !important;
+  display: block !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  line-height: 32px !important;
+  padding: 0 !important;
+  border: none !important;
+  margin: 0 0 24px !important;
+  width: 100% !important;
+}
+
+
+/* =============================================================
+   ROW 2
+   Col 1–4 : Mobile Number input
+   Col 5–8 : Pan Card / Date of Birth radio group  (top of row 2)
+   Col 9–12: Income Source label + radios  (spans rows 2–4)
+   ============================================================= */
+
+/* ── Col 1–4: Mobile Number ──────────────────────────────── */
+.field-mobile-no {
+  grid-column: 1 / 5 !important;
+  grid-row: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  align-self: start !important;
+  margin: 0 !important;
+}
+
+.field-mobile-no > label.field-label {
+  display: block !important;
+  font-size: 13px !important;
+  color: #374151 !important;
+  line-height: 20px !important;
+  margin-bottom: 6px !important;
+}
+
+/* Red asterisk via the data-required attribute on parent */
+.field-mobile-no[data-required="true"] > label.field-label::after {
+  content: " *" !important;
+  color: #ef4444 !important;
+}
+
+.field-mobile-no > input[type="text"] {
+  padding-left: 56px !important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 20'%3E%3Crect width='30' height='20' fill='%23f97316'/%3E%3Crect y='6.67' width='30' height='6.67' fill='%23fff'/%3E%3Crect y='13.33' width='30' height='6.67' fill='%2316a34a'/%3E%3Ccircle cx='15' cy='10' r='3' fill='none' stroke='%231d4ed8' stroke-width='0.8'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239ca3af'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-position: 12px center, 40px center !important;
+  background-size: 22px 15px, 8px 5px !important;
+}
+
+.field-mobile-no > .field-description {
+  display: block !important;
+  font-size: 12px !important;
+  color: #6b7280 !important;
+  line-height: 18px !important;
+  margin-top: 6px !important;
+}
+
+
+/* ── Col 5–8: Pan Card / Date of Birth radios ───────────────
+   In the screenshot these sit at the TOP of row 2, aligned with
+   the mobile-no label row. We use padding-top: 0 and push them
+   up so they are at the same vertical level as the label line.
+   ─────────────────────────────────────────────────────────── */
+.field-id-type-selector {
+  grid-column: 5 / 9 !important;
+  grid-row: 2 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 40px !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  align-self: center !important;
+  /* Align vertically with the input box (label ~20px + gap 6px = 26px) */
+  margin-top: 26px !important;
+}
+
+.field-id-type-selector > legend {
+  display: none !important;
+}
+
+/* Each radio option: circle LEFT, label RIGHT */
+.field-id-type-selector > .radio-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+}
+
+/* The radio circle sits ABOVE the label text in the screenshot */
+.field-id-type-selector > .radio-wrapper > input[type="radio"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  border: 1.5px solid #9ca3af !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  transition: all 0.15s !important;
+  order: 0 !important;
+}
+
+.field-id-type-selector > .radio-wrapper > input[type="radio"]:checked {
+  background: #1c3fca !important;
+  border: 5px solid #ffffff !important;
+  box-shadow: 0 0 0 1.5px #1c3fca !important;
+}
+
+.field-id-type-selector > .radio-wrapper > label.field-label {
+  display: block !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #374151 !important;
+  line-height: 20px !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  order: 1 !important;
+  text-align: center !important;
+}
+
+
+/* ── Col 9–12, Row 2–4: Income Source ──────────────────────
+   "Your source of income" label at top, then Salaried radio,
+   spacer for note, then Self Employed radio.
+   ─────────────────────────────────────────────────────────── */
+.field-income-source {
+  grid-column: 9 / 13 !important;
+  grid-row: 2 / 5 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  align-self: start !important;
+}
+
+.field-income-source > legend.field-label {
+  display: block !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #6b7280 !important;
+  line-height: 20px !important;
+  padding: 0 !important;
+  margin-bottom: 2px !important;
+  order: 0 !important;
+  width: 100% !important;
+}
+
+/* Each income radio: circle LEFT, label RIGHT */
+.field-income-source > .radio-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  cursor: pointer !important;
+}
+
+.field-income-source > .radio-wrapper > input[type="radio"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  border: 1.5px solid #9ca3af !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+  transition: all 0.15s !important;
+}
+
+.field-income-source > .radio-wrapper > input[type="radio"]:checked {
+  background: #1c3fca !important;
+  border: 5px solid #ffffff !important;
+  box-shadow: 0 0 0 1.5px #1c3fca !important;
+}
+
+.field-income-source > .radio-wrapper > label.field-label {
+  display: inline !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #111827 !important;
+  line-height: 20px !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+}
+
+/* Salaried = first radio (order 1) */
+.field-income-source > .radio-wrapper:first-of-type {
+  order: 1 !important;
+}
+
+/* Spacer between Salaried and Self Employed — reserves space for note box */
+.field-income-source::after {
+  content: '' !important;
+  order: 2 !important;
+  display: block !important;
+  height: 76px !important;
+  width: 100% !important;
+  flex-shrink: 0 !important;
+}
+
+/* Self Employed = last radio (order 3) */
+.field-income-source > .radio-wrapper:last-of-type {
+  order: 3 !important;
+}
+
+
+/* =============================================================
+   ROW 3
+   Col 5–8: Date of Birth input
+   Col 9–12: Notes (grid-stacked with income-source area)
+   ============================================================= */
+
+/* ── Col 5–8: Date of Birth ──────────────────────────────── */
+.field-date-of-birth {
+  grid-column: 5 / 9 !important;
+  grid-row: 3 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  align-self: start !important;
+  margin: 0 !important;
+  padding-top: 16px !important;
+}
+
+.field-date-of-birth > label.field-label {
+  display: block !important;
+  font-size: 13px !important;
+  color: #374151 !important;
+  line-height: 20px !important;
+  margin-bottom: 6px !important;
+}
+
+.field-date-of-birth[data-required="true"] > label.field-label::after {
+  content: " *" !important;
+  color: #ef4444 !important;
+}
+
+.field-date-of-birth > input[type="text"] {
+  padding: 0 38px 0 14px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 16px 16px !important;
+}
+
+
+/* ── Col 9–12, Row 3: Income note (Salaried) — hidden by default */
+#text-5055f02d04.field-income-note {
+  grid-column: 9 / 13 !important;
+  grid-row: 3 !important;
+  align-self: start !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  position: relative !important;
+  z-index: 2 !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Reveal when Salaried is checked */
+.field-personal-loan-offer-panel:has(
+  input[name="income_source"][value="salaried"]:checked
+) #text-5055f02d04.field-income-note {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  padding-top: 42px !important;
+}
+
+#text-5055f02d04.field-income-note > p {
+  padding: 14px 16px !important;
+  background-color: #fffdf0 !important;
+  border: 1.5px solid #d4a72c !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #7d5a00 !important;
+  line-height: 20px !important;
+  margin: 0 !important;
+}
+
+
+/* ── Col 9–12, Row 3: Self Employed note — hidden by default */
+#text-492ab37757.field-self-employed {
+  grid-column: 9 / 13 !important;
+  grid-row: 3 !important;
+  align-self: start !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  position: relative !important;
+  z-index: 2 !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Reveal when Self Employed is checked */
+.field-personal-loan-offer-panel:has(
+  input[name="income_source"][value="self_employed"]:checked
+) #text-492ab37757.field-self-employed {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  padding-top: 42px !important;
+}
+
+#text-492ab37757.field-self-employed > p {
+  padding: 14px 16px !important;
+  background-color: #fffdf0 !important;
+  border: 1.5px solid #d4a72c !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #7d5a00 !important;
+  line-height: 20px !important;
+  margin: 0 !important;
+}
+
+#text-492ab37757.field-self-employed > p > p {
+  margin: 0 0 8px !important;
+  font-size: 13px !important;
+  color: #7d5a00 !important;
+  line-height: 20px !important;
+}
+
+#text-492ab37757.field-self-employed > p > p:last-child {
+  margin-bottom: 0 !important;
+}
+
+
+/* =============================================================
+   ROWS 5–6 — Consent checkboxes  col 1–12
+   ============================================================= */
+.field-consent-loan-processing,
+.field-consent-marketing {
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  padding: 0 !important;
+}
+
+.field-consent-loan-processing {
+  grid-row: 5 !important;
+  margin: 24px 0 14px !important;
+}
+
+.field-consent-marketing {
+  grid-row: 6 !important;
+  margin: 0 0 14px !important;
+}
+
+.field-consent-loan-processing > input[type="checkbox"],
+.field-consent-marketing > input[type="checkbox"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 17px !important;
+  height: 17px !important;
+  min-width: 17px !important;
+  border: 1.5px solid #9ca3af !important;
+  border-radius: 3px !important;
+  background: #ffffff !important;
+  cursor: pointer !important;
+  margin-top: 3px !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  transition: all 0.15s !important;
+}
+
+.field-consent-loan-processing > input[type="checkbox"]:checked,
+.field-consent-marketing > input[type="checkbox"]:checked {
+  background: #1c3fca !important;
+  border-color: #1c3fca !important;
+}
+
+.field-consent-loan-processing > input[type="checkbox"]:checked::after,
+.field-consent-marketing > input[type="checkbox"]:checked::after {
+  content: "" !important;
+  display: block !important;
+  width: 3px !important;
+  height: 7px !important;
+  border: 1.5px solid #ffffff !important;
+  border-top: none !important;
+  border-left: none !important;
+  position: absolute !important;
+  top: 1px !important;
+  left: 4px !important;
+  transform: rotate(45deg) !important;
+}
+
+.field-consent-loan-processing > label.field-label,
+.field-consent-marketing > label.field-label {
+  display: inline !important;
+  flex: 1 !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #374151 !important;
+  line-height: 22px !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+}
+
+
+/* =============================================================
+   ROW 7 — Terms & Privacy text
+   ============================================================= */
+.field-terms-privacy-text {
+  grid-column: 1 / -1 !important;
+  grid-row: 7 !important;
+  margin: 0 0 20px !important;
+  padding: 0 !important;
+}
+
+.field-terms-privacy-text > p {
+  font-size: 14px !important;
+  color: #374151 !important;
+  line-height: 22px !important;
+  margin: 0 !important;
+}
+
+.field-terms-privacy-text > p > b,
+.field-terms-privacy-text a {
+  font-weight: 600 !important;
+  color: #1c3fca !important;
+  text-decoration: none !important;
+}
+
+.field-terms-privacy-text a:hover {
+  text-decoration: underline !important;
+}
+
+
+/* =============================================================
+   ROW 8 — Submit button  col 1–4
+   ============================================================= */
+.field-view-loan-eligibility {
+  grid-column: 1 / 5 !important;
+  grid-row: 8 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.field-view-loan-eligibility > button.button[type="submit"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  height: 52px !important;
+  padding: 0 24px !important;
+  background: #6b84d9 !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background 0.2s, box-shadow 0.2s !important;
+  letter-spacing: 0.01em !important;
+}
+
+.field-view-loan-eligibility > button.button[type="submit"]::after {
+  content: "›" !important;
+  font-size: 22px !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+  margin-left: 4px !important;
+}
+
+.field-view-loan-eligibility > button.button[type="submit"]:hover {
+  background: #1c3fca !important;
+  box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
+}
+
+.field-view-loan-eligibility > button.button[type="submit"]:active {
+  background: #1633a8 !important;
+}
+
+
+/* =============================================================
+   ROW 9 — Essentials sub-panel
+   ============================================================= */
+.field-essentials-for-the-journey {
+  grid-column: 1 / -1 !important;
+  grid-row: 9 !important;
+  display: grid !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  column-gap: 24px !important;
+  row-gap: 16px !important;
+  border: none !important;
+  border-top: 1px solid #e5e7eb !important;
+  padding: 24px 0 8px !important;
+  margin-top: 32px !important;
+  width: 100% !important;
+}
+
+.field-essentials-for-the-journey > legend,
+.field-essentials-for-the-journey > legend[data-visible="false"] {
+  display: none !important;
+}
+
+/* Important links note — full width */
+.field-important-links-note {
+  grid-column: 1 / -1 !important;
+}
+
+.field-important-links-note > p {
+  font-size: 13px !important;
+  color: #6b7280 !important;
+  line-height: 22px !important;
+  margin: 0 !important;
+  text-align: center !important;
+}
+
+/* "Essentials for the journey" heading */
+.field-journey-essentials {
+  grid-column: 1 / -1 !important;
+}
+
+.field-journey-essentials > p { margin: 0 !important; }
+
+.field-journey-essentials > p > p {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  line-height: 26px !important;
+  margin: 0 !important;
+}
+
+.field-essentials-for-the-journey > div.col-12 {
+  grid-column: 1 / -1 !important;
+}
+
+.field-essentials-for-the-journey > div.col-3 {
+  grid-column: span 3 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Icon + label row */
+.field-mobile-phone > p, .field-pan-card > p,
+.field-dob > p, .field-cheque > p {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.field-mobile-phone > p > p, .field-pan-card > p > p,
+.field-dob > p > p, .field-cheque > p > p {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #1c3fca !important;
+  line-height: 20px !important;
+  margin: 0 !important;
+}
+
+.field-mobile-phone > p::before, .field-pan-card > p::before,
+.field-dob > p::before, .field-cheque > p::before {
+  content: "" !important;
+  display: inline-flex !important;
+  flex-shrink: 0 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  background-color: #e8eeff !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 18px 18px !important;
+}
+
+.field-mobile-phone > p::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='2' width='14' height='20' rx='2'/%3E%3Cline x1='12' y1='18' x2='12.01' y2='18' stroke-width='3'/%3E%3C/svg%3E") !important;
+}
+.field-pan-card > p::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='1' y='4' width='22' height='16' rx='2'/%3E%3Cline x1='1' y1='10' x2='23' y2='10'/%3E%3C/svg%3E") !important;
+}
+.field-dob > p::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E") !important;
+}
+.field-cheque > p::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'/%3E%3Cpath d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'/%3E%3C/svg%3E") !important;
+}
+
+
+/* =============================================================
+   RESPONSIVE — Tablet ≤ 860px
+   ============================================================= */
+@media (max-width: 860px) {
+  .field-personal-loan-offer-panel {
+    padding: 24px 24px 32px !important;
+    column-gap: 16px !important;
+  }
+
+  .field-mobile-no        { grid-column: 1 / 7 !important; grid-row: 2 !important; }
+  .field-id-type-selector { grid-column: 7 / 13 !important; grid-row: 2 !important; margin-top: 26px !important; }
+  .field-date-of-birth    { grid-column: 1 / 7 !important; grid-row: 3 !important; padding-top: 0 !important; margin-top: 16px !important; }
+
+  .field-income-source {
+    grid-column: 1 / -1 !important;
+    grid-row: 4 !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 12px 32px !important;
+  }
+  .field-income-source > legend.field-label { width: 100% !important; }
+  .field-income-source::after { display: none !important; }
+  .field-income-source > .radio-wrapper:first-of-type,
+  .field-income-source > .radio-wrapper:last-of-type { order: unset !important; }
+
+  #text-5055f02d04.field-income-note,
+  #text-492ab37757.field-self-employed {
+    grid-column: 1 / -1 !important;
+    grid-row: 5 !important;
+    padding-top: 0 !important;
+  }
+
+  .field-personal-loan-offer-panel:has(input[name="income_source"][value="salaried"]:checked) #text-5055f02d04.field-income-note,
+  .field-personal-loan-offer-panel:has(input[name="income_source"][value="self_employed"]:checked) #text-492ab37757.field-self-employed {
+    padding-top: 0 !important;
+  }
+
+  .field-consent-loan-processing { grid-row: 6 !important; }
+  .field-consent-marketing       { grid-row: 7 !important; }
+  .field-terms-privacy-text      { grid-row: 8 !important; }
+  .field-view-loan-eligibility   { grid-column: 1 / 7 !important; grid-row: 9 !important; }
+  .field-essentials-for-the-journey { grid-row: 10 !important; }
+  .field-essentials-for-the-journey > div.col-3 { grid-column: span 6 !important; }
+}
+
+
+/* =============================================================
+   RESPONSIVE — Mobile ≤ 540px
+   ============================================================= */
+@media (max-width: 540px) {
+  .field-personal-loan-offer-panel { padding: 20px 16px 28px !important; }
+
+  .field-mobile-no, .field-id-type-selector,
+  .field-date-of-birth, .field-income-source {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  .field-id-type-selector {
+    margin-top: 0 !important;
+    padding-top: 8px !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap: 32px !important;
+  }
+
+  .field-income-source {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .field-income-source::after { display: none !important; }
+  .field-income-source > .radio-wrapper:first-of-type,
+  .field-income-source > .radio-wrapper:last-of-type { order: unset !important; }
+
+  #text-5055f02d04.field-income-note,
+  #text-492ab37757.field-self-employed {
+    grid-column: 1 / -1 !important;
+    padding-top: 0 !important;
+  }
+  .field-personal-loan-offer-panel:has(input[name="income_source"][value="salaried"]:checked) #text-5055f02d04.field-income-note,
+  .field-personal-loan-offer-panel:has(input[name="income_source"][value="self_employed"]:checked) #text-492ab37757.field-self-employed {
+    padding-top: 0 !important;
+  }
+
+  .field-view-loan-eligibility { grid-column: 1 / -1 !important; grid-row: auto !important; }
+  .field-essentials-for-the-journey > div.col-3 { grid-column: span 6 !important; }
+}
