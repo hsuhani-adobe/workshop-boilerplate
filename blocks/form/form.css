@@ -2030,27 +2030,7 @@ color: #a600ff;
   accent-color: #1c3fca !important;
 }
 
-/* PAN */
-.field-pan-number {
-  grid-column: 5 / 9 !important;
-  display: none !important;
-}
 
-.field-pan-number label::after {
-  content: " *";
-  color: red;
-}
-
-/* DOB */
-.field-date-of-birth {
-  grid-column: 5 / 9 !important;
-  display: none !important;
-}
-
-.field-date-of-birth label::after {
-  content: " *";
-  color: red;
-}
 
 /* INCOME */
 .field-income-source {
