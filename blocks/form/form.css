@@ -1920,55 +1920,59 @@ color: #a600ff;
 
 
 
+/* =============================================================
+   HDFC Bank — Personal Loan Offer Panel Final Updated
+============================================================= */
 
-
-
-
-
-
-
-
-
-
-/* =========================================================
-   PERSONAL LOAN OFFER PANEL - FINAL CLEAN CSS
-========================================================= */
-
-/* RESET */
+/* GLOBAL RESET */
 .field-personal-loan-offer-panel,
 .field-personal-loan-offer-panel * {
   box-sizing: border-box !important;
-  font-family: Arial, sans-serif !important;
+  font-family: 'Segoe UI', Arial, sans-serif !important;
 }
 
 .field-personal-loan-offer-panel fieldset {
   border: none !important;
   margin: 0 !important;
   padding: 0 !important;
+  min-width: 0 !important;
 }
 
+.field-personal-loan-offer-panel label.field-label,
+.field-personal-loan-offer-panel p {
+  font-size: 14px !important;
+  line-height: 22px !important;
+  font-weight: 400 !important;
+  color: #374151 !important;
+  margin: 0 !important;
+}
+
+/* INPUT */
 .field-personal-loan-offer-panel input[type="text"] {
   width: 100% !important;
-  height: 48px !important;
+  height: 44px !important;
   border: 1px solid #d1d5db !important;
   border-radius: 8px !important;
+  background: #fff !important;
   padding: 0 14px !important;
   font-size: 14px !important;
+  color: #111827 !important;
   outline: none !important;
 }
 
 .field-personal-loan-offer-panel input[type="text"]:focus {
   border-color: #1c3fca !important;
-  box-shadow: 0 0 0 3px rgba(28, 63, 202, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(28,63,202,0.12) !important;
 }
 
 /* MAIN GRID */
 .field-personal-loan-offer-panel {
   display: grid !important;
-  grid-template-columns: repeat(12, 1fr) !important;
-  gap: 20px 24px !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  column-gap: 24px !important;
+  row-gap: 16px !important;
   background: #fff !important;
-  padding: 32px !important;
+  padding: 28px 32px 40px !important;
 }
 
 /* TITLE */
@@ -1977,29 +1981,36 @@ color: #a600ff;
   font-size: 22px !important;
   font-weight: 700 !important;
   color: #111827 !important;
+  margin-bottom: 24px !important;
 }
 
-/* MOBILE NUMBER */
+/* MOBILE */
 .field-mobile-no {
   grid-column: 1 / 5 !important;
 }
 
-.field-mobile-no label {
-  display: block !important;
-  margin-bottom: 6px !important;
+.field-mobile-no label::after {
+  content: " *";
+  color: red;
 }
 
 .field-mobile-no input {
   padding-left: 56px !important;
 }
 
-/* PAN / DOB SELECTOR */
+.field-description {
+  margin-top: 6px !important;
+  font-size: 12px !important;
+  color: #6b7280 !important;
+}
+
+/* ID TYPE */
 .field-id-type-selector {
-  grid-column: 5 / 8 !important;
+  grid-column: 5 / 9 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 30px !important;
-  margin-top: 28px !important;
+  gap: 40px !important;
+  margin-top: 24px !important;
 }
 
 .field-id-type-selector legend {
@@ -2019,21 +2030,31 @@ color: #a600ff;
   accent-color: #1c3fca !important;
 }
 
-/* PAN FIELD */
+/* PAN */
 .field-pan-number {
-  grid-column: 5 / 8 !important;
+  grid-column: 5 / 9 !important;
   display: none !important;
 }
 
-/* DOB FIELD */
+.field-pan-number label::after {
+  content: " *";
+  color: red;
+}
+
+/* DOB */
 .field-date-of-birth {
-  grid-column: 5 / 8 !important;
+  grid-column: 5 / 9 !important;
   display: none !important;
+}
+
+.field-date-of-birth label::after {
+  content: " *";
+  color: red;
 }
 
 /* INCOME */
 .field-income-source {
-  grid-column: 8 / 13 !important;
+  grid-column: 9 / 13 !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 12px !important;
@@ -2054,22 +2075,21 @@ color: #a600ff;
 /* NOTE BOX */
 .field-income-note,
 .field-self-employed {
-  grid-column: 8 / 13 !important;
+  grid-column: 9 / 13 !important;
   display: none !important;
 }
 
 .field-income-note p,
 .field-self-employed p {
-  background: #fff8e8 !important;
-  border: 1px solid #e4b545 !important;
-  border-radius: 8px !important;
-  padding: 12px !important;
+  background: #fffdf0 !important;
+  border: 1px solid #d4a72c !important;
+  border-radius: 6px !important;
+  padding: 14px !important;
   font-size: 13px !important;
-  line-height: 18px !important;
-  color: #7a5a00 !important;
+  color: #7d5a00 !important;
 }
 
-/* CHECKBOXES */
+/* CHECKBOX */
 .field-consent-loan-processing,
 .field-consent-marketing {
   grid-column: 1 / -1 !important;
@@ -2085,75 +2105,184 @@ color: #a600ff;
   margin-top: 3px !important;
 }
 
-.field-consent-loan-processing label,
-.field-consent-marketing label {
-  line-height: 24px !important;
-}
-
 /* TERMS */
 .field-terms-privacy-text {
   grid-column: 1 / -1 !important;
+  margin-top: 8px !important;
+  margin-bottom: 10px !important;
+}
+
+.field-terms-privacy-text p {
+  font-size: 15px !important;
+  line-height: 24px !important;
 }
 
 .field-terms-privacy-text b {
   color: #1c3fca !important;
+  font-weight: 700 !important;
 }
 
 /* BUTTON */
+/* =============================================================
+   ROW 8 — Submit button  col 1–4
+   ============================================================= */
 .field-view-loan-eligibility {
-  grid-column: 1 / 4 !important;
+  grid-column: 1 / 5 !important;
+  grid-row: 8 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.field-view-loan-eligibility button {
+.field-view-loan-eligibility > button.button[type="submit"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
   width: 100% !important;
   height: 52px !important;
-  border-radius: 10px !important;
-  border: none !important;
+  padding: 0 24px !important;
   background: #6b84d9 !important;
-  color: white !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
   font-size: 16px !important;
   font-weight: 600 !important;
+  border: none !important;
+  border-radius: 10px !important;
   cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background 0.2s, box-shadow 0.2s !important;
+  letter-spacing: 0.01em !important;
 }
 
-.field-view-loan-eligibility button::after {
-  content: " ›";
-  font-size: 20px;
+.field-view-loan-eligibility > button.button[type="submit"]::after {
+  content: "›" !important;
+  font-size: 22px !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+  margin-left: 4px !important;
 }
 
-/* ESSENTIALS SECTION */
+.field-view-loan-eligibility > button.button[type="submit"]:hover {
+  background: #1c3fca !important;
+  box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
+}
+
+.field-view-loan-eligibility > button.button[type="submit"]:active {
+  background: #1633a8 !important;
+}
+
+/*
+=============================================================
+   ROW 9 — Essentials sub-panel
+   ============================================================= */
 .field-essentials-for-the-journey {
   grid-column: 1 / -1 !important;
+  grid-row: 9 !important;
+  display: grid !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  column-gap: 24px !important;
+  row-gap: 16px !important;
+  border: none !important;
   border-top: 1px solid #e5e7eb !important;
-  padding-top: 24px !important;
+  padding: 24px 0 8px !important;
+  margin-top: 32px !important;
+  width: 100% !important;
 }
 
+.field-essentials-for-the-journey > legend,
+.field-essentials-for-the-journey > legend[data-visible="false"] {
+  display: none !important;
+}
+
+/* Important links note — full width */
 .field-important-links-note {
+  grid-column: 1 / -1 !important;
+}
+
+.field-important-links-note > p {
+  font-size: 13px !important;
+  color: #6b7280 !important;
+  line-height: 22px !important;
+  margin: 0 !important;
   text-align: center !important;
 }
 
+/* "Essentials for the journey" heading */
 .field-journey-essentials {
-  font-size: 18px !important;
-  font-weight: 700 !important;
-  margin: 20px 0 !important;
+  grid-column: 1 / -1 !important;
 }
 
-/* ESSENTIAL ITEMS */
-.field-mobile-phone,
-.field-pan-card,
-.field-dob,
-.field-cheque {
-  display: inline-block !important;
-  width: 24% !important;
-  vertical-align: top !important;
-  text-align: center !important;
+.field-journey-essentials > p { margin: 0 !important; }
+
+.field-journey-essentials > p > p {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  line-height: 26px !important;
+  margin: 0 !important;
+}
+
+.field-essentials-for-the-journey > div.col-12 {
+  grid-column: 1 / -1 !important;
+}
+
+.field-essentials-for-the-journey > div.col-3 {
+  grid-column: span 3 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Icon + label row */
+.field-mobile-phone > p, .field-pan-card > p,
+.field-dob > p, .field-cheque > p {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.field-mobile-phone > p > p, .field-pan-card > p > p,
+.field-dob > p > p, .field-cheque > p > p {
   font-size: 14px !important;
   font-weight: 700 !important;
   color: #1c3fca !important;
+  line-height: 20px !important;
+  margin: 0 !important;
 }
 
+.field-mobile-phone > p::before, .field-pan-card > p::before,
+.field-dob > p::before, .field-cheque > p::before {
+  content: "" !important;
+  display: inline-flex !important;
+  flex-shrink: 0 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  background-color: #e8eeff !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 18px 18px !important;
+}
+
+.field-mobile-phone > p::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='2' width='14' height='20' rx='2'/%3E%3Cline x1='12' y1='18' x2='12.01' y2='18' stroke-width='3'/%3E%3C/svg%3E") !important;
+}
+.field-pan-card > p::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='1' y='4' width='22' height='16' rx='2'/%3E%3Cline x1='1' y1='10' x2='23' y2='10'/%3E%3C/svg%3E") !important;
+}
+.field-dob > p::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E") !important;
+}
+.field-cheque > p::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'/%3E%3Cpath d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'/%3E%3C/svg%3E") !important;
+}
+
+
+
+
 /* RESPONSIVE */
-@media(max-width: 768px) {
+@media(max-width:768px){
   .field-mobile-no,
   .field-id-type-selector,
   .field-pan-number,
@@ -2173,15 +2302,11 @@ color: #a600ff;
   }
 }
 
-@media(max-width: 540px) {
+@media(max-width:540px){
   .field-mobile-phone,
   .field-pan-card,
   .field-dob,
   .field-cheque {
     width: 100% !important;
-  }
-
-  .field-id-type-selector {
-    gap: 20px !important;
   }
 }
