@@ -1930,3 +1930,258 @@ color: #a600ff;
 
 
 
+/* =========================================================
+   PERSONAL LOAN OFFER PANEL - FINAL CLEAN CSS
+========================================================= */
+
+/* RESET */
+.field-personal-loan-offer-panel,
+.field-personal-loan-offer-panel * {
+  box-sizing: border-box !important;
+  font-family: Arial, sans-serif !important;
+}
+
+.field-personal-loan-offer-panel fieldset {
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.field-personal-loan-offer-panel input[type="text"] {
+  width: 100% !important;
+  height: 48px !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px !important;
+  padding: 0 14px !important;
+  font-size: 14px !important;
+  outline: none !important;
+}
+
+.field-personal-loan-offer-panel input[type="text"]:focus {
+  border-color: #1c3fca !important;
+  box-shadow: 0 0 0 3px rgba(28, 63, 202, 0.1) !important;
+}
+
+/* MAIN GRID */
+.field-personal-loan-offer-panel {
+  display: grid !important;
+  grid-template-columns: repeat(12, 1fr) !important;
+  gap: 20px 24px !important;
+  background: #fff !important;
+  padding: 32px !important;
+}
+
+/* TITLE */
+.field-personal-loan-offer-panel > legend.field-label {
+  grid-column: 1 / -1 !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+}
+
+/* MOBILE NUMBER */
+.field-mobile-no {
+  grid-column: 1 / 5 !important;
+}
+
+.field-mobile-no label {
+  display: block !important;
+  margin-bottom: 6px !important;
+}
+
+.field-mobile-no input {
+  padding-left: 56px !important;
+}
+
+/* PAN / DOB SELECTOR */
+.field-id-type-selector {
+  grid-column: 5 / 8 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 30px !important;
+  margin-top: 28px !important;
+}
+
+.field-id-type-selector legend {
+  display: none !important;
+}
+
+.field-id-type-selector .radio-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.field-id-type-selector input[type="radio"] {
+  width: 20px !important;
+  height: 20px !important;
+  accent-color: #1c3fca !important;
+}
+
+/* PAN FIELD */
+.field-pan-number {
+  grid-column: 5 / 8 !important;
+  display: none !important;
+}
+
+/* DOB FIELD */
+.field-date-of-birth {
+  grid-column: 5 / 8 !important;
+  display: none !important;
+}
+
+/* INCOME */
+.field-income-source {
+  grid-column: 8 / 13 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.field-income-source .radio-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.field-income-source input[type="radio"] {
+  width: 20px !important;
+  height: 20px !important;
+  accent-color: #1c3fca !important;
+}
+
+/* NOTE BOX */
+.field-income-note,
+.field-self-employed {
+  grid-column: 8 / 13 !important;
+  display: none !important;
+}
+
+.field-income-note p,
+.field-self-employed p {
+  background: #fff8e8 !important;
+  border: 1px solid #e4b545 !important;
+  border-radius: 8px !important;
+  padding: 12px !important;
+  font-size: 13px !important;
+  line-height: 18px !important;
+  color: #7a5a00 !important;
+}
+
+/* CHECKBOXES */
+.field-consent-loan-processing,
+.field-consent-marketing {
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+}
+
+.field-consent-loan-processing input,
+.field-consent-marketing input {
+  width: 18px !important;
+  height: 18px !important;
+  margin-top: 3px !important;
+}
+
+.field-consent-loan-processing label,
+.field-consent-marketing label {
+  line-height: 24px !important;
+}
+
+/* TERMS */
+.field-terms-privacy-text {
+  grid-column: 1 / -1 !important;
+}
+
+.field-terms-privacy-text b {
+  color: #1c3fca !important;
+}
+
+/* BUTTON */
+.field-view-loan-eligibility {
+  grid-column: 1 / 4 !important;
+}
+
+.field-view-loan-eligibility button {
+  width: 100% !important;
+  height: 52px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  background: #6b84d9 !important;
+  color: white !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+
+.field-view-loan-eligibility button::after {
+  content: " ›";
+  font-size: 20px;
+}
+
+/* ESSENTIALS SECTION */
+.field-essentials-for-the-journey {
+  grid-column: 1 / -1 !important;
+  border-top: 1px solid #e5e7eb !important;
+  padding-top: 24px !important;
+}
+
+.field-important-links-note {
+  text-align: center !important;
+}
+
+.field-journey-essentials {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin: 20px 0 !important;
+}
+
+/* ESSENTIAL ITEMS */
+.field-mobile-phone,
+.field-pan-card,
+.field-dob,
+.field-cheque {
+  display: inline-block !important;
+  width: 24% !important;
+  vertical-align: top !important;
+  text-align: center !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #1c3fca !important;
+}
+
+/* RESPONSIVE */
+@media(max-width: 768px) {
+  .field-mobile-no,
+  .field-id-type-selector,
+  .field-pan-number,
+  .field-date-of-birth,
+  .field-income-source,
+  .field-income-note,
+  .field-self-employed,
+  .field-view-loan-eligibility {
+    grid-column: 1 / -1 !important;
+  }
+
+  .field-mobile-phone,
+  .field-pan-card,
+  .field-dob,
+  .field-cheque {
+    width: 48% !important;
+  }
+}
+
+@media(max-width: 540px) {
+  .field-mobile-phone,
+  .field-pan-card,
+  .field-dob,
+  .field-cheque {
+    width: 100% !important;
+  }
+
+  .field-id-type-selector {
+    gap: 20px !important;
+  }
+}
