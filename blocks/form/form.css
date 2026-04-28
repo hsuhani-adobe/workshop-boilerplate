@@ -881,7 +881,7 @@ color: #a600ff;
 .field-loan-offer-banner .field-label {
     color: #000;
     font-weight: 700;
-    font-size: 18px; /* keep same as input */
+    font-size: 20px; /* keep same as input */
     line-height: 1.4;
 }
 
@@ -892,7 +892,7 @@ color: #a600ff;
     background: transparent;
     color: #000;
     font-weight: 700;
-    font-size: 28px; /* match label */
+    font-size: 20px; /* match label */
     line-height: 1.4;
     padding: 0;
     margin: 0;
