@@ -73,13 +73,7 @@ function calcEMI(principal, annualRate, months) {
 }
 
 
-export {
-  getFullName,
-  days,
-  submitFormArrayToString,
-  maskMobileNumber,
-  validateDOB,
-};
+
 /**
  * Validates if age is 21 years or above
  * @param {string} dob in date format
