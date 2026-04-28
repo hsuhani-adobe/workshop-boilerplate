@@ -2033,7 +2033,7 @@ MOBILE
 /* INCOME SOURCE */
 .field-income-source {
   grid-column: 1 / 7 !important;
-  grid-row: 4 !important;
+  grid-row: 3 !important;
 
   display: flex !important;
   flex-direction: row !important;
@@ -2122,6 +2122,17 @@ MOBILE
 .field-terms-privacy-text b {
   color: #1c3fca !important;
   font-weight: 700 !important;
+}
+.field-consent-loan-processing {
+   grid-row: 4 !important;
+}
+
+.field-consent-marketing {
+   grid-row: 5 !important;
+}
+
+.field-terms-privacy-text {
+   grid-row: 6 !important;
 }
 
 /* BUTTON */
