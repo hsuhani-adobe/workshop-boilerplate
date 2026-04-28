@@ -75,38 +75,30 @@ function calcEMI(principal, annualRate, months) {
 
 
 
-function validateDOB(form) {
-  const dobField = form.querySelector('[name="date_of_birth"]');
+function validateDOB() {
+    var dob = date_of_birth.value;
 
-  if (!dobField || !dobField.value) return;
+    if (!dob) return true;
 
-  // Remove existing error
-  let existingError = dobField.parentNode.querySelector(".dob-error");
-  if (existingError) existingError.remove();
+    var birthDate = new Date(dob);
+    var today = new Date();
 
-  const dob = new Date(dobField.value);
-  const today = new Date();
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var monthDiff = today.getMonth() - birthDate.getMonth();
 
-  let age = today.getFullYear() - dob.getFullYear();
-  const monthDiff = today.getMonth() - dob.getMonth();
+    if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+        age--;
+    }
 
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < dob.getDate())
-  ) {
-    age--;
-  }
+    if (age < 21) {
+        date_of_birth.errorMessage = "Age should be 21 years.";
+        date_of_birth.valid = false;
+        return false;
+    }
 
-  if (age < 21) {
-    const errorMsg = document.createElement("div");
-    errorMsg.className = "dob-error";
-    errorMsg.style.color = "red";
-    errorMsg.style.fontSize = "12px";
-    errorMsg.textContent = "Age should be 21 years.";
-
-    dobField.parentNode.appendChild(errorMsg);
-    return false;
-  }
-
-  return true;
+    date_of_birth.valid = true;
+    return true;
 }
