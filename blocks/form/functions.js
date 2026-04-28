@@ -71,3 +71,42 @@ function calcEMI(principal, annualRate, months) {
         (Math.pow(1 + r, months) - 1)
     );
 }
+
+
+
+
+function validateDOB(form) {
+  const dobField = form.querySelector('[name="date_of_birth"]');
+
+  if (!dobField || !dobField.value) return;
+
+  // Remove existing error
+  let existingError = dobField.parentNode.querySelector(".dob-error");
+  if (existingError) existingError.remove();
+
+  const dob = new Date(dobField.value);
+  const today = new Date();
+
+  let age = today.getFullYear() - dob.getFullYear();
+  const monthDiff = today.getMonth() - dob.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < dob.getDate())
+  ) {
+    age--;
+  }
+
+  if (age < 21) {
+    const errorMsg = document.createElement("div");
+    errorMsg.className = "dob-error";
+    errorMsg.style.color = "red";
+    errorMsg.style.fontSize = "12px";
+    errorMsg.textContent = "Age should be 21 years.";
+
+    dobField.parentNode.appendChild(errorMsg);
+    return false;
+  }
+
+  return true;
+}
