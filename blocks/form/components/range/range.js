@@ -52,132 +52,109 @@ export default async function decorate(fieldDiv, fieldJson) {
 (function () {
     'use strict';
 
-    const RATE_ANNUAL = 10.97;
-    const TAXES_FLAT = 4000;
-
-    const TENURE = {
-        min: 12,
-        max: 84,
-        step: 1,
-        defaultValue: 84
-    };
-
-    const AMOUNT = {
-        min: 50000,
-        max: 1500000,
-        step: 10000,
-        defaultValue: 1500000
-    };
+    const RATE = 10.97;
+    const TAX = 4000;
 
     function formatINR(v) {
         return '₹' + Number(v).toLocaleString('en-IN');
     }
 
-    function parseNumber(val) {
-        return Number(String(val).replace(/[^0-9]/g, '')) || 0;
+    function parseNum(v) {
+        return Number(String(v).replace(/[^0-9]/g, '')) || 0;
     }
 
-    function calcEMI(P, annualRate, n) {
-        const r = annualRate / 12 / 100;
-        return Math.round(
-            (P * r * Math.pow(1 + r, n)) /
-            (Math.pow(1 + r, n) - 1)
-        );
+    function calcEMI(P, n) {
+        const r = RATE / 12 / 100;
+        return Math.round((P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1));
+    }
+
+    function syncBubble(rangeInput, wrapper, text) {
+        const step = parseFloat(rangeInput.step) || 1;
+        const max = parseFloat(rangeInput.max) || 100;
+        const min = parseFloat(rangeInput.min) || 1;
+        const value = parseFloat(rangeInput.value) || min;
+
+        const current = Math.ceil((value - min) / step);
+        const total = Math.ceil((max - min) / step);
+
+        const bubble = wrapper.querySelector('.range-bubble');
+        if (bubble) bubble.textContent = text;
+
+        wrapper.style.setProperty('--total-steps', total);
+        wrapper.style.setProperty('--current-steps', current);
     }
 
     function updateSummary(amount, tenure) {
-        const emi = calcEMI(amount, RATE_ANNUAL, tenure);
+        const emi = calcEMI(amount, tenure);
 
-        const emiInput = document.querySelector('[name="emi_amount"]');
-        const roiInput = document.querySelector('[name="rate_of_interest"]');
-        const taxInput = document.querySelector('[name="taxes"]');
-
-        if (emiInput) emiInput.value = formatINR(emi);
-        if (roiInput) roiInput.value = RATE_ANNUAL + '%';
-        if (taxInput) taxInput.value = formatINR(TAXES_FLAT);
+        document.querySelector('[name="emi_amount"]').value = formatINR(emi);
+        document.querySelector('[name="rate_of_interest"]').value = RATE + '%';
+        document.querySelector('[name="taxes"]').value = formatINR(TAX);
 
         const heading = document.querySelector('.field-offer-summary-heading p');
-        if (heading) {
-            heading.innerHTML =
-                'Avail XPRESS Personal Loan of <span class="lo-amount-large">' +
-                formatINR(amount) +
-                '</span>';
-        }
+        heading.innerHTML =
+            'Avail XPRESS Personal Loan of <span class="lo-amount-large">' +
+            formatINR(amount) +
+            '</span>';
     }
 
     function init() {
-        const amountField = document.querySelector('.field-loan-amount-slider[data-component-status="loaded"]');
-        const tenureField = document.querySelector('.field-loan-tenure-slider[data-component-status="loaded"]');
+        const amountWrapper = document.querySelector('.field-loan-amount-slider .range-widget-wrapper');
+        const tenureWrapper = document.querySelector('.field-loan-tenure-slider .range-widget-wrapper');
 
-        if (!amountField || !tenureField) {
-            setTimeout(init, 300);
+        if (!amountWrapper || !tenureWrapper) {
+            setTimeout(init, 200);
             return;
         }
 
-        const bannerInput = document.querySelector('[name="loan_offer_banner"]');
+        const amountSlider = amountWrapper.querySelector('input[type="range"]');
+        const tenureSlider = tenureWrapper.querySelector('input[type="range"]');
 
         const amountInput = document.querySelector('[name="loan_amount_inr"]');
         const tenureInput = document.querySelector('[name="loan_tenure_months"]');
+        const bannerInput = document.querySelector('[name="loan_offer_banner"]');
 
-        const amountSlider = amountField.querySelector('input[type="range"]');
-        const tenureSlider = tenureField.querySelector('input[type="range"]');
+        function applyOffer() {
+            let offer = parseNum(bannerInput.value);
+            if (!offer) return;
 
-        let offerAmount = parseNumber(bannerInput?.value);
+            amountSlider.min = 50000;
+            amountSlider.max = offer;
+            amountSlider.step = 10000;
+            amountSlider.value = offer;
 
-        if (offerAmount > 0) {
-            AMOUNT.max = offerAmount;
-            AMOUNT.defaultValue = offerAmount;
+            amountInput.value = offer;
+
+            syncBubble(amountSlider, amountWrapper, Math.round(offer / 100000) + 'L');
+            updateSummary(offer, parseNum(tenureInput.value || 84));
         }
 
-        let currentAmount = AMOUNT.defaultValue;
-        let currentTenure = TENURE.defaultValue;
+        tenureSlider.min = 12;
+        tenureSlider.max = 84;
+        tenureSlider.step = 1;
+        tenureSlider.value = 84;
+        tenureInput.value = 84;
 
-        amountSlider.min = AMOUNT.min;
-        amountSlider.max = AMOUNT.max;
-        amountSlider.step = AMOUNT.step;
-        amountSlider.value = currentAmount;
+        syncBubble(tenureSlider, tenureWrapper, '84m');
 
-        tenureSlider.min = TENURE.min;
-        tenureSlider.max = TENURE.max;
-        tenureSlider.step = TENURE.step;
-        tenureSlider.value = currentTenure;
+        applyOffer();
 
-        if (amountInput) amountInput.value = currentAmount;
-        if (tenureInput) tenureInput.value = currentTenure;
-
-        updateSummary(currentAmount, currentTenure);
-
-        amountSlider.addEventListener('input', function () {
-            currentAmount = parseNumber(this.value);
-            if (amountInput) amountInput.value = currentAmount;
-            updateSummary(currentAmount, currentTenure);
+        amountSlider.addEventListener('input', () => {
+            let val = parseNum(amountSlider.value);
+            amountInput.value = val;
+            syncBubble(amountSlider, amountWrapper, Math.round(val / 100000) + 'L');
+            updateSummary(val, parseNum(tenureInput.value));
         });
 
-        tenureSlider.addEventListener('input', function () {
-            currentTenure = parseNumber(this.value);
-            if (tenureInput) tenureInput.value = currentTenure;
-            updateSummary(currentAmount, currentTenure);
+        tenureSlider.addEventListener('input', () => {
+            let val = parseNum(tenureSlider.value);
+            tenureInput.value = val;
+            syncBubble(tenureSlider, tenureWrapper, val + 'm');
+            updateSummary(parseNum(amountInput.value), val);
         });
 
-        if (bannerInput) {
-            const observer = new MutationObserver(() => {
-                let val = parseNumber(bannerInput.value);
-                if (val > 0) {
-                    AMOUNT.max = val;
-                    currentAmount = val;
-                    amountSlider.max = val;
-                    amountSlider.value = val;
-                    if (amountInput) amountInput.value = val;
-                    updateSummary(currentAmount, currentTenure);
-                }
-            });
-
-            observer.observe(bannerInput, {
-                attributes: true,
-                childList: true,
-                subtree: true
-            });
-        }
+        const observer = new MutationObserver(applyOffer);
+        observer.observe(bannerInput, { attributes: true, childList: true, subtree: true });
     }
 
     document.addEventListener('DOMContentLoaded', init);
