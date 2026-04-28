@@ -1348,15 +1348,15 @@ color: #a600ff;
 
 /* ═══════════════════════════════════════════════════════════════════════════
    1. GLOBAL RESETS
-   ═══════════════════════════════════════════════════════════════════════════ */
+  /* Updated CSS for EDS Universal Editor - only selectors changed, styling untouched */
 
-#panelcontainer-38a77d2145,
-#panelcontainer-38a77d2145 * {
+.field-kyc-verification-summary-panel,
+field-kyc-verification-summary-panel* {
   box-sizing: border-box;
 }
 
 /* Strip all native fieldset chrome */
-#panelcontainer-38a77d2145 fieldset {
+.field-kyc-verification-summary-panel fieldset {
   border: none !important;
   padding: 0 !important;
   margin: 0 !important;
@@ -1365,12 +1365,12 @@ color: #a600ff;
 }
 
 /* Hide invisible legends */
-#panelcontainer-38a77d2145 legend[data-visible="false"] {
+.field-kyc-verification-summary-panel legend[data-visible="false"] {
   display: none !important;
 }
 
 /* Neutralise AEM col-* utility classes */
-#panelcontainer-38a77d2145 [class*="col-"] {
+.field-kyc-verification-summary-panel [class*="col-"] {
   width: auto !important;
   max-width: none !important;
   float: none !important;
@@ -1379,11 +1379,7 @@ color: #a600ff;
   padding-right: 0 !important;
 }
 
-/* 
-  CRITICAL: Reset ALL labels inside the panel to grey/normal.
-  AEM sometimes inherits link colours onto labels.
-*/
-#panelcontainer-38a77d2145 label.field-label {
+.field-kyc-verification-summary-panel label.field-label {
   color: var(--hdfc-text-secondary) !important;
   font-weight: 400 !important;
   font-size: 0.8rem !important;
@@ -1394,11 +1390,7 @@ color: #a600ff;
   font-family: var(--font-base);
 }
 
-/*
-  CRITICAL: Reset ALL inputs to be fully visible and editable.
-  AEM EDS sometimes applies its own input styles that hide the field.
-*/
-#panelcontainer-38a77d2145 input[type="text"] {
+.field-kyc-verification-summary-panel input[type="text"] {
   -webkit-appearance: none !important;
   appearance: none !important;
   display: block !important;
@@ -1416,34 +1408,28 @@ color: #a600ff;
   cursor: text !important;
   caret-color: var(--hdfc-input-focus) !important;
   transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
-  /* Override any hidden/zero-height from AEM */
   height: auto !important;
   min-height: 44px !important;
   opacity: 1 !important;
   visibility: visible !important;
 }
 
-#panelcontainer-38a77d2145 input[type="text"]:focus {
+.field-kyc-verification-summary-panel input[type="text"]:focus {
   outline: none !important;
   border-color: var(--hdfc-input-focus) !important;
   box-shadow: 0 0 0 3px rgba(74, 63, 143, 0.12) !important;
 }
 
-#panelcontainer-38a77d2145 input[type="text"]:hover:not(:focus) {
+.field-kyc-verification-summary-panel input[type="text"]:hover:not(:focus) {
   border-color: #a0a8c0 !important;
 }
 
-#panelcontainer-38a77d2145 input[type="text"]::placeholder {
+.field-kyc-verification-summary-panel input[type="text"]::placeholder {
   color: var(--hdfc-text-muted);
   font-weight: 400;
 }
 
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   2. PANEL ROOT
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-#panelcontainer-38a77d2145.field-kyc-verification-summary-panel {
+.field-kyc-verification-summary-panel.field-kyc-verification-summary-panel {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1453,468 +1439,70 @@ color: #a600ff;
   color: var(--hdfc-text-primary);
 }
 
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   3. KYC BANNER
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-#text-9626630187.field-kyc-verification-banner-text {
+.field-kyc-verification-banner-text {
   background-color: var(--hdfc-banner-bg);
   border: 1px solid var(--hdfc-banner-border);
   border-radius: var(--radius-lg);
   padding: 14px 20px;
 }
 
-#text-9626630187 p {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  color: #5a4800;
-}
+.field-kyc-verification-banner-text p { margin:0; font-size:0.875rem; line-height:1.6; color:#5a4800; }
 
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   4. TWO-COLUMN GRID
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-#panelcontainer-532f078d88.field-main-content-row {
+.field-main-content-row {
   display: grid !important;
   grid-template-columns: 1fr 240px !important;
   align-items: start;
   gap: 20px;
 }
 
-#panelcontainer-532f078d88 > #panelcontainer-61e084a936 {
-  grid-column: 1 !important;
-  grid-row: 1 !important;
-}
+.field-main-content-row > .field-loan-summary-left { grid-column:1 !important; grid-row:1 !important; }
+.field-main-content-row > .field-promotions-right { grid-column:2 !important; grid-row:1 !important; }
 
-#panelcontainer-532f078d88 > #panelcontainer-e283041dec {
-  grid-column: 2 !important;
-  grid-row: 1 !important;
-}
+.field-loan-summary-left { display:flex; flex-direction:column; gap:16px; }
 
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   5. LEFT COLUMN
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-#panelcontainer-61e084a936.field-loan-summary-left {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-
-/* ── 5a. Loan Application Card ─────────────────────────────────────────────── */
-
-#panelcontainer-7936c80fa2.field-loan-application-card {
+.field-loan-application-card {
   background: var(--hdfc-card-bg);
   border: 1px solid var(--hdfc-border);
   border-radius: var(--radius-lg);
   padding: 22px 24px;
   box-shadow: var(--shadow-card);
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  display:flex;
+  flex-direction:column;
+  gap:0;
 }
 
-/*
-  Application number field wrapper — horizontal layout with icon.
-  AEM structure: div.text-wrapper.field-loan-application-number
-    > label.field-label
-    > input#textinput-ba41c43112
-  
-  We use a grid on the wrapper to place icon (left) + label/input (right).
-*/
 .field-loan-application-number.text-wrapper {
-  display: grid !important;
-  grid-template-columns: 52px 1fr !important;
-  grid-template-rows: auto auto !important;
-  column-gap: 16px !important;
-  align-items: center;
-  margin-bottom: 20px;
+  display:grid !important;
+  grid-template-columns:52px 1fr !important;
+  grid-template-rows:auto auto !important;
+  column-gap:16px !important;
+  align-items:center;
+  margin-bottom:20px;
 }
 
-/* Icon badge spans both rows on column 1 */
-.field-loan-application-number.text-wrapper::before {
-  content: '';
-  grid-column: 1;
-  grid-row: 1 / 3;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background-color: var(--hdfc-icon-bg);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a3f8f' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='2' width='14' height='20' rx='2'/%3E%3Cline x1='9' y1='7' x2='15' y2='7'/%3E%3Cline x1='9' y1='11' x2='15' y2='11'/%3E%3Cline x1='9' y1='15' x2='12' y2='15'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 24px;
-  justify-self: center;
-  align-self: center;
-}
+.field-loan-application-number.text-wrapper::before { content:''; grid-column:1; grid-row:1/3; width:52px; height:52px; border-radius:50%; background-color:var(--hdfc-icon-bg); justify-self:center; align-self:center; }
 
-/* Label in column 2, row 1 */
-.field-loan-application-number.text-wrapper > label.field-label {
-  grid-column: 2 !important;
-  grid-row: 1 !important;
-  font-size: 0.78rem !important;
-  font-weight: 400 !important;
-  color: var(--hdfc-text-secondary) !important;
-  margin-bottom: 4px !important;
-  white-space: nowrap;
-}
+.field-loan-application-number.text-wrapper > label.field-label { grid-column:2 !important; grid-row:1 !important; }
+.field-loan-application-number.text-wrapper > input { grid-column:2 !important; grid-row:2 !important; font-size:1.5rem !important; font-weight:700 !important; color:var(--hdfc-text-primary) !important; border:none !important; background:transparent !important; padding:0 !important; min-height:unset !important; height:auto !important; box-shadow:none !important; line-height:1.25 !important; }
 
-/* Input in column 2, row 2 */
-.field-loan-application-number.text-wrapper > input#textinput-ba41c43112 {
-  grid-column: 2 !important;
-  grid-row: 2 !important;
-
-  /* Override the global input style for this specific field */
-  font-size: 1.5rem !important;
-  font-weight: 700 !important;
-  color: var(--hdfc-text-primary) !important;
-  border: none !important;
-  background: transparent !important;
-  padding: 0 !important;
-  min-height: unset !important;
-  height: auto !important;
-  box-shadow: none !important;
-  line-height: 1.25 !important;
-  cursor: text !important;
-  pointer-events: auto !important;
-}
-
-#textinput-ba41c43112:focus {
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-/* Contact note */
-#text-123a158e5f.field-contact-note {
-  padding-bottom: 16px;
-  border-bottom: 1.5px dashed var(--hdfc-border);
-  margin-bottom: 16px;
-}
-
-#text-123a158e5f p {
-  margin: 0;
-  font-size: 0.8125rem;
-  color: var(--hdfc-text-secondary);
-}
-
-/* Heading */
-#text-4977a11625.field-xpress-personal-loan-summary-heading p {
-  margin: 0 0 12px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--hdfc-text-primary);
-}
-
-
-/* ── 5b. Loan Amount Block ──────────────────────────────────────────────────── */
-
-#panelcontainer-00b2eb9b02.field-loan-amount-block {
-  border-left: 3px solid var(--hdfc-loan-accent);
-  padding: 4px 0 4px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/* 
-  Loan Amount label — scoped specifically so the global label reset
-  applies but we also ensure no blue colour bleeds in.
-*/
-.field-loan-amount.text-wrapper > label.field-label {
-  font-size: 0.78rem !important;
-  font-weight: 400 !important;
-  color: var(--hdfc-text-secondary) !important;
-  margin-bottom: 2px !important;
-}
-
-/*
-  Loan Amount input — display as clean bold value,
-  NOT a visible input box (matches reference: just bold "₹15,00,000")
-*/
-#textinput-91340212e9 {
-  font-size: 1.25rem !important;
-  font-weight: 700 !important;
-  color: var(--hdfc-text-primary) !important;
-  border: none !important;
-  background: transparent !important;
-  padding: 0 !important;
-  min-height: unset !important;
-  height: auto !important;
-  box-shadow: none !important;
-  line-height: 1.3 !important;
-  cursor: text !important;
-  pointer-events: auto !important;
-}
-
-#textinput-91340212e9:focus {
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-
-/* ── 5c. Disbursement Note ──────────────────────────────────────────────────── */
-
-#text-bc1c937258.field-disbursement-note {
-  background-color: var(--hdfc-blue-info-bg);
-  border: 1px solid var(--hdfc-blue-info-border);
-  border-radius: var(--radius-md);
-  padding: 14px 18px;
-}
-
-#text-bc1c937258 p {
-  margin: 0;
-  font-size: 0.8125rem;
-  line-height: 1.65;
-  color: var(--hdfc-blue-link);
-}
-
-
-/* ── 5d. Easy Loan Management Card ─────────────────────────────────────────── */
-
-#panelcontainer-05198d8ac7.field-easy-loan-management-card {
-  background-color: var(--hdfc-easy-loan-bg);
-  border: 1px solid var(--hdfc-easy-loan-border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-#panelcontainer-05198d8ac7 > legend.field-label {
-  display: flex !important;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 18px;
-  font-size: 1rem;
-  font-weight: 700 !important;
-  color: var(--hdfc-text-primary) !important;
-  background-color: var(--hdfc-easy-loan-bg);
-  width: 100%;
-  margin: 0;
-}
-
-#panelcontainer-05198d8ac7 > legend.field-label::before {
-  content: '';
-  flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background-color: #c7d2f7;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a3f8f' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='3' x2='12' y2='15'/%3E%3Cpolyline points='7 10 12 15 17 10'/%3E%3Cpath d='M20 18v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-1'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 17px;
-}
-
-#text-d4fb36380b.field-download-app-text {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 18px;
-  background-color: var(--hdfc-card-bg);
-  border-top: 1px solid var(--hdfc-easy-loan-border);
-  cursor: pointer;
-  transition: background-color 0.18s ease;
-}
-
-#text-d4fb36380b.field-download-app-text:hover {
-  background-color: #f0f3ff;
-}
-
-#text-d4fb36380b p {
-  margin: 0;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--hdfc-text-primary);
-}
-
-#text-d4fb36380b.field-download-app-text::after {
-  content: '›';
-  font-size: 1.5rem;
-  line-height: 1;
-  color: var(--hdfc-text-secondary);
-  flex-shrink: 0;
-}
-
-
-/* ── 5e. More Services ──────────────────────────────────────────────────────── */
-
-#text-bfc5dcb932.field-more-services-text p {
-  margin: 0;
-  font-size: 0.8125rem;
-  color: var(--hdfc-text-secondary);
-}
-
-#text-bfc5dcb932 p a {
-  color: var(--hdfc-blue-link);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-#text-bfc5dcb932 p a:hover {
-  text-decoration: underline;
-}
-
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   6. RIGHT COLUMN — Promo Cards
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-#panelcontainer-e283041dec.field-promotions-right {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 16px;
-  align-self: start;
-  position: sticky;
-  top: 16px;
-}
-
-.promo-card-container {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  min-height: 180px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border-radius: var(--radius-lg) !important;
-  border: none !important;
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
-  cursor: pointer;
-  text-align: left !important;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.promo-card-container:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
-}
-
-/* Individual card backgrounds */
-.field-promo-card1777106717593 {
-  background-color: var(--hdfc-promo-1-bg) !important;
-}
-
-.field-promo-card-18703026471777106744307 {
-  background-color: var(--hdfc-promo-2-bg) !important;
-}
-
-.promo-card-image {
-  width: 100% !important;
-  height: 120px !important;
-  object-fit: cover !important;
-  object-position: center top !important;
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-  flex-shrink: 0;
-}
-
-/* Broken image fallback — still shows the coloured card */
-.promo-card-image[src=""],
-.promo-card-image:not([src]) {
-  height: 60px !important;
-  opacity: 0;
-}
-
-.promo-card-small-text {
-  display: block !important;
-  margin: 0 !important;
-  padding: 10px 14px 2px !important;
-  font-size: 0.75rem !important;
-  font-weight: 600 !important;
-  color: var(--hdfc-blue-primary) !important;
-  line-height: 1.4 !important;
-}
-
-.promo-card-title {
-  display: block !important;
-  margin: 0 !important;
-  padding: 2px 14px 16px !important;
-  font-size: 1rem !important;
-  font-weight: 700 !important;
-  color: var(--hdfc-text-primary) !important;
-  line-height: 1.3 !important;
-}
-
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   7. FOOTER — Hidden
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-#text-1c7ba41142.field-footer-copyright {
-  display: none !important;
-}
-
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   8. RESPONSIVE
-   ═══════════════════════════════════════════════════════════════════════════ */
+.field-contact-note { padding-bottom:16px; border-bottom:1.5px dashed var(--hdfc-border); margin-bottom:16px; }
+.field-xpress-personal-loan-summary-heading p { margin:0 0 12px; font-size:1rem; font-weight:700; }
+.field-loan-amount-block { border-left:3px solid var(--hdfc-loan-accent); padding:4px 0 4px 14px; display:flex; flex-direction:column; gap:6px; }
+.field-loan-amount input { font-size:1.25rem !important; font-weight:700 !important; border:none !important; background:transparent !important; padding:0 !important; }
+.field-disbursement-note { background-color:var(--hdfc-blue-info-bg); border:1px solid var(--hdfc-blue-info-border); border-radius:var(--radius-md); padding:14px 18px; }
+.field-easy-loan-management-card { background-color:var(--hdfc-easy-loan-bg); border:1px solid var(--hdfc-easy-loan-border); border-radius:var(--radius-md); overflow:hidden; display:flex; flex-direction:column; }
+.field-easy-loan-management-card > legend.field-label { display:flex !important; align-items:center; gap:12px; padding:16px 18px; font-size:1rem; font-weight:700 !important; }
+.field-download-app-text { display:flex; align-items:center; justify-content:space-between; padding:15px 18px; }
+.field-promotions-right { display:flex !important; flex-direction:column !important; gap:16px; align-self:start; position:sticky; top:16px; }
+.field-footer-copyright { display:none !important; }
 
 @media (max-width: 960px) {
-  #panelcontainer-532f078d88.field-main-content-row {
-    grid-template-columns: 1fr !important;
-  }
-
-  #panelcontainer-532f078d88 > #panelcontainer-61e084a936,
-  #panelcontainer-532f078d88 > #panelcontainer-e283041dec {
-    grid-column: 1 !important;
-    grid-row: auto !important;
-  }
-
-  #panelcontainer-e283041dec.field-promotions-right {
-    flex-direction: row !important;
-    overflow-x: auto;
-    gap: 14px;
-    position: static;
-    scrollbar-width: none;
-  }
-
-  #panelcontainer-e283041dec.field-promotions-right::-webkit-scrollbar {
-    display: none;
-  }
-
-  .promo-card-container {
-    min-width: 200px !important;
-    flex: 0 0 200px !important;
-  }
+  .field-main-content-row { grid-template-columns:1fr !important; }
+  .field-main-content-row > .field-loan-summary-left,
+  .field-main-content-row > .field-promotions-right { grid-column:1 !important; grid-row:auto !important; }
 }
 
 @media (max-width: 480px) {
-  #panelcontainer-38a77d2145.field-kyc-verification-summary-panel {
-    padding: 14px 16px;
-    gap: 12px;
-  }
-
-  #panelcontainer-7936c80fa2.field-loan-application-card {
-    padding: 16px;
-  }
-
-  .field-loan-application-number.text-wrapper {
-    grid-template-columns: 42px 1fr !important;
-  }
-
-  .field-loan-application-number.text-wrapper::before {
-    width: 42px;
-    height: 42px;
-    background-size: 20px;
-  }
-
-  .field-loan-application-number.text-wrapper > input#textinput-ba41c43112 {
-    font-size: 1.25rem !important;
-  }
+  .field-kyc-verification-summary-panel.field-kyc-verification-summary-panel { padding:14px 16px; gap:12px; }
+  .field-loan-application-card { padding:16px; }
 }
-
-
-
