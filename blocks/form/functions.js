@@ -73,32 +73,35 @@ function calcEMI(principal, annualRate, months) {
 }
 
 
-
-
-function validateDOB() {
-    var dob = date_of_birth.value;
-
-    if (!dob) return true;
-
-    var birthDate = new Date(dob);
-    var today = new Date();
-
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var monthDiff = today.getMonth() - birthDate.getMonth();
-
-    if (
-        monthDiff < 0 ||
-        (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
-        age--;
-    }
-
-    if (age < 21) {
-        date_of_birth.errorMessage = "Age should be 21 years.";
-        date_of_birth.valid = false;
-        return false;
-    }
-
-    date_of_birth.valid = true;
+export {
+  getFullName,
+  days,
+  submitFormArrayToString,
+  maskMobileNumber,
+  validateDOB,
+};
+/**
+ * Validates if age is 21 years or above
+ * @param {string} dob in date format
+ * @returns {boolean}
+ */
+function validateDOB(dob) {
+  if (!dob) {
     return true;
+  }
+
+  const birthDate = typeof dob === 'string' ? new Date(dob) : dob;
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age -= 1;
+  }
+
+  return age >= 21;
 }
