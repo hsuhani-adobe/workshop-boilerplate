@@ -892,7 +892,7 @@ color: #a600ff;
     background: transparent;
     color: #000;
     font-weight: 700;
-    font-size: 20px; /* match label */
+    font-size: 18px; /* match label */
     line-height: 1.4;
     padding: 0;
     margin: 0;
@@ -920,7 +920,7 @@ color: #a600ff;
 
 .field-loan-offer-banner p {
     margin: 0 !important;
-    font-size: 1.1rem !important;
+    font-size: 1.0rem !important;
     font-weight: 700 !important;
     color: var(--lo-text-dark) !important;
 }
