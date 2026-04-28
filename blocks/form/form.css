@@ -1483,7 +1483,7 @@ field-kyc-verification-summary-panel {
   gap: 20px;
 }
 
-.field-main-content-row >.field-loan-summary-left {
+.field-main-content-row > #panelcontainer-61e084a936 {
   grid-column: 1 !important;
   grid-row: 1 !important;
 }
