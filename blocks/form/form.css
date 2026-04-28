@@ -1983,8 +1983,8 @@ color: #a600ff;
   color: #111827 !important;
   margin-bottom: 24px !important;
 }
-
-/* MOBILE */
+/*
+MOBILE
 .field-mobile-no {
   grid-column: 1 / 5 !important;
 }
@@ -2068,7 +2068,7 @@ color: #a600ff;
   font-size: 13px !important;
   color: #7d5a00 !important;
 }
-
+*/
 /* CHECKBOX */
 .field-consent-loan-processing,
 .field-consent-marketing {
