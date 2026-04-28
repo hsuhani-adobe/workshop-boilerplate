@@ -2031,25 +2031,47 @@ MOBILE
 }
 
 
-
-/* INCOME */
+/* INCOME SOURCE */
 .field-income-source {
-  grid-column: 9 / 13 !important;
+  grid-column: 1 / 5 !important;   /* same width as mobile field */
+  grid-row: 4 !important;          /* below mobile field */
+  
   display: flex !important;
   flex-direction: column !important;
-  gap: 12px !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+
+  margin-top: 10px !important;
 }
 
+/* heading */
+.field-income-source > legend.field-label {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: #4b5563 !important;
+  margin-bottom: 6px !important;
+}
+
+/* each radio row */
 .field-income-source .radio-wrapper {
   display: flex !important;
   align-items: center !important;
-  gap: 10px !important;
+  gap: 12px !important;
 }
 
+/* radio button */
 .field-income-source input[type="radio"] {
   width: 20px !important;
   height: 20px !important;
   accent-color: #1c3fca !important;
+  cursor: pointer !important;
+}
+
+/* label */
+.field-income-source .field-label {
+  font-size: 15px !important;
+  color: #1f2937 !important;
+  line-height: 20px !important;
 }
 
 /* NOTE BOX */
