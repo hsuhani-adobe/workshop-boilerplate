@@ -662,7 +662,7 @@ export default async function decorate(fieldDiv, fieldJson) {
             if (raw > amountMax)          raw = amountMax;
             currentAmount = clamp(raw, AMOUNT_MIN, amountMax, AMOUNT_STEP);
             input.value   = formatINR(currentAmount);
-            input.type    = 'number';
+            input.type    = 'text';
             if (setAmountSlider) setAmountSlider(currentAmount);
             updateSummary();
         });
