@@ -3495,6 +3495,10 @@ remove default fieldset style
   width: 150px !important;   /* reduced */
 }
 
+/* Increase bottom space of whole panel */
+.field-submit-otp {
+  margin-bottom: 80px !important;
+}
 /* ================= Responsive ================= */
 @media (max-width: 992px) {
   .field-otp-verification-panel {
