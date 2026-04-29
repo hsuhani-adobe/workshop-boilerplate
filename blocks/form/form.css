@@ -1124,19 +1124,22 @@ color: #a600ff;
 
 /* ══════════════════════════════════════════
    RIGHT PANEL — summary card
+═/* ══════════════════════════════════════════
+   RIGHT PANEL — SUMMARY CARD
 ══════════════════════════════════════════ */
 .field-loan-summary-panel {
-    background: var(--lo-card-bg) !important;
-    border: 1.5px solid var(--lo-card-border) !important;
-    border-radius: var(--lo-radius) !important;
+    background: #f8f2e4 !important;
+    border: none !important;
+    border-radius: 24px !important;
     overflow: hidden !important;
     padding: 0 !important;
     margin: 0 !important;
-    box-shadow: var(--lo-shadow) !important;
+    box-shadow: none !important;
     display: flex !important;
     flex-direction: column !important;
-    float: none !important;
     width: 100% !important;
+    max-width: 520px !important;
+    min-height: 510px !important;
     box-sizing: border-box !important;
 }
 
@@ -1146,121 +1149,104 @@ color: #a600ff;
 
 /* ── Heading block ── */
 .field-offer-summary-heading {
-    padding: 24px 24px 18px !important;
-    border-bottom: 1.5px dashed var(--lo-card-dashed) !important;
+    padding: 34px 36px 24px !important;
+    border-bottom: 2px dashed #d9cdb2 !important;
     margin: 0 !important;
-    border-left: none !important;
-    border-right: none !important;
-    border-top: none !important;
+    background: transparent !important;
 }
 
 .field-offer-summary-heading p {
     margin: 0 !important;
-    font-size: 0.85rem !important;
-    font-weight: 500 !important;
-    color: var(--lo-text-mid) !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
     line-height: 1.5 !important;
 }
 
-/* Large loan amount span injected by JS */
+/* Large amount */
 .lo-amount-large {
     display: block !important;
-    font-size: 2rem !important;
+    font-size: 4rem !important;
     font-weight: 800 !important;
-    color: var(--lo-text-dark) !important;
-    letter-spacing: -0.03em !important;
-    line-height: 1.2 !important;
-    margin-top: 4px !important;
+    color: #0b1b45 !important;
+    line-height: 1.1 !important;
+    margin-top: 10px !important;
+    letter-spacing: -0.04em !important;
 }
 
-/* ── Fields grid built by JS ── */
+/* ── Fields area ── */
 .lo-fields-grid {
-    padding: 20px 24px 8px !important;
+    padding: 30px 36px 18px !important;
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 0 !important;
+    gap: 28px 26px !important;
     width: 100% !important;
     box-sizing: border-box !important;
 }
 
 .lo-fields-grid .field-wrapper {
-    padding: 10px 14px 14px !important;
-    border-left: 2.5px solid var(--lo-card-border) !important;
-    border-right: none !important;
-    border-top: none !important;
-    border-bottom: none !important;
+    padding: 0 0 0 16px !important;
+    border-left: 4px solid #f4a029 !important;
     margin: 0 !important;
     background: transparent !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 3px !important;
+    gap: 4px !important;
     min-width: 0 !important;
-    float: none !important;
     box-sizing: border-box !important;
 }
 
-/* Taxes: full width + top divider */
+/* Taxes full width */
 .lo-fields-grid .field-taxes {
     grid-column: 1 / -1 !important;
-    padding-top: 14px !important;
-    margin-top: 8px !important;
-    border-top: 1px solid var(--lo-divider) !important;
+    margin-top: 4px !important;
 }
 
 /* Labels */
 .lo-fields-grid label.field-label {
-    font-size: 0.72rem !important;
-    font-weight: 400 !important;
-    color: var(--lo-text-light) !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    color: #6b7280 !important;
     margin: 0 !important;
     line-height: 1.4 !important;
-    display: block !important;
 }
 
-/* Value inputs */
+/* Values */
 .lo-fields-grid input[type="text"] {
-    font-size: 1rem !important;
+    font-size: 2rem !important;
     font-weight: 700 !important;
-    color: var(--lo-text-dark) !important;
+    color: #111827 !important;
     background: transparent !important;
     border: none !important;
     padding: 0 !important;
     margin: 0 !important;
     outline: none !important;
     width: 100% !important;
+    pointer-events: none !important;
     box-shadow: none !important;
     height: auto !important;
     min-height: unset !important;
-    pointer-events: none !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    border-radius: 0 !important;
-    display: block !important;
 }
 
 /* ── Orange warning strip ── */
 .field-principal-offer-note {
-    background: var(--lo-orange) !important;
-    margin: 16px 0 0 0 !important;
-    padding: 16px 18px !important;
+    background: #f4a029 !important;
+    margin: auto 0 0 0 !important;
+    padding: 20px 28px !important;
     display: flex !important;
     align-items: flex-start !important;
-    gap: 10px !important;
-    border-left: none !important;
-    border-right: none !important;
-    border-top: none !important;
-    border-bottom: none !important;
-    border-radius: 0 0 calc(var(--lo-radius) - 1px) calc(var(--lo-radius) - 1px) !important;
+    gap: 12px !important;
+    border-radius: 0 0 24px 24px !important;
     width: 100% !important;
     box-sizing: border-box !important;
 }
 
 .field-principal-offer-note::before {
-    content: '';
+    content: "" !important;
     flex-shrink: 0;
-    width: 18px;
-    height: 18px;
-    margin-top: 1px;
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Ccircle cx='12' cy='16' r='0.6' fill='white'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-size: contain;
@@ -1268,28 +1254,49 @@ color: #a600ff;
 
 .field-principal-offer-note p {
     margin: 0 !important;
-    font-size: 0.78rem !important;
+    font-size: 1rem !important;
     font-weight: 500 !important;
     color: #fff !important;
-    line-height: 1.55 !important;
+    line-height: 1.6 !important;
 }
 
-/* ══════════════════════════════════════════
-   KILL EDS FLOAT/WIDTH OVERRIDES
-   EDS uses col-6, col-12 etc. which apply
-   float:left and width:%. We must neutralise
-   these on our containers.
-══════════════════════════════════════════ */
-.field-loan-offer-content.col-12,
-.field-loan-amount-tenure-panel.col-6,
+/* EDS overrides */
 .field-loan-summary-panel.col-5,
-.field-loan-amount-tenure-panel.col-12,
 .field-loan-summary-panel.col-12 {
     float: none !important;
     width: 100% !important;
-    max-width: none !important;
+    max-width: 520px !important;
 }
 
+/* Responsive */
+@media (max-width: 768px) {
+    .field-loan-summary-panel {
+        max-width: 100% !important;
+        min-height: auto !important;
+    }
+
+    .field-offer-summary-heading {
+        padding: 24px !important;
+    }
+
+    .lo-amount-large {
+        font-size: 2.8rem !important;
+    }
+
+    .lo-fields-grid {
+        grid-template-columns: 1fr !important;
+        padding: 24px !important;
+        gap: 20px !important;
+    }
+
+    .lo-fields-grid .field-taxes {
+        grid-column: auto !important;
+    }
+
+    .lo-fields-grid input[type="text"] {
+        font-size: 1.5rem !important;
+    }
+}
 /* Also kill any clearfix rows EDS might insert */
 .field-loan-offer-content::after {
     display: none !important;
