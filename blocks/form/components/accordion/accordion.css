@@ -118,9 +118,7 @@ main .form fieldset.accordion > fieldset > legend.accordion-legend::after {
     height: 9px;
     transform: translateY(-35%) rotate(-135deg);
     transition: transform 0.3s ease;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius:20px ;
-    
+   
 }
 
 /* ── Chevron down when collapsed ── */
