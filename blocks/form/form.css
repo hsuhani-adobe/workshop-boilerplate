@@ -3676,6 +3676,52 @@ remove default fieldset style
 }
 
 
+/* Confirm + Proceed Button Wrapper */
+.field-confirm-button,
+.field-proceed-button {
+    margin-top: 28px !important;
+    max-width: 220px !important;
+}
 
+/* Confirm + Proceed Button */
+.field-confirm-button > button.button[type="submit"],
+.field-proceed-button > button.button[type="submit"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 52px !important;
+    padding: 0 24px !important;
+    background: #6b84d9 !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    transition: background 0.2s, box-shadow 0.2s !important;
+}
+
+/* Hover */
+.field-confirm-button > button.button[type="submit"]:hover,
+.field-proceed-button > button.button[type="submit"]:hover {
+    background: #1c3fca !important;
+    box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .field-confirm-button,
+    .field-proceed-button {
+        max-width: 100% !important;
+    }
+
+    .field-confirm-button > button.button[type="submit"],
+    .field-proceed-button > button.button[type="submit"] {
+        width: 100% !important;
+        height: 48px !important;
+        font-size: 15px !important;
+    }
+}
 
 
