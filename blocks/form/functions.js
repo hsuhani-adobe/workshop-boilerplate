@@ -95,6 +95,3 @@ function isAgeLessThan21(dob) {
   return age < 21;
 }
 
-export {
-  getFullName, days, submitFormArrayToString, maskMobileNumber, isAgeLessThan21,
-};
