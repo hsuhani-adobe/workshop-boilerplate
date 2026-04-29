@@ -2752,6 +2752,16 @@ field-kyc-verification-summary-panel* {
     line-height: 1.4;
     margin-top: 10px;
 }
+.field-self_employed {
+    background-color: #fff7e6; /* light yellow background */
+    border: 1px solid #f5c26b; /* soft orange border */
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #6b4f1d; /* dark brown text */
+    line-height: 1.4;
+    margin-top: 10px;
+}
 
 /* Optional: make it align nicely with radio button section */
 .field-income-note p {
