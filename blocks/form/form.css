@@ -1350,14 +1350,16 @@ color: #a600ff;
 /* Footer */
 .field-principal-offer-note {
     margin-top: 16px !important;
-    background: #f59e0b !important;
+    background: #e16e10 !important;
     padding: 12px 16px !important;
     border-radius: 0 0 18px 18px !important;
+   
 }
 
 .field-principal-offer-note p {
     font-size: 11px !important;
     line-height: 1.4 !important;
+    color:#000
 }
 
 .field-principal-offer-note::before {
