@@ -3165,7 +3165,6 @@ field-kyc-verification-summary-panel* {
   max-width: 700px !important;
   margin: 20px 40px !important;
   padding: 0 !important;
-  min-height: 320px !important; /* increased panel height */
 }
 
 /* remove default fieldset style */
@@ -3190,7 +3189,7 @@ field-kyc-verification-summary-panel* {
 
 /* ================= Instruction text ================= */
 .field-otp-instructions {
-  margin-bottom: 14px !important;
+  margin-bottom: 10px !important;
 }
 
 .field-otp-instructions p {
@@ -3230,7 +3229,7 @@ field-kyc-verification-summary-panel* {
 /* ================= OTP Box ================= */
 .field-otp-code {
   position: relative !important;
-  margin-bottom: 8px !important;
+  margin-bottom: 6px !important;
 }
 
 .field-otp-code label.field-label {
@@ -3238,7 +3237,7 @@ field-kyc-verification-summary-panel* {
 }
 
 .field-otp-code input {
-  height: 52px !important;
+  height: 48px !important;
   border-radius: 12px !important;
   font-size: 24px !important;
   letter-spacing: 34px !important;
@@ -3258,7 +3257,7 @@ field-kyc-verification-summary-panel* {
 
 /* ================= OTP STATUS ================= */
 .field-otp-status {
-  margin-bottom: 8px !important;
+  margin-bottom: 6px !important;
 }
 
 .field-otp-status label.field-label {
@@ -3280,7 +3279,7 @@ field-kyc-verification-summary-panel* {
 .field-otp-attempts-left {
   display: inline-block !important;
   width: 48% !important;
-  margin-top: 4px !important;
+  margin-top: 2px !important;
 }
 
 .field-timer {
@@ -3296,7 +3295,7 @@ field-kyc-verification-summary-panel* {
   display: none !important;
 }
 
-/* ===== KEY FIX: Remove border/background from timer & attempts inputs ===== */
+/* ===== Remove all box styling from timer & attempts inputs ===== */
 .field-timer input,
 .field-otp-attempts-left input {
   border: none !important;
@@ -3306,10 +3305,10 @@ field-kyc-verification-summary-panel* {
   font-weight: 600 !important;
   box-shadow: none !important;
   outline: none !important;
-  /* Override the common input styles that add border + white bg */
   border-radius: 0 !important;
   min-height: unset !important;
   width: auto !important;
+  pointer-events: none !important;
 }
 
 .field-timer input {
@@ -3324,7 +3323,7 @@ field-kyc-verification-summary-panel* {
 /* ================= Buttons ================= */
 .field-resend-otp,
 .field-submit-otp {
-  margin-top: 18px !important;
+  margin-top: 14px !important;
   max-width: 280px !important;
 }
 
@@ -3335,7 +3334,7 @@ field-kyc-verification-summary-panel* {
   justify-content: center !important;
   gap: 8px !important;
   width: 100% !important;
-  height: 52px !important;
+  height: 48px !important;
   padding: 0 24px !important;
   background: #6b84d9 !important;
   color: #ffffff !important;
@@ -3371,7 +3370,7 @@ field-kyc-verification-summary-panel* {
   .field-otp-code input {
     font-size: 20px !important;
     letter-spacing: 18px !important;
-    height: 48px !important;
+    height: 44px !important;
   }
 
   .field-timer,
