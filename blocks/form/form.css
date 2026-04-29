@@ -1352,7 +1352,7 @@ color: #a600ff;
 /* Footer */
 .field-principal-offer-note {
     margin-top: 16px !important;
-    background: #f59e0b !important;   /* brighter orange */
+    background: #d14809 !important;  /* brighter orange */
     padding: 22px 20px !important;    /* increased height */
     border-radius: 0 0 18px 18px !important;
     min-height: 90px !important;
@@ -1377,7 +1377,7 @@ color: #a600ff;
 
 /* Footer note background */
 div.field-principal-offer-note {
-    background: #8d4103 !important;
+    background: #d14809 !important;
     padding: 22px 20px !important;
     min-height: 90px !important;
     border-radius: 0 0 18px 18px !important;
