@@ -3408,7 +3408,7 @@ remove default fieldset style
 .field-timer {
     display: inline-block !important;
     width: auto !important;
-    margin-top: 6px !important;
+    margin-top: 4px !important;
 }
 
 .field-timer input {
@@ -3423,7 +3423,7 @@ remove default fieldset style
 .field-otp-attempts-left {
     float: right !important;
     width: auto !important;
-    margin-top: 6px !important;
+    margin-top: 4px !important;
     text-align: right !important;
 }
 
@@ -3439,7 +3439,7 @@ remove default fieldset style
 
 /* ================= Resend OTP Button ================= */
 .field-resend-otp {
-  margin-top: 16px !important;
+  margin-top: 14px !important;
   max-width: 280px !important;
 }
 
