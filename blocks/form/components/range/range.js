@@ -699,7 +699,7 @@ export default async function decorate(fieldDiv, fieldJson) {
             if (raw > TENURE_MAX)         raw = TENURE_MAX;
             currentTenure = clamp(raw, TENURE_MIN, TENURE_MAX, TENURE_STEP);
             input.value   = currentTenure + ' months';
-            input.type    = 'number';
+            input.type    = 'text';
             if (setTenureSlider) setTenureSlider(currentTenure);
             updateSummary();
         });
