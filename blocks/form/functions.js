@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,isAgeLessThan21,
-  startOtpTimer
+  startOtpTimer,resendOtp
 };
 
 
@@ -249,7 +249,3 @@ function resendOtp() {
   return `${attemptsLeft}/${totalAttempts} attempts left`;
 }
 
-export {
-  getFullName, days, submitFormArrayToString,
-  maskMobileNumber, isAgeLessThan21, startOtpTimer, resendOtp
-};
