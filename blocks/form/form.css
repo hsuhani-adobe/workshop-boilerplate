@@ -1343,7 +1343,7 @@ color: #a600ff;
     font-weight: 700 !important;
     color: #0f172a !important;
     padding-left: 8px !important;
-    border-left: 3px solid #f59e0b !important;
+    border-left: 3px solid #f97316;
     box-shadow: none !important;
     height: auto !important;
 }
@@ -1352,7 +1352,7 @@ color: #a600ff;
 /* Footer */
 .field-principal-offer-note {
     margin-top: 16px !important;
-    background: #d14809 !important;  /* brighter orange */
+    background:#f97316 !important;  /* brighter orange */
     padding: 22px 20px !important;    /* increased height */
     border-radius: 0 0 18px 18px !important;
     min-height: 90px !important;
@@ -1377,7 +1377,7 @@ color: #a600ff;
 
 /* Footer note background */
 div.field-principal-offer-note {
-    background: #d14809 !important;
+    background:#f97316 !important;
     padding: 22px 20px !important;
     min-height: 90px !important;
     border-radius: 0 0 18px 18px !important;
@@ -1392,14 +1392,14 @@ div.field-principal-offer-note p {
 }
 /* Footer note background */
 div.field-principal-offer-note {
-    background-color: #d14809 !important;
+    background-color: #f97316 !important;
     background-image: none !important;
     padding: 22px 20px !important;
     min-height: 90px !important;
     border-radius: 0 0 18px 18px !important;
 }
 .field-loan-summary-panel .field-principal-offer-note.field-wrapper {
-    background:#d14809 !important;
+    background:#f97316 !important;
 }
 
 /* Footer note icon */
