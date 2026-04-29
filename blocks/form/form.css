@@ -2620,6 +2620,59 @@ field-kyc-verification-summary-panel* {
 }
 
 
+
+/* ================= TITLE ================= */
+.field-personal-loan-offer-panel > legend.field-label {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  line-height: 38px !important;
+}
+
+/* ================= LABELS ================= */
+.field-personal-loan-offer-panel label.field-label {
+  font-size: 16px !important;
+  line-height: 24px !important;
+}
+
+/* ================= INPUTS ================= */
+.field-personal-loan-offer-panel input[type="text"],
+.field-personal-loan-offer-panel input[type="tel"],
+.field-personal-loan-offer-panel input[type="date"],
+.field-personal-loan-offer-panel input[type="number"],
+.field-personal-loan-offer-panel select {
+  font-size: 18px !important;
+  height: 52px !important;
+}
+
+/* ================= Placeholder ================= */
+.field-personal-loan-offer-panel input::placeholder {
+  font-size: 18px !important;
+}
+
+/* ================= OTP Note ================= */
+.field-mobile-otp-note > p,
+.field-otp-note > p,
+[class*="otp-note"] > p {
+  font-size: 14px !important;
+  line-height: 22px !important;
+}
+
+/* ================= Income Note ================= */
+.field-income-note,
+.field-self-employed-note,
+[class*="income-note"] {
+  font-size: 15px !important;
+  line-height: 22px !important;
+}
+
+/* ================= Terms ================= */
+.field-terms-conditions > p,
+.field-terms-note > p,
+[class*="terms"] > p {
+  font-size: 15px !important;
+  line-height: 24px !important;
+}
+
 /* =============================================================
    9. VIEW LOAN ELIGIBILITY BUTTON
    ============================================================= */
