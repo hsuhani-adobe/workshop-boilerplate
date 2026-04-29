@@ -1353,20 +1353,18 @@ color: #a600ff;
 /* footer */
 .field-principal-offer-note {
     margin-top: auto !important;
-    background: #be6b27 !important;
-    padding: 20px 20px !important; /* increased from 16px */
+    background: #f59e0b !important;
+    padding: 16px 18px !important;
     border-radius: 0 0 20px 20px !important;
-    min-height: 70px; /* ensures consistent height */
-    display: flex;
-    align-items: center; /* vertically center text */
 }
 
 .field-principal-offer-note p {
     font-size: 12px !important;
-    line-height: 1.6 !important; /* slightly more breathing space */
-    color: #0b0101 !important;
-    margin: 0 !important;
+    line-height: 1.5 !important;
+    color: #fff !important;
 }
+
+
 
 
 
