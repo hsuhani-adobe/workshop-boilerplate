@@ -1126,6 +1126,7 @@ color: #a600ff;
    RIGHT PANEL — summary card
 ═/* ══════════════════════════════════════════
   /* ══════════════════════════════════════════
+ /* ══════════════════════════════════════════
    SUMMARY PANEL
 ══════════════════════════════════════════ */
 .field-loan-summary-panel {
@@ -1257,7 +1258,6 @@ color: #a600ff;
         font-size: 11px !important;
     }
 }
-
 /* ══════════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════════ */
@@ -1294,6 +1294,79 @@ color: #a600ff;
 }
 
 
+
+/* ===== FORCE SUMMARY PANEL OVERRIDE ===== */
+.field-loan-summary-panel {
+    background: #f9f4e8 !important;
+    border-radius: 18px !important;
+    max-width: 360px !important;
+    width: 360px !important;
+    min-height: auto !important;
+    box-shadow: none !important;
+}
+
+/* Heading */
+.field-offer-summary-heading {
+    padding: 18px 20px 12px !important;
+    border-bottom: 1px dashed #d9cdb2 !important;
+}
+
+.field-offer-summary-heading p {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+}
+
+/* Loan amount */
+.lo-amount-large {
+    font-size: 2.2rem !important;
+    font-weight: 800 !important;
+    color: #081b55 !important;
+    margin-top: 2px !important;
+}
+
+/* Wrappers */
+.field-loan-summary-panel .field-wrapper {
+    padding: 12px 20px 0 !important;
+}
+
+/* Labels */
+.field-loan-summary-panel label.field-label {
+    font-size: 11px !important;
+    color: #64748b !important;
+    margin-bottom: 4px !important;
+}
+
+/* Values */
+.field-loan-summary-panel input[type="text"] {
+    border: none !important;
+    background: transparent !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    padding-left: 8px !important;
+    border-left: 3px solid #f59e0b !important;
+    box-shadow: none !important;
+    height: auto !important;
+}
+
+/* Footer */
+.field-principal-offer-note {
+    margin-top: 16px !important;
+    background: #f59e0b !important;
+    padding: 12px 16px !important;
+    border-radius: 0 0 18px 18px !important;
+}
+
+.field-principal-offer-note p {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+}
+
+.field-principal-offer-note::before {
+    width: 14px !important;
+    height: 14px !important;
+}
 
 
 
