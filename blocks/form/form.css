@@ -2897,7 +2897,129 @@ field-kyc-verification-summary-panel* {
 
 
 
+/* =============================================================
+   FINAL RESPONSIVE FIX
+============================================================= */
 
+/* Tablet */
+@media (max-width: 992px) {
+  .field-personal-loan-offer-panel {
+    width: 100% !important;
+    padding: 24px 20px !important;
+  }
+
+  .field-personal-loan-offer-panel > legend.field-label {
+    font-size: 24px !important;
+    line-height: 32px !important;
+  }
+
+  .field-personal-loan-offer-panel input[type="text"],
+  .field-personal-loan-offer-panel input[type="tel"],
+  .field-personal-loan-offer-panel input[type="date"],
+  .field-personal-loan-offer-panel input[type="number"],
+  .field-personal-loan-offer-panel select {
+    font-size: 16px !important;
+    height: 48px !important;
+  }
+
+  .field-view-loan-eligibility {
+    grid-column: 1 / 7 !important;
+  }
+
+  .field-essentials-for-the-journey > div.col-3 {
+    grid-column: span 6 !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .field-personal-loan-offer-panel {
+    display: block !important;
+    width: 100% !important;
+    padding: 16px !important;
+  }
+
+  .field-personal-loan-offer-panel > legend.field-label {
+    font-size: 22px !important;
+    line-height: 30px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .field-personal-loan-offer-panel label.field-label {
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+
+  .field-personal-loan-offer-panel input[type="text"],
+  .field-personal-loan-offer-panel input[type="tel"],
+  .field-personal-loan-offer-panel input[type="date"],
+  .field-personal-loan-offer-panel input[type="number"],
+  .field-personal-loan-offer-panel select {
+    width: 100% !important;
+    height: 46px !important;
+    font-size: 15px !important;
+  }
+
+  .field-view-loan-eligibility {
+    width: 100% !important;
+    margin-top: 20px !important;
+  }
+
+  .field-view-loan-eligibility button {
+    width: 100% !important;
+  }
+
+  .field-essentials-for-the-journey {
+    display: block !important;
+    padding-top: 20px !important;
+  }
+
+  .field-essentials-for-the-journey > div.col-3,
+  .field-essentials-for-the-journey > div.col-12 {
+    width: 100% !important;
+    margin-bottom: 14px !important;
+  }
+
+  .field-mobile-phone > p,
+  .field-pan-card > p,
+  .field-dob > p,
+  .field-cheque > p {
+    gap: 10px !important;
+  }
+
+  .field-mobile-phone > p > p,
+  .field-pan-card > p > p,
+  .field-dob > p > p,
+  .field-cheque > p > p {
+    font-size: 14px !important;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .field-personal-loan-offer-panel {
+    padding: 12px !important;
+  }
+
+  .field-personal-loan-offer-panel > legend.field-label {
+    font-size: 20px !important;
+    line-height: 28px !important;
+  }
+
+  .field-personal-loan-offer-panel input[type="text"],
+  .field-personal-loan-offer-panel input[type="tel"],
+  .field-personal-loan-offer-panel input[type="date"],
+  .field-personal-loan-offer-panel input[type="number"],
+  .field-personal-loan-offer-panel select {
+    height: 42px !important;
+    font-size: 14px !important;
+  }
+
+  .field-view-loan-eligibility > button.button[type="submit"] {
+    height: 48px !important;
+    font-size: 15px !important;
+  }
+}
 
 
 /* =========================================================
