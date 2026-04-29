@@ -149,3 +149,12 @@ function startOtpTimer() {
   return `Resend OTP in ${timerValue}s`;
 }
 
+// All functions must be listed here
+export {
+  getFullName,
+  days,
+  submitFormArrayToString,
+  maskMobileNumber,
+  isAgeLessThan21,
+  startOtpTimer,   // ← make sure this is added
+};
