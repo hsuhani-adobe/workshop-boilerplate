@@ -2742,3 +2742,18 @@ field-kyc-verification-summary-panel* {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c3fca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'/%3E%3Cpath d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'/%3E%3C/svg%3E") !important;
 }
 
+.field-income-note {
+    background-color: #fff7e6; /* light yellow background */
+    border: 1px solid #f5c26b; /* soft orange border */
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #6b4f1d; /* dark brown text */
+    line-height: 1.4;
+    margin-top: 10px;
+}
+
+/* Optional: make it align nicely with radio button section */
+.field-income-note p {
+    margin: 0;
+}
