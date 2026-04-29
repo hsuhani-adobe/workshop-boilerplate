@@ -3146,3 +3146,272 @@ field-kyc-verification-summary-panel* {
     grid-column: span 6 !important;
   }
 }
+
+
+
+
+
+
+/* ================= OTP PANEL ================= */
+.field-otp-verification-panel {
+    max-width: 950px;
+    width: 100%;
+    margin: 40px auto !important;
+    padding: 10px 20px !important;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Heading */
+.field-otp-verification-panel > .field-label,
+.field-otp-verification-panel legend {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: #111 !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+    border: none !important;
+}
+
+/* Instructions */
+.field-otp-instructions {
+    margin-bottom: 20px !important;
+}
+
+.field-otp-instructions p {
+    font-size: 20px !important;
+    color: #333 !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+}
+
+.field-otp-instructions u {
+    color: #2f5cff !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+}
+
+/* OTP Input */
+.field-otp-code {
+    position: relative !important;
+    width: 100% !important;
+    margin-bottom: 16px !important;
+}
+
+.field-otp-code input {
+    width: 100% !important;
+    height: 82px !important;
+    border: 2px solid #e6e8f0 !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    font-size: 34px !important;
+    letter-spacing: 55px !important;
+    padding-left: 28px !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+}
+
+.field-otp-code input:focus {
+    border-color: #5b7cff !important;
+    box-shadow: 0 0 0 2px rgba(91, 124, 255, 0.15) !important;
+}
+
+/* Eye Icon */
+#togglePassword {
+    position: absolute !important;
+    right: 25px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 26px !important;
+    color: #555 !important;
+    cursor: pointer;
+}
+
+/* Hide unwanted field */
+.field-otp-status,
+.field-resend-otp {
+    display: none !important;
+}
+
+/* Bottom Row */
+.field-timer {
+    display: inline-block !important;
+    width: auto !important;
+    margin-top: 6px !important;
+}
+
+.field-timer input {
+    border: none !important;
+    background: transparent !important;
+    font-size: 20px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+    padding: 0 !important;
+}
+
+.field-otp-attempts-left {
+    float: right !important;
+    width: auto !important;
+    margin-top: 6px !important;
+    text-align: right !important;
+}
+
+.field-otp-attempts-left input {
+    border: none !important;
+    background: transparent !important;
+    font-size: 20px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+    text-align: right !important;
+    padding: 0 !important;
+}
+
+/* Submit Button */
+.field-submit-otp {
+    clear: both !important;
+    margin-top: 35px !important;
+    width: 380px !important;
+    max-width: 100%;
+}
+
+.field-submit-otp button {
+    width: 100% !important;
+    height: 78px !important;
+    border: none !important;
+    border-radius: 18px !important;
+    background: #9bb2ff !important;
+    color: #fff !important;
+    font-size: 30px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    transition: 0.3s ease;
+    position: relative;
+}
+
+.field-submit-otp button::after {
+    content: "›";
+    position: absolute;
+    right: 35px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 38px;
+    font-weight: 400;
+}
+
+.field-submit-otp button:hover {
+    background: #7f9cff !important;
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 992px) {
+    .field-otp-verification-panel {
+        padding: 10px 16px !important;
+    }
+
+    .field-otp-verification-panel legend {
+        font-size: 24px !important;
+    }
+
+    .field-otp-instructions p {
+        font-size: 18px !important;
+    }
+
+    .field-otp-code input {
+        height: 72px !important;
+        font-size: 28px !important;
+        letter-spacing: 40px !important;
+    }
+
+    .field-submit-otp button {
+        height: 68px !important;
+        font-size: 24px !important;
+    }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+    .field-otp-verification-panel {
+        margin: 20px auto !important;
+        padding: 10px 14px !important;
+    }
+
+    .field-otp-verification-panel legend {
+        font-size: 22px !important;
+    }
+
+    .field-otp-instructions p {
+        font-size: 16px !important;
+        line-height: 1.5 !important;
+    }
+
+    .field-otp-code input {
+        height: 64px !important;
+        font-size: 22px !important;
+        letter-spacing: 22px !important;
+        padding-left: 18px !important;
+    }
+
+    #togglePassword {
+        right: 18px !important;
+        font-size: 22px !important;
+    }
+
+    .field-timer,
+    .field-otp-attempts-left {
+        display: block !important;
+        float: none !important;
+        width: 100% !important;
+        text-align: left !important;
+        margin-top: 6px !important;
+    }
+
+    .field-timer input,
+    .field-otp-attempts-left input {
+        font-size: 16px !important;
+        text-align: left !important;
+    }
+
+    .field-submit-otp {
+        width: 100% !important;
+        margin-top: 25px !important;
+    }
+
+    .field-submit-otp button {
+        height: 60px !important;
+        font-size: 22px !important;
+        border-radius: 14px !important;
+    }
+
+    .field-submit-otp button::after {
+        font-size: 28px !important;
+        right: 20px !important;
+    }
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+    .field-otp-verification-panel legend {
+        font-size: 20px !important;
+    }
+
+    .field-otp-instructions p {
+        font-size: 14px !important;
+    }
+
+    .field-otp-code input {
+        height: 56px !important;
+        font-size: 18px !important;
+        letter-spacing: 14px !important;
+        padding-left: 14px !important;
+    }
+
+    #togglePassword {
+        font-size: 18px !important;
+    }
+
+    .field-submit-otp button {
+        height: 54px !important;
+        font-size: 18px !important;
+    }
+}
