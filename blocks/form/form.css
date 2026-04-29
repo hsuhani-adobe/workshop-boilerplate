@@ -1061,6 +1061,22 @@ color: #a600ff;
     -webkit-appearance: none !important;
     margin: 0 !important;
 }
+/* Remove spinner arrows only */
+.field-loan-amount-inr input[type="number"]::-webkit-inner-spin-button,
+.field-loan-amount-inr input[type="number"]::-webkit-outer-spin-button,
+.field-loan-tenure-months input[type="number"]::-webkit-inner-spin-button,
+.field-loan-tenure-months input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
+.field-loan-amount-inr input[type="number"],
+.field-loan-tenure-months input[type="number"] {
+    -moz-appearance: textfield !important;
+}
+
+
+
 
 /* ── Slider wrappers ── */
 .field-loan-amount-slider,
