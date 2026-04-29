@@ -3725,3 +3725,128 @@ remove default fieldset style
 }
 
 
+/* ================= RESPONSIVE ================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .field-loan-offer-content {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+    }
+
+    .field-loan-summary-panel,
+    .field-loan-amount-tenure-panel {
+        max-width: 100% !important;
+        width: 100% !important;
+        grid-column: 1 !important;
+    }
+
+    .field-loan-offer-banner {
+        padding: 16px 20px 16px 90px !important;
+    }
+
+    .field-loan-offer-banner .field-label,
+    .field-loan-offer-banner input[type="text"] {
+        font-size: 18px !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .field-loan-offer-screen {
+        gap: 20px !important;
+    }
+
+    .field-loan-offer-banner {
+        min-height: 70px !important;
+        padding: 14px 16px 14px 72px !important;
+        border-radius: 12px !important;
+    }
+
+    .field-loan-offer-banner::before {
+        width: 48px !important;
+        height: 48px !important;
+        left: 12px !important;
+    }
+
+    .field-loan-offer-banner .field-label,
+    .field-loan-offer-banner input[type="text"] {
+        font-size: 15px !important;
+        line-height: 1.3 !important;
+    }
+
+    .field-loan-offer-content {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 24px !important;
+    }
+
+    .field-loan-amount-tenure-panel,
+    .field-loan-summary-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .field-loan-amount-tenure-panel > legend {
+        font-size: 20px !important;
+        padding-bottom: 18px !important;
+    }
+
+    .field-loan-amount-inr,
+    .field-loan-tenure-months {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+
+    .field-loan-amount-inr input[type="number"],
+    .field-loan-tenure-months input[type="number"] {
+        width: 100% !important;
+    }
+
+    .field-proceed-button,
+    .field-confirm-button {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .field-proceed-button button,
+    .field-confirm-button button {
+        width: 100% !important;
+        height: 48px !important;
+        font-size: 15px !important;
+    }
+
+    .lo-amount-large {
+        font-size: 2rem !important;
+    }
+
+    .field-loan-summary-panel input[type="text"] {
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .field-loan-offer-banner {
+        padding: 12px 14px 12px 64px !important;
+    }
+
+    .field-loan-offer-banner::before {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .field-loan-offer-banner .field-label,
+    .field-loan-offer-banner input[type="text"] {
+        font-size: 13px !important;
+    }
+
+    .field-loan-amount-tenure-panel > legend {
+        font-size: 18px !important;
+    }
+
+    .lo-amount-large {
+        font-size: 1.7rem !important;
+    }
+}
