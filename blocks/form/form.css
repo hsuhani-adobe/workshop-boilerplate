@@ -3437,32 +3437,42 @@ remove default fieldset style
     padding: 0 !important;
 }
 
-
-/* Resend OTP Button */
+/* ================= Resend OTP Button ================= */
 .field-resend-otp {
-  margin-top: 18px !important;
-  display: block !important;
-  width: 180px !important;
+  margin-top: 16px !important;
+  max-width: 280px !important;
 }
 
-.field-resend-otp button.button {
+.field-resend-otp > button.button[type="button"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
   width: 100% !important;
-  height: 46px !important;
-  border: 1px solid #1c3fca !important;
-  border-radius: 10px !important;
-  background: #ffffff !important;
-  color: #1c3fca !important;
-  font-size: 15px !important;
+  height: 48px !important; /* slightly smaller than submit */
+  padding: 0 20px !important;
+
+  background: #e8edff !important; /* lighter version of primary */
+  color: #2f49b5 !important;
+
+  font-size: 14px !important;
   font-weight: 600 !important;
+
+  border: 1px solid #c7d2fe !important;
+  border-radius: 10px !important;
+
   cursor: pointer !important;
   transition: all 0.2s ease !important;
 }
 
-.field-resend-otp button.button:hover {
-  background: #1c3fca !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 10px rgba(28, 63, 202, 0.25) !important;
+
+
+/* hover */
+.field-resend-otp > button.button[type="button"]:hover {
+  background: #dbe4ff !important;
+  box-shadow: 0 4px 12px rgba(47, 73, 181, 0.2) !important;
 }
+
 
 /* Mobile */
 @media (max-width: 768px) {
@@ -3497,7 +3507,7 @@ remove default fieldset style
 
 /* Increase bottom space of whole panel */
 .field-submit-otp {
-  margin-bottom: 120px !important;
+  margin-bottom: 140px !important;
 }
 /* ================= Responsive ================= */
 @media (max-width: 992px) {
