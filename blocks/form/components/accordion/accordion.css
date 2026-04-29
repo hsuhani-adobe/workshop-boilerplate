@@ -86,8 +86,7 @@ main .form fieldset.accordion > fieldset > legend.accordion-legend::before {
     background-position: center;
     background-size: contain;
     opacity: 0.85;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+  
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
@@ -119,6 +118,9 @@ main .form fieldset.accordion > fieldset > legend.accordion-legend::after {
     height: 9px;
     transform: translateY(-35%) rotate(-135deg);
     transition: transform 0.3s ease;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius:20px ;
+    
 }
 
 /* ── Chevron down when collapsed ── */
@@ -145,6 +147,8 @@ main .form fieldset.accordion > fieldset > fieldset {
     align-items: start;
     box-sizing: border-box;
     width: 100%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 /* Hide inner panel's structural legend */
