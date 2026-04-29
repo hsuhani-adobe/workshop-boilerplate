@@ -3598,3 +3598,119 @@ remove default fieldset style
     font-size: 14px !important;
   }
 }
+/* ================= RESPONSIVE FIX ================= */
+
+/* Tablet */
+@media (max-width: 992px) {
+  .field-otp-verification-panel {
+    width: 90% !important;
+    max-width: 90% !important;
+    margin: 20px auto !important;
+  }
+
+  .field-otp-code input {
+    height: 58px !important;
+    font-size: 24px !important;
+    letter-spacing: 24px !important;
+  }
+
+  .field-submit-otp {
+    max-width: 200px !important;
+    margin-bottom: 100px !important;
+  }
+
+  .field-resend-otp {
+    width: 160px !important;
+  }
+
+  .field-timer input,
+  .field-otp-attempts-left input {
+    font-size: 18px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .field-otp-verification-panel {
+    width: calc(100% - 32px) !important;
+    max-width: 100% !important;
+    margin: 16px !important;
+  }
+
+  .field-otp-verification-panel legend {
+    font-size: 22px !important;
+    line-height: 28px !important;
+  }
+
+  .field-otp-instructions p {
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+
+  .field-otp-code input {
+    height: 52px !important;
+    font-size: 20px !important;
+    letter-spacing: 14px !important;
+    padding-left: 14px !important;
+  }
+
+  #togglePassword {
+    right: 14px !important;
+    font-size: 18px !important;
+  }
+
+  .field-timer,
+  .field-otp-attempts-left {
+    width: 100% !important;
+    display: block !important;
+    float: none !important;
+    text-align: left !important;
+    margin-bottom: 8px !important;
+  }
+
+  .field-otp-attempts-left input {
+    text-align: left !important;
+  }
+
+  .field-resend-otp,
+  .field-submit-otp {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .field-submit-otp button,
+  .field-resend-otp button {
+    width: 100% !important;
+    height: 48px !important;
+    font-size: 15px !important;
+  }
+
+  .field-submit-otp {
+    margin-bottom: 80px !important;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .field-otp-verification-panel legend {
+    font-size: 20px !important;
+    line-height: 24px !important;
+  }
+
+  .field-otp-code input {
+    height: 46px !important;
+    font-size: 18px !important;
+    letter-spacing: 8px !important;
+  }
+
+  .field-timer input,
+  .field-otp-attempts-left input {
+    font-size: 16px !important;
+  }
+
+  .field-submit-otp button,
+  .field-resend-otp button {
+    height: 44px !important;
+    font-size: 14px !important;
+  }
+}
