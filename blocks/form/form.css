@@ -1392,14 +1392,14 @@ div.field-principal-offer-note p {
 }
 /* Footer note background */
 div.field-principal-offer-note {
-    background-color: #0924d1 !important;
+    background-color: #d14809 !important;
     background-image: none !important;
     padding: 22px 20px !important;
     min-height: 90px !important;
     border-radius: 0 0 18px 18px !important;
 }
 .field-loan-summary-panel .field-principal-offer-note.field-wrapper {
-    background: #1e3a8a !important;
+    background:#d14809 !important;
 }
 
 /* Footer note icon */
