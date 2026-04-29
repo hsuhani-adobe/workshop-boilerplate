@@ -86,6 +86,8 @@ main .form fieldset.accordion > fieldset > legend.accordion-legend::before {
     background-position: center;
     background-size: contain;
     opacity: 0.85;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
