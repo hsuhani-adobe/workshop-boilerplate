@@ -1348,25 +1348,31 @@ color: #a600ff;
 }
 
 /* Footer */
+/* Footer */
 .field-principal-offer-note {
     margin-top: 16px !important;
-    background: #e16e10 !important;
-    padding: 12px 16px !important;
+    background: #f59e0b !important;   /* brighter orange */
+    padding: 22px 20px !important;    /* increased height */
     border-radius: 0 0 18px 18px !important;
-   
+    min-height: 90px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
 }
 
 .field-principal-offer-note p {
-    font-size: 11px !important;
-    line-height: 1.4 !important;
-    color:#000
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    color: #ffffff !important;   /* white text */
+    font-weight: 500 !important;
+    margin: 0 !important;
 }
 
 .field-principal-offer-note::before {
-    width: 14px !important;
-    height: 14px !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin-top: 2px !important;
 }
-
 
 
 
