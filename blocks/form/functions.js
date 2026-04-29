@@ -58,7 +58,8 @@ function maskMobileNumber(mobileNumber) {
 
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, submitFormArrayToString, maskMobileNumber,
+  getFullName, days, submitFormArrayToString, maskMobileNumber,isAgeLessThan21,
+  startOtpTimer
 };
 
 
@@ -149,12 +150,3 @@ function startOtpTimer() {
   return `Resend OTP in ${timerValue}s`;
 }
 
-// All functions must be listed here
-export {
-  getFullName,
-  days,
-  submitFormArrayToString,
-  maskMobileNumber,
-  isAgeLessThan21,
-  startOtpTimer,   // ← make sure this is added
-};
