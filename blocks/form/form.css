@@ -3151,7 +3151,7 @@ field-kyc-verification-summary-panel* {
 
 
 /* =========================================================
-   OTP VERIFICATION PANEL
+   OTP VERIFICATION PANEL - COMPACT
 ========================================================= */
 
 .field-otp-verification-panel,
@@ -3162,8 +3162,8 @@ field-kyc-verification-summary-panel* {
 
 .field-otp-verification-panel {
   width: 100% !important;
-  max-width: 760px !important;
-  margin: 24px 40px !important;
+  max-width: 700px !important;
+  margin: 20px 40px !important;
   padding: 0 !important;
 }
 
@@ -3179,60 +3179,46 @@ field-kyc-verification-summary-panel* {
 /* ================= Heading ================= */
 .field-otp-verification-panel legend,
 .field-otp-verification-panel > .field-label {
-  font-size: 28px !important;
-  line-height: 34px !important;
+  font-size: 18px !important;
+  line-height: 24px !important;
   font-weight: 700 !important;
   color: #111827 !important;
-  margin-bottom: 8px !important;
+  margin-bottom: 4px !important;
   border: none !important;
 }
 
 /* ================= Instruction text ================= */
 .field-otp-instructions {
-  margin-bottom: 24px !important;
+  margin-bottom: 14px !important;
 }
 
 .field-otp-instructions p {
   margin: 0 !important;
-  font-size: 18px !important;
-  line-height: 28px !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
   color: #374151 !important;
-  font-weight: 400 !important;
+  font-weight: 500 !important;
 }
 
 .field-otp-instructions u {
   color: #1c3fca !important;
   text-decoration: none !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   cursor: pointer !important;
 }
 
-/* ================= Common labels ================= */
-.field-otp-verification-panel label.field-label {
-  color: #374151 !important;
-  font-weight: 400 !important;
-  font-size: 14px !important;
-  line-height: 20px !important;
-  display: block !important;
-  margin-bottom: 6px !important;
-}
-
-/* ================= Common inputs ================= */
+/* ================= Common Inputs ================= */
 .field-otp-verification-panel input[type="text"],
 .field-otp-verification-panel input[type="password"] {
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  display: block !important;
   width: 100% !important;
-  min-height: 44px !important;
+  min-height: 40px !important;
   font-size: 14px !important;
   color: #111827 !important;
   background-color: #ffffff !important;
   border: 1px solid #d1d5db !important;
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   padding: 0 14px !important;
   outline: none !important;
-  transition: border-color 0.18s, box-shadow 0.18s !important;
 }
 
 .field-otp-verification-panel input:focus {
@@ -3243,7 +3229,7 @@ field-kyc-verification-summary-panel* {
 /* ================= OTP Box ================= */
 .field-otp-code {
   position: relative !important;
-  margin-bottom: 18px !important;
+  margin-bottom: 8px !important;
 }
 
 .field-otp-code label.field-label {
@@ -3251,116 +3237,91 @@ field-kyc-verification-summary-panel* {
 }
 
 .field-otp-code input {
-  height: 64px !important;
-  border-radius: 14px !important;
-  font-size: 30px !important;
-  letter-spacing: 42px !important;
-  padding-left: 20px !important;
-  color: #6b7280 !important;
+  height: 52px !important;
+  border-radius: 12px !important;
+  font-size: 24px !important;
+  letter-spacing: 34px !important;
+  padding-left: 18px !important;
+  color: #d1d5db !important;
 }
 
 #togglePassword {
   position: absolute !important;
-  right: 20px !important;
-  top: 56% !important;
+  right: 18px !important;
+  top: 50% !important;
   transform: translateY(-50%) !important;
-  font-size: 20px !important;
+  font-size: 18px !important;
   color: #6b7280 !important;
   cursor: pointer !important;
 }
 
-/* ================= OTP Status ================= */
+/* ================= OTP STATUS ================= */
 .field-otp-status {
-  width: 100% !important;
   margin-bottom: 8px !important;
 }
 
-/* ================= Timer + Attempts Row ================= */
-.field-timer,
-.field-otp-attempts-left,
-.field-resend-otp {
-  display: inline-block !important;
-  vertical-align: middle !important;
-  margin-top: 8px !important;
-}
-
-/* Timer aligned left */
-.field-timer {
-  width: auto !important;
-}
-
-.field-timer label.field-label {
+.field-otp-status label.field-label {
   display: none !important;
 }
 
-.field-timer input {
+.field-otp-status input {
   border: none !important;
   background: transparent !important;
   padding: 0 !important;
-  min-height: auto !important;
-  font-size: 16px !important;
-  font-weight: 600 !important;
-  color: #111827 !important;
-  width: auto !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #6b7280 !important;
   box-shadow: none !important;
 }
 
-/* Attempts aligned right */
+/* ================= Timer / Attempts Row ================= */
+.field-timer,
 .field-otp-attempts-left {
-  float: right !important;
-  width: auto !important;
+  display: inline-block !important;
+  width: 48% !important;
+  margin-top: 4px !important;
 }
 
+.field-timer {
+  text-align: left !important;
+}
+
+.field-otp-attempts-left {
+  text-align: right !important;
+}
+
+.field-timer label.field-label,
 .field-otp-attempts-left label.field-label {
   display: none !important;
 }
 
+.field-timer input,
 .field-otp-attempts-left input {
   border: none !important;
   background: transparent !important;
   padding: 0 !important;
-  min-height: auto !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   font-weight: 600 !important;
-  color: #6b7280 !important;
-  text-align: right !important;
-  width: auto !important;
   box-shadow: none !important;
 }
 
-/* ================= Resend OTP Button ================= */
-.field-resend-otp {
-  margin-top: 18px !important;
-  display: block !important;
-  width: 180px !important;
+.field-timer input {
+  color: #111827 !important;
 }
 
-.field-resend-otp button.button {
-  width: 100% !important;
-  height: 46px !important;
-  border: 1px solid #1c3fca !important;
-  border-radius: 10px !important;
-  background: #ffffff !important;
-  color: #1c3fca !important;
-  font-size: 15px !important;
-  font-weight: 600 !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
+.field-otp-attempts-left input {
+  color: #6b7280 !important;
+  text-align: right !important;
 }
 
-.field-resend-otp button.button:hover {
-  background: #1c3fca !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 10px rgba(28, 63, 202, 0.25) !important;
-}
-
-/* ================= Submit Button ================= */
+/* ================= Buttons ================= */
+.field-resend-otp,
 .field-submit-otp {
-  margin-top: 28px !important;
+  margin-top: 18px !important;
   max-width: 280px !important;
-  clear: both !important;
 }
 
+.field-resend-otp button.button,
 .field-submit-otp > button.button[type="submit"] {
   display: inline-flex !important;
   align-items: center !important;
@@ -3379,14 +3340,15 @@ field-kyc-verification-summary-panel* {
   transition: background 0.2s, box-shadow 0.2s !important;
 }
 
+.field-resend-otp button.button::after,
 .field-submit-otp > button.button[type="submit"]::after {
   content: "›" !important;
   font-size: 22px !important;
   font-weight: 300 !important;
-  line-height: 1 !important;
   margin-left: 4px !important;
 }
 
+.field-resend-otp button.button:hover,
 .field-submit-otp > button.button[type="submit"]:hover {
   background: #1c3fca !important;
   box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
@@ -3395,31 +3357,22 @@ field-kyc-verification-summary-panel* {
 /* ================= Responsive ================= */
 @media (max-width: 768px) {
   .field-otp-verification-panel {
-    margin: 20px !important;
-  }
-
-  .field-otp-verification-panel legend {
-    font-size: 22px !important;
-  }
-
-  .field-otp-instructions p {
-    font-size: 15px !important;
-    line-height: 22px !important;
+    margin: 16px !important;
+    max-width: 100% !important;
   }
 
   .field-otp-code input {
-    font-size: 22px !important;
-    letter-spacing: 20px !important;
-    height: 56px !important;
+    font-size: 20px !important;
+    letter-spacing: 18px !important;
+    height: 48px !important;
   }
 
   .field-timer,
   .field-otp-attempts-left {
-    float: none !important;
     display: block !important;
     width: 100% !important;
     text-align: left !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
   }
 
   .field-otp-attempts-left input {
@@ -3428,7 +3381,6 @@ field-kyc-verification-summary-panel* {
 
   .field-resend-otp,
   .field-submit-otp {
-    width: 100% !important;
     max-width: 100% !important;
   }
 }
