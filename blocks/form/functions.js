@@ -73,29 +73,28 @@ function calcEMI(principal, annualRate, months) {
 }
 
 
-
 /**
- * Validates if age is 21 years or above
- * @param {string} dob in date format8
- * @returns {boolean}
+ * Calculates age from date of birth and checks if >= 21
+ * @param {string} dob - Date of birth value from the form field
+ * @returns {boolean} returns true if age is less than 21
  */
-function validateDOB(dob) {
-  if (!dob) {
-    return true;
-  }
-
-  const birthDate = typeof dob === 'string' ? new Date(dob) : dob;
+function isAgeLessThan21(dob) {
+  if (!dob) return false;
+  
+  const birthDate = new Date(dob);
   const today = new Date();
-
+  
   let age = today.getFullYear() - birthDate.getFullYear();
   const monthDiff = today.getMonth() - birthDate.getMonth();
-
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDate.getDate())
-  ) {
-    age -= 1;
+  
+  // Adjust if birthday hasn't occurred yet this year
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
   }
-
-  return age >= 21;
+  
+  return age < 21;
 }
+
+export {
+  getFullName, days, submitFormArrayToString, maskMobileNumber, isAgeLessThan21,
+};
