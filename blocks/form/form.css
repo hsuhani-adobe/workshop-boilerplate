@@ -2646,7 +2646,7 @@ field-kyc-verification-summary-panel* {
 
 /* ================= Placeholder ================= */
 .field-personal-loan-offer-panel input::placeholder {
-  font-size: 18px !important;
+  font-size: 13px !important;
 }
 
 /* ================= OTP Note ================= */
@@ -2672,7 +2672,21 @@ field-kyc-verification-summary-panel* {
   font-size: 15px !important;
   line-height: 24px !important;
 }
+/* Hide Mobile Number label */
+.field-mobile-number-wrapper label.field-label,
+.field-aadhaar-mobile label.field-label,
+[class*="field-mobile"][class*="number"] label.field-label {
+    display: none !important;
+}
 
+/* Hide PAN / DOB field label */
+.field-pan-dob-toggle label.field-label,
+.field-identifier-type label.field-label,
+[class*="pan-dob"] label.field-label,
+.field-pan-card label.field-label,
+.field-date-of-birth label.field-label {
+    display: none !important;
+}
 /* =============================================================
    9. VIEW LOAN ELIGIBILITY BUTTON
    ============================================================= */
