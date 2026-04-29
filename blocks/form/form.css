@@ -3783,3 +3783,45 @@ remove default fieldset style
         gap: 18px !important;
     }
 }
+/* Summary panel */
+.field-loan-summary-panel {
+    max-width: 430px !important;
+    min-height: auto !important;   /* remove forced height */
+}
+
+/* Heading */
+.field-offer-summary-heading {
+    padding: 24px 24px 18px !important;
+}
+
+/* Large amount */
+.lo-amount-large {
+    font-size: 3rem !important;
+    margin-top: 6px !important;
+}
+
+/* Each field wrapper */
+.field-loan-summary-panel .field-wrapper {
+    padding: 16px 24px 0 !important;
+}
+
+/* Labels */
+.field-loan-summary-panel label.field-label {
+    font-size: 14px !important;
+    margin-bottom: 6px !important;
+}
+
+/* Values */
+.field-loan-summary-panel input[type="text"] {
+    font-size: 1.5rem !important;
+}
+
+/* Footer strip */
+.field-principal-offer-note {
+    padding: 16px 20px !important;
+}
+
+.field-principal-offer-note p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
