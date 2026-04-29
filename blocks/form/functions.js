@@ -76,7 +76,7 @@ function calcEMI(principal, annualRate, months) {
 
 /**
  * Validates if age is 21 years or above
- * @param {string} dob in date format
+ * @param {string} dob in date format8
  * @returns {boolean}
  */
 function validateDOB(dob) {
