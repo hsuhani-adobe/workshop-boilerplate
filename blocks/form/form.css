@@ -3400,3 +3400,104 @@ field-kyc-verification-summary-panel* {
   .field-submit-otp {
     max-width: 100% !important;
   } }
+
+
+  /* ================= Timer + Attempts Row ================= */
+
+.field-timer,
+.field-otp-attempts-left,
+.field-resend-otp {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin-top: 8px !important;
+}
+
+/* Timer aligned left */
+.field-timer {
+  width: auto !important;
+}
+
+.field-timer label.field-label {
+  display: none !important;
+}
+
+.field-timer input {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+  width: auto !important;
+  box-shadow: none !important;
+}
+
+/* Attempts aligned right */
+.field-otp-attempts-left {
+  float: right !important;
+  width: auto !important;
+}
+
+.field-otp-attempts-left label.field-label {
+  display: none !important;
+}
+
+.field-otp-attempts-left input {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #6b7280 !important;
+  text-align: right !important;
+  width: auto !important;
+  box-shadow: none !important;
+}
+
+/* Resend OTP Button */
+.field-resend-otp {
+  margin-top: 18px !important;
+  display: block !important;
+  width: 180px !important;
+}
+
+.field-resend-otp button.button {
+  width: 100% !important;
+  height: 46px !important;
+  border: 1px solid #1c3fca !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #1c3fca !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.field-resend-otp button.button:hover {
+  background: #1c3fca !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(28, 63, 202, 0.25) !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .field-timer,
+  .field-otp-attempts-left {
+    float: none !important;
+    display: block !important;
+    width: 100% !important;
+    text-align: left !important;
+    margin-bottom: 6px !important;
+  }
+
+  .field-otp-attempts-left input {
+    text-align: left !important;
+  }
+
+  .field-resend-otp {
+    width: 100% !important;
+  }
+}
