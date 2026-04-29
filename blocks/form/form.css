@@ -1398,6 +1398,9 @@ div.field-principal-offer-note {
     min-height: 90px !important;
     border-radius: 0 0 18px 18px !important;
 }
+.field-loan-summary-panel .field-principal-offer-note.field-wrapper {
+    background: #1e3a8a !important;
+}
 
 /* Footer note icon */
 div.field-principal-offer-note::before {
