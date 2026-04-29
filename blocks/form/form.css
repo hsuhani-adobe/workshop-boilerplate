@@ -1125,181 +1125,129 @@ color: #a600ff;
 /* ══════════════════════════════════════════
    RIGHT PANEL — summary card
 ═/* ══════════════════════════════════════════
-   RIGHT PANEL — SUMMARY CARD
+  /* ══════════════════════════════════════════
+   SUMMARY PANEL
 ══════════════════════════════════════════ */
 .field-loan-summary-panel {
     background: #f8f2e4 !important;
-    border: none !important;
-    border-radius: 24px !important;
+    border-radius: 22px !important;
     overflow: hidden !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 430px !important;
+    min-height: auto !important;
     display: flex !important;
     flex-direction: column !important;
-    width: 100% !important;
-    max-width: 520px !important;
-    min-height: 510px !important;
-    box-sizing: border-box !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
+/* Hide legend */
 .field-loan-summary-panel > legend {
     display: none !important;
 }
 
-/* ── Heading block ── */
+/* Heading section */
 .field-offer-summary-heading {
-    padding: 34px 36px 24px !important;
-    border-bottom: 2px dashed #d9cdb2 !important;
-    margin: 0 !important;
-    background: transparent !important;
+    padding: 24px 24px 18px !important;
+    border-bottom: 2px dashed #d8ccb0 !important;
 }
 
 .field-offer-summary-heading p {
     margin: 0 !important;
-    font-size: 1rem !important;
+    font-size: 15px !important;
     font-weight: 600 !important;
     color: #111827 !important;
     line-height: 1.5 !important;
 }
 
-/* Large amount */
+/* Big amount */
 .lo-amount-large {
     display: block !important;
-    font-size: 4rem !important;
+    font-size: 3rem !important;
     font-weight: 800 !important;
-    color: #0b1b45 !important;
     line-height: 1.1 !important;
-    margin-top: 10px !important;
-    letter-spacing: -0.04em !important;
+    color: #081b55 !important;
+    margin-top: 6px !important;
 }
 
-/* ── Fields area ── */
-.lo-fields-grid {
-    padding: 30px 36px 18px !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 28px 26px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-}
-
-.lo-fields-grid .field-wrapper {
-    padding: 0 0 0 16px !important;
-    border-left: 4px solid #f4a029 !important;
+/* Field wrapper */
+.field-loan-summary-panel .field-wrapper {
+    padding: 16px 24px 0 !important;
     margin: 0 !important;
+    border: none !important;
     background: transparent !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 4px !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-}
-
-/* Taxes full width */
-.lo-fields-grid .field-taxes {
-    grid-column: 1 / -1 !important;
-    margin-top: 4px !important;
 }
 
 /* Labels */
-.lo-fields-grid label.field-label {
-    font-size: 0.95rem !important;
+.field-loan-summary-panel label.field-label {
+    display: block !important;
+    font-size: 14px !important;
     font-weight: 500 !important;
-    color: #6b7280 !important;
-    margin: 0 !important;
-    line-height: 1.4 !important;
+    color: #5b6473 !important;
+    margin-bottom: 6px !important;
 }
 
-/* Values */
-.lo-fields-grid input[type="text"] {
-    font-size: 2rem !important;
+/* Value fields */
+.field-loan-summary-panel input[type="text"] {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+    padding: 0 0 0 12px !important;
+    margin: 0 !important;
+    font-size: 1.5rem !important;
     font-weight: 700 !important;
     color: #111827 !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    outline: none !important;
-    width: 100% !important;
-    pointer-events: none !important;
-    box-shadow: none !important;
     height: auto !important;
     min-height: unset !important;
+    pointer-events: none !important;
+    border-left: 4px solid #f4a029 !important;
+    border-radius: 0 !important;
 }
 
-/* ── Orange warning strip ── */
+/* Footer strip */
 .field-principal-offer-note {
+    margin-top: 20px !important;
     background: #f4a029 !important;
-    margin: auto 0 0 0 !important;
-    padding: 20px 28px !important;
+    padding: 16px 20px !important;
     display: flex !important;
     align-items: flex-start !important;
-    gap: 12px !important;
-    border-radius: 0 0 24px 24px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
+    gap: 10px !important;
+    border-radius: 0 0 22px 22px !important;
 }
 
 .field-principal-offer-note::before {
     content: "" !important;
-    flex-shrink: 0;
-    width: 22px;
-    height: 22px;
-    margin-top: 2px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Ccircle cx='12' cy='16' r='0.6' fill='white'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
+    width: 20px !important;
+    height: 20px !important;
+    flex-shrink: 0 !important;
+    margin-top: 2px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='white' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Ccircle cx='12' cy='16' r='1' fill='white'/%3E%3C/svg%3E");
     background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .field-principal-offer-note p {
     margin: 0 !important;
-    font-size: 1rem !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    color: white !important;
     font-weight: 500 !important;
-    color: #fff !important;
-    line-height: 1.6 !important;
 }
 
-/* EDS overrides */
-.field-loan-summary-panel.col-5,
-.field-loan-summary-panel.col-12 {
-    float: none !important;
-    width: 100% !important;
-    max-width: 520px !important;
-}
-
-/* Responsive */
+/* Mobile */
 @media (max-width: 768px) {
     .field-loan-summary-panel {
         max-width: 100% !important;
-        min-height: auto !important;
-    }
-
-    .field-offer-summary-heading {
-        padding: 24px !important;
     }
 
     .lo-amount-large {
-        font-size: 2.8rem !important;
+        font-size: 2.4rem !important;
     }
 
-    .lo-fields-grid {
-        grid-template-columns: 1fr !important;
-        padding: 24px !important;
-        gap: 20px !important;
+    .field-loan-summary-panel input[type="text"] {
+        font-size: 1.25rem !important;
     }
-
-    .lo-fields-grid .field-taxes {
-        grid-column: auto !important;
-    }
-
-    .lo-fields-grid input[type="text"] {
-        font-size: 1.5rem !important;
-    }
-}
-/* Also kill any clearfix rows EDS might insert */
-.field-loan-offer-content::after {
-    display: none !important;
 }
 
 /* ══════════════════════════════════════════
