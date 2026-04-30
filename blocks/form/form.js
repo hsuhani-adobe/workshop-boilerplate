@@ -609,3 +609,8 @@ return ` ${'*'.repeat(5)}${value.substring(5)}`;
 
 
 
+const input = document.querySelector('.field-mobile-no input[name="mobile_no"]');
+const wrapper = document.createElement('div');
+wrapper.className = 'mobile-flag-wrapper';
+input.parentNode.insertBefore(wrapper, input);
+wrapper.appendChild(input);
