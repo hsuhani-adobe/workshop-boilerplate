@@ -110,6 +110,12 @@ function validateDOBAndToggleText(dob) {
     } else {
         textComponent.style.display = "none";
     }
+
+
+
+    console.log("Function loaded");
+console.log("DOB:", dob);
+console.log("Element:", document.querySelector(".field-dob-validation"));
 }
 
 
