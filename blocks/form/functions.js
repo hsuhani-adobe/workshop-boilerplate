@@ -58,7 +58,7 @@ function maskMobileNumber(mobileNumber) {
 
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, submitFormArrayToString, maskMobileNumber,isAgeLessThan21,
+  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
   startOtpTimer,resendOtp
 };
 
@@ -74,26 +74,41 @@ function calcEMI(principal, annualRate, months) {
 }
 
 
-/**
- * Calculates age from date of birth and checks if >= 21
- * @param {string} dob - Date of birth value from the form field
- * @returns {boolean} returns true if age is less than 21
- */
-function isAgeLessThan21(dob) {
-  if (!dob) return false;
-  
-  const birthDate = new Date(dob);
-  const today = new Date();
-  
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-  
-  // Adjust if birthday hasn't occurred yet this year
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  
-  return age < 21;
+function validateDOBAndToggleText(dob) {
+    // Target using EDS field name & wrapper class
+    const textComponent = document.querySelector(".field-dob-validation");
+
+    if (!dob || !textComponent) return;
+
+    // Parse M/d/YY or M/d/YYYY
+    const parts = dob.split("/");
+    let month = parseInt(parts[0], 10) - 1;
+    let day = parseInt(parts[1], 10);
+    let year = parseInt(parts[2], 10);
+
+    if (year < 100) {
+        year += (year > 50 ? 1900 : 2000);
+    }
+
+    const birthDate = new Date(year, month, day);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+        age--;
+    }
+
+    // ✅ Action inside function
+    if (age < 21) {
+        textComponent.style.display = "block";
+    } else {
+        textComponent.style.display = "none";
+    }
 }
 
 
