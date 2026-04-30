@@ -3852,14 +3852,10 @@ remove default fieldset style
 }
 
 
-.field-dob-validation,
-.field-dob-validation p {
-  color: #d32f2f !important;
-  font-size: 12px !important;
-  display: none;
-  margin: 0 !important;
-}
 .plain-text-wrapper.field-dob-validation p {
   color: #d32f2f !important;
   font-size: 12px !important;
+   color: #d32f2f !important;
+  font-size: 12px !important;
+  display: none;
 }
