@@ -2681,24 +2681,35 @@ field-kyc-verification-summary-panel* {
   color: #6b7280 !important;
   margin-top: 4px !important;
 }
+/* ================= INCOME NOTE & SELF-EMPLOYED (OVERRIDE ROOT CSS) ================= */
 
-/* ================= INCOME NOTE ================= */
-.field-income-note,
-.field-self-employed-note,
-[class*="income-note"] {
-  background: #fffaf0 !important;
-  border: 1px solid #f0d9a7 !important;
-  border-radius: 8px !important;
-  padding: 10px 12px !important;
-  font-size: 13px !important;
-  color: #7c5a12 !important;
-  line-height: 1.5 !important;
+/* Wrapper styling */
+.plain-text-wrapper.field-income-note.field-wrapper,
+.plain-text-wrapper.field-self-employed.field-wrapper {
+  background: #fffaf0;
+  border: 1px solid #f0d9a7;
+  border-radius: 6px;
+  padding: 6px 10px;
+  box-sizing: border-box;
 }
 
-.field-income-note p,
-.field-self-employed-note p {
+/* Inner text styling (strong override) */
+.plain-text-wrapper.field-income-note.field-wrapper p,
+.plain-text-wrapper.field-self-employed.field-wrapper p {
+  font-size: 12px !important;     /* smaller text */
+  font-weight: 500 !important;    /* slightly bold */
+  color: #6b4f0f !important;      /* richer brown tone */
+  line-height: 1.4 !important;    /* tighter spacing */
   margin: 0 !important;
 }
+
+/* Fix nested paragraph issue (extra spacing removal) */
+.plain-text-wrapper.field-self-employed.field-wrapper p p {
+  margin: 0 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
 
 /* ================= TERMS ================= */
 .field-terms-conditions p,
