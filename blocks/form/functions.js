@@ -72,10 +72,9 @@ function calcEMI(principal, annualRate, months) {
         (Math.pow(1 + r, months) - 1)
     );
 }
-
 /**
  * Validates the given date of birth and toggles the visibility of the DOB validation text component
- * @param {*} dob - Date of birth in M/d/YY or M/d/YYYY format
+ * @param {*} dob - Date of birth in YYYY-MM-DD format (EDS default)
  * @returns {void} does not return anything, only updates UI (show/hide text component)
  */
 function validateDOBAndToggleText(dob) {
@@ -83,16 +82,8 @@ function validateDOBAndToggleText(dob) {
 
     if (!dob || !textComponent) return;
 
-    const parts = dob.split("/");
-    let month = parseInt(parts[0], 10) - 1;
-    let day = parseInt(parts[1], 10);
-    let year = parseInt(parts[2], 10);
-
-    if (year < 100) {
-        year += (year > 50 ? 1900 : 2000);
-    }
-
-    const birthDate = new Date(year, month, day);
+    // ✅ Correct parsing for EDS format
+    const birthDate = new Date(dob);
     const today = new Date();
 
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -105,17 +96,16 @@ function validateDOBAndToggleText(dob) {
         age--;
     }
 
+    // ✅ Show only when age < 21
     if (age < 21) {
         textComponent.style.display = "block";
     } else {
         textComponent.style.display = "none";
     }
 
-
-
-    console.log("Function loaded");
-console.log("DOB:", dob);
-console.log("Element:", document.querySelector(".field-dob-validation"));
+    // Debug (optional)
+    console.log("DOB:", dob);
+    console.log("Age:", age);
 }
 
 
