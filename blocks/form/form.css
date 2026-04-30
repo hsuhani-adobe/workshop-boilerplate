@@ -3882,15 +3882,15 @@ remove default fieldset style
   line-height: 1.4 !important;
 }
 
-
-.mobile-input-wrapper {
+================= MOBILE FLAG PREFIX ================= */
+.field-personal-loan-offer-panel .mobile-input-wrapper {
   position: relative;
 }
 
-.mobile-input-wrapper::before {
+.field-personal-loan-offer-panel .mobile-input-wrapper::before {
   content: "";
   position: absolute;
-  left: 12px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%);
   width: 22px;
@@ -3901,17 +3901,17 @@ remove default fieldset style
   pointer-events: none;
 }
 
-.mobile-input-wrapper::after {
+.field-personal-loan-offer-panel .mobile-input-wrapper::after {
   content: "+91";
   position: absolute;
-  left: 38px;
+  left: 40px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 14px;
-  color: #333;
+  color: #111827;
   pointer-events: none;
 }
 
-.mobile-input-wrapper input {
-  padding-left: 68px;
+.field-personal-loan-offer-panel .mobile-input-wrapper input {
+  padding-left: 72px !important;
 }
