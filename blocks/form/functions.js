@@ -74,40 +74,78 @@ function calcEMI(principal, annualRate, months) {
 }
 /**
  * Validates the given date of birth and toggles the visibility of the DOB validation text component
- * @param {*} dob - Date of birth in YYYY-MM-DD format (EDS default)
- * @returns {void} does not return anything, only updates UI (show/hide text component)
+ * @param {*} dob - Date of birth (can be YYYY-MM-DD or DD/MM/YYYY or M/D/YY)
+ * @returns {void}
  */
 function validateDOBAndToggleText(dob) {
     const textComponent = document.querySelector(".field-dob-validation");
 
     if (!dob || !textComponent) return;
 
-    // ✅ Correct parsing for EDS format
-    const birthDate = new Date(dob);
-    const today = new Date();
+    let birthDate;
 
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
+    try {
+        // ✅ Case 1: YYYY-MM-DD (EDS standard)
+        if (dob.includes("-")) {
+            birthDate = new Date(dob);
+        }
 
-    if (
-        monthDiff < 0 ||
-        (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
-        age--;
-    }
+        // ✅ Case 2: DD/MM/YYYY or M/D/YY
+        else if (dob.includes("/")) {
+            const parts = dob.split("/");
 
-    // ✅ Show only when age < 21
-    if (age < 21) {
-        textComponent.style.display = "block";
-    } else {
+            let day, month, year;
+
+            // Detect format safely
+            if (parts[2].length === 4) {
+                // DD/MM/YYYY
+                day = parseInt(parts[0], 10);
+                month = parseInt(parts[1], 10) - 1;
+                year = parseInt(parts[2], 10);
+            } else {
+                // M/D/YY
+                month = parseInt(parts[0], 10) - 1;
+                day = parseInt(parts[1], 10);
+                year = parseInt(parts[2], 10);
+
+                if (year < 100) {
+                    year += (year > 50 ? 1900 : 2000);
+                }
+            }
+
+            birthDate = new Date(year, month, day);
+        }
+
+        // ❌ Invalid date fallback
+        if (!birthDate || isNaN(birthDate.getTime())) {
+            textComponent.style.display = "none";
+            return;
+        }
+
+        const today = new Date();
+
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        if (
+            monthDiff < 0 ||
+            (monthDiff === 0 && today.getDate() < birthDate.getDate())
+        ) {
+            age--;
+        }
+
+        // ✅ FINAL CONDITION
+        textComponent.style.display = age < 21 ? "block" : "none";
+
+        console.log("DOB:", dob);
+        console.log("Parsed:", birthDate);
+        console.log("Age:", age);
+
+    } catch (e) {
+        console.error("DOB parsing error:", e);
         textComponent.style.display = "none";
     }
-
-    // Debug (optional)
-    console.log("DOB:", dob);
-    console.log("Age:", age);
 }
-
 
 
 
