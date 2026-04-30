@@ -3874,8 +3874,9 @@ remove default fieldset style
 
 
 .plain-text-wrapper.field-dob-validation.field-wrapper p {
+  display: none;
   color: #d32f2f !important;     /* red color */
-  font-size: 12px !important;    /* smaller text */
+  font-size: 14px !important;    /* smaller text */
   font-weight: 500 !important;   /* slightly bold */
   margin: 0 !important;          /* remove extra spacing */
   line-height: 1.4 !important;
