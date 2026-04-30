@@ -2634,7 +2634,7 @@ field-kyc-verification-summary-panel* {
 
 /* ================= TITLE ================= */
 .field-personal-loan-offer-panel > legend.field-label {
-  display: block !important;
+ 
   font-size: 22px !important;
   font-weight: 700 !important;
   color: #111827 !important;
@@ -2648,7 +2648,7 @@ field-kyc-verification-summary-panel* {
   font-weight: 400 !important;
   color: #374151 !important;
   margin-bottom: 6px !important;
-  display: block !important;
+  
 }
 
 /* ================= INPUTS ================= */
