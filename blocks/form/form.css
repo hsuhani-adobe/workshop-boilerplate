@@ -3851,14 +3851,14 @@ remove default fieldset style
     }
 }
 
-
+/* 
 .field-dob-validation {
-  display: none;          /* ✅ hidden initially */
-  color: #d32f2f;         /* ✅ red color */
-  font-size: 12px;        /* ✅ smaller text */
-  margin-top: 6px;        /* optional spacing */
+  display: none;          /* ✅ hidden initially 
+  color: #d32f2f;         /* ✅ red color 
+  font-size: 12px;        /* ✅ smaller text 
+  margin-top: 6px;        /* optional spacing 
 }
 
 .field-dob-validation p {
-  margin: 0;              /* remove extra spacing */
-}
+  margin: 0;              /* remove extra spacing 
+} */
