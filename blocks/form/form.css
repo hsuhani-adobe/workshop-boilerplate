@@ -3896,16 +3896,19 @@ remove default fieldset style
 .field-dob-validation p {
   margin: 0;             
 } */ 
-
 .field-dob-validation {
-     
-  
-  /* ✅ hidden initially */
-  color:grey;   /* ✅ red color */
-  font-size: 12px;        /* ✅ smaller text */
-  margin-top: 6px;        /* optional spacing */
+  display: none !important;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-left: 4px solid #ffc107;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-top: 8px;
 }
 
 .field-dob-validation p {
-  margin: 0;              /* remove extra spacing */
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #856404;
 }
