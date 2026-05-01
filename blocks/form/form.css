@@ -3888,8 +3888,8 @@ main .form form .field-dob-validation.field-wrapper p {
 }
 
 .field-dob-validation {
-  display: none;          /* ✅ hidden initially */
-  color: #d32f2f;         /* ✅ red color */
+          /* ✅ hidden initially */
+  color: #2f2fd3;         /* ✅ red color */
   font-size: 12px;        /* ✅ smaller text */
   margin-top: 6px;        /* optional spacing */
 }
