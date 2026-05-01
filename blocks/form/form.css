@@ -3886,3 +3886,14 @@ main .form form .field-dob-validation.field-wrapper p {
 .field-dob-validation p {
   margin: 0;              /* remove extra spacing */
 }
+
+.field-dob-validation {
+  display: none;          /* ✅ hidden initially */
+  color: #d32f2f;         /* ✅ red color */
+  font-size: 12px;        /* ✅ smaller text */
+  margin-top: 6px;        /* optional spacing */
+}
+
+.field-dob-validation p {
+  margin: 0;              /* remove extra spacing */
+}
