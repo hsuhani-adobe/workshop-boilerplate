@@ -3914,13 +3914,11 @@ remove default fieldset style
 }
 
 
-
-
-.field-mobile_no .input-wrapper {
+.field-mobile-no {
   position: relative;
 }
 
-.field-mobile_no .input-wrapper::before {
+.field-mobile-no::before {
   content: "";
   position: absolute;
   left: 12px;
@@ -3935,8 +3933,7 @@ remove default fieldset style
   z-index: 1;
 }
 
-/* +91 text using input's padding area — no pseudo element needed */
-.field-mobile_no .input-wrapper::after {
+.field-mobile-no::after {
   content: "+91";
   position: absolute;
   left: 40px;
@@ -3949,13 +3946,11 @@ remove default fieldset style
   z-index: 1;
 }
 
-/* Divider after +91 */
-.field-mobile_no input {
+.field-mobile-no input {
   padding-left: 75px !important;
-  border-left: none;
 }
 
-.field-mobile_no input::placeholder {
+.field-mobile-no input::placeholder {
   color: #aaa;
   font-size: 13px;
 }
