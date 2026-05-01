@@ -297,11 +297,13 @@ main .form fieldset.accordion a:hover {
 
 /* ============================================
    e-Verify Income - Complete Styles
+   Built from Figma design specs
    Targets:
-     - fieldset[name="banks"]         → bank icon cards + dropdown
-     - fieldset[name="e-verify"]      → verify method cards
+     fieldset[name="banks"]      → bank icon cards + dropdown
+     fieldset[name="e-verify"]   → verify method cards
    Does NOT touch accordion styles
    ============================================ */
+
 
 /* ============================================
    BANKS PANEL
@@ -309,14 +311,15 @@ main .form fieldset.accordion a:hover {
 
 fieldset[name="banks"] {
   border: none;
-  padding: 16px 20px 20px;
+  padding: 0;
   margin: 0;
-  background: #eef0fb;
-  border-radius: 16px;
+  background: transparent;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 1096px;
 }
 
 fieldset[name="banks"] > legend {
@@ -329,9 +332,9 @@ fieldset[name="banks"] .field-bank-options {
   padding: 0;
   margin: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
 }
 
 fieldset[name="banks"] .field-bank-options > legend {
@@ -348,57 +351,66 @@ fieldset[name="banks"] .field-bank-options .radio-wrapper input[type="radio"] {
   margin: 0 !important;
 }
 
-/* Each bank wrapper */
+/* Each bank item */
 fieldset[name="banks"] .field-bank-options .radio-wrapper {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  padding: 0;
+  gap: 8px;
+  width: 82px;
+  position: relative;
+  cursor: pointer;
 }
 
-/* Label = icon box + bank name */
+/* Label */
 fieldset[name="banks"] .field-bank-options .radio-wrapper label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   cursor: pointer;
-  font-size: 12px;
+  width: 82px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
   font-weight: 500;
-  color: #444;
-  user-select: none;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  color: #4B5563;
 }
 
-/* Icon box */
+/* Icon box — 60x60 white box with neutral border */
 fieldset[name="banks"] .field-bank-options .radio-wrapper label::before {
   content: '';
+  box-sizing: border-box;
   display: block;
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
+  background: #ffffff;
+  border: 1px solid #D2D5DB;
   border-radius: 12px;
-  border: 1.5px solid #d0d5e8;
-  background: #fff;
+  flex-shrink: 0;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 fieldset[name="banks"] .field-bank-options .radio-wrapper label:hover::before {
-  border-color: #3b4fc8;
+  border-color: #1C3FCA;
 }
 
-/* Selected bank — blue border */
+/* Selected — blue border + glow */
 fieldset[name="banks"] .field-bank-options .radio-wrapper input[type="radio"]:checked + label::before {
-  border: 2px solid #3b4fc8;
-  box-shadow: 0 0 0 3px rgba(59, 79, 200, 0.12);
+  border: 2px solid #1C3FCA;
+  box-shadow: 0 0 0 3px rgba(28, 63, 202, 0.12);
 }
 
-/* Selected bank — blue label text */
+/* Selected — blue label */
 fieldset[name="banks"] .field-bank-options .radio-wrapper input[type="radio"]:checked + label {
-  color: #3b4fc8;
+  color: #1C3FCA;
   font-weight: 600;
 }
 
-/* Blue checkmark badge on selected */
+/* Selected — blue checkmark badge */
 fieldset[name="banks"] .field-bank-options .radio-wrapper input[type="radio"]:checked + label::after {
   content: '✔';
   display: flex;
@@ -406,13 +418,13 @@ fieldset[name="banks"] .field-bank-options .radio-wrapper input[type="radio"]:ch
   justify-content: center;
   width: 18px;
   height: 18px;
-  background: #3b4fc8;
+  background: #1C3FCA;
   color: #fff;
   border-radius: 50%;
   font-size: 10px;
-  border: 2px solid #eef0fb;
+  border: 2px solid #fff;
   position: absolute;
-  top: 40px;
+  top: 42px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -427,55 +439,66 @@ fieldset[name="banks"] .field-select-other-bank label {
 }
 
 fieldset[name="banks"] .field-select-other-bank select {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 20px;
+  gap: 12px;
+  width: 347px;
+  height: 52px;
+  border: 1px solid #1C3FCA;
+  border-radius: 13px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231C3FCA' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 16px center;
+  background-size: 16px;
   appearance: none;
   -webkit-appearance: none;
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
-  background-size: 14px;
-  border: 1.5px solid #d0d5e8;
-  border-radius: 10px;
-  padding: 12px 36px 12px 14px;
-  font-family: inherit;
-  font-size: 14px;
-  color: #777;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  font-feature-settings: 'ss01' on;
+  color: #1C3FCA;
   cursor: pointer;
-  min-width: 160px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 fieldset[name="banks"] .field-select-other-bank select:focus {
   outline: none;
-  border-color: #3b4fc8;
+  box-shadow: 0 0 0 3px rgba(28, 63, 202, 0.15);
 }
+
 
 /* ============================================
    e-VERIFY METHODS PANEL
    ============================================ */
 
 fieldset[name="e-verify"] {
-  background: #eef0fb;
   border: none;
-  border-radius: 16px;
-  padding: 20px 24px 24px;
+  padding: 0;
   margin: 0;
+  background: transparent;
+  width: 100%;
+  max-width: 1096px;
 }
 
 fieldset[name="e-verify"] > legend {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1a1a2e;
-  padding: 0 0 16px 0;
-  float: none;
-  width: 100%;
+  display: none;
 }
 
-/* Verify Methods Radio Group */
+/* Methods row — wrapping flex, gap: 32px 24px from Figma */
 fieldset[name="e-verify"] .field-verify-methods {
   border: none;
   padding: 0;
   margin: 0;
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
-  gap: 14px;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 32px 24px;
   width: 100%;
 }
 
@@ -486,7 +509,8 @@ fieldset[name="e-verify"] .field-verify-methods > legend {
 /* Each method card wrapper */
 fieldset[name="e-verify"] .field-verify-methods .radio-wrapper {
   flex: 1;
-  min-width: 180px;
+  min-width: 300px;
+  max-width: 349.33px;
   position: relative;
 }
 
@@ -500,88 +524,117 @@ fieldset[name="e-verify"] .field-verify-methods .radio-wrapper input[type="radio
   margin: 0 !important;
 }
 
-/* Method card label */
+/* ---- Unselected card ---- */
 fieldset[name="e-verify"] .field-verify-methods .radio-wrapper label {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  border: 1.5px solid #d0d5e8;
-  border-radius: 14px;
-  background: #fff;
-  padding: 16px 16px 50px;
+  align-items: flex-start;
+  padding: 24px;
+  gap: 20px;
+  width: 100%;
+  min-height: 128px;
+  background: #FFFFFF;
+  border: 1px solid #D2D5DB;
+  border-radius: 24px;
   cursor: pointer;
-  font-size: 15px;
-  font-weight: 700;
-  color: #1a1a2e;
-  transition: border-color 0.2s, box-shadow 0.2s;
   position: relative;
-  min-height: 120px;
-  overflow: hidden;
-  gap: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 fieldset[name="e-verify"] .field-verify-methods .radio-wrapper label:hover {
-  border-color: #9aa5e0;
+  border-color: #1C3FCA;
 }
 
-/* Radio dot via pseudo-element */
+/* Radio control indicator (square style from Figma — border-radius: 4px) */
 fieldset[name="e-verify"] .field-verify-methods .radio-wrapper label::before {
   content: '';
+  box-sizing: border-box;
   display: block;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid #bbb;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid #D2D5DB;
+  border-radius: 4px;
   background: #fff;
   flex-shrink: 0;
-  margin-bottom: 4px;
-  transition: all 0.2s;
+  transition: border-color 0.2s, background 0.2s;
 }
 
-/* Subtitle text (injected by JS) */
+/* Method title — Inter 600 20px */
+fieldset[name="e-verify"] .field-verify-methods .radio-wrapper label .method-title {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.02em;
+  color: #111827;
+  display: block;
+}
+
+/* Subtitle — Inter 400 16px */
 fieldset[name="e-verify"] .field-verify-methods .radio-wrapper label .subtitle {
-  display: block;
-  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
   font-weight: 400;
-  color: #666;
-  line-height: 1.5;
-}
-
-/* Selected card */
-fieldset[name="e-verify"] .field-verify-methods .radio-wrapper input[type="radio"]:checked + label {
-  border: 2px solid #3b4fc8;
-  box-shadow: 0 0 0 3px rgba(59, 79, 200, 0.08);
-}
-
-/* Selected radio dot — filled blue */
-fieldset[name="e-verify"] .field-verify-methods .radio-wrapper input[type="radio"]:checked + label::before {
-  border-color: #3b4fc8;
-  background: radial-gradient(circle at center, #3b4fc8 42%, #fff 46%);
-  box-shadow: 0 0 0 1px #3b4fc8;
-}
-
-/* Recommended badge (injected by JS) */
-fieldset[name="e-verify"] .field-verify-methods .radio-wrapper label .recommended-badge {
+  font-size: 16px;
+  line-height: 24px;
+  color: #4B5563;
   display: block;
-  background: #1d7a4f;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  text-align: center;
-  padding: 9px 0;
-  border-radius: 0 0 12px 12px;
-  position: absolute;
-  bottom: 0;
-  left: -1px;
-  right: -1px;
 }
+
+/* ---- Selected card ---- */
+fieldset[name="e-verify"] .field-verify-methods .radio-wrapper input[type="radio"]:checked + label {
+  background: #F3F6FD;
+  border: 1px solid #1C3FCA;
+  border-radius: 24px;
+  min-height: 152px; /* selected card is taller in Figma */
+}
+
+/* Selected radio dot — filled blue square */
+fieldset[name="e-verify"] .field-verify-methods .radio-wrapper input[type="radio"]:checked + label::before {
+  border-color: #1C3FCA;
+  background: #1C3FCA;
+  /* inner white fill via box-shadow inset */
+  box-shadow: inset 0 0 0 4px #F3F6FD;
+}
+
+/* Selected card title — black (color: #000) per Figma */
+fieldset[name="e-verify"] .field-verify-methods .radio-wrapper input[type="radio"]:checked + label .method-title {
+  color: #000000;
+}
+
+/* Recommended / badge — green pill from Figma */
+fieldset[name="e-verify"] .field-verify-methods .radio-wrapper label .recommended-badge {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 8px;
+  gap: 4px;
+  height: 28px;
+  background: #00875F;
+  border-radius: 16px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  font-feature-settings: 'ss01' on;
+  color: #FFFFFF;
+  margin-top: 4px;
+}
+
 
 /* ============================================
    RESPONSIVE
    ============================================ */
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   fieldset[name="banks"] .field-bank-options {
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   fieldset[name="banks"] .field-select-other-bank {
@@ -593,7 +646,8 @@ fieldset[name="e-verify"] .field-verify-methods .radio-wrapper label .recommende
     width: 100%;
   }
 
-  fieldset[name="e-verify"] .field-verify-methods {
-    flex-direction: column;
+  fieldset[name="e-verify"] .field-verify-methods .radio-wrapper {
+    max-width: 100%;
+    min-width: unset;
   }
 }
