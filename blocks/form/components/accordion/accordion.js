@@ -80,16 +80,12 @@ export default function decorate(panel) {
 
 
 
-// At the bottom of your existing decorate() function, AFTER the accordion is built
-export default function decorate(block) {
-  // ... your existing accordion code ...
-
-  // Add this at the very end, after DOM is ready
-  enhanceVerifyForm(block);
-}
-
-function enhanceVerifyForm(block) {
-  // Subtitle map
+/**
+ * e-Verify Income Form - JS Enhancement
+ * Adds subtitles to verify method cards & "Recommended" badge logic
+ * Drop this in your EDS block JS or as a separate script
+ */
+(function () {
   const METHOD_DETAILS = {
     'Account Aggregrater': {
       subtitle: 'Instant & secure, processed via RBI-regulated partner.',
@@ -105,28 +101,70 @@ function enhanceVerifyForm(block) {
     },
   };
 
-  block.querySelectorAll('.field-verify-methods .radio-wrapper').forEach((wrapper) => {
-    const label = wrapper.querySelector('label');
-    const input = wrapper.querySelector('input[type="radio"]');
-    if (!label || !input) return;
+  function enhanceVerifyMethods() {
+    const methodsFieldset = document.querySelector('.field-verify-methods');
+    if (!methodsFieldset) return;
 
-    const details = METHOD_DETAILS[input.value];
-    if (!details) return;
+    methodsFieldset.querySelectorAll('.radio-wrapper').forEach((wrapper) => {
+      const label = wrapper.querySelector('label');
+      const input = wrapper.querySelector('input[type="radio"]');
+      if (!label || !input) return;
 
-    const title = label.textContent.trim();
-    label.innerHTML = `<span class="method-title">${title}</span>`;
+      const value = input.value;
+      const details = METHOD_DETAILS[value];
+      if (!details) return;
 
-    const sub = document.createElement('span');
-    sub.className = 'subtitle';
-    sub.textContent = details.subtitle;
-    label.appendChild(sub);
+      // Wrap label text in a title span
+      const title = label.textContent.trim();
+      label.innerHTML = `<span class="method-title">${title}</span>`;
 
-    if (details.recommended) {
-      const badge = document.createElement('span');
-      badge.className = 'recommended-badge';
-      badge.textContent = 'Recommended';
-      label.appendChild(badge);
-      input.checked = true;
-    }
-  });
-}
+      // Add subtitle
+      const subtitleEl = document.createElement('span');
+      subtitleEl.className = 'subtitle';
+      subtitleEl.textContent = details.subtitle;
+      label.appendChild(subtitleEl);
+
+      // Mark recommended
+      if (details.recommended) {
+        label.classList.add('recommended');
+        // Auto-select first (recommended) option
+        input.checked = true;
+      }
+    });
+  }
+
+  function enhanceBankOptions() {
+    const bankFieldset = document.querySelector('.field-bank-options');
+    if (!bankFieldset) return;
+
+    // Map bank label text to display names (correcting abbreviations)
+    const BANK_NAMES = {
+      'HDFC': 'HDFC Bank',
+      'BOB': 'Bank of Bar...',
+      'IDFC': 'IDFC First',
+      'Kotak': 'Kotak',
+      'Axis': 'Axis Bank',
+      'SBI': 'SBI',
+    };
+
+    bankFieldset.querySelectorAll('.radio-wrapper').forEach((wrapper) => {
+      const label = wrapper.querySelector('label');
+      if (!label) return;
+      const text = label.textContent.trim();
+      if (BANK_NAMES[text]) {
+        label.textContent = BANK_NAMES[text];
+      }
+    });
+  }
+
+  // Run after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      enhanceVerifyMethods();
+      enhanceBankOptions();
+    });
+  } else {
+    enhanceVerifyMethods();
+    enhanceBankOptions();
+  }
+})();
