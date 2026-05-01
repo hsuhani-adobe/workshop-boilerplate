@@ -3912,3 +3912,50 @@ remove default fieldset style
   font-weight: 500;
   color: #856404;
 }
+
+
+
+
+.field-mobile_no .input-wrapper {
+  position: relative;
+}
+
+.field-mobile_no .input-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 15px;
+  background-image: url("https://flagcdn.com/w40/in.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* +91 text using input's padding area — no pseudo element needed */
+.field-mobile_no .input-wrapper::after {
+  content: "+91";
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Divider after +91 */
+.field-mobile_no input {
+  padding-left: 75px !important;
+  border-left: none;
+}
+
+.field-mobile_no input::placeholder {
+  color: #aaa;
+  font-size: 13px;
+}
