@@ -3912,47 +3912,66 @@ remove default fieldset style
   font-weight: 500;
   color: #856404;
 }
-.field-mobile-no {
+
+
+
+.mobile-input-container {
+  display: flex;
+  align-items: center;
   position: relative;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  height: 44px;
+  padding: 0 10px;
 }
 
-/* Flag */
-.field-mobile-no::before {
-  content: "";
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+.mobile-input-container:focus-within {
+  border-color: #e01f26;
+  box-shadow: 0 0 0 2px rgba(224, 31, 38, 0.1);
+}
+
+.mobile-prefix-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.mobile-flag {
   width: 18px;
   height: 12px;
-  background-image: url("https://flagcdn.com/w40/in.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  pointer-events: none;
-  z-index: 1;
+  object-fit: cover;
+  border-radius: 2px;
 }
 
-/* +91 */
-.field-mobile-no::after {
-  content: "+91";
-  position: absolute;
-  left: 34px;
-  top: 50%;
-  transform: translateY(-50%);
+.mobile-code {
   font-size: 13px;
   font-weight: 600;
   color: #333;
-  pointer-events: none;
-  z-index: 1;
 }
 
-/* Push input text past flag + +91 */
-.field-mobile-no input {
-  padding-left: 68px !important;
-  box-sizing: border-box;
+.mobile-divider {
+  width: 1px;
+  height: 18px;
+  background: #ccc;
+  margin-left: 4px;
 }
 
-.field-mobile-no input::placeholder {
+.mobile-input-container input {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  flex: 1;
+  font-size: 13px;
+  color: #333;
+  background: transparent;
+  padding-left: 8px !important;
+  height: 100%;
+}
+
+.mobile-input-container input::placeholder {
   color: #aaa;
   font-size: 13px;
 }
