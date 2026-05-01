@@ -5329,8 +5329,7 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
 
 
 
-
-  .field-confirm-button button.button[name="confirm"] {
+.field-confirm button.button[name="confirm"] {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -5351,18 +5350,18 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
   letter-spacing: 0.01em !important;
 }
 
-.field-confirm-button button.button[name="confirm"]::after {
+.field-confirm button.button[name="confirm"]::after {
   content: "›" !important;
   font-size: 22px !important;
   font-weight: 300 !important;
   margin-left: 4px !important;
 }
 
-.field-confirm-button button.button[name="confirm"]:hover {
+.field-confirm button.button[name="confirm"]:hover {
   background: #1c3fca !important;
   box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
 }
 
-.field-confirm-button button.button[name="confirm"]:active {
+.field-confirm button.button[name="confirm"]:active {
   background: #1633a8 !important;
 }
