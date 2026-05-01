@@ -5326,3 +5326,43 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
     width: 100% !important;
     flex: 0 0 100% !important;
   }}
+
+
+
+
+  .field-confirm-button button.button[name="confirm"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  height: 52px !important;
+  padding: 0 24px !important;
+  background: #6b84d9 !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background 0.2s, box-shadow 0.2s !important;
+  letter-spacing: 0.01em !important;
+}
+
+.field-confirm-button button.button[name="confirm"]::after {
+  content: "›" !important;
+  font-size: 22px !important;
+  font-weight: 300 !important;
+  margin-left: 4px !important;
+}
+
+.field-confirm-button button.button[name="confirm"]:hover {
+  background: #1c3fca !important;
+  box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
+}
+
+.field-confirm-button button.button[name="confirm"]:active {
+  background: #1633a8 !important;
+}
