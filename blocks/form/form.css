@@ -3913,17 +3913,16 @@ remove default fieldset style
   color: #856404;
 }
 
-
 .field-mobile-no {
   position: relative;
 }
 
+/* Flag */
 .field-mobile-no::before {
   content: "";
   position: absolute;
   left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 38px; /* below label, aligned to input */
   width: 22px;
   height: 15px;
   background-image: url("https://flagcdn.com/w40/in.png");
@@ -3933,24 +3932,26 @@ remove default fieldset style
   z-index: 1;
 }
 
+/* +91 */
 .field-mobile-no::after {
   content: "+91";
   position: absolute;
   left: 40px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 13px;
+  top: 34px; /* aligned to input text */
+  font-size: 12px;
   font-weight: 600;
   color: #333;
   pointer-events: none;
   z-index: 1;
 }
 
+/* Divider line */
 .field-mobile-no input {
   padding-left: 75px !important;
+  box-sizing: border-box;
 }
 
 .field-mobile-no input::placeholder {
   color: #aaa;
-  font-size: 13px;
+  font-size: 12px;
 }
