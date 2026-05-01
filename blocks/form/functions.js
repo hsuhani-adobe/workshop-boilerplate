@@ -79,12 +79,10 @@ function calcEMI(principal, annualRate, months) {
  */
 function validateDOBAndToggleText(dob) {
     const textComponent = document.querySelector(".field-dob-validation");
+ 
+     if (!dob || !textComponent) return;
 
-     // Hide initially if no dob provided yet
-    if (!dob || !textComponent) {
-        if (textComponent) textComponent.style.display = "none";
-        return;
-    }
+    
 
     let birthDate;
 
