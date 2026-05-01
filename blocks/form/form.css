@@ -2687,7 +2687,7 @@ field-kyc-verification-summary-panel* {
 /* Wrapper */
 .plain-text-wrapper.field-income-note.field-wrapper,
 .plain-text-wrapper.field-self-employed.field-wrapper {
-  background: #fffaf0;
+  background: #fff3cd;
   border: 1px solid #f0d9a7;
   border-radius: 6px;
   padding: 6px 10px 6px 28px; /* extra left space for icon */
@@ -2709,10 +2709,10 @@ field-kyc-verification-summary-panel* {
 /* Text styling */
 .plain-text-wrapper.field-income-note.field-wrapper p,
 .plain-text-wrapper.field-self-employed.field-wrapper p {
-  font-size: 12px !important;
+  font-size: 13px !important;
   font-weight: 500 !important;
   color: #6b4f0f !important;
-  line-height: 1.4 !important;
+  line-height: 1.5 !important;
   margin: 0 !important;
 }
 
@@ -3908,7 +3908,7 @@ remove default fieldset style
 
 .field-dob-validation p {
   margin: 0;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: #856404;
 }
