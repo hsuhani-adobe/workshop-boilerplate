@@ -282,7 +282,7 @@ function resendOtp() {
 
   // Update attempts field display
   if (attemptsInput) {
-    attemptsInput.value = `${attemptsLeft}/${totalAttempts} attempts left`;
+    attemptsInput.value = `${attemptsLeft}/${totalAttempts} attempts lef`;
   }
 
   // Always restart timer on a valid click
@@ -297,5 +297,5 @@ function resendOtp() {
     return `0/${totalAttempts} attempts left`;
   }
 
-  return `${attemptsLeft}/${totalAttempts} attempts left`;
+  return `${attemptsLeft}/${totalAttempts} attempts `;
 }
