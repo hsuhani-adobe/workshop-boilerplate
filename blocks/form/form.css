@@ -3883,13 +3883,24 @@ main .form form .field-dob-validation.field-wrapper p {
 }
 
 
+/* /* .field-dob-validation p {
+  margin: 0;              /* remove extra spacing 
+} 
+
+/* .field-dob-validation {
+          
+  color: #2f2fd3;         
+  font-size: 12px;        
+  margin-top: 6px;        
+} */
+/* 
 .field-dob-validation p {
-  margin: 0;              /* remove extra spacing */
-}
+  margin: 0;             
+} */ 
 
 .field-dob-validation {
-          /* ✅ hidden initially */
-  color: #2f2fd3;         /* ✅ red color */
+  display: none;          /* ✅ hidden initially */
+  color: #d32f2f;         /* ✅ red color */
   font-size: 12px;        /* ✅ smaller text */
   margin-top: 6px;        /* optional spacing */
 }
