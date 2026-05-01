@@ -4214,177 +4214,160 @@ fieldset.panel-wrapper.field-name-as-pan .field-description p {
 
 /* ============================================================
    EDS Forms — Panel Styles
-   
-   STRUCTURE:
-     fieldset.field-customer-details          ← outer wrapper
-       fieldset.panel-wrapper                 ← any sub-panel (PAN, Personal, etc.)
-         legend.field-label                   ← panel heading
-         div.text-wrapper.col-6 / .col-12     ← field wrappers
-           label.field-label                  ← floating label
-           input[type="text"]                 ← input
-           div.field-description              ← helper text (optional)
-   
-   HOW TO ADD NEW PANELS:
-   Just add a new fieldset in UE — no new CSS needed.
-   Only add a panel-specific rule if you need a layout override.
+   Generic: applies to ALL sub-panels inside .field-customer-details
    ============================================================ */
 
 
 /* -----------------------------------------------------------
-   OUTER CUSTOMER DETAILS PANEL
-   Strips all visual styling — acts as a transparent wrapper
+   OUTER WRAPPER — transparent, stacks sub-panels vertically
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-customer-details {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
 }
 
-/* Hide the outer panel's own legend if not needed */
 fieldset.panel-wrapper.field-customer-details > legend.field-label {
-  display: none;
+  display: none !important;
 }
 
 
 /* -----------------------------------------------------------
-   ALL INNER SUB-PANELS  (panel-wrapper inside customer-details)
-   This targets every child fieldset automatically —
-   field-name-as-pan, field-personal-details, and any future panels
+   SUB-PANEL CARD
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper {
-  box-sizing: border-box;
-  position: relative;
+  box-sizing: border-box !important;
+  position: relative !important;
+  padding: 76px 24px 32px 24px !important;
+  margin: 0 !important;
+  border: 1px solid #ECEDF3 !important;
+  border-radius: 16px !important;
+  background: #FFFFFF !important;
+  width: 100% !important;
 
-  /* Space for the absolutely-positioned legend header */
-  padding: 76px 24px 32px 24px;
-
-  border: 1px solid #ECEDF3;
-  border-radius: 16px;
-  background: #FFFFFF;
-  width: 100%;
-
-  /* Flex-wrap row: fields sit side-by-side, wrap to next row */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 20px 24px;
+  /* Two-column flex layout */
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  align-content: flex-start !important;
+  gap: 20px 24px !important;
 }
 
 
 /* -----------------------------------------------------------
-   SUB-PANEL LEGEND — gradient header bar
-   position: absolute so it doesn't participate in flex flow
+   SUB-PANEL LEGEND — gradient header, absolutely positioned
+   so it doesn't consume space in the flex row
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > legend.field-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  box-sizing: border-box;
-  width: 100%;
-  padding: 18px 24px;
-  margin: 0;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 18px 24px !important;
+  margin: 0 !important;
 
-  background: linear-gradient(90deg, #EEF2FD 0%, #D5DFF9 100%);
-  border-radius: 15px 15px 0 0;
+  background: linear-gradient(90deg, #EEF2FD 0%, #D5DFF9 100%) !important;
+  border-radius: 15px 15px 0 0 !important;
 
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
 
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  color: #111827;
-
-  /* Prevent legend text from wrapping */
-  white-space: nowrap;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  line-height: 24px !important;
+  letter-spacing: -0.01em !important;
+  color: #111827 !important;
+  white-space: nowrap !important;
 }
 
-/* Panel icon (left of heading) — generic card/section icon */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > legend.field-label::before {
-  content: '';
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 18' fill='none'%3E%3Crect x='1' y='1' width='20' height='16' rx='3' stroke='%234F6FDF' stroke-width='1.5'/%3E%3Cpath d='M4 7h4M4 11h2' stroke='%234F6FDF' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='15' cy='7' r='2.5' stroke='%234F6FDF' stroke-width='1.5'/%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
+  content: '' !important;
+  display: inline-block !important;
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 18' fill='none'%3E%3Crect x='1' y='1' width='20' height='16' rx='3' stroke='%234F6FDF' stroke-width='1.5'/%3E%3Cpath d='M4 7h4M4 11h2' stroke='%234F6FDF' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='15' cy='7' r='2.5' stroke='%234F6FDF' stroke-width='1.5'/%3E%3C/svg%3E") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
 }
 
-/* Info (ⓘ) icon (right of heading text) */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > legend.field-label::after {
-  content: '';
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  margin-left: 4px;
-  flex-shrink: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Ccircle cx='8' cy='8' r='7' stroke='%236B7280' stroke-width='1.4'/%3E%3Cpath d='M8 7.5v3.5M8 5v.01' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
+  content: '' !important;
+  display: inline-block !important;
+  width: 15px !important;
+  height: 15px !important;
+  margin-left: 4px !important;
+  flex-shrink: 0 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Ccircle cx='8' cy='8' r='7' stroke='%236B7280' stroke-width='1.4'/%3E%3Cpath d='M8 7.5v3.5M8 5v.01' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
 }
 
 
 /* -----------------------------------------------------------
-   FIELD WRAPPERS inside sub-panels
-   col-6 = 50% width  |  col-12 = 100% width
+   FIELD WRAPPERS — col-6 = 2 per row, col-12 = full width
+   !important overrides EDS default block/width styles
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper {
-  box-sizing: border-box;
-  position: relative;   /* anchor for floating label */
-  min-width: 0;
+  box-sizing: border-box !important;
+  position: relative !important;
+  min-width: 0 !important;
+  /* Reset any EDS default margins/padding */
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* col-6: two fields per row */
+/* col-6: exactly half the row minus half the column gap (24px / 2 = 12px) */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper.col-6 {
-  flex: 0 0 calc(50% - 12px);
+  width: calc(50% - 12px) !important;
+  flex: 0 0 calc(50% - 12px) !important;
 }
 
-/* col-12: full-width field */
+/* col-12: full row */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper.col-12 {
-  flex: 0 0 100%;
+  width: 100% !important;
+  flex: 0 0 100% !important;
 }
 
 
 /* -----------------------------------------------------------
    FLOATING LABEL
-   Sits on top of the input's top border
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper > label.field-label {
-  position: absolute;
-  top: 0;
-  left: 12px;
-  transform: translateY(-50%);
-  z-index: 1;
+  position: absolute !important;
+  top: 0 !important;
+  left: 12px !important;
+  transform: translateY(-50%) !important;
+  z-index: 1 !important;
 
-  background: #FFFFFF;
-  padding: 0 4px;
+  background: #FFFFFF !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
 
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
-  color: #6B7280;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+  color: #6B7280 !important;
 
-  pointer-events: none;
-  white-space: nowrap;
-  transition: color 0.15s ease;
+  pointer-events: none !important;
+  white-space: nowrap !important;
+  transition: color 0.15s ease !important;
 }
 
-/* Blue label on focus */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper:focus-within > label.field-label {
-  color: #4F6FDF;
+  color: #4F6FDF !important;
 }
 
 
@@ -4392,92 +4375,97 @@ fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-w
    TEXT INPUT
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper > input[type="text"] {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  height: 56px;
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 56px !important;
+  padding: 20px 16px 8px 16px !important;
+  margin: 0 !important;
 
-  /* Top padding clears the floating label */
-  padding: 20px 16px 8px 16px;
+  background: #FFFFFF !important;
+  border: 1px solid #D2D5DB !important;
+  border-radius: 10px !important;
 
-  background: #FFFFFF;
-  border: 1px solid #D2D5DB;
-  border-radius: 10px;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  color: #111827 !important;
 
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #111827;
-
-  outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
 }
 
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper > input[type="text"]::placeholder {
-  color: #9CA3AF;
+  color: #9CA3AF !important;
 }
 
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper > input[type="text"]:focus {
-  border-color: #4F6FDF;
-  box-shadow: 0 0 0 3px rgba(79, 111, 223, 0.10);
+  border-color: #4F6FDF !important;
+  box-shadow: 0 0 0 3px rgba(79, 111, 223, 0.10) !important;
 }
 
 
 /* -----------------------------------------------------------
-   HELPER / DESCRIPTION TEXT
+   HELPER TEXT
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper .field-description {
-  display: block;
-  margin-top: 6px;
+  display: block !important;
+  margin-top: 6px !important;
+  padding: 0 !important;
 
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 20px;
-  color: #6B7280;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  line-height: 20px !important;
+  color: #6B7280 !important;
 }
 
 fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper .field-description p {
-  margin: 0;
+  margin: 0 !important;
 }
 
 
 /* -----------------------------------------------------------
-   RESPONSIVE — tablet
+   RESPONSIVE — tablet (768px): tighten gaps
    ----------------------------------------------------------- */
 @media (max-width: 768px) {
   fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper {
-    padding: 68px 16px 24px 16px;
-    gap: 16px 16px;
+    padding: 68px 16px 24px 16px !important;
+    gap: 16px !important;
   }
 
   fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > legend.field-label {
-    padding: 14px 16px;
-    font-size: 14px;
-    border-radius: 15px 15px 0 0;
+    padding: 14px 16px !important;
+    font-size: 14px !important;
+  }
+
+  fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper.col-6 {
+    width: calc(50% - 8px) !important;
+    flex: 0 0 calc(50% - 8px) !important;
   }
 }
 
+
 /* -----------------------------------------------------------
-   RESPONSIVE — mobile: stack all fields to full width
+   RESPONSIVE — mobile (540px): single column
    ----------------------------------------------------------- */
 @media (max-width: 540px) {
   fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper {
-    padding: 64px 12px 20px 12px;
-    border-radius: 12px;
-    gap: 16px;
+    padding: 64px 12px 20px 12px !important;
+    border-radius: 12px !important;
+    gap: 16px !important;
   }
 
   fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > legend.field-label {
-    padding: 12px 16px;
-    font-size: 13px;
-    white-space: normal;
-    border-radius: 11px 11px 0 0;
+    padding: 12px 14px !important;
+    font-size: 13px !important;
+    white-space: normal !important;
+    border-radius: 11px 11px 0 0 !important;
   }
 
-  fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper.col-6,
-  fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper.col-12 {
-    flex: 0 0 100%;
+  fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper.col-6 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
   }
 }
