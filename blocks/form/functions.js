@@ -265,7 +265,6 @@ function startOtpTimer() {
 
   return `Resend OTP in ${timerValue} secs`;
 }
-
 /**
  * Handles resend OTP click - decreases attempts and restarts timer
  * @returns {string} updated attempts display value
@@ -296,6 +295,12 @@ function resendOtp() {
   // Still have attempts - restart timer
   startOtpTimer();
 
+  // Disable button after last allowed resend
+  const isLastAttempt = attemptsLeft <= 1;
+  if (isLastAttempt) {
+    if (resendBtn) resendBtn.disabled = true;
+    if (resendWrapper) resendWrapper.style.setProperty('display', 'none', 'important');
+  }
+
   return `${attemptsLeft}/${totalAttempts} attempts left`;
 }
-
