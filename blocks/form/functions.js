@@ -79,10 +79,14 @@ function calcEMI(principal, annualRate, months) {
  */
 function validateDOBAndToggleText(dob) {
     const textComponent = document.querySelector(".field-dob-validation");
- 
-     if (!dob || !textComponent) return;
 
-    
+    if (!textComponent) return;
+
+    // Hide initially when no dob
+    if (!dob) {
+        textComponent.style.setProperty('display', 'none', 'important');
+        return;
+    }
 
     let birthDate;
 
@@ -120,7 +124,7 @@ function validateDOBAndToggleText(dob) {
 
         // ❌ Invalid date fallback
         if (!birthDate || isNaN(birthDate.getTime())) {
-            textComponent.style.display = "none";
+            textComponent.style.setProperty('display', 'none', 'important');
             return;
         }
 
@@ -137,7 +141,11 @@ function validateDOBAndToggleText(dob) {
         }
 
         // ✅ FINAL CONDITION
-        textComponent.style.display = age < 21 ? "block !important": "none !important";
+        if (age < 21) {
+            textComponent.style.setProperty('display', 'block', 'important');
+        } else {
+            textComponent.style.setProperty('display', 'none', 'important');
+        }
 
         console.log("DOB:", dob);
         console.log("Parsed:", birthDate);
@@ -145,7 +153,7 @@ function validateDOBAndToggleText(dob) {
 
     } catch (e) {
         console.error("DOB parsing error:", e);
-        textComponent.style.display = "none";
+        textComponent.style.setProperty('display', 'none', 'important');
     }
 }
 
