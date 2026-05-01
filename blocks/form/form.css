@@ -3996,20 +3996,35 @@ remove default fieldset style
 
 
 /* TIER 2*/
-/* ============================================
-   Full Name (As per PAN) — Panel Styles
-   Matches screenshot: floating labels, 2-col grid
-   ============================================ */
+/* ============================================================
+   Full Name (As per PAN) — Panel
+   Targets: fieldset#panelcontainer-50456af472.field-name-as-pan
+   HTML structure:
+     fieldset.panel-wrapper.field-name-as-pan
+       legend.field-label
+       div.text-wrapper.field-first-name
+         label.field-label
+         input[type="text"]
+       div.text-wrapper.field-text-input-762...
+         label.field-label
+         input[type="text"]
+         div.field-description
+       div.text-wrapper.field-last-name
+         label.field-label
+         input[type="text"]
+   ============================================================ */
 
-/* --- Panel Container (fieldset reset) --- */
-fieldset.panel-wrapper {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  padding: 0 0 32px 0;
+/* -----------------------------------------------------------
+   1. FIELDSET — outer card
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-name-as-pan {
+  /* Reset browser fieldset defaults */
   margin: 0;
+  padding: 0 0 28px 0;
+  min-width: 0;
+  box-sizing: border-box;
 
+  /* Card styles */
   background: #FFFFFF;
   border: 1px solid #ECEDF3;
   border-radius: 16px;
@@ -4017,110 +4032,139 @@ fieldset.panel-wrapper {
 
   width: 100%;
   max-width: 1160px;
-  min-width: 0;
+
+  /* Grid for inner fields — legend floats out of flow,
+     the three .text-wrapper divs form the grid */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto; /* legend row + 2 field rows */
+  column-gap: 20px;
+  row-gap: 20px;
+  align-items: start;
 }
 
-/* --- Panel Header (legend) --- */
-fieldset.panel-wrapper > legend.field-label {
-  float: left;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 18px 24px;
-  margin: 0 0 24px 0;
+/* -----------------------------------------------------------
+   2. LEGEND — full-width header row
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-name-as-pan > legend.field-label {
+  /* Stretch across both grid columns */
+  grid-column: 1 / -1;
+  grid-row: 1;
 
-  background: linear-gradient(90deg, #F0F3FD 0%, #D8E1FB 100%);
-
+  /* Override browser legend float */
   display: flex;
   align-items: center;
   gap: 8px;
+  float: none;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 16px 24px;
+  margin: 0 0 4px 0;  /* small gap before first field row */
+
+  background: linear-gradient(90deg, #EEF2FD 0%, #D5DFF9 100%);
 
   font-family: 'Inter', sans-serif;
+  font-style: normal;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 24px;
   letter-spacing: -0.01em;
   color: #111827;
 }
 
-/* PAN card icon before legend text */
-fieldset.panel-wrapper > legend.field-label::before {
+/* PAN card icon */
+fieldset.panel-wrapper.field-name-as-pan > legend.field-label::before {
   content: '';
-  display: inline-flex;
+  display: inline-block;
   width: 22px;
   height: 18px;
   flex-shrink: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 18' fill='none'%3E%3Crect x='1' y='1' width='20' height='16' rx='3' stroke='%234F6FDF' stroke-width='1.5'/%3E%3Cpath d='M4 7h4M4 11h2' stroke='%234F6FDF' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='15' cy='7' r='2.5' stroke='%234F6FDF' stroke-width='1.5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
-/* Info (i) icon after legend text */
-fieldset.panel-wrapper > legend.field-label::after {
+/* Info (ⓘ) icon */
+fieldset.panel-wrapper.field-name-as-pan > legend.field-label::after {
   content: '';
-  display: inline-flex;
-  width: 16px;
-  height: 16px;
-  margin-left: 4px;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-left: 2px;
   flex-shrink: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Ccircle cx='8' cy='8' r='7' stroke='%236B7280' stroke-width='1.4'/%3E%3Cpath d='M8 7v5M8 5v.5' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Ccircle cx='8' cy='8' r='7' stroke='%236B7280' stroke-width='1.4'/%3E%3Cpath d='M8 7.5v3.5M8 5v.01' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
-/* Clearfix after float */
-fieldset.panel-wrapper::after {
-  content: '';
-  display: block;
-  clear: both;
-}
+/* -----------------------------------------------------------
+   3. FIELD WRAPPERS — grid placement
+      Grid starts at row 2 (row 1 = legend)
+      Browsers vary on legend-in-grid behaviour so we use
+      padding-top on fieldset + margin-top on legend to keep
+      the header visually correct, and rely on the three
+      .text-wrapper divs being the only non-legend children.
+   ----------------------------------------------------------- */
 
-/* --- Fields Grid Layout --- */
-.field-name-as-pan {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 24px;
-  row-gap: 20px;
-  padding: 0 24px;
-  align-items: start;
-  /* Override flex from fieldset to allow grid */
-  display: grid !important;
-}
-
-/* Grid placement */
-.field-name-as-pan > .field-first-name {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.field-name-as-pan > .field-text-input-7622509141777672531781 {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.field-name-as-pan > .field-last-name {
+/* First Name — col 1, row 1 of fields */
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-first-name {
   grid-column: 1;
   grid-row: 2;
 }
 
-/* --- Individual Field Wrapper --- */
-.field-name-as-pan > .text-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+/* Middle Name — col 2, row 1 of fields */
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-text-input-7622509141777672531781 {
+  grid-column: 2;
+  grid-row: 2;
 }
 
-/* --- Floating Label --- */
-.field-name-as-pan .field-label {
-  position: absolute;
-  top: -9px;
-  left: 12px;
-  z-index: 2;
+/* Last Name — col 1, row 2 of fields */
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-last-name {
+  grid-column: 1;
+  grid-row: 3;
+}
 
+/* Side-padding for all field wrappers */
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper {
+  box-sizing: border-box;
+  position: relative;   /* anchor for the floating label */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Left/right padding via grid padding on fieldset */
+fieldset.panel-wrapper.field-name-as-pan {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Legend must bleed to full width — negative margins cancel the grid padding */
+fieldset.panel-wrapper.field-name-as-pan > legend.field-label {
+  margin-left: -24px;
+  margin-right: -24px;
+  width: calc(100% + 48px);
+}
+
+/* -----------------------------------------------------------
+   4. FLOATING LABEL
+      label sits in normal flow but is lifted via transform
+      so it floats above the input border when active/filled.
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper > label.field-label {
+  /* Remove from normal flow — position over input top-border */
+  position: absolute;
+  top: 0;
+  left: 12px;
+  transform: translateY(-50%);   /* sit exactly on the border line */
+  z-index: 1;
+
+  /* White pill so it masks the border behind it */
   background: #FFFFFF;
   padding: 0 4px;
 
   font-family: 'Inter', sans-serif;
+  font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
@@ -4128,18 +4172,23 @@ fieldset.panel-wrapper::after {
 
   pointer-events: none;
   white-space: nowrap;
+  transition: color 0.15s ease;
 }
 
-/* Blue label color on focus */
-.field-name-as-pan .text-wrapper:focus-within .field-label {
+/* Label turns brand-blue when the input inside is focused */
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper:focus-within > label.field-label {
   color: #4F6FDF;
 }
 
-/* --- Input Fields --- */
-.field-name-as-pan input[type="text"] {
+/* -----------------------------------------------------------
+   5. INPUT
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper > input[type="text"] {
   box-sizing: border-box;
   width: 100%;
   height: 56px;
+
+  /* Top padding larger to push text below the floating label */
   padding: 20px 16px 8px 16px;
 
   background: #FFFFFF;
@@ -4147,6 +4196,7 @@ fieldset.panel-wrapper::after {
   border-radius: 10px;
 
   font-family: 'Inter', sans-serif;
+  font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -4156,77 +4206,92 @@ fieldset.panel-wrapper::after {
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Placeholder for empty unfocused state */
-.field-name-as-pan input[type="text"]::placeholder {
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper > input[type="text"]::placeholder {
   color: #9CA3AF;
-  font-size: 16px;
 }
 
-/* Focus border */
-.field-name-as-pan input[type="text"]:focus {
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper > input[type="text"]:focus {
   border-color: #4F6FDF;
   box-shadow: 0 0 0 3px rgba(79, 111, 223, 0.10);
 }
 
-/* --- Helper / Description Text --- */
-.field-name-as-pan .field-description {
+/* -----------------------------------------------------------
+   6. HELPER / DESCRIPTION TEXT
+      .field-description sits after the input inside
+      .text-wrapper.field-text-input-762...
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-name-as-pan .field-description {
   margin-top: 6px;
-  padding-left: 4px;
+  padding: 0 2px;
 
   font-family: 'Inter', sans-serif;
+  font-style: normal;
   font-weight: 400;
   font-size: 13px;
   line-height: 20px;
   color: #6B7280;
 
-  display: block; /* Always visible per screenshot */
+  display: block; /* always visible per screenshot */
 }
 
-.field-name-as-pan .field-description p {
+fieldset.panel-wrapper.field-name-as-pan .field-description p {
   margin: 0;
 }
 
-/* --- Responsive: Tablet --- */
+/* -----------------------------------------------------------
+   7. RESPONSIVE
+   ----------------------------------------------------------- */
+
+/* Tablet */
 @media (max-width: 768px) {
-  .field-name-as-pan {
-    grid-template-columns: 1fr 1fr !important;
-    padding: 0 16px;
+  fieldset.panel-wrapper.field-name-as-pan {
+    grid-template-columns: 1fr 1fr;
     column-gap: 16px;
-    row-gap: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  fieldset.panel-wrapper {
-    padding-bottom: 24px;
+  fieldset.panel-wrapper.field-name-as-pan > legend.field-label {
+    margin-left: -16px;
+    margin-right: -16px;
+    width: calc(100% + 32px);
+    padding: 14px 16px;
   }
 }
 
-/* --- Responsive: Mobile --- */
+/* Mobile */
 @media (max-width: 540px) {
-  .field-name-as-pan {
-    grid-template-columns: 1fr !important;
-    padding: 0 12px;
+  fieldset.panel-wrapper.field-name-as-pan {
+    grid-template-columns: 1fr;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 20px;
+    border-radius: 12px;
     row-gap: 16px;
   }
 
-  .field-name-as-pan > .field-first-name,
-  .field-name-as-pan > .field-text-input-7622509141777672531781,
-  .field-name-as-pan > .field-last-name {
-    grid-column: 1 !important;
-  }
-
-  .field-name-as-pan > .field-first-name  { grid-row: 1 !important; }
-  .field-name-as-pan > .field-text-input-7622509141777672531781 { grid-row: 2 !important; }
-  .field-name-as-pan > .field-last-name   { grid-row: 3 !important; }
-
-  fieldset.panel-wrapper {
-    border-radius: 12px;
-    padding-bottom: 20px;
-  }
-
-  fieldset.panel-wrapper > legend.field-label {
+  fieldset.panel-wrapper.field-name-as-pan > legend.field-label {
+    margin-left: -12px;
+    margin-right: -12px;
+    width: calc(100% + 24px);
     font-size: 14px;
-    padding: 14px 16px;
-    margin-bottom: 16px;
+    padding: 12px 16px;
+    margin-bottom: 0;
+  }
+
+  fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-first-name {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-text-input-7622509141777672531781 {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-last-name {
+    grid-column: 1;
+    grid-row: 4;
   }
 }
 
