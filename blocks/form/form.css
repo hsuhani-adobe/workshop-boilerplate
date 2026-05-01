@@ -5115,3 +5115,214 @@ fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper.field-add
     font-size: 16px !important;
   }
 }
+
+
+
+  FLOATING LABEL
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper > label.field-label {
+  position: absolute !important;
+  top: 0 !important;
+  left: 12px !important;
+  transform: translateY(-50%) !important;
+  z-index: 1 !important;
+ 
+  background: #FFFFFF !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+ 
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+  color: #6B7280 !important;
+ 
+  pointer-events: none !important;
+  white-space: nowrap !important;
+  transition: color 0.15s ease !important;
+}
+ 
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper:focus-within > label.field-label {
+  color: #4F6FDF !important;
+}
+ 
+ 
+/* -----------------------------------------------------------
+   TEXT INPUT
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper > input[type="text"] {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 56px !important;
+  padding: 20px 16px 8px 16px !important;
+  margin: 0 !important;
+ 
+  background: #FFFFFF !important;
+  border: 1px solid #D2D5DB !important;
+  border-radius: 10px !important;
+ 
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  color: #111827 !important;
+ 
+  outline: none !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+ 
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper > input[type="text"]::placeholder {
+  color: #9CA3AF !important;
+}
+ 
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper > input[type="text"]:focus {
+  border-color: #4F6FDF !important;
+  box-shadow: 0 0 0 3px rgba(79, 111, 223, 0.10) !important;
+}
+ 
+ 
+/* -----------------------------------------------------------
+   HELPER TEXT
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper .field-description {
+  display: block !important;
+  margin-top: 6px !important;
+  padding: 0 !important;
+ 
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  line-height: 20px !important;
+  color: #6B7280 !important;
+}
+ 
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper .field-description p {
+  margin: 0 !important;
+}
+ 
+ 
+/* -----------------------------------------------------------
+   FULLNAME AADHAAR — direct child of customer-details panel
+   Violet bg pill, left accent bar, label + bold value, no box
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adhar {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  position: relative !important;
+  padding: 12px 20px 12px 20px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  background: #F4F0FF !important;
+  border-radius: 12px !important;
+}
+ 
+/* Left violet accent bar */
+fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adhar::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 8px !important;
+  bottom: 8px !important;
+  width: 3px !important;
+  background: #CDBBFD !important;
+  border-radius: 2px !important;
+}
+ 
+fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adhar::after {
+  display: none !important;
+}
+ 
+/* Label */
+fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adhar > label.field-label {
+  position: static !important;
+  transform: none !important;
+  display: block !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 0 4px 0 !important;
+  top: auto !important;
+  left: auto !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  color: #4B5563 !important;
+  white-space: nowrap !important;
+}
+ 
+/* Input — transparent, no border, display text */
+fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adhar > input[type="text"] {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 28px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 18px !important;
+  line-height: 28px !important;
+  color: #111827 !important;
+}
+ 
+fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adhar > input[type="text"]::placeholder {
+  color: #9CA3AF !important;
+  font-weight: 400 !important;
+}
+ 
+fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adhar > input[type="text"]:focus {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+ 
+ 
+/* -----------------------------------------------------------
+   RESPONSIVE — tablet (768px): tighten gaps
+   ----------------------------------------------------------- */
+@media (max-width: 768px) {
+  fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper {
+    padding: 68px 16px 24px 16px !important;
+    gap: 16px !important;
+  }
+ 
+  fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > legend.field-label {
+    padding: 14px 16px !important;
+    font-size: 14px !important;
+  }
+ 
+  fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper.col-6 {
+    width: calc(50% - 8px) !important;
+    flex: 0 0 calc(50% - 8px) !important;
+  }
+}
+ 
+ 
+/* -----------------------------------------------------------
+   RESPONSIVE — mobile (540px): single column
+   ----------------------------------------------------------- */
+@media (max-width: 540px) {
+  fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper {
+    padding: 64px 12px 20px 12px !important;
+    border-radius: 12px !important;
+    gap: 16px !important;
+  }
+ 
+  fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > legend.field-label {
+    padding: 12px 14px !important;
+    font-size: 13px !important;
+    white-space: normal !important;
+    border-radius: 11px 11px 0 0 !important;
+  }
+ 
+  fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper > .text-wrapper.col-6 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+  }}
