@@ -3975,3 +3975,246 @@ remove default fieldset style
   color: #aaa;
   font-size: 13px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* TIER 2*/
+/* ============================================
+   Full Name (as in PAN) — Panel Styles
+   Based on Figma spec: Frame 1410120673
+   ============================================ */
+
+/* --- Panel Container --- */
+.panel-wrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 16px 32px;
+  gap: 32px;
+
+  width: 1160px;
+
+  background: #FFFFFF;
+  border: 1px solid #ECEDF3;
+  border-radius: 24px;
+}
+
+/* Remove default fieldset styles */
+fieldset.panel-wrapper {
+  border: 1px solid #ECEDF3;
+  margin: 0;
+  min-width: 0;
+}
+
+/* --- Panel Legend / Section Header --- */
+fieldset.panel-wrapper > legend {
+  /* Reset legend positioning to act as a flex header */
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0;
+
+  /* Header section styling */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 24px 32px;
+  gap: 16px;
+
+  width: 100%;
+  height: 76px;
+
+  background: linear-gradient(90deg, #F3F6FD 0%, #D0DDFC 100%);
+  border-radius: 20px 20px 4px 4px;
+
+  /* Typography */
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+/* Clearfix after legend float */
+fieldset.panel-wrapper::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* --- Fields Row Wrapper --- */
+fieldset.panel-wrapper > .field-wrapper {
+  /* handled per row below */
+}
+
+/* Row layout: wrapping flex container for field pairs */
+.field-name-as-pan {
+  /* Panel already has column layout, but the inner fields
+     need to sit in a wrapping row */
+}
+
+/* Override: inner fields lay out in a wrapping row */
+.field-name-as-pan > .field-wrapper {
+  /* fields are col-6 = ~50% minus gap */
+}
+
+/* Simulate the Frame 1171277800–1171277803 row containers */
+.field-name-as-pan > .field-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 12px;
+  isolation: isolate;
+  flex: none;
+  flex-grow: 0;
+}
+
+/* col-6 = half width in a 1096px content area, with 24px gap */
+.field-name-as-pan > .col-6 {
+  width: calc(50% - 12px);  /* 536px in a 1096px row with 24px gap */
+}
+
+/* col-12 = full width */
+.field-name-as-pan > .col-12 {
+  width: 100%;
+}
+
+/* --- Input Frame --- */
+.field-name-as-pan input[type="text"] {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  width: 100%;
+  height: 60px;
+  padding: 16px 12px 16px 20px;
+
+  background: #FFFFFF;
+  border: 1px solid #D2D5DB;
+  border-radius: 12px;
+
+  /* Typography */
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  font-feature-settings: 'ss01' on;
+  color: #111827;
+
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Placeholder text */
+.field-name-as-pan input[type="text"]::placeholder {
+  color: #6B7280;
+}
+
+/* Focus state */
+.field-name-as-pan input[type="text"]:focus {
+  border-color: #4F6FDF;
+  box-shadow: 0 0 0 3px rgba(79, 111, 223, 0.12);
+}
+
+/* --- Field Labels --- */
+.field-name-as-pan .field-label {
+  display: none; /* Labels are visually replaced by placeholder in this design */
+}
+
+/* If you wish to show labels above inputs, uncomment below: */
+/*
+.field-name-as-pan .field-label {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #374151;
+  margin-bottom: 4px;
+}
+*/
+
+/* --- Helper / Description Text --- */
+.field-name-as-pan .field-description {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #6B7280;
+
+  display: none; /* hidden by default per Figma spec */
+}
+
+/* Show description on focus of the related input */
+.field-name-as-pan .text-wrapper:focus-within .field-description {
+  display: block;
+}
+
+/* --- Responsive: Tablet & Mobile 480 --- */
+@media (max-width: 900px) {
+  .panel-wrapper {
+    width: 100%;
+    padding: 0px 12px 24px;
+    gap: 24px;
+  }
+
+  fieldset.panel-wrapper > legend {
+    padding: 16px 20px;
+    height: auto;
+    font-size: 18px;
+    border-radius: 16px 16px 4px 4px;
+  }
+
+  .field-name-as-pan > .col-6 {
+    width: 100%;
+  }
+}
+
+/* --- Responsive: Mobile 320 --- */
+@media (max-width: 480px) {
+  .panel-wrapper {
+    padding: 0px 8px 20px;
+    gap: 20px;
+    border-radius: 16px;
+  }
+
+  fieldset.panel-wrapper > legend {
+    font-size: 16px;
+    padding: 14px 16px;
+    border-radius: 12px 12px 4px 4px;
+  }
+
+  .field-name-as-pan input[type="text"] {
+    height: 52px;
+    font-size: 16px;
+    padding: 14px 12px 14px 16px;
+    border-radius: 10px;
+  }
+}
+
+
