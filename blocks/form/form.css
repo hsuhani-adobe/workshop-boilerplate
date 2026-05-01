@@ -4469,3 +4469,345 @@ fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper .field-de
     flex: 0 0 100% !important;
   }
 }
+
+
+
+
+/* ============================================================
+   Address Details Panel
+   Targets: fieldset.panel-wrapper.field-address-details
+   Figma: violet/purple theme (#F4F0FF bg, #7454F2 accents)
+   ============================================================ */
+
+
+/* -----------------------------------------------------------
+   1. PANEL CARD
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-address-details {
+  box-sizing: border-box !important;
+  position: relative !important;
+  padding: 76px 32px 32px 32px !important;
+  margin: 0 !important;
+
+  background: #F4F0FF !important;
+  border: none !important;
+  border-radius: 24px !important;
+  width: 100% !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+}
+
+
+/* -----------------------------------------------------------
+   2. LEGEND — panel header
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-address-details > legend.field-label {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 22px 32px !important;
+  margin: 0 !important;
+
+  /* No separate header bg — blends into card background */
+  background: transparent !important;
+  border-bottom: none !important;
+  border-radius: 24px 24px 0 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 20px !important;
+  line-height: 28px !important;
+  letter-spacing: -0.02em !important;
+  color: #111827 !important;
+  white-space: nowrap !important;
+}
+
+/* Users/person icon */
+fieldset.panel-wrapper.field-address-details > legend.field-label::before {
+  content: '' !important;
+  display: inline-block !important;
+  width: 24px !important;
+  height: 24px !important;
+  flex-shrink: 0 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Crect x='1' y='3' width='22' height='16' rx='3' stroke='%237454F2' stroke-width='1.75'/%3E%3Ccircle cx='8.5' cy='9' r='2.5' stroke='%237454F2' stroke-width='1.75'/%3E%3Cpath d='M3 19c0-3 2.5-4.5 5.5-4.5S14 16 14 19' stroke='%237454F2' stroke-width='1.75' stroke-linecap='round'/%3E%3Cpath d='M16 8h5M16 12h3' stroke='%237454F2' stroke-width='1.75' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+}
+
+/* No info icon for this panel */
+fieldset.panel-wrapper.field-address-details > legend.field-label::after {
+  display: none !important;
+}
+
+
+/* -----------------------------------------------------------
+   3. ADDRESS TEXT INPUT WRAPPER
+      Left violet border accent + read-only display style
+   ----------------------------------------------------------- */
+
+/* Indented container — matches Figma's 40px left padding */
+fieldset.panel-wrapper.field-address-details > .text-wrapper.field-address-aadhar {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  padding-left: 40px !important;  /* indent from left edge */
+  position: relative !important;
+}
+
+/* The left violet accent bar + dashed top border from Figma */
+fieldset.panel-wrapper.field-address-details > .text-wrapper.field-address-aadhar::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 3px !important;
+  background: #CDBBFD !important;
+  border-radius: 2px !important;
+}
+
+/* Dashed separator line above the address block */
+fieldset.panel-wrapper.field-address-details > .text-wrapper.field-address-aadhar::after {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  top: -12px !important;
+  left: 40px !important;
+  right: 0 !important;
+  height: 0 !important;
+  border-top: 1px dashed #9CA3AF !important;
+}
+
+/* Floating label — "Address as per Aadhaar records" */
+fieldset.panel-wrapper.field-address-details > .text-wrapper.field-address-aadhar > label.field-label {
+  display: block !important;
+  position: static !important;
+  transform: none !important;
+  margin-bottom: 6px !important;
+  padding: 0 !important;
+  background: transparent !important;
+
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  color: #4B5563 !important;
+  white-space: nowrap !important;
+}
+
+/* Address input — reads like display text, no box */
+fieldset.panel-wrapper.field-address-details > .text-wrapper.field-address-aadhar > input[type="text"] {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 28px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 18px !important;
+  line-height: 28px !important;
+  color: #111827 !important;
+}
+
+fieldset.panel-wrapper.field-address-details > .text-wrapper.field-address-aadhar > input[type="text"]::placeholder {
+  color: #9CA3AF !important;
+  font-weight: 400 !important;
+}
+
+fieldset.panel-wrapper.field-address-details > .text-wrapper.field-address-aadhar > input[type="text"]:focus {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+
+/* -----------------------------------------------------------
+   4. RADIO GROUP FIELDSET
+   ----------------------------------------------------------- */
+fieldset.radio-group-wrapper.field-customer-address-is {
+  box-sizing: border-box !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+}
+
+/* Radio group legend — "Is the customer's Aadhaar address?" */
+fieldset.radio-group-wrapper.field-customer-address-is > legend.field-label {
+  float: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 0 4px 0 !important;
+
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 18px !important;
+  line-height: 24px !important;
+  letter-spacing: -0.02em !important;
+  color: #111827 !important;
+}
+
+/* Radio options row */
+fieldset.radio-group-wrapper.field-customer-address-is {
+  /* Override to make radio wrappers sit in a row */
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+/* Row of radio buttons */
+fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper {
+  /* will be made inline via parent flex-direction override below */
+  display: inline-flex !important;
+}
+
+/* Make the radio options sit horizontally */
+fieldset.radio-group-wrapper.field-customer-address-is {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Wrap legend + radios — legend stays block, radios go into a row */
+fieldset.radio-group-wrapper.field-customer-address-is > legend.field-label {
+  display: block !important;
+}
+
+/* Row container for radio buttons using adjacent sibling trick —
+   all .radio-wrapper siblings sit in a flex row via their parent */
+fieldset.radio-group-wrapper.field-customer-address-is {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0 !important;
+  row-gap: 12px !important;
+  column-gap: 0 !important;
+}
+
+fieldset.radio-group-wrapper.field-customer-address-is > legend.field-label {
+  flex: 0 0 100% !important;   /* legend takes full row */
+  margin-bottom: 12px !important;
+}
+
+fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-right: 32px !important;
+}
+
+/* Radio input — custom styled circle */
+fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper > input[type="radio"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  box-sizing: border-box !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  border: 1.5px solid #D2D5DB !important;
+  border-radius: 50% !important;
+  background: #FFFFFF !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  position: relative !important;
+  transition: border-color 0.15s ease !important;
+}
+
+/* Checked state — violet fill with inner dot */
+fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper > input[type="radio"]:checked {
+  border-color: #7454F2 !important;
+  background: #FFFFFF !important;
+  box-shadow: inset 0 0 0 5px #7454F2 !important;
+}
+
+/* Radio label */
+fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper > label.field-label {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 18px !important;
+  line-height: 24px !important;
+  letter-spacing: -0.02em !important;
+  color: #111827 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+
+  /* Reset any floating label styles */
+  position: static !important;
+  transform: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  top: auto !important;
+  left: auto !important;
+}
+
+
+/* -----------------------------------------------------------
+   5. RESPONSIVE
+   ----------------------------------------------------------- */
+@media (max-width: 768px) {
+  fieldset.panel-wrapper.field-address-details {
+    padding: 72px 20px 24px 20px !important;
+    border-radius: 20px !important;
+  }
+
+  fieldset.panel-wrapper.field-address-details > legend.field-label {
+    padding: 18px 20px !important;
+    font-size: 18px !important;
+  }
+
+  fieldset.panel-wrapper.field-address-details > .text-wrapper.field-address-aadhar > input[type="text"] {
+    font-size: 16px !important;
+  }
+
+  fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper {
+    margin-right: 20px !important;
+  }
+
+  fieldset.radio-group-wrapper.field-customer-address-is > legend.field-label {
+    font-size: 16px !important;
+  }
+
+  fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper > label.field-label {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 540px) {
+  fieldset.panel-wrapper.field-address-details {
+    padding: 64px 16px 20px 16px !important;
+    border-radius: 16px !important;
+  }
+
+  fieldset.radio-group-wrapper.field-customer-address-is {
+    flex-wrap: wrap !important;
+  }
+
+  fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper {
+    margin-right: 16px !important;
+    margin-bottom: 8px !important;
+  }
+}
