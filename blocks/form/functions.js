@@ -139,7 +139,7 @@ function validateDOBAndToggleText(dob) {
         }
 
         // ✅ FINAL CONDITION
-        textComponent.style.display = age < 21 ? "block" : "none";
+        textComponent.style.display = age < 21 ? "block !important": "none !important";
 
         console.log("DOB:", dob);
         console.log("Parsed:", birthDate);
