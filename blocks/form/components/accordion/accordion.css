@@ -287,3 +287,337 @@ main .form fieldset.accordion a:hover {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================================
+   e-Verify Your Income - Form Styles
+   Target: EDS Forms / Universal Editor
+   ============================================ */
+
+/* ---------- Page Title ---------- */
+.field-panel1777545583372 > legend,
+h1.e-verify-title {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 24px;
+  display: block;
+}
+
+/* ---------- Outer Panel Wrapper ---------- */
+.field-panel1777545583372 {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: transparent;
+}
+
+/* ---------- Section Panels (Select Bank + e-Verify) ---------- */
+.field-select-bank,
+.field-e-verify {
+  background: #f0f2fb;
+  border: none;
+  border-radius: 16px;
+  padding: 20px 24px 24px;
+  margin: 0;
+}
+
+/* ---------- Section Legends (Headers) ---------- */
+.field-select-bank > legend,
+.field-e-verify > legend {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a2e;
+  padding: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.field-select-bank > legend::before {
+  content: '🏛️';
+  font-size: 18px;
+}
+
+.field-e-verify > legend::before {
+  content: '🔗';
+  font-size: 18px;
+}
+
+/* ---------- Bank Options Radio Group (icon buttons) ---------- */
+.field-bank-options {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.field-bank-options > legend {
+  display: none !important;
+}
+
+/* Hide the actual radio inputs */
+.field-bank-options .radio-wrapper input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Each bank option as a card button */
+.field-bank-options .radio-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.field-bank-options .radio-wrapper label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Bank icon box */
+.field-bank-options .radio-wrapper label::before {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  border: 1.5px solid #d0d5e8;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Selected state */
+.field-bank-options .radio-wrapper input[type="radio"]:checked + label::before {
+  border: 2px solid #3b4fc8;
+  box-shadow: 0 0 0 3px rgba(59, 79, 200, 0.1);
+}
+
+.field-bank-options .radio-wrapper input[type="radio"]:checked + label {
+  color: #3b4fc8;
+  font-weight: 600;
+  position: relative;
+}
+
+/* Blue checkmark on selected bank */
+.field-bank-options .radio-wrapper input[type="radio"]:checked + label::after {
+  content: '✔';
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: #3b4fc8;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 10px;
+  line-height: 18px;
+  text-align: center;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+}
+
+/* ---------- Inner panel wrapper (holds bank options + dropdown) ---------- */
+.field-panel1777545583372 > fieldset > .field-panel1777545583372,
+fieldset[name="panel1777545583372"] {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  background: transparent;
+}
+
+fieldset[name="panel1777545583372"] > legend {
+  display: none;
+}
+
+/* ---------- Other Bank Dropdown ---------- */
+.field-select-other-bank {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.field-select-other-bank label {
+  display: none; /* hidden visually, shown via placeholder */
+}
+
+.field-select-other-bank select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
+  background-size: 16px;
+  border: 1.5px solid #d0d5e8;
+  border-radius: 10px;
+  padding: 10px 36px 10px 14px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+  min-width: 180px;
+  transition: border-color 0.2s;
+}
+
+.field-select-other-bank select:focus {
+  outline: none;
+  border-color: #3b4fc8;
+}
+
+/* ---------- Verify Methods Radio Group (horizontal cards) ---------- */
+.field-verify-methods {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+}
+
+.field-verify-methods > legend {
+  display: none;
+}
+
+/* Each method card */
+.field-verify-methods .radio-wrapper {
+  flex: 1;
+  min-width: 180px;
+}
+
+.field-verify-methods .radio-wrapper input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.field-verify-methods .radio-wrapper label {
+  display: block;
+  border: 1.5px solid #d0d5e8;
+  border-radius: 14px;
+  background: #fff;
+  padding: 18px 18px 16px;
+  cursor: pointer;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a2e;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+  min-height: 100px;
+}
+
+/* Radio circle indicator */
+.field-verify-methods .radio-wrapper label::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #bbb;
+  margin-right: 10px;
+  vertical-align: middle;
+  flex-shrink: 0;
+  background: #fff;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+/* Subtitle text injected via data-description or a span — handled below */
+.field-verify-methods .radio-wrapper label span.subtitle {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: #666;
+  margin-top: 6px;
+  margin-left: 28px;
+}
+
+/* Selected card */
+.field-verify-methods .radio-wrapper input[type="radio"]:checked + label {
+  border: 2px solid #3b4fc8;
+  box-shadow: 0 0 0 3px rgba(59, 79, 200, 0.08);
+}
+
+.field-verify-methods .radio-wrapper input[type="radio"]:checked + label::before {
+  border-color: #3b4fc8;
+  background: radial-gradient(circle at center, #3b4fc8 45%, #fff 47%);
+  box-shadow: 0 0 0 2px #3b4fc8;
+}
+
+/* "Recommended" banner on selected/first card */
+.field-verify-methods .radio-wrapper:first-child input[type="radio"]:checked + label::after,
+.field-verify-methods .radio-wrapper input[type="radio"]:checked + label.recommended::after {
+  content: 'Recommended';
+  display: block;
+  background: #1d7a4f;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  padding: 8px 0;
+  border-radius: 0 0 12px 12px;
+  position: absolute;
+  bottom: 0;
+  left: -2px;
+  right: -2px;
+}
+
+/* Add subtitles for each method using CSS content (fallback - JS enhancement below) */
+
+/* ---------- Hover effects ---------- */
+.field-bank-options .radio-wrapper label:hover::before {
+  border-color: #3b4fc8;
+}
+
+.field-verify-methods .radio-wrapper label:hover {
+  border-color: #9aa5e0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .field-bank-options {
+    gap: 8px;
+  }
+
+  .field-verify-methods {
+    flex-direction: column;
+  }
+
+  .field-select-other-bank select {
+    min-width: 140px;
+  }
+}
