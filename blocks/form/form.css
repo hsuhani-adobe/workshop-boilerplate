@@ -3998,76 +3998,52 @@ remove default fieldset style
 /* TIER 2*/
 /* ============================================================
    Full Name (As per PAN) — Panel
-   Targets: fieldset#panelcontainer-50456af472.field-name-as-pan
-   HTML structure:
-     fieldset.panel-wrapper.field-name-as-pan
-       legend.field-label
-       div.text-wrapper.field-first-name
-         label.field-label
-         input[type="text"]
-       div.text-wrapper.field-text-input-762...
-         label.field-label
-         input[type="text"]
-         div.field-description
-       div.text-wrapper.field-last-name
-         label.field-label
-         input[type="text"]
+   Layout: float-based col-6 / col-12, matches Figma spec
    ============================================================ */
 
 /* -----------------------------------------------------------
-   1. FIELDSET — outer card
+   1. FIELDSET RESET & CARD
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-name-as-pan {
-  /* Reset browser fieldset defaults */
-  margin: 0;
-  padding: 0 0 28px 0;
-  min-width: 0;
   box-sizing: border-box;
-
-  /* Card styles */
-  background: #FFFFFF;
+  margin: 0;
+  padding: 0;
   border: 1px solid #ECEDF3;
   border-radius: 16px;
+  background: #FFFFFF;
   overflow: hidden;
-
   width: 100%;
   max-width: 1160px;
 
-  /* Grid for inner fields — legend floats out of flow,
-     the three .text-wrapper divs form the grid */
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto; /* legend row + 2 field rows */
-  column-gap: 20px;
-  row-gap: 20px;
-  align-items: start;
+  /* Clearfix — contains the floated .col-6 children */
+  display: block;
+}
+
+fieldset.panel-wrapper.field-name-as-pan::after {
+  content: '';
+  display: table;
+  clear: both;
 }
 
 /* -----------------------------------------------------------
-   2. LEGEND — full-width header row
+   2. LEGEND — gradient header
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-name-as-pan > legend.field-label {
-  /* Stretch across both grid columns */
-  grid-column: 1 / -1;
-  grid-row: 1;
-
-  /* Override browser legend float */
   display: flex;
   align-items: center;
   gap: 8px;
-  float: none;
-
-  box-sizing: border-box;
+  float: left;
   width: 100%;
-  padding: 16px 24px;
-  margin: 0 0 4px 0;  /* small gap before first field row */
+  box-sizing: border-box;
+
+  padding: 20px 24px;
+  margin: 0 0 28px 0;
 
   background: linear-gradient(90deg, #EEF2FD 0%, #D5DFF9 100%);
 
   font-family: 'Inter', sans-serif;
-  font-style: normal;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 24px;
   letter-spacing: -0.01em;
   color: #111827;
@@ -4085,7 +4061,7 @@ fieldset.panel-wrapper.field-name-as-pan > legend.field-label::before {
   background-repeat: no-repeat;
 }
 
-/* Info (ⓘ) icon */
+/* Info icon */
 fieldset.panel-wrapper.field-name-as-pan > legend.field-label::after {
   content: '';
   display: inline-block;
@@ -4099,72 +4075,71 @@ fieldset.panel-wrapper.field-name-as-pan > legend.field-label::after {
 }
 
 /* -----------------------------------------------------------
-   3. FIELD WRAPPERS — grid placement
-      Grid starts at row 2 (row 1 = legend)
-      Browsers vary on legend-in-grid behaviour so we use
-      padding-top on fieldset + margin-top on legend to keep
-      the header visually correct, and rely on the three
-      .text-wrapper divs being the only non-legend children.
+   3. FIELD ROWS — padding wrapper around floated cols
    ----------------------------------------------------------- */
 
-/* First Name — col 1, row 1 of fields */
-fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-first-name {
-  grid-column: 1;
-  grid-row: 2;
-}
+/* All .text-wrapper children float inside the fieldset.
+   We add horizontal padding via a pseudo row container.
+   Since we can't wrap them (HTML is fixed), we use
+   padding on the fieldset after the legend. */
 
-/* Middle Name — col 2, row 1 of fields */
-fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-text-input-7622509141777672531781 {
-  grid-column: 2;
-  grid-row: 2;
-}
-
-/* Last Name — col 1, row 2 of fields */
-fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-last-name {
-  grid-column: 1;
-  grid-row: 3;
-}
-
-/* Side-padding for all field wrappers */
 fieldset.panel-wrapper.field-name-as-pan > .text-wrapper {
   box-sizing: border-box;
-  position: relative;   /* anchor for the floating label */
-  display: flex;
-  flex-direction: column;
+  float: left;
+  position: relative;         /* anchor for floating label */
+  padding: 0 12px;
+  margin-bottom: 24px;
 }
 
-/* Left/right padding via grid padding on fieldset */
-fieldset.panel-wrapper.field-name-as-pan {
+/* col-6 = 50% width */
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.col-6 {
+  width: 50%;
+}
+
+/* col-12 = full width */
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.col-12 {
+  width: 100%;
+}
+
+/* Add left indent to match Figma 24px edge padding:
+   first col gets left padding, last col gets right padding */
+fieldset.panel-wrapper.field-name-as-pan > .text-wrapper:first-of-type {
   padding-left: 24px;
+  padding-right: 12px;
+}
+
+/* Alternate: target by field name for precision */
+fieldset.panel-wrapper.field-name-as-pan > .field-first-name {
+  padding-left: 24px;
+  padding-right: 12px;
+}
+
+fieldset.panel-wrapper.field-name-as-pan > .field-text-input-7622509141777672531781 {
+  padding-left: 12px;
   padding-right: 24px;
 }
 
-/* Legend must bleed to full width — negative margins cancel the grid padding */
-fieldset.panel-wrapper.field-name-as-pan > legend.field-label {
-  margin-left: -24px;
-  margin-right: -24px;
-  width: calc(100% + 48px);
+fieldset.panel-wrapper.field-name-as-pan > .field-last-name {
+  padding-left: 24px;
+  padding-right: 12px;
+  /* clear so it starts on a new row below the first two */
+  clear: left;
 }
 
 /* -----------------------------------------------------------
    4. FLOATING LABEL
-      label sits in normal flow but is lifted via transform
-      so it floats above the input border when active/filled.
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-name-as-pan > .text-wrapper > label.field-label {
-  /* Remove from normal flow — position over input top-border */
   position: absolute;
   top: 0;
-  left: 12px;
-  transform: translateY(-50%);   /* sit exactly on the border line */
+  left: calc(12px + 12px); /* padding-left of wrapper + inner offset */
+  transform: translateY(-50%);
   z-index: 1;
 
-  /* White pill so it masks the border behind it */
   background: #FFFFFF;
   padding: 0 4px;
 
   font-family: 'Inter', sans-serif;
-  font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
@@ -4175,7 +4150,13 @@ fieldset.panel-wrapper.field-name-as-pan > .text-wrapper > label.field-label {
   transition: color 0.15s ease;
 }
 
-/* Label turns brand-blue when the input inside is focused */
+/* Adjust label left for first-name / last-name (padding-left: 24px) */
+fieldset.panel-wrapper.field-name-as-pan > .field-first-name > label.field-label,
+fieldset.panel-wrapper.field-name-as-pan > .field-last-name > label.field-label {
+  left: calc(24px + 12px); /* wrapper padding-left + inner offset */
+}
+
+/* Blue on focus */
 fieldset.panel-wrapper.field-name-as-pan > .text-wrapper:focus-within > label.field-label {
   color: #4F6FDF;
 }
@@ -4185,10 +4166,9 @@ fieldset.panel-wrapper.field-name-as-pan > .text-wrapper:focus-within > label.fi
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-name-as-pan > .text-wrapper > input[type="text"] {
   box-sizing: border-box;
+  display: block;
   width: 100%;
   height: 56px;
-
-  /* Top padding larger to push text below the floating label */
   padding: 20px 16px 8px 16px;
 
   background: #FFFFFF;
@@ -4196,7 +4176,6 @@ fieldset.panel-wrapper.field-name-as-pan > .text-wrapper > input[type="text"] {
   border-radius: 10px;
 
   font-family: 'Inter', sans-serif;
-  font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -4216,22 +4195,20 @@ fieldset.panel-wrapper.field-name-as-pan > .text-wrapper > input[type="text"]:fo
 }
 
 /* -----------------------------------------------------------
-   6. HELPER / DESCRIPTION TEXT
-      .field-description sits after the input inside
-      .text-wrapper.field-text-input-762...
+   6. HELPER TEXT
    ----------------------------------------------------------- */
 fieldset.panel-wrapper.field-name-as-pan .field-description {
+  display: block;
   margin-top: 6px;
-  padding: 0 2px;
 
   font-family: 'Inter', sans-serif;
-  font-style: normal;
   font-weight: 400;
   font-size: 13px;
   line-height: 20px;
   color: #6B7280;
 
-  display: block; /* always visible per screenshot */
+  /* Prevent wrapping to a new float row */
+  white-space: nowrap;
 }
 
 fieldset.panel-wrapper.field-name-as-pan .field-description p {
@@ -4239,59 +4216,24 @@ fieldset.panel-wrapper.field-name-as-pan .field-description p {
 }
 
 /* -----------------------------------------------------------
-   7. RESPONSIVE
+   7. RESPONSIVE — stack to single column on mobile
    ----------------------------------------------------------- */
-
-/* Tablet */
-@media (max-width: 768px) {
-  fieldset.panel-wrapper.field-name-as-pan {
-    grid-template-columns: 1fr 1fr;
-    column-gap: 16px;
-    padding-left: 16px;
-    padding-right: 16px;
+@media (max-width: 600px) {
+  fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.col-6,
+  fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.col-12 {
+    width: 100%;
+    float: none;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    clear: both;
   }
 
-  fieldset.panel-wrapper.field-name-as-pan > legend.field-label {
-    margin-left: -16px;
-    margin-right: -16px;
-    width: calc(100% + 32px);
-    padding: 14px 16px;
-  }
-}
-
-/* Mobile */
-@media (max-width: 540px) {
-  fieldset.panel-wrapper.field-name-as-pan {
-    grid-template-columns: 1fr;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-bottom: 20px;
-    border-radius: 12px;
-    row-gap: 16px;
+  fieldset.panel-wrapper.field-name-as-pan > .text-wrapper > label.field-label {
+    left: calc(16px + 12px) !important;
   }
 
-  fieldset.panel-wrapper.field-name-as-pan > legend.field-label {
-    margin-left: -12px;
-    margin-right: -12px;
-    width: calc(100% + 24px);
-    font-size: 14px;
-    padding: 12px 16px;
-    margin-bottom: 0;
-  }
-
-  fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-first-name {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-text-input-7622509141777672531781 {
-    grid-column: 1;
-    grid-row: 3;
-  }
-
-  fieldset.panel-wrapper.field-name-as-pan > .text-wrapper.field-last-name {
-    grid-column: 1;
-    grid-row: 4;
+  fieldset.panel-wrapper.field-name-as-pan .field-description {
+    white-space: normal;
   }
 }
 
