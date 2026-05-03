@@ -6091,377 +6091,309 @@ main .form form .field-verify-methods .radio-wrapper {
 
 /* ==========================================================================
    Verify Email ID Panel — AEM EDS Forms
-   Based on exact HTML structure from Universal Editor
+   Pattern: absolute-positioned legend + flex-wrap fieldset
    ========================================================================== */
 
-/* ── 1. Fieldset — flex container (the KEY fix) ─────────────────────────── */
-.panel-wrapper.field-verify-email-id {
-  box-sizing: border-box;
-  /* Override browser fieldset defaults */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 0;
+/* ── 1. Fieldset card ───────────────────────────────────────────────────── */
+fieldset.panel-wrapper.field-verify-email-id {
+  box-sizing: border-box !important;
+  position: relative !important;
 
-  padding: 0 32px 32px;
-  margin: 0;
+  /* Top padding = legend height (80px) so content clears it */
+  padding: 112px 32px 32px 32px !important;
+  margin: 0 !important;
 
-  background: #ffffff;
-  border: 1px solid #ecedf3;
-  border-radius: 24px;
-  width: 100%;
-  max-width: 1160px;
-  min-width: 0;
+  background: #ffffff !important;
+  border: 1px solid #ecedf3 !important;
+  border-radius: 24px !important;
+  width: 100% !important;
+  max-width: 1160px !important;
+
+  /* Flex row — children sit side-by-side */
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  align-content: flex-start !important;
+  gap: 0 !important;
 }
 
-/* ── 2. Legend — force full width as first flex row ─────────────────────── */
-.panel-wrapper.field-verify-email-id > legend {
-  /* flex-basis 100% forces it onto its own row */
-  flex: 0 0 calc(100% + 64px);
-  width: calc(100% + 64px);
-  box-sizing: border-box;
+/* ── 2. Legend — absolutely positioned gradient header ──────────────────── */
+fieldset.panel-wrapper.field-verify-email-id > legend.field-label {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 
-  /* Bleed to card edges (counteract fieldset padding) */
-  margin-left: -32px;
-  margin-right: -32px;
-  margin-top: 0;
-  margin-bottom: 32px;
+  padding: 24px 32px !important;
+  margin: 0 !important;
+  min-height: 80px !important;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
+  background: linear-gradient(90deg, #f3f6fd 0%, #d0ddfc 100%) !important;
+  border-radius: 23px 23px 4px 4px !important;
 
-  padding: 24px 32px;
-  min-height: 80px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px !important;
 
-  background: linear-gradient(90deg, #f3f6fd 0%, #d0ddfc 100%);
-  border-radius: 20px 20px 4px 4px;
-
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: -0.02em;
-  color: #111827;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 20px !important;
+  line-height: 28px !important;
+  letter-spacing: -0.02em !important;
+  color: #111827 !important;
 }
 
 /* Mail icon */
-.panel-wrapper.field-verify-email-id > legend::before {
-  content: '';
-  display: inline-block;
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  background-image: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='3' y='6' width='22' height='17' rx='2' stroke='%234F6FDF' stroke-width='1.8'/%3E%3Cpath d='M3 10L14 17L25 10' stroke='%234F6FDF' stroke-width='1.8'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: contain;
+fieldset.panel-wrapper.field-verify-email-id > legend.field-label::before {
+  content: '' !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  width: 28px !important;
+  height: 28px !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='3' y='6' width='22' height='17' rx='2' stroke='%234F6FDF' stroke-width='1.8'/%3E%3Cpath d='M3 10L14 17L25 10' stroke='%234F6FDF' stroke-width='1.8'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
 }
 
 /* Chevron up */
-.panel-wrapper.field-verify-email-id > legend::after {
-  content: '';
-  display: inline-block;
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  margin-left: auto;
-  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 20L16 14L22 20' stroke='%231C3FCA' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: contain;
+fieldset.panel-wrapper.field-verify-email-id > legend.field-label::after {
+  content: '' !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  width: 32px !important;
+  height: 32px !important;
+  margin-left: auto !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 20L16 14L22 20' stroke='%231C3FCA' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
 }
 
-/* ── 3. Field row layout
-        Order in DOM: email1 | btn1 | email2 | btn2
-        Figma:        [349px input] [32px gap] [104px btn]  [60px gap+divider]  [349px input] [32px gap] [104px btn]
-   ─────────────────────────────────────────────────────────────────────────── */
-
-/* Primary email input */
-.panel-wrapper.field-verify-email-id > .field-primary-email-id {
-  flex: 0 0 349px;
-  width: 349px;
-  min-width: 0;
-  align-self: center;
+/* ── 3. Primary email input ─────────────────────────────────────────────── */
+fieldset.panel-wrapper.field-verify-email-id > .field-primary-email-id {
+  flex: 0 0 349px !important;
+  width: 349px !important;
+  min-width: 0 !important;
+  position: relative !important;
+  margin: 0 !important;
 }
 
-/* Verify button 1 */
-.panel-wrapper.field-verify-email-id > .field-verify-mail1 {
-  flex: 0 0 104px;
-  width: 104px;
-  margin-left: 32px;
-  align-self: center;
-  position: relative;
+/* ── 4. Verify button 1 ─────────────────────────────────────────────────── */
+fieldset.panel-wrapper.field-verify-email-id > .field-verify-mail1 {
+  flex: 0 0 104px !important;
+  width: 104px !important;
+  margin-left: 32px !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
-/* Dashed vertical divider between groups */
-.panel-wrapper.field-verify-email-id > .field-verify-mail1::after {
-  content: '';
-  position: absolute;
-  /* Centre in the 60px gap to the right of the button */
-  left: calc(100% + 30px);
-  top: 50%;
-  transform: translateY(-50%);
-  height: 80px;
-  width: 0;
-  border-right: 1px dashed #d2d5db;
-  pointer-events: none;
+/* Dashed vertical divider — centred in the 60px gap after button 1 */
+fieldset.panel-wrapper.field-verify-email-id > .field-verify-mail1::after {
+  content: '' !important;
+  position: absolute !important;
+  left: calc(100% + 30px) !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  height: 80px !important;
+  width: 0 !important;
+  border-right: 1px dashed #d2d5db !important;
+  pointer-events: none !important;
 }
 
-/* Work email input */
-.panel-wrapper.field-verify-email-id > .field-work-email-id {
-  flex: 0 0 349px;
-  width: 349px;
-  min-width: 0;
-  margin-left: 60px;
-  align-self: center;
+/* ── 5. Work email input ────────────────────────────────────────────────── */
+fieldset.panel-wrapper.field-verify-email-id > .field-work-email-id {
+  flex: 0 0 349px !important;
+  width: 349px !important;
+  min-width: 0 !important;
+  margin-left: 60px !important;
+  position: relative !important;
 }
 
-/* Verify button 2 */
-.panel-wrapper.field-verify-email-id > .field-verify-mail2 {
-  flex: 0 0 104px;
-  width: 104px;
-  margin-left: 32px;
-  align-self: center;
+/* ── 6. Verify button 2 ─────────────────────────────────────────────────── */
+fieldset.panel-wrapper.field-verify-email-id > .field-verify-mail2 {
+  flex: 0 0 104px !important;
+  width: 104px !important;
+  margin-left: 32px !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
-/* ── 4. Note texts — sit below their respective groups ──────────────────── */
-
-/* Note 1 — under primary group (input 349 + gap 32 + btn 104 = 485px) */
-.panel-wrapper.field-verify-email-id > .field-verify-email-note {
-  flex: 0 0 485px;
-  width: 485px;
-  margin-top: 12px;
+/* ── 7. Note texts ──────────────────────────────────────────────────────── */
+fieldset.panel-wrapper.field-verify-email-id > .field-verify-email-note {
+  flex: 0 0 485px !important;        /* 349 + 32 + 104 */
+  width: 485px !important;
+  margin-top: 12px !important;
 }
 
-/* Note 2 — under work group, offset by same 60px gap */
-.panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
-  flex: 0 0 485px;
-  width: 485px;
-  margin-top: 12px;
-  margin-left: 60px;
+fieldset.panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
+  flex: 0 0 485px !important;
+  width: 485px !important;
+  margin-top: 12px !important;
+  margin-left: 60px !important;
 }
 
-/* ── 5. Email input — floating label ────────────────────────────────────── */
-.email-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+/* ── 8. Email input — floating label ────────────────────────────────────── */
+.field-verify-email-id .email-wrapper {
+  position: relative !important;
+  width: 100% !important;
 }
 
-.email-wrapper .field-label {
-  position: absolute;
-  top: -10px;
-  left: 17px;
-  z-index: 2;
-  padding: 0 4px;
-  background: #ffffff;
+.field-verify-email-id .email-wrapper > label.field-label {
+  position: absolute !important;
+  top: 0 !important;
+  left: 17px !important;
+  transform: translateY(-50%) !important;
+  z-index: 2 !important;
 
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: #6b7280;
-  white-space: nowrap;
-  pointer-events: none;
-  transition: color 0.15s ease;
+  padding: 0 4px !important;
+  background: #ffffff !important;
+  margin: 0 !important;
+
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  color: #6b7280 !important;
+
+  pointer-events: none !important;
+  white-space: nowrap !important;
+  transition: color 0.15s ease !important;
 }
 
-.email-wrapper input[type="email"] {
-  box-sizing: border-box;
-  width: 100%;
-  height: 60px;
-  padding: 16px 12px 16px 20px;
-
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 28px;
-  color: #111827;
-
-  background: #ffffff;
-  border: 1px solid #d2d5db;
-  border-radius: 12px;
-  outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+.field-verify-email-id .email-wrapper:focus-within > label.field-label {
+  color: #4f6fdf !important;
 }
 
-.email-wrapper input[type="email"]:focus {
-  border-color: #4f6fdf;
-  box-shadow: 0 0 0 3px rgba(79, 111, 223, 0.12);
+.field-verify-email-id .email-wrapper > input[type="email"] {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 60px !important;
+  padding: 16px 12px 16px 20px !important;
+  margin: 0 !important;
+
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 18px !important;
+  line-height: 28px !important;
+  color: #111827 !important;
+
+  background: #ffffff !important;
+  border: 1px solid #d2d5db !important;
+  border-radius: 12px !important;
+  outline: none !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
 }
 
-.email-wrapper input[type="email"]:focus + .field-label {
-  color: #4f6fdf;
+.field-verify-email-id .email-wrapper > input[type="email"]:focus {
+  border-color: #4f6fdf !important;
+  box-shadow: 0 0 0 3px rgba(79, 111, 223, 0.12) !important;
 }
 
-/* ── 6. Verify buttons (Secondary) ──────────────────────────────────────── */
-.button-wrapper {
-  display: flex;
-  align-items: center;
-  height: 60px;
+/* ── 9. Verify buttons (Secondary) ─────────────────────────────────────── */
+.field-verify-email-id .button-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  height: 60px !important;
 }
 
-.button-wrapper .button {
-  box-sizing: border-box;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+.field-verify-email-id .button-wrapper > button.button {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 
-  width: 104px;
-  height: 52px;
-  padding: 14px 20px;
+  width: 104px !important;
+  height: 52px !important;
+  padding: 14px 20px !important;
 
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  font-feature-settings: 'ss01' on;
-  color: #1c3fca;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  font-feature-settings: 'ss01' on !important;
+  color: #1c3fca !important;
 
-  background: transparent;
-  border: 1px solid #1c3fca;
-  border-radius: 13px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  background: transparent !important;
+  border: 1px solid #1c3fca !important;
+  border-radius: 13px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease !important;
 }
 
-.button-wrapper .button:hover {
-  background-color: #1c3fca;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(28, 63, 202, 0.2);
+.field-verify-email-id .button-wrapper > button.button:hover {
+  background-color: #1c3fca !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(28, 63, 202, 0.2) !important;
 }
 
-.button-wrapper .button:active {
-  background-color: #1630a0;
-  border-color: #1630a0;
-  color: #ffffff;
-  box-shadow: none;
+.field-verify-email-id .button-wrapper > button.button:active {
+  background-color: #1630a0 !important;
+  border-color: #1630a0 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
 }
 
-.button-wrapper .button:focus-visible {
-  outline: 2px solid #4f6fdf;
-  outline-offset: 2px;
+.field-verify-email-id .button-wrapper > button.button:focus-visible {
+  outline: 2px solid #4f6fdf !important;
+  outline-offset: 2px !important;
 }
 
-.button-wrapper .button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
+/* ── 10. Note / helper text ─────────────────────────────────────────────── */
+.field-verify-email-id .plain-text-wrapper p {
+  margin: 0 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  color: #6b7280 !important;
 }
 
-/* ── 7. Note text ───────────────────────────────────────────────────────── */
-.plain-text-wrapper p {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #6b7280;
-}
-
-/* ── 8. Confirm / Submit CTA button (Primary — muted state #A3BAF9) ─────── */
-.panel-wrapper.field-verify-email-id > .field-wrapper[data-id*="confirm"] .button,
-.panel-wrapper.field-verify-email-id > .field-wrapper[data-id*="submit"] .button,
-.panel-wrapper.field-verify-email-id > .button-wrapper:last-of-type .button {
-  box-sizing: border-box;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-
-  width: 256px;
-  height: 52px;
-  padding: 14px 20px;
-
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  font-feature-settings: 'ss01' on;
-  color: #ffffff;
-  text-align: center;
-
-  background: #a3baf9;
-  border: none;
-  border-radius: 13px;
-  cursor: not-allowed;
-  white-space: nowrap;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Arrow icon appended to confirm button */
-.panel-wrapper.field-verify-email-id > .button-wrapper:last-of-type .button::after {
-  content: '';
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 10H16M16 10L11 5M16 10L11 15' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-/* Enabled state */
-.panel-wrapper.field-verify-email-id > .button-wrapper:last-of-type .button.enabled,
-.panel-wrapper.field-verify-email-id > .button-wrapper:last-of-type .button:not(:disabled):hover {
-  background: #1c3fca;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(28, 63, 202, 0.3);
-}
-
-/* ── 9. Responsive ──────────────────────────────────────────────────────── */
+/* ── 11. Responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 860px) {
-  .panel-wrapper.field-verify-email-id {
-    padding: 0 16px 24px;
+  fieldset.panel-wrapper.field-verify-email-id {
+    padding: 88px 16px 24px 16px !important;
   }
 
-  .panel-wrapper.field-verify-email-id > legend {
-    flex: 0 0 calc(100% + 32px);
-    width: calc(100% + 32px);
-    margin-left: -16px;
-    margin-right: -16px;
-    padding: 20px 16px;
-    font-size: 17px;
-    margin-bottom: 24px;
+  fieldset.panel-wrapper.field-verify-email-id > legend.field-label {
+    padding: 20px 16px !important;
+    font-size: 17px !important;
+    min-height: 64px !important;
   }
 
-  .panel-wrapper.field-verify-email-id > .field-primary-email-id,
-  .panel-wrapper.field-verify-email-id > .field-work-email-id {
-    flex: 1 1 0;
-    width: auto;
-    min-width: 0;
+  fieldset.panel-wrapper.field-verify-email-id > .field-primary-email-id,
+  fieldset.panel-wrapper.field-verify-email-id > .field-work-email-id {
+    flex: 1 1 0 !important;
+    width: auto !important;
   }
 
-  .panel-wrapper.field-verify-email-id > .field-work-email-id {
-    margin-left: 0;
-    margin-top: 24px;
+  fieldset.panel-wrapper.field-verify-email-id > .field-work-email-id {
+    margin-left: 0 !important;
+    margin-top: 24px !important;
   }
 
-  .panel-wrapper.field-verify-email-id > .field-verify-mail1 {
-    margin-left: 12px;
+  fieldset.panel-wrapper.field-verify-email-id > .field-verify-mail1 {
+    margin-left: 12px !important;
   }
 
-  .panel-wrapper.field-verify-email-id > .field-verify-mail2 {
-    margin-left: 12px;
-    margin-top: 24px;
+  fieldset.panel-wrapper.field-verify-email-id > .field-verify-mail2 {
+    margin-left: 12px !important;
+    margin-top: 24px !important;
   }
 
-  .panel-wrapper.field-verify-email-id > .field-verify-mail1::after {
-    display: none;
+  fieldset.panel-wrapper.field-verify-email-id > .field-verify-mail1::after {
+    display: none !important;
   }
 
-  .panel-wrapper.field-verify-email-id > .field-verify-email-note,
-  .panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
-    flex: 0 0 100%;
-    width: 100%;
-    margin-left: 0;
-    margin-top: 8px;
-  }
-
-  .panel-wrapper.field-verify-email-id > .button-wrapper:last-of-type .button {
-    width: 100%;
+  fieldset.panel-wrapper.field-verify-email-id > .field-verify-email-note,
+  fieldset.panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
   }
 }
