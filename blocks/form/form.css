@@ -5204,7 +5204,7 @@ fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper .field-de
 
 .field-customer-details .field-description p,
 .field-customer-details .field-description {
-  font-size: 11px !important;
+  font-size: 12px !important;
   line-height: 1.4 !important;
 }
 /* -----------------------------------------------------------
@@ -5404,6 +5404,7 @@ main .form form .field-e-verify-your-income {
 }
 
 main .form form .field-e-verify-your-income > legend.field-label {
+
   display: none;
 }
 
@@ -5768,9 +5769,39 @@ main .form form .field-verify-methods .radio-wrapper[data-id="verify-methods"]::
   white-space: nowrap !important;
 } */
 
+
+.field-customer-details .field-verify-personal button,
+.field-customer-details .field-verify-work button {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 14px 20px !important;
+  gap: 12px !important;
+  width: 104px !important;
+  height: 52px !important;
+  border: 1px solid #1C3FCA !important;
+  border-radius: 13px !important;
+  background: transparent !important;
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  text-align: center !important;
+  color: #1C3FCA !important;
+  cursor: pointer !important;
+}
+
+
 /* ============================================
    CONTINUE BUTTON
    ============================================ */
+
+
+
+
 
 main .form form .field-continue {
   display: block;
