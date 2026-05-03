@@ -7041,3 +7041,605 @@ fieldset.panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
     flex: 1 1 100% !important;
   }
 }
+
+
+
+
+
+
+
+
+/* =============================================================================
+   KYC Verification Summary Panel — HDFC Bank EDS Forms
+   Scoped entirely to .field-kyc-verification-summary-panell
+   No ID selectors — panel name + class name only.
+   Follows same structure/pattern as the existing panel CSS.
+   ============================================================================= */
+
+/* ── Design Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --hdfc-blue-primary:     #004c8f;
+  --hdfc-blue-link:        #1a56a0;
+  --hdfc-blue-info-bg:     #e8f0fe;
+  --hdfc-blue-info-border: #c5d8f8;
+  --hdfc-card-bg:          #ffffff;
+  --hdfc-page-bg:          #f0f2f8;
+  --hdfc-border:           #e2e6f0;
+  --hdfc-input-border:     #d8dce8;
+  --hdfc-input-focus:      #4a3f8f;
+  --hdfc-banner-bg:        #fdf8e8;
+  --hdfc-banner-border:    #e8d870;
+  --hdfc-text-primary:     #000000;
+  --hdfc-text-secondary:   #6b7280;
+  --hdfc-text-muted:       #9ca3af;
+  --hdfc-loan-accent:      #4a3f8f;
+  --hdfc-icon-bg:          #ede7f6;
+  --hdfc-easy-loan-bg:     #eef1fc;
+  --hdfc-easy-loan-border: #d0d9f5;
+  --hdfc-promo-1-bg:       #f0ecfc;
+  --hdfc-promo-2-bg:       #fce8f3;
+
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+
+  --shadow-card:  0 2px 16px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   1. GLOBAL RESETS — scoped to panel
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-kyc-verification-summary-panell,
+.field-kyc-verification-summary-panell * {
+  box-sizing: border-box;
+}
+
+/* Strip native fieldset chrome */
+.field-kyc-verification-summary-panell fieldset {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  background: none;
+}
+
+/* Hide invisible legends */
+.field-kyc-verification-summary-panell legend[data-visible="false"] {
+  display: none !important;
+}
+
+/* Kill AEM col-* constraints */
+.field-kyc-verification-summary-panell [class*="col-"] {
+  width: auto !important;
+  max-width: none !important;
+  float: none !important;
+  flex: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Reset all labels to grey */
+.field-kyc-verification-summary-panell label.field-label {
+  color: var(--hdfc-text-secondary) !important;
+  font-weight: 400 !important;
+  font-size: 0.8rem !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  display: block !important;
+  margin-bottom: 6px;
+  font-family: var(--font-base);
+}
+
+/* Reset all inputs */
+.field-kyc-verification-summary-panell input[type="text"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: block !important;
+  width: 100% !important;
+  font-family: var(--font-base) !important;
+  background-color: var(--hdfc-card-bg) !important;
+  color: var(--hdfc-text-primary) !important;
+  border: 1.5px solid var(--hdfc-input-border) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 10px 14px !important;
+  font-size: 0.9375rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  pointer-events: auto !important;
+  cursor: text !important;
+  caret-color: var(--hdfc-input-focus) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  height: auto !important;
+  min-height: 44px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.field-kyc-verification-summary-panell input[type="text"]:focus {
+  outline: none !important;
+  border-color: var(--hdfc-input-focus) !important;
+  box-shadow: 0 0 0 3px rgba(74, 63, 143, 0.12) !important;
+}
+
+.field-kyc-verification-summary-panell input[type="text"]:hover:not(:focus) {
+  border-color: #a0a8c0 !important;
+}
+
+.field-kyc-verification-summary-panell input[type="text"]::placeholder {
+  color: var(--hdfc-text-muted);
+  font-weight: 400;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   2. PANEL ROOT
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-kyc-verification-summary-panell {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 24px;
+  background-color: var(--hdfc-page-bg);
+  font-family: var(--font-base);
+  color: var(--hdfc-text-primary);
+  border: none !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   3. KYC BANNER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-kyc-verification-summary-panell .field-kyc-verification-banner-text {
+  background-color: var(--hdfc-banner-bg);
+  border: 1px solid var(--hdfc-banner-border);
+  border-radius: var(--radius-lg);
+  padding: 14px 20px;
+}
+
+.field-kyc-verification-summary-panell .field-kyc-verification-banner-text p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #5a4800;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   4. TWO-COLUMN LAYOUT
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-kyc-verification-summary-panell .field-main-content-row {
+  display: grid !important;
+  grid-template-columns: 1fr 240px !important;
+  align-items: start;
+  gap: 20px;
+}
+
+.field-kyc-verification-summary-panell .field-main-content-row > .field-loan-summary-left {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+
+.field-kyc-verification-summary-panell .field-main-content-row > .field-promotions-right {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   5. LEFT COLUMN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-kyc-verification-summary-panell .field-loan-summary-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+/* ── 5a. Loan Application Card ─────────────────────────────────────────────── */
+
+.field-kyc-verification-summary-panell .field-loan-application-card {
+  background: var(--hdfc-card-bg);
+  border: 1px solid var(--hdfc-border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Loan Number — icon + label + bold number */
+.field-kyc-verification-summary-panell .field-loan-application-numberr2.text-wrapper {
+  display: grid !important;
+  grid-template-columns: 52px 1fr !important;
+  grid-template-rows: auto auto !important;
+  column-gap: 16px !important;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Icon badge */
+.field-kyc-verification-summary-panell .field-loan-application-numberr2.text-wrapper::before {
+  content: '';
+  grid-column: 1;
+  grid-row: 1 / 3;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--hdfc-icon-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a3f8f' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='2' width='14' height='20' rx='2'/%3E%3Cline x1='9' y1='7' x2='15' y2='7'/%3E%3Cline x1='9' y1='11' x2='15' y2='11'/%3E%3Cline x1='9' y1='15' x2='12' y2='15'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px;
+  justify-self: center;
+  align-self: center;
+}
+
+/* Label → col 2, row 1 */
+.field-kyc-verification-summary-panell .field-loan-application-numberr2.text-wrapper > label.field-label {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  font-size: 0.78rem !important;
+  font-weight: 400 !important;
+  color: var(--hdfc-text-secondary) !important;
+  margin-bottom: 4px !important;
+  white-space: nowrap;
+}
+
+/* Input → col 2, row 2 — bold number, no box */
+.field-kyc-verification-summary-panell .field-loan-application-numberr2.text-wrapper > input[type="text"] {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: var(--hdfc-text-primary) !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  min-height: unset !important;
+  height: auto !important;
+  box-shadow: none !important;
+  line-height: 1.25 !important;
+  cursor: text !important;
+  pointer-events: auto !important;
+}
+
+.field-kyc-verification-summary-panell .field-loan-application-numberr2.text-wrapper > input[type="text"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Contact note */
+.field-kyc-verification-summary-panell .field-contact-note {
+  padding-bottom: 16px;
+  border-bottom: 1.5px dashed var(--hdfc-border);
+  margin-bottom: 16px;
+}
+
+.field-kyc-verification-summary-panell .field-contact-note p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--hdfc-text-secondary);
+}
+
+/* Xpress heading */
+.field-kyc-verification-summary-panell .field-xpress-personal-loan-summary-heading p {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--hdfc-text-primary);
+}
+
+
+/* ── 5b. Loan Amount Block ──────────────────────────────────────────────────── */
+
+.field-kyc-verification-summary-panell .field-loan-amount-block {
+  border-left: 3px solid var(--hdfc-loan-accent);
+  padding: 4px 0 4px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-kyc-verification-summary-panell .field-loan-amountt2.text-wrapper > label.field-label {
+  font-size: 0.78rem !important;
+  font-weight: 400 !important;
+  color: var(--hdfc-text-secondary) !important;
+  margin-bottom: 2px !important;
+}
+
+/* Loan amount — bold value, no input box */
+.field-kyc-verification-summary-panell .field-loan-amountt2.text-wrapper > input[type="text"] {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: var(--hdfc-text-primary) !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  min-height: unset !important;
+  height: auto !important;
+  box-shadow: none !important;
+  line-height: 1.3 !important;
+  cursor: text !important;
+  pointer-events: auto !important;
+}
+
+.field-kyc-verification-summary-panell .field-loan-amountt2.text-wrapper > input[type="text"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   6. DISBURSEMENT NOTE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-kyc-verification-summary-panell .field-disbursement-note {
+  background-color: var(--hdfc-blue-info-bg);
+  border: 1px solid var(--hdfc-blue-info-border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+}
+
+.field-kyc-verification-summary-panell .field-disbursement-note p {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--hdfc-blue-link);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   7. EASY LOAN MANAGEMENT CARD
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-kyc-verification-summary-panell .field-easy-loan-management-card {
+  background-color: var(--hdfc-easy-loan-bg);
+  border: 1px solid var(--hdfc-easy-loan-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+}
+
+.field-kyc-verification-summary-panell .field-easy-loan-management-card > legend.field-label {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  font-size: 1rem;
+  font-weight: 700 !important;
+  color: var(--hdfc-text-primary) !important;
+  background-color: var(--hdfc-easy-loan-bg);
+  width: 100%;
+  margin: 0;
+  float: none !important;
+}
+
+.field-kyc-verification-summary-panell .field-easy-loan-management-card > legend.field-label::before {
+  content: '';
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background-color: #c7d2f7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a3f8f' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='3' x2='12' y2='15'/%3E%3Cpolyline points='7 10 12 15 17 10'/%3E%3Cpath d='M20 18v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-1'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 17px;
+}
+
+.field-kyc-verification-summary-panell .field-download-app-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 18px;
+  background-color: var(--hdfc-card-bg);
+  border-top: 1px solid var(--hdfc-easy-loan-border);
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.field-kyc-verification-summary-panell .field-download-app-text:hover {
+  background-color: #f0f3ff;
+}
+
+.field-kyc-verification-summary-panell .field-download-app-text p {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--hdfc-text-primary);
+}
+
+.field-kyc-verification-summary-panell .field-download-app-text::after {
+  content: '›';
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--hdfc-text-secondary);
+  flex-shrink: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   8. MORE SERVICES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-kyc-verification-summary-panell .field-more-services-text p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--hdfc-text-secondary);
+}
+
+.field-kyc-verification-summary-panell .field-more-services-text p a {
+  color: var(--hdfc-blue-link);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.field-kyc-verification-summary-panell .field-more-services-text p a:hover {
+  text-decoration: underline;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   9. RIGHT COLUMN — Promo Cards
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-kyc-verification-summary-panell .field-promotions-right {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px;
+  align-self: start;
+  position: sticky;
+  top: 16px;
+}
+
+.field-kyc-verification-summary-panell .promo-card-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 180px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: var(--radius-lg) !important;
+  border: none !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  text-align: left !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.field-kyc-verification-summary-panell .promo-card-container:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.field-kyc-verification-summary-panell .field-promo-card1777106717593 {
+  background-color: var(--hdfc-promo-1-bg) !important;
+}
+
+.field-kyc-verification-summary-panell .field-promo-card-18703026471777106744307 {
+  background-color: var(--hdfc-promo-2-bg) !important;
+}
+
+.field-kyc-verification-summary-panell .promo-card-image {
+  width: 100% !important;
+  height: 120px !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  flex-shrink: 0;
+}
+
+.field-kyc-verification-summary-panell .promo-card-image[src=""],
+.field-kyc-verification-summary-panell .promo-card-image:not([src]) {
+  height: 60px !important;
+  opacity: 0;
+}
+
+.field-kyc-verification-summary-panell .promo-card-small-text {
+  display: block !important;
+  margin: 0 !important;
+  padding: 10px 14px 2px !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: var(--hdfc-blue-primary) !important;
+  line-height: 1.4 !important;
+}
+
+.field-kyc-verification-summary-panell .promo-card-title {
+  display: block !important;
+  margin: 0 !important;
+  padding: 2px 14px 16px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: var(--hdfc-text-primary) !important;
+  line-height: 1.3 !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   10. FOOTER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-kyc-verification-summary-panell .field-footer-copyright {
+  display: none !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   11. RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 960px) {
+  .field-kyc-verification-summary-panell .field-main-content-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .field-kyc-verification-summary-panell .field-main-content-row > .field-loan-summary-left,
+  .field-kyc-verification-summary-panell .field-main-content-row > .field-promotions-right {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  .field-kyc-verification-summary-panell .field-promotions-right {
+    flex-direction: row !important;
+    overflow-x: auto;
+    gap: 14px;
+    position: static;
+    scrollbar-width: none;
+  }
+
+  .field-kyc-verification-summary-panell .field-promotions-right::-webkit-scrollbar {
+    display: none;
+  }
+
+  .field-kyc-verification-summary-panell .promo-card-container {
+    min-width: 200px !important;
+    flex: 0 0 200px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .field-kyc-verification-summary-panell {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .field-kyc-verification-summary-panell .field-loan-application-card {
+    padding: 16px;
+  }
+
+  .field-kyc-verification-summary-panell .field-loan-application-numberr2.text-wrapper {
+    grid-template-columns: 42px 1fr !important;
+  }
+
+  .field-kyc-verification-summary-panell .field-loan-application-numberr2.text-wrapper::before {
+    width: 42px;
+    height: 42px;
+    background-size: 20px;
+  }
+
+  .field-kyc-verification-summary-panell .field-loan-application-numberr2.text-wrapper > input[type="text"] {
+    font-size: 1.25rem !important;
+  }
+}
