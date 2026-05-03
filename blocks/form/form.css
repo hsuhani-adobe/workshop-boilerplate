@@ -5635,15 +5635,15 @@ main .form form .field-select-your-bank select:focus {
   border-color: #1C3FCA;
   box-shadow: 0 0 0 3px rgba(28, 63, 202, 0.10);
 }
-
+/* 
 /* ============================================
    VERIFY METHODS — 3 COLUMN GRID
    The .horizontal class on the fieldset is what
    AEM uses to force flex-direction: row.
    We must override it here with grid.
-   ============================================ */
+   ============================================ 
 
-/* This is the critical fix — target .horizontal.field-verify-methods */
+/* This is the critical fix — target .horizontal.field-verify-methods 
 main .form form .field-verify-methods.horizontal,
 main .form form .field-verify-methods {
   display: grid !important;
@@ -5654,7 +5654,7 @@ main .form form .field-verify-methods {
   margin: 0 !important;
   border: none !important;
   background: transparent !important;
-  /* Reset any flex properties AEM sets */
+  /* Reset any flex properties AEM sets 
   flex-direction: unset !important;
   flex-wrap: unset !important;
   align-items: unset !important;
@@ -5669,7 +5669,7 @@ main .form form .field-verify-methods > legend.field-label {
   display: none !important;
 }
 
-/* Each method card */
+/* Each method card 
 main .form form .field-verify-methods .radio-wrapper {
   display: flex !important;
   flex-direction: column !important;
@@ -5684,11 +5684,11 @@ main .form form .field-verify-methods .radio-wrapper {
   min-height: 80px !important;
   position: relative !important;
   width: 100% !important;
-  /* Override AEM default radio-wrapper flex row */
+  /* Override AEM default radio-wrapper flex row 
   flex-direction: column !important;
 }
 
-/* Hide native radio */
+/* Hide native radio 
 main .form form .field-verify-methods .radio-wrapper input[type="radio"] {
   position: absolute !important;
   width: 1px !important;
@@ -5697,7 +5697,7 @@ main .form form .field-verify-methods .radio-wrapper input[type="radio"] {
   pointer-events: none !important;
 }
 
-/* Label with custom radio circle */
+/* Label with custom radio circle 
 main .form form .field-verify-methods .radio-wrapper > label.field-label {
   display: flex !important;
   flex-direction: row !important;
@@ -5714,7 +5714,7 @@ main .form form .field-verify-methods .radio-wrapper > label.field-label {
   padding: 0 !important;
 }
 
-/* Custom radio circle */
+/* Custom radio circle 
 main .form form .field-verify-methods .radio-wrapper > label.field-label::before {
   content: '' !important;
   flex-shrink: 0 !important;
@@ -5728,25 +5728,25 @@ main .form form .field-verify-methods .radio-wrapper > label.field-label::before
   transition: border-color 0.15s, border-width 0.1s;
 }
 
-/* Selected card */
+/* Selected card 
 main .form form .field-verify-methods .radio-wrapper:has(input[type="radio"]:checked) {
   border-color: #1C3FCA !important;
   background-color: #F3F6FD !important;
 }
 
-/* Selected radio filled */
+/* Selected radio filled 
 main .form form .field-verify-methods .radio-wrapper input[type="radio"]:checked + label.field-label::before {
   border-color: #1C3FCA !important;
   border-width: 6px !important;
   background: #ffffff !important;
 }
 
-/* Hover */
+/* Hover 
 main .form form .field-verify-methods .radio-wrapper:hover:not(:has(input:checked)) {
   border-color: #93A8F0 !important;
 }
 
-/* "Recommended" badge — Account Aggregator only */
+/* "Recommended" badge — Account Aggregator only 
 main .form form .field-verify-methods .radio-wrapper[data-id="verify-methods"]::after {
   content: 'Recommended' !important;
   display: inline-block !important;
@@ -5761,7 +5761,7 @@ main .form form .field-verify-methods .radio-wrapper[data-id="verify-methods"]::
   margin-left: 30px !important;
   line-height: 1.6 !important;
   white-space: nowrap !important;
-}
+} */
 
 /* ============================================
    CONTINUE BUTTON
@@ -5844,9 +5844,9 @@ main .form form .field-continue > button.button::after {
 
 /* ============================================
    FIXES ONLY — add these on top of your existing CSS
-   ============================================ */
+   ============================================ 
 
-/* ---- FIX 1: Section header — stop it being clipped, show full gradient bar ---- */
+/* ---- FIX 1: Section header — stop it being clipped, show full gradient bar ---- 
 main .form form .field-select-bank,
 main .form form .field-income-method {
   overflow: visible;
@@ -5862,7 +5862,7 @@ main .form form .field-income-method > legend.field-label {
   width: 100% !important;
   box-sizing: border-box !important;
   padding: 20px 32px !important;
-  margin: 0 0 0 -1px !important; /* compensate for fieldset border */
+  margin: 0 0 0 -1px !important; /* compensate for fieldset border 
   font-family: 'Inter', sans-serif !important;
   font-size: 16px !important;
   font-weight: 600 !important;
@@ -5871,13 +5871,13 @@ main .form form .field-income-method > legend.field-label {
   line-height: 1.4 !important;
   background: linear-gradient(90deg, #F3F6FD 0%, #D0DDFC 100%) !important;
   border-radius: 23px 23px 4px 4px !important;
-  /* Critical: fieldset legends need these to behave like block elements */
+  /* Critical: fieldset legends need these to behave like block elements 
   position: relative !important;
   top: 0 !important;
   left: 0 !important;
 }
 
-/* Bank icon in select-bank header */
+/* Bank icon in select-bank header 
 main .form form .field-select-bank > legend.field-label::before {
   content: '' !important;
   display: inline-block !important;
@@ -5890,7 +5890,7 @@ main .form form .field-select-bank > legend.field-label::before {
   background-size: contain !important;
 }
 
-/* Verify icon in income-method header */
+/* Verify icon in income-method header 
 main .form form .field-income-method > legend.field-label::before {
   content: '' !important;
   display: inline-block !important;
@@ -5903,9 +5903,9 @@ main .form form .field-income-method > legend.field-label::before {
   background-size: contain !important;
 }
 
-/* ---- FIX 2: Native radio completely hidden and replaced ---- */
+/* ---- FIX 2: Native radio completely hidden and replaced ---- 
 
-/* Step 1: completely kill the native radio — size 0, not just opacity */
+/* Step 1: completely kill the native radio — size 0, not just opacity 
 main .form form .field-verify-methods .radio-wrapper input[type="radio"] {
   position: absolute !important;
   width: 0 !important;
@@ -5919,7 +5919,7 @@ main .form form .field-verify-methods .radio-wrapper input[type="radio"] {
   -webkit-appearance: none !important;
 }
 
-/* Step 2: custom radio circle on label::before — reset all */
+/* Step 2: custom radio circle on label::before — reset all 
 main .form form .field-verify-methods .radio-wrapper > label.field-label::before {
   content: '' !important;
   display: inline-flex !important;
@@ -5937,26 +5937,26 @@ main .form form .field-verify-methods .radio-wrapper > label.field-label::before
   transition: border-color 0.15s, border-width 0.1s !important;
 }
 
-/* Step 3: selected state — thick border creates filled dot illusion */
+/* Step 3: selected state — thick border creates filled dot illusion 
 main .form form .field-verify-methods .radio-wrapper input[type="radio"]:checked + label.field-label::before {
   border: 6px solid #1C3FCA !important;
   background-color: #ffffff !important;
   background-image: none !important;
 }
 
-/* Step 4: selected card background */
+/* Step 4: selected card background 
 main .form form .field-verify-methods .radio-wrapper:has(input[type="radio"]:checked) {
   border: 1.5px solid #1C3FCA !important;
   background-color: #F3F6FD !important;
 }
 
-/* Step 5: unselected cards */
+/* Step 5: unselected cards 
 main .form form .field-verify-methods .radio-wrapper:not(:has(input[type="radio"]:checked)) {
   border: 1px solid #D2D5DB !important;
   background-color: #ffffff !important;
 }
 
-/* ---- FIX 3: Recommended badge visible & contained ---- */
+/* ---- FIX 3: Recommended badge visible & contained ---- 
 main .form form .field-verify-methods .radio-wrapper[data-id="verify-methods"] {
   overflow: visible !important;
 }
@@ -5978,7 +5978,7 @@ main .form form .field-verify-methods .radio-wrapper[data-id="verify-methods"]::
   white-space: nowrap !important;
 }
 
-/* ---- FIX 4: card height consistent — all 3 same height ---- */
+/* ---- FIX 4: card height consistent — all 3 same height ---- 
 main .form form .field-verify-methods {
   align-items: stretch !important;
 }
