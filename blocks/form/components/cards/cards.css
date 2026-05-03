@@ -1,12 +1,14 @@
 /* ============================================================
-   VERIFY CARDS — Income e-Verification Method Selection
-   Component class: .verify-cards (added by cards.js)
+   VERIFY CARDS — Income e-Verification Method
+   Scoped to .verify-cards (added by cards.js decorate())
+   No CSS grid — uses flexbox row layout per Figma spec
    ============================================================ */
 
-/* ── Fieldset reset ── */
+/* ── Fieldset: flex row, 3 equal cards ── */
 .verify-cards {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
   gap: 16px !important;
   padding: 24px 0 8px !important;
   margin: 0 !important;
@@ -15,39 +17,33 @@
   box-shadow: none !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  /* Reset any AEM flex overrides */
-  flex-direction: unset !important;
-  flex-wrap: unset !important;
-  align-items: unset !important;
-  align-content: unset !important;
-  justify-content: unset !important;
-  overflow: visible !important;
+  flex-wrap: wrap !important;
 }
 
 /* ── Each card ── */
 .verify-cards .radio-wrapper {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: flex-start !important;
-  gap: 10px !important;
+  gap: 8px !important;
   padding: 20px !important;
   background: #ffffff !important;
   border: 1px solid #D2D5DB !important;
   border-radius: 20px !important;
   cursor: pointer !important;
   box-sizing: border-box !important;
-  width: 100% !important;
-  min-height: 130px !important;
   position: relative !important;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition: border-color 0.15s ease, background-color 0.15s ease !important;
 }
 
-/* Hover — unselected only */
+/* Hover — unselected */
 .verify-cards .radio-wrapper:hover:not(.is-selected) {
   border-color: #93A8F0 !important;
 }
 
-/* Selected state */
+/* Selected */
 .verify-cards .radio-wrapper.is-selected {
   border-color: #1C3FCA !important;
   background-color: #F3F6FD !important;
@@ -62,11 +58,11 @@
   pointer-events: none !important;
 }
 
-/* ── Header row: radio circle + icon + text ── */
+/* ── Header: radio circle + title inline ── */
 .verify-cards .radio-wrapper .vc-header {
   display: flex !important;
   flex-direction: row !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   gap: 10px !important;
   width: 100% !important;
 }
@@ -74,7 +70,6 @@
 /* ── Custom radio circle ── */
 .verify-cards .radio-wrapper .vc-radio-circle {
   flex-shrink: 0 !important;
-  display: inline-block !important;
   width: 20px !important;
   height: 20px !important;
   min-width: 20px !important;
@@ -82,61 +77,33 @@
   border: 1.5px solid #D2D5DB !important;
   background: #ffffff !important;
   box-sizing: border-box !important;
-  margin-top: 2px !important;
-  transition: border-color 0.15s, border-width 0.1s;
+  display: inline-block !important;
+  transition: border-color 0.15s, border-width 0.1s !important;
 }
 
-/* Selected radio circle — filled dot via thick border */
+/* Selected — thick border becomes filled dot */
 .verify-cards .radio-wrapper.is-selected .vc-radio-circle {
   border-color: #1C3FCA !important;
   border-width: 6px !important;
-  background: #ffffff !important;
 }
 
-/* ── Icon ── */
-.verify-cards .radio-wrapper .vc-icon {
-  flex-shrink: 0 !important;
-  width: 32px !important;
-  height: 32px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.verify-cards .radio-wrapper .vc-icon svg {
-  width: 32px !important;
-  height: 32px !important;
-  display: block !important;
-}
-
-/* ── Text block ── */
-.verify-cards .radio-wrapper .vc-text {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 4px !important;
-  flex: 1 !important;
-  min-width: 0 !important;
-}
-
-/* Title */
+/* ── Title ── */
 .verify-cards .radio-wrapper .vc-title {
   font-family: 'Inter', sans-serif !important;
   font-size: 14px !important;
   font-weight: 600 !important;
   color: #111827 !important;
   line-height: 1.4 !important;
-  margin: 0 !important;
-  padding: 0 !important;
 }
 
-/* Description */
+/* ── Description — indented to align with title ── */
 .verify-cards .radio-wrapper .vc-desc {
   font-family: 'Inter', sans-serif !important;
   font-size: 13px !important;
   font-weight: 400 !important;
   color: #4B5563 !important;
   line-height: 1.5 !important;
-  margin: 0 !important;
+  margin: 0 0 0 30px !important;
   padding: 0 !important;
 }
 
@@ -155,16 +122,9 @@
   margin-left: 30px !important;
 }
 
-/* ── Responsive: 1 column on mobile ── */
+/* ── Tablet: still flex row but allow wrap ── */
 @media (max-width: 768px) {
-  .verify-cards {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ── 2 columns on tablet ── */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .verify-cards {
-    grid-template-columns: repeat(2, 1fr) !important;
+  .verify-cards .radio-wrapper {
+    flex: 1 1 100% !important;
   }
 }
