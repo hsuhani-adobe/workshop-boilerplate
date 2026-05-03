@@ -5378,15 +5378,13 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
 
 
 /* ============================================
-   e-Verify Income Panel
-   Using AEM EDS correct selector pattern:
-   main .form form .field-{name}
+   e-Verify Income Panel — Final Fix
    ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 /* ============================================
-   OUTER PANEL WRAPPER
+   OUTER WRAPPER
    ============================================ */
 
 main .form form .field-e-verify-your-income {
@@ -5405,40 +5403,10 @@ main .form form .field-e-verify-your-income > legend.field-label {
 }
 
 /* ============================================
-   SECTION CARD — SELECT BANK
+   SECTION CARDS
    ============================================ */
 
-main .form form .field-select-bank {
-  background: #ffffff;
-  border: 1px solid #ECEDF3;
-  border-radius: 24px;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-  display: block;
-}
-
-main .form form .field-select-bank > legend.field-label {
-  display: block;
-  float: none;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 20px 32px;
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  color: #111827;
-  letter-spacing: -0.02em;
-  line-height: 1.4;
-  background: linear-gradient(90deg, #F3F6FD 0%, #D0DDFC 100%);
-  border-radius: 24px 24px 4px 4px;
-}
-
-/* ============================================
-   SECTION CARD — INCOME METHOD
-   ============================================ */
-
+main .form form .field-select-bank,
 main .form form .field-income-method {
   background: #ffffff;
   border: 1px solid #ECEDF3;
@@ -5449,8 +5417,12 @@ main .form form .field-income-method {
   display: block;
 }
 
+/* ---- Section header with gradient + icon ---- */
+main .form form .field-select-bank > legend.field-label,
 main .form form .field-income-method > legend.field-label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   float: none;
   width: 100%;
   box-sizing: border-box;
@@ -5466,9 +5438,34 @@ main .form form .field-income-method > legend.field-label {
   border-radius: 24px 24px 4px 4px;
 }
 
+/* Bank icon in "Select your bank" header */
+main .form form .field-select-bank > legend.field-label::before {
+  content: '';
+  display: inline-block;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='%234F6FDF' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='3' y1='22' x2='21' y2='22'/%3E%3Cline x1='6' y1='18' x2='6' y2='11'/%3E%3Cline x1='10' y1='18' x2='10' y2='11'/%3E%3Cline x1='14' y1='18' x2='14' y2='11'/%3E%3Cline x1='18' y1='18' x2='18' y2='11'/%3E%3Cpolygon points='12 2 2 7 22 7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* Verify icon in "e-Verify your income" header */
+main .form form .field-income-method > legend.field-label::before {
+  content: '';
+  display: inline-block;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='%234F6FDF' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpolyline points='9 12 11 14 15 10'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
 /* ============================================
-   BANK OPTIONS RADIO GROUP
-   main .form form .field-bank-options
+   BANK OPTIONS
    ============================================ */
 
 main .form form .field-bank-options {
@@ -5493,7 +5490,6 @@ main .form form .field-bank-options > legend.field-label {
   display: none;
 }
 
-/* Each bank radio-wrapper */
 main .form form .field-bank-options .radio-wrapper {
   display: flex;
   flex-direction: column;
@@ -5508,7 +5504,6 @@ main .form form .field-bank-options .radio-wrapper {
   background: transparent;
 }
 
-/* Hide native radio input */
 main .form form .field-bank-options .radio-wrapper input[type="radio"] {
   position: absolute;
   width: 1px;
@@ -5516,10 +5511,8 @@ main .form form .field-bank-options .radio-wrapper input[type="radio"] {
   opacity: 0;
   pointer-events: none;
   margin: 0;
-  padding: 0;
 }
 
-/* Label — bank name text */
 main .form form .field-bank-options .radio-wrapper > label.field-label {
   display: flex;
   flex-direction: column;
@@ -5536,69 +5529,57 @@ main .form form .field-bank-options .radio-wrapper > label.field-label {
   word-break: break-word;
   margin: 0;
   padding: 0;
-  border: none;
 }
 
-/* Icon box rendered via ::before on label */
+/* Icon box */
 main .form form .field-bank-options .radio-wrapper > label.field-label::before {
   content: '';
   display: block;
   width: 60px;
   height: 60px;
-  flex-shrink: 0;
   border: 1px solid #D2D5DB;
   border-radius: 12px;
   background-color: #ffffff;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center;
   background-size: 32px 32px;
   box-sizing: border-box;
   transition: border-color 0.15s, background-color 0.15s;
 }
 
-/* ---- BANK LOGOS — target by data-id ---- */
-
-main .form form .field-bank-options .radio-wrapper[data-id="bank-options"] > label.field-label::before {
-  background-image: url('/path/to/hdfc-logo.svg');        /* ← Replace: HDFC */
+/* ---- Bank Logos by data-id ---- */
+main .form form .field-bank-options .radio-wrapper[data-id="bank-options"] > label::before {
+  background-image: url('/path/to/hdfc-logo.svg');        /* ← HDFC */
+}
+main .form form .field-bank-options .radio-wrapper[data-id="bank-options-1"] > label::before {
+  background-image: url('/path/to/icici-logo.svg');       /* ← ICICI */
+}
+main .form form .field-bank-options .radio-wrapper[data-id="bank-options-2"] > label::before {
+  background-image: url('/path/to/axis-logo.svg');        /* ← Axis */
+}
+main .form form .field-bank-options .radio-wrapper[data-id="bank-options-3"] > label::before {
+  background-image: url('/path/to/kotak-logo.svg');       /* ← Kotak */
+}
+main .form form .field-bank-options .radio-wrapper[data-id="bank-options-4"] > label::before {
+  background-image: url('/path/to/sbi-logo.svg');         /* ← SBI */
+}
+main .form form .field-bank-options .radio-wrapper[data-id="bank-options-5"] > label::before {
+  background-image: url('/path/to/bob-logo.svg');         /* ← Bank of Baroda */
+}
+main .form form .field-bank-options .radio-wrapper[data-id="bank-options-6"] > label::before {
+  background-image: url('/path/to/idfc-logo.svg');        /* ← IDFC First */
 }
 
-main .form form .field-bank-options .radio-wrapper[data-id="bank-options-1"] > label.field-label::before {
-  background-image: url('/path/to/icici-logo.svg');       /* ← Replace: ICICI Bank */
-}
-
-main .form form .field-bank-options .radio-wrapper[data-id="bank-options-2"] > label.field-label::before {
-  background-image: url('/path/to/axis-logo.svg');        /* ← Replace: Axis Bank */
-}
-
-main .form form .field-bank-options .radio-wrapper[data-id="bank-options-3"] > label.field-label::before {
-  background-image: url('/path/to/kotak-logo.svg');       /* ← Replace: Kotak Bank */
-}
-
-main .form form .field-bank-options .radio-wrapper[data-id="bank-options-4"] > label.field-label::before {
-  background-image: url('/path/to/sbi-logo.svg');         /* ← Replace: SBI */
-}
-
-main .form form .field-bank-options .radio-wrapper[data-id="bank-options-5"] > label.field-label::before {
-  background-image: url('/path/to/bob-logo.svg');         /* ← Replace: Bank of Baroda */
-}
-
-main .form form .field-bank-options .radio-wrapper[data-id="bank-options-6"] > label.field-label::before {
-  background-image: url('/path/to/idfc-logo.svg');        /* ← Replace: IDFC First Bank */
-}
-
-/* ---- Selected bank ---- */
+/* Selected bank */
 main .form form .field-bank-options .radio-wrapper input[type="radio"]:checked + label.field-label {
   color: #1C3FCA;
   font-weight: 600;
 }
-
 main .form form .field-bank-options .radio-wrapper input[type="radio"]:checked + label.field-label::before {
   border-color: #1C3FCA;
   border-width: 2px;
   background-color: #F3F6FD;
 }
-
-/* Blue dot below selected bank */
 main .form form .field-bank-options .radio-wrapper input[type="radio"]:checked + label.field-label::after {
   content: '';
   display: block;
@@ -5609,15 +5590,12 @@ main .form form .field-bank-options .radio-wrapper input[type="radio"]:checked +
   margin-top: -4px;
 }
 
-/* Hover */
 main .form form .field-bank-options .radio-wrapper > label.field-label:hover::before {
   border-color: #93A8F0;
-  background-color: #F9FAFF;
 }
 
 /* ============================================
    OTHER BANK DROPDOWN
-   main .form form .field-select-your-bank
    ============================================ */
 
 main .form form .field-select-your-bank {
@@ -5643,7 +5621,6 @@ main .form form .field-select-your-bank select {
   padding: 10px 40px 10px 14px;
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  font-weight: 400;
   color: #374151;
   background-color: #ffffff;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -5660,126 +5637,134 @@ main .form form .field-select-your-bank select:focus {
 }
 
 /* ============================================
-   VERIFY METHODS — 3 COLUMN CARDS
-   main .form form .field-verify-methods
+   VERIFY METHODS — 3 COLUMN GRID
+   The .horizontal class on the fieldset is what
+   AEM uses to force flex-direction: row.
+   We must override it here with grid.
    ============================================ */
 
+/* This is the critical fix — target .horizontal.field-verify-methods */
+main .form form .field-verify-methods.horizontal,
 main .form form .field-verify-methods {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  padding: 24px 32px 32px 32px;
-  margin: 0;
-  border: none;
-  background: transparent;
-  /* Critical — override AEM's horizontal flex default */
-  flex-direction: unset;
-  flex-wrap: unset;
-  align-items: unset;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  grid-template-rows: auto !important;
+  gap: 16px !important;
+  padding: 24px 32px 32px 32px !important;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  /* Reset any flex properties AEM sets */
+  flex-direction: unset !important;
+  flex-wrap: unset !important;
+  align-items: unset !important;
+  align-content: unset !important;
+  justify-content: unset !important;
+  overflow: visible !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 main .form form .field-verify-methods > legend.field-label {
-  display: none;
+  display: none !important;
 }
 
 /* Each method card */
 main .form form .field-verify-methods .radio-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  border: 1px solid #D2D5DB;
-  border-radius: 20px;
-  padding: 20px 20px 16px 20px;
-  background: #ffffff;
-  cursor: pointer;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  border: 1px solid #D2D5DB !important;
+  border-radius: 20px !important;
+  padding: 20px !important;
+  background: #ffffff !important;
+  cursor: pointer !important;
   transition: border-color 0.15s, background-color 0.15s;
-  box-sizing: border-box;
-  min-height: 80px;
-  position: relative;
-  /* Override AEM flex row default on radio-wrapper */
-  flex-direction: column;
-  width: 100%;
+  box-sizing: border-box !important;
+  min-height: 80px !important;
+  position: relative !important;
+  width: 100% !important;
+  /* Override AEM default radio-wrapper flex row */
+  flex-direction: column !important;
 }
 
 /* Hide native radio */
 main .form form .field-verify-methods .radio-wrapper input[type="radio"] {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Label with custom radio circle */
 main .form form .field-verify-methods .radio-wrapper > label.field-label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #111827;
-  cursor: pointer;
-  line-height: 1.5;
-  letter-spacing: -0.01em;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  border: none;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+  cursor: pointer !important;
+  line-height: 1.5 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* Custom radio circle */
 main .form form .field-verify-methods .radio-wrapper > label.field-label::before {
-  content: '';
-  flex-shrink: 0;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid #D2D5DB;
-  background: #ffffff;
-  box-sizing: border-box;
+  content: '' !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid #D2D5DB !important;
+  background: #ffffff !important;
+  box-sizing: border-box !important;
   transition: border-color 0.15s, border-width 0.1s;
 }
 
 /* Selected card */
 main .form form .field-verify-methods .radio-wrapper:has(input[type="radio"]:checked) {
-  border-color: #1C3FCA;
-  background-color: #F3F6FD;
+  border-color: #1C3FCA !important;
+  background-color: #F3F6FD !important;
 }
 
-/* Selected radio dot */
+/* Selected radio filled */
 main .form form .field-verify-methods .radio-wrapper input[type="radio"]:checked + label.field-label::before {
-  border-color: #1C3FCA;
-  border-width: 6px;
-  background: #ffffff;
+  border-color: #1C3FCA !important;
+  border-width: 6px !important;
+  background: #ffffff !important;
 }
 
 /* Hover */
 main .form form .field-verify-methods .radio-wrapper:hover:not(:has(input:checked)) {
-  border-color: #93A8F0;
+  border-color: #93A8F0 !important;
 }
 
-/* "Recommended" badge — Account Aggregator only (data-id="verify-methods") */
+/* "Recommended" badge — Account Aggregator only */
 main .form form .field-verify-methods .radio-wrapper[data-id="verify-methods"]::after {
-  content: 'Recommended';
-  display: inline-block;
-  background-color: #00875F;
-  color: #ffffff;
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  padding: 3px 12px;
-  border-radius: 20px;
-  margin-top: 10px;
-  margin-left: 30px;
-  line-height: 1.6;
+  content: 'Recommended' !important;
+  display: inline-block !important;
+  background-color: #00875F !important;
+  color: #ffffff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  padding: 3px 12px !important;
+  border-radius: 20px !important;
+  margin-top: 10px !important;
+  margin-left: 30px !important;
+  line-height: 1.6 !important;
+  white-space: nowrap !important;
 }
 
 /* ============================================
    CONTINUE BUTTON
-   main .form form .field-continue
    ============================================ */
 
 main .form form .field-continue {
@@ -5819,11 +5804,11 @@ main .form form .field-continue > button.button::after {
   display: inline-block;
   width: 18px;
   height: 18px;
-  flex-shrink: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M4 10h12M12 6l4 4-4 4' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  flex-shrink: 0;
 }
 
 /* ============================================
@@ -5831,9 +5816,10 @@ main .form form .field-continue > button.button::after {
    ============================================ */
 
 @media (max-width: 900px) {
+  main .form form .field-verify-methods.horizontal,
   main .form form .field-verify-methods {
-    grid-template-columns: 1fr;
-    padding: 16px 20px 24px;
+    grid-template-columns: 1fr !important;
+    padding: 16px 20px 24px !important;
   }
 }
 
@@ -5843,22 +5829,15 @@ main .form form .field-continue > button.button::after {
     font-size: 14px;
     padding: 16px 20px;
   }
-
   main .form form .field-bank-options {
-    padding: 20px 20px 0;
-    gap: 12px;
+    padding: 20px 20px 0 !important;
+    gap: 10px !important;
   }
-
   main .form form .field-select-your-bank {
-    padding: 14px 20px 20px;
+    padding: 14px 20px 20px !important;
   }
-
   main .form form .field-select-your-bank select {
-    width: 100%;
-  }
-
-  main .form form .field-verify-methods {
-    padding: 16px 20px 20px;
+    width: 100% !important;
   }
 }
 
