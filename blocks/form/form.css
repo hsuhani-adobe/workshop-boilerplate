@@ -4626,127 +4626,103 @@ fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper.field-add
   outline: none !important;
 }
 
-/* ============================================
-   RADIO GROUP — FONT REFINEMENT + CLEAN LOOK
-   ============================================ */
 
-/* Legend (question text) */
-fieldset.panel-wrapper.field-customer-details 
-> fieldset.panel-wrapper.field-address-details 
-> fieldset.radio-group-wrapper.field-customer-address-is 
-> legend.field-label {
+/* -----------------------------------------------------------
+   4. RADIO GROUP FIELDSET
+   ----------------------------------------------------------- */
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper.field-address-details > fieldset.radio-group-wrapper.field-customer-address-is {
+  box-sizing: border-box !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  flex: 0 0 100% !important;
+
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0 !important;
+}
+
+/* Radio group legend */
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper.field-address-details > fieldset.radio-group-wrapper.field-customer-address-is > legend.field-label {
+  flex: 0 0 100% !important;
+  float: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 0 16px 0 !important;
+  position: static !important;
+  transform: none !important;
+  background: transparent !important;
+
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
   font-size: 15px !important;
+  line-height: 22px !important;
+  letter-spacing: -0.02em !important;
+  color: #111827 !important;
+
+  /* No pseudo icons */
+}
+
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper.field-address-details > fieldset.radio-group-wrapper.field-customer-address-is > legend.field-label::before,
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper.field-address-details > fieldset.radio-group-wrapper.field-customer-address-is > legend.field-label::after {
+  display: none !important;
+}
+
+/* Individual radio wrapper */
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper.field-address-details > fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-right: 32px !important;
+}
+
+/* Radio input */
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper.field-address-details > fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper > input[type="radio"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  box-sizing: border-box !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 22px !important;
+  border: 1.5px solid #D2D5DB !important;
+  border-radius: 50% !important;
+  background: #FFFFFF !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+  flex-shrink: 0 !important;
+}
+
+/* Checked state */
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper.field-address-details > fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper > input[type="radio"]:checked {
+  border-color: #7454F2 !important;
+  box-shadow: inset 0 0 0 5px #7454F2 !important;
+  background: #FFFFFF !important;
+}
+
+/* Radio label */
+fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper.field-address-details > fieldset.radio-group-wrapper.field-customer-address-is > .radio-wrapper > label.field-label {
+  position: static !important;
+  transform: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  top: auto !important;
+  left: auto !important;
+
+  font-family: 'Inter', sans-serif !important;
   font-weight: 500 !important;
+  font-size: 12px !important;
   line-height: 20px !important;
-  color: #374151 !important;
-  margin-bottom: 14px !important;
+  letter-spacing: -0.02em !important;
+  color: #111827 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
 }
 
-
-/* Radio label text */
-fieldset.panel-wrapper.field-customer-details 
-> fieldset.panel-wrapper.field-address-details 
-> fieldset.radio-group-wrapper.field-customer-address-is 
-> .radio-wrapper > label.field-label {
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  line-height: 20px !important;
-  color: #374151 !important;
-}
-
-
-/* Improve spacing between options */
-fieldset.panel-wrapper.field-customer-details 
-> fieldset.panel-wrapper.field-address-details 
-> fieldset.radio-group-wrapper.field-customer-address-is 
-> .radio-wrapper {
-  margin-right: 24px !important;
-}
-
-
-/* Slightly smaller radio button for balance */
-fieldset.panel-wrapper.field-customer-details 
-> fieldset.panel-wrapper.field-address-details 
-> fieldset.radio-group-wrapper.field-customer-address-is 
-> .radio-wrapper > input[type="radio"] {
-  width: 18px !important;
-  height: 18px !important;
-  min-width: 18px !important;
-}
-
-
-/* Adjust checked dot */
-fieldset.panel-wrapper.field-customer-details 
-> fieldset.panel-wrapper.field-address-details 
-> fieldset.radio-group-wrapper.field-customer-address-is 
-> .radio-wrapper > input[type="radio"]:checked {
-  box-shadow: inset 0 0 0 4px #7454F2 !important;
-}
-
-
-/* ============================================
-   RESPONSIVE IMPROVEMENT
-   ============================================ */
-
-/* Tablet */
-@media (max-width: 768px) {
-
-  fieldset.panel-wrapper.field-customer-details 
-  > fieldset.panel-wrapper.field-address-details 
-  > fieldset.radio-group-wrapper.field-customer-address-is 
-  > .radio-wrapper {
-    margin-right: 18px !important;
-  }
-
-  fieldset.panel-wrapper.field-customer-details 
-  > fieldset.panel-wrapper.field-address-details 
-  > fieldset.radio-group-wrapper.field-customer-address-is 
-  > legend.field-label {
-    font-size: 14px !important;
-  }
-
-  fieldset.panel-wrapper.field-customer-details 
-  > fieldset.panel-wrapper.field-address-details 
-  > fieldset.radio-group-wrapper.field-customer-address-is 
-  > .radio-wrapper > label.field-label {
-    font-size: 13px !important;
-  }
-}
-
-
-/* Mobile */
-@media (max-width: 480px) {
-
-  /* Stack options nicely */
-  fieldset.panel-wrapper.field-customer-details 
-  > fieldset.panel-wrapper.field-address-details 
-  > fieldset.radio-group-wrapper.field-customer-address-is {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 12px !important;
-  }
-
-  fieldset.panel-wrapper.field-customer-details 
-  > fieldset.panel-wrapper.field-address-details 
-  > fieldset.radio-group-wrapper.field-customer-address-is 
-  > .radio-wrapper {
-    margin-right: 0 !important;
-  }
-
-  fieldset.panel-wrapper.field-customer-details 
-  > fieldset.panel-wrapper.field-address-details 
-  > fieldset.radio-group-wrapper.field-customer-address-is 
-  > legend.field-label {
-    font-size: 13px !important;
-  }
-
-  fieldset.panel-wrapper.field-customer-details 
-  > fieldset.panel-wrapper.field-address-details 
-  > fieldset.radio-group-wrapper.field-customer-address-is 
-  > .radio-wrapper > label.field-label {
-    font-size: 13px !important;
-  }
-}
 
 /* -----------------------------------------------------------
    5. RESPONSIVE
@@ -5215,9 +5191,9 @@ fieldset.panel-wrapper.field-customer-details > fieldset.panel-wrapper .field-de
   padding: 0 !important;
  
   font-family: 'Inter', sans-serif !important;
-  font-weight: 400 !important;
-  font-size: 13px !important;
-  line-height: 20px !important;
+  font-weight: 300 !important;
+  font-size: 11px !important;
+  line-height: 15px !important;
   color: #6B7280 !important;
 }
  
