@@ -6091,39 +6091,50 @@ main .form form .field-verify-methods .radio-wrapper {
 
 /* ==========================================================================
    Verify Email ID Panel — AEM EDS Forms
-   Pixel-accurate to Figma: Frame 1410120675
+   Based on exact HTML structure from Universal Editor
    ========================================================================== */
 
-/* ── 1. Fieldset base reset ─────────────────────────────────────────────── */
+/* ── 1. Fieldset — flex container (the KEY fix) ─────────────────────────── */
 .panel-wrapper.field-verify-email-id {
   box-sizing: border-box;
+  /* Override browser fieldset defaults */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0;
+
+  padding: 0 32px 32px;
   margin: 0;
-  /* Remove ALL padding — we control spacing on children */
-  padding: 0;
+
+  background: #ffffff;
   border: 1px solid #ecedf3;
   border-radius: 24px;
-  background: #ffffff;
   width: 100%;
   max-width: 1160px;
-
-  /* Fieldset can't reliably be a flex parent alongside <legend>,
-     so we keep it as block and use an inner wrapper for the content row */
-  display: block;
+  min-width: 0;
 }
 
-/* ── 2. Legend — gradient header (80px tall, full-width) ───────────────── */
+/* ── 2. Legend — force full width as first flex row ─────────────────────── */
 .panel-wrapper.field-verify-email-id > legend {
-  /* Force legend to behave as a full-width block, not the default inline float */
+  /* flex-basis 100% forces it onto its own row */
+  flex: 0 0 calc(100% + 64px);
+  width: calc(100% + 64px);
+  box-sizing: border-box;
+
+  /* Bleed to card edges (counteract fieldset padding) */
+  margin-left: -32px;
+  margin-right: -32px;
+  margin-top: 0;
+  margin-bottom: 32px;
+
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 12px;
 
-  box-sizing: border-box;
-  width: 100%;
   padding: 24px 32px;
   min-height: 80px;
-  margin: 0 0 0 0;
 
   background: linear-gradient(90deg, #f3f6fd 0%, #d0ddfc 100%);
   border-radius: 20px 20px 4px 4px;
@@ -6148,7 +6159,7 @@ main .form form .field-verify-methods .radio-wrapper {
   background-size: contain;
 }
 
-/* Chevron up — right-aligned */
+/* Chevron up */
 .panel-wrapper.field-verify-email-id > legend::after {
   content: '';
   display: inline-block;
@@ -6161,120 +6172,77 @@ main .form form .field-verify-methods .radio-wrapper {
   background-size: contain;
 }
 
-/* ── 3. Inner content wrapper
-        Figma: Frame 1410120676 — flex row, gap 60px, padding 0 32px 32px
-        We use a real div-like wrapper by targeting all siblings after legend
-        via an adjacent combinator trick on a wrapping div if present,
-        OR we just style the fieldset's own padding area.
-
-        Since AEM renders all fields as direct children of the fieldset,
-        we create the two-column row using a CSS wrapper approach:
-        wrap .field-primary-email-id + .field-verify-mail1 as left group,
-        .field-work-email-id + .field-verify-mail2 as right group.
-
-        Because we cannot add wrapper divs in AEM fieldset output, we use
-        display:contents on the pairs and manage spacing via margins.
+/* ── 3. Field row layout
+        Order in DOM: email1 | btn1 | email2 | btn2
+        Figma:        [349px input] [32px gap] [104px btn]  [60px gap+divider]  [349px input] [32px gap] [104px btn]
    ─────────────────────────────────────────────────────────────────────────── */
 
-/* Content area below legend */
-.panel-wrapper.field-verify-email-id > .field-wrapper,
-.panel-wrapper.field-verify-email-id > .email-wrapper,
-.panel-wrapper.field-verify-email-id > .button-wrapper,
-.panel-wrapper.field-verify-email-id > .plain-text-wrapper {
-  /* All non-legend children sit inside a pseudo-row.
-     We float the left group left and position the right group via margin-left */
-}
-
-/* ── APPROACH: give the fieldset a padding box and use inline-flex on children ── */
-
-/* Padding container for everything below the legend */
-.panel-wrapper.field-verify-email-id > .field-primary-email-id,
-.panel-wrapper.field-verify-email-id > .field-verify-mail1,
-.panel-wrapper.field-verify-email-id > .field-work-email-id,
-.panel-wrapper.field-verify-email-id > .field-verify-mail2,
-.panel-wrapper.field-verify-email-id > .field-verify-email-note,
-.panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
-  display: inline-flex;
-  vertical-align: top;
-}
-
-/* Make fieldset establish a formatting context with padding */
-.panel-wrapper.field-verify-email-id {
-  padding: 0 32px 32px;
-}
-
-/* Re-apply legend width bleed to counteract fieldset padding */
-.panel-wrapper.field-verify-email-id > legend {
-  /* Bleed the legend to the card edges */
-  width: calc(100% + 64px);
-  margin-left: -32px;
-  margin-top: 0;
-  margin-bottom: 32px;
-}
-
-/*
-  Two-group row layout (Figma values):
-    Left group:  [input 349px] [gap 32px] [button 104px]  = 485px
-    Middle gap:  60px (with dashed divider centred)
-    Right group: [input 349px] [gap 32px] [button 104px]  = 485px
-    Total inner: 485 + 60 + 485 = 1030px  (fits in 1096px inner width)
-*/
-
-/* ── Left group ── */
+/* Primary email input */
 .panel-wrapper.field-verify-email-id > .field-primary-email-id {
+  flex: 0 0 349px;
   width: 349px;
-  vertical-align: middle;
+  min-width: 0;
+  align-self: center;
 }
 
+/* Verify button 1 */
 .panel-wrapper.field-verify-email-id > .field-verify-mail1 {
+  flex: 0 0 104px;
   width: 104px;
   margin-left: 32px;
-  vertical-align: middle;
+  align-self: center;
   position: relative;
 }
 
-/* Dashed vertical divider — centred in the 60px gap */
+/* Dashed vertical divider between groups */
 .panel-wrapper.field-verify-email-id > .field-verify-mail1::after {
   content: '';
   position: absolute;
-  left: calc(100% + 29px); /* 104px button + half of 60px gap */
+  /* Centre in the 60px gap to the right of the button */
+  left: calc(100% + 30px);
   top: 50%;
   transform: translateY(-50%);
-  height: 120px;
+  height: 80px;
+  width: 0;
   border-right: 1px dashed #d2d5db;
+  pointer-events: none;
 }
 
-/* ── Right group ── */
+/* Work email input */
 .panel-wrapper.field-verify-email-id > .field-work-email-id {
+  flex: 0 0 349px;
   width: 349px;
+  min-width: 0;
   margin-left: 60px;
-  vertical-align: middle;
+  align-self: center;
 }
 
+/* Verify button 2 */
 .panel-wrapper.field-verify-email-id > .field-verify-mail2 {
+  flex: 0 0 104px;
   width: 104px;
   margin-left: 32px;
-  vertical-align: middle;
+  align-self: center;
 }
 
-/* ── Note texts (second row) ── */
+/* ── 4. Note texts — sit below their respective groups ──────────────────── */
+
+/* Note 1 — under primary group (input 349 + gap 32 + btn 104 = 485px) */
 .panel-wrapper.field-verify-email-id > .field-verify-email-note {
-  /* Aligns under left group: input(349) + gap(32) + button(104) = 485px */
+  flex: 0 0 485px;
   width: 485px;
   margin-top: 12px;
-  display: block; /* back to block for text wrapping */
 }
 
+/* Note 2 — under work group, offset by same 60px gap */
 .panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
-  /* Aligns under right group, with same 60px offset */
+  flex: 0 0 485px;
   width: 485px;
   margin-top: 12px;
   margin-left: 60px;
-  display: inline-block;
-  vertical-align: top;
 }
 
-/* ── 4. Email input (floating label pattern) ────────────────────────────── */
+/* ── 5. Email input — floating label ────────────────────────────────────── */
 .email-wrapper {
   position: relative;
   display: flex;
@@ -6297,6 +6265,7 @@ main .form form .field-verify-methods .radio-wrapper {
   color: #6b7280;
   white-space: nowrap;
   pointer-events: none;
+  transition: color 0.15s ease;
 }
 
 .email-wrapper input[type="email"] {
@@ -6323,15 +6292,15 @@ main .form form .field-verify-methods .radio-wrapper {
   box-shadow: 0 0 0 3px rgba(79, 111, 223, 0.12);
 }
 
-.email-wrapper input[type="email"]:focus ~ .field-label {
+.email-wrapper input[type="email"]:focus + .field-label {
   color: #4f6fdf;
 }
 
-/* ── 5. Verify button (Secondary style) ─────────────────────────────────── */
+/* ── 6. Verify buttons (Secondary) ──────────────────────────────────────── */
 .button-wrapper {
   display: flex;
   align-items: center;
-  height: 60px; /* match input height so button aligns to input centre */
+  height: 60px;
 }
 
 .button-wrapper .button {
@@ -6356,8 +6325,7 @@ main .form form .field-verify-methods .radio-wrapper {
   border-radius: 13px;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.15s ease, color 0.15s ease,
-              box-shadow 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .button-wrapper .button:hover {
@@ -6384,7 +6352,7 @@ main .form form .field-verify-methods .radio-wrapper {
   pointer-events: none;
 }
 
-/* ── 6. Note / helper text ──────────────────────────────────────────────── */
+/* ── 7. Note text ───────────────────────────────────────────────────────── */
 .plain-text-wrapper p {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -6394,21 +6362,10 @@ main .form form .field-verify-methods .radio-wrapper {
   color: #6b7280;
 }
 
-/* ── 7. Confirm / Submit CTA button (Primary, disabled-muted state)
-        Figma: Frame 1171277831 — background #A3BAF9, white label
-   ─────────────────────────────────────────────────────────────────────────── */
-.button-wrapper.field-verify-email-id-submit,
-.field-verify-email-id .submit-wrapper {
-  margin-top: 24px;
-  width: 100%;
-}
-
-/* Target the confirm/submit button specifically by its field name */
-.button-wrapper[data-id*="confirm"] .button,
-.button-wrapper[data-id*="submit"] .button,
-.field-verify-email-id-submit .button,
-/* AEM EDS often gives submit buttons a predictable class: */
-.panel-wrapper.field-verify-email-id .button-wrapper:last-of-type .button {
+/* ── 8. Confirm / Submit CTA button (Primary — muted state #A3BAF9) ─────── */
+.panel-wrapper.field-verify-email-id > .field-wrapper[data-id*="confirm"] .button,
+.panel-wrapper.field-verify-email-id > .field-wrapper[data-id*="submit"] .button,
+.panel-wrapper.field-verify-email-id > .button-wrapper:last-of-type .button {
   box-sizing: border-box;
   display: inline-flex;
   justify-content: center;
@@ -6427,29 +6384,16 @@ main .form form .field-verify-methods .radio-wrapper {
   color: #ffffff;
   text-align: center;
 
-  background: #a3baf9;      /* Primary disabled/muted state from Figma */
+  background: #a3baf9;
   border: none;
   border-radius: 13px;
-  cursor: not-allowed;       /* Disabled until both emails verified */
-
-  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+  cursor: not-allowed;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Active / enabled state — swap to full primary blue */
-.panel-wrapper.field-verify-email-id .button-wrapper:last-of-type .button:not(:disabled):hover,
-.panel-wrapper.field-verify-email-id .button-wrapper:last-of-type .button.is-enabled:hover {
-  background: #1c3fca;
-  box-shadow: 0 4px 16px rgba(28, 63, 202, 0.3);
-  cursor: pointer;
-}
-
-.panel-wrapper.field-verify-email-id .button-wrapper:last-of-type .button:not(:disabled):active {
-  background: #1630a0;
-  box-shadow: none;
-}
-
-/* Arrow icon after confirm button label (from Figma) */
-.panel-wrapper.field-verify-email-id .button-wrapper:last-of-type .button::after {
+/* Arrow icon appended to confirm button */
+.panel-wrapper.field-verify-email-id > .button-wrapper:last-of-type .button::after {
   content: '';
   display: inline-block;
   width: 20px;
@@ -6460,32 +6404,35 @@ main .form form .field-verify-methods .radio-wrapper {
   background-size: contain;
 }
 
-/* ── 8. Responsive — stack to single column on mobile ───────────────────── */
-@media (max-width: 800px) {
+/* Enabled state */
+.panel-wrapper.field-verify-email-id > .button-wrapper:last-of-type .button.enabled,
+.panel-wrapper.field-verify-email-id > .button-wrapper:last-of-type .button:not(:disabled):hover {
+  background: #1c3fca;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(28, 63, 202, 0.3);
+}
+
+/* ── 9. Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
   .panel-wrapper.field-verify-email-id {
     padding: 0 16px 24px;
   }
 
   .panel-wrapper.field-verify-email-id > legend {
+    flex: 0 0 calc(100% + 32px);
     width: calc(100% + 32px);
     margin-left: -16px;
+    margin-right: -16px;
     padding: 20px 16px;
     font-size: 17px;
     margin-bottom: 24px;
   }
 
-  /* Stack to block on mobile */
-  .panel-wrapper.field-verify-email-id > .field-primary-email-id,
-  .panel-wrapper.field-verify-email-id > .field-verify-mail1,
-  .panel-wrapper.field-verify-email-id > .field-work-email-id,
-  .panel-wrapper.field-verify-email-id > .field-verify-mail2 {
-    display: inline-flex;
-    vertical-align: middle;
-  }
-
   .panel-wrapper.field-verify-email-id > .field-primary-email-id,
   .panel-wrapper.field-verify-email-id > .field-work-email-id {
-    width: calc(100% - 120px); /* leave room for button */
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
   }
 
   .panel-wrapper.field-verify-email-id > .field-work-email-id {
@@ -6502,22 +6449,19 @@ main .form form .field-verify-methods .radio-wrapper {
     margin-top: 24px;
   }
 
-  /* Hide divider */
   .panel-wrapper.field-verify-email-id > .field-verify-mail1::after {
     display: none;
   }
 
-  /* Notes full width */
   .panel-wrapper.field-verify-email-id > .field-verify-email-note,
   .panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
-    display: block;
+    flex: 0 0 100%;
     width: 100%;
     margin-left: 0;
     margin-top: 8px;
   }
 
-  /* Confirm button full width on mobile */
-  .panel-wrapper.field-verify-email-id .button-wrapper:last-of-type .button {
+  .panel-wrapper.field-verify-email-id > .button-wrapper:last-of-type .button {
     width: 100%;
   }
 }
