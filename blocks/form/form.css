@@ -7711,3 +7711,139 @@ fieldset.panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
     font-size: 1.2rem !important;
   }
 }
+
+
+
+
+/* ============================================
+   VERIFY METHOD RADIO CARDS
+   ============================================ */
+
+/* Hide the descriptions plain-text block — content shown inside cards */
+main .form form .field-income-everification-method-descriptions {
+  display: none !important;
+}
+
+/* 3-column grid for the radio group */
+main .form form .field-income-everification-method-choice.horizontal,
+main .form form .field-income-everification-method-choice {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 16px !important;
+  padding: 24px 0 8px 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  flex-direction: unset !important;
+  flex-wrap: unset !important;
+  align-items: unset !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+main .form form .field-income-everification-method-choice > legend.field-label {
+  display: none !important;
+}
+
+/* Each card */
+main .form form .field-income-everification-method-choice .radio-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  border: 1px solid #D2D5DB !important;
+  border-radius: 20px !important;
+  padding: 20px !important;
+  background: #ffffff !important;
+  cursor: pointer !important;
+  transition: border-color 0.15s, background-color 0.15s;
+  box-sizing: border-box !important;
+  min-height: 130px !important;
+  position: relative !important;
+  width: 100% !important;
+  gap: 8px !important;
+}
+
+/* Hide native radio input */
+main .form form .field-income-everification-method-choice .radio-wrapper input[type="radio"] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Label row with custom radio circle */
+main .form form .field-income-everification-method-choice .radio-wrapper > label.field-label {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+  cursor: pointer !important;
+  line-height: 1.5 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Custom radio circle */
+main .form form .field-income-everification-method-choice .radio-wrapper > label.field-label::before {
+  content: '' !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid #D2D5DB !important;
+  background: #ffffff !important;
+  box-sizing: border-box !important;
+}
+
+/* Description text — injected via JS or existing ::after on wrapper */
+main .form form .field-income-everification-method-choice .radio-wrapper .field-description {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #4B5563 !important;
+  line-height: 1.5 !important;
+  margin: 0 0 0 30px !important;
+  padding: 0 !important;
+}
+
+/* Selected card */
+main .form form .field-income-everification-method-choice .radio-wrapper:has(input[type="radio"]:checked) {
+  border-color: #1C3FCA !important;
+  background-color: #F3F6FD !important;
+}
+
+/* Selected radio dot */
+main .form form .field-income-everification-method-choice .radio-wrapper input[type="radio"]:checked + label.field-label::before {
+  border-color: #1C3FCA !important;
+  border-width: 6px !important;
+  background: #ffffff !important;
+}
+
+/* Hover on unselected */
+main .form form .field-income-everification-method-choice .radio-wrapper:hover:not(:has(input:checked)) {
+  border-color: #93A8F0 !important;
+}
+
+/* "Recommended" badge — Account Aggregator card only */
+main .form form .field-income-everification-method-choice .radio-wrapper[data-id="income-everification-method-choice"]::after {
+  content: 'Recommended' !important;
+  display: inline-block !important;
+  background-color: #00875F !important;
+  color: #ffffff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  padding: 3px 12px !important;
+  border-radius: 20px !important;
+  margin-top: 4px !important;
+  margin-left: 30px !important;
+  line-height: 1.6 !important;
+  white-space: nowrap !important;
+}
