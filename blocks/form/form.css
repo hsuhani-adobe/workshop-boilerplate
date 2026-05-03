@@ -7643,3 +7643,71 @@ fieldset.panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
     font-size: 1.25rem !important;
   }
 }
+
+
+
+/* ============================================
+   RESPONSIVE — LOAN NUMBER BLOCK
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 768px) {
+
+  .field-kyc-verification-summary-panell 
+  .field-loan-application-numberr2.text-wrapper {
+    grid-template-columns: 44px 1fr !important;
+    column-gap: 12px !important;
+  }
+
+  .field-kyc-verification-summary-panell 
+  .field-loan-application-numberr2.text-wrapper::before {
+    width: 44px !important;
+    height: 44px !important;
+    background-size: 20px !important;
+  }
+
+  .field-kyc-verification-summary-panell 
+  .field-loan-application-numberr2.text-wrapper > input[type="text"] {
+    font-size: 1.3rem !important;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 480px) {
+
+  /* Stack layout */
+  .field-kyc-verification-summary-panell 
+  .field-loan-application-numberr2.text-wrapper {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto auto !important;
+    row-gap: 6px !important;
+  }
+
+  /* Center icon on top */
+  .field-kyc-verification-summary-panell 
+  .field-loan-application-numberr2.text-wrapper::before {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 40px !important;
+    height: 40px !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* Label below icon */
+  .field-kyc-verification-summary-panell 
+  .field-loan-application-numberr2.text-wrapper > label.field-label {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    font-size: 0.7rem !important;
+    white-space: normal !important;
+  }
+
+  /* Number below label */
+  .field-kyc-verification-summary-panell 
+  .field-loan-application-numberr2.text-wrapper > input[type="text"] {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    font-size: 1.2rem !important;
+  }
+}
