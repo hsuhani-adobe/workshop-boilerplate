@@ -6453,148 +6453,361 @@ fieldset.panel-wrapper.field-verify-email-id > .field-verify-work-email-note {
   }
 }
 
+/* ============================================================
+   KYC Verification Summary Panel — HDFC EDS Forms Styles
+   Light theme — matches the white content area in the image
+   No grid used — flexbox only, fully responsive
+   ============================================================ */
 
-/* ============================================
-   APPLY SAME STYLE TO CONFIRM + CONTINUE
-   ============================================ */
-
-.field-verify-details,
-.field-continue {
-  margin-top: 28px !important;
-  max-width: 280px !important;
+/* ── Reset & wrapper ────────────────────────────────────── */
+.field-kyc-verification-summary-panell {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: #f5f6fa;
+  padding: 20px;
+  margin: 0;
+  border: none;
+  box-sizing: border-box;
 }
 
-/* Buttons */
-.field-verify-details > button.button,
-.field-continue > button.button {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-  width: 100% !important;
-  height: 52px !important;
-  padding: 0 24px !important;
-  background: #6b84d9 !important;
-  color: #ffffff !important;
-  font-size: 16px !important;
-  font-weight: 600 !important;
-  border: none !important;
-  border-radius: 10px !important;
-  cursor: pointer !important;
-  transition: background 0.2s, box-shadow 0.2s !important;
+.field-kyc-verification-summary-panell *,
+.field-kyc-verification-summary-panell *::before,
+.field-kyc-verification-summary-panell *::after {
+  box-sizing: border-box;
 }
 
-/* Arrow */
-.field-verify-details > button.button::after,
-.field-continue > button.button::after {
-  content: "›" !important;
-  font-size: 22px !important;
-  font-weight: 300 !important;
-  line-height: 1 !important;
-  margin-left: 4px !important;
+/* Hide all auto-generated EDS legend labels */
+legend[data-visible="false"] {
+  display: none;
 }
 
-/* Hover */
-.field-verify-details > button.button:hover,
-.field-continue > button.button:hover {
-  background: #1c3fca !important;
-  box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
+/* ── Top KYC Banner (soft yellow) ───────────────────────── */
+.field-kyc-verification-banner-text {
+  background-color: #fffbea;
+  border: 1px solid #f0dfa0;
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+  font-size: 13.5px;
+  color: #5a4e00;
+  line-height: 1.5;
 }
 
+.field-kyc-verification-banner-text p {
+  margin: 0;
+}
 
-/* ============================================
-   RESPONSIVE FIX
-   ============================================ */
+/* ── Main Content Row — flex, no grid ───────────────────── */
+.field-main-content-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
 
-/* Tablet */
+/* ── Left Column ────────────────────────────────────────── */
+.field-loan-summary-left {
+  flex: 1 1 60%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ── Loan Application Card (white card) ─────────────────── */
+.field-loan-application-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px 22px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Loan Application Number */
+.field-loan-application-numberr2 {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.field-loan-application-numberr2 .field-label {
+  font-size: 11.5px;
+  color: #888888;
+  font-weight: 500;
+}
+
+.field-loan-application-numberr2 input[type="text"] {
+  font-size: 22px;
+  font-weight: 700;
+  color: #222222;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  letter-spacing: 0.5px;
+}
+
+/* Contact note */
+.field-contact-note {
+  font-size: 12.5px;
+  color: #777777;
+  border-top: 1px dashed #e5e5e5;
+  padding-top: 10px;
+}
+
+.field-contact-note p {
+  margin: 0;
+}
+
+/* Xpress Personal Loan heading */
+.field-xpress-personal-loan-summary-heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222222;
+  margin-top: 2px;
+}
+
+.field-xpress-personal-loan-summary-heading p {
+  margin: 0;
+}
+
+/* ── Loan Amount block ──────────────────────────────────── */
+.field-loan-amount-block {
+  border: 1.5px solid #c8d6f8;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #f7f9ff;
+  margin: 0;
+}
+
+.field-loan-amountt2 {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.field-loan-amountt2 .field-label {
+  font-size: 11px;
+  color: #888888;
+  font-weight: 500;
+}
+
+.field-loan-amountt2 input[type="text"] {
+  font-size: 20px;
+  font-weight: 700;
+  color: #222222;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  width: 100%;
+}
+
+/* ── Disbursement Note (light blue info box) ────────────── */
+.field-disbursement-note {
+  background: #e8f0fe;
+  border-radius: 8px;
+  padding: 13px 16px;
+  font-size: 12.5px;
+  color: #1a5fa8;
+  line-height: 1.6;
+}
+
+.field-disbursement-note p {
+  margin: 0;
+}
+
+/* ── Easy Loan Management Card (light lavender) ─────────── */
+.field-easy-loan-management-card {
+  background: #eef1fb;
+  border-radius: 10px;
+  padding: 16px 18px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.field-easy-loan-management-card > legend.field-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222222;
+  padding: 0;
+  margin-bottom: 12px;
+  display: block;
+  float: none;
+  width: 100%;
+}
+
+/* Download app row with arrow */
+.field-download-app-text {
+  font-size: 13px;
+  color: #222222;
+  border-top: 1px solid #d8ddf0;
+  padding-top: 12px;
+}
+
+.field-download-app-text p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.field-download-app-text p::after {
+  content: '›';
+  font-size: 22px;
+  color: #1a5fa8;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.field-download-app-text a,
+.field-download-app-text strong {
+  color: #1a5fa8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ── More Services text ─────────────────────────────────── */
+.field-more-services-text {
+  font-size: 12.5px;
+  color: #555555;
+  margin-top: 4px;
+}
+
+.field-more-services-text p {
+  margin: 0;
+}
+
+.field-more-services-text a {
+  color: #1a5fa8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ── Right Column (Promotions) ──────────────────────────── */
+.field-promotions-right {
+  flex: 0 0 38%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ── Promo Cards ────────────────────────────────────────── */
+.promo-card-container {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.promo-card-container .promo-card-image {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+}
+
+.promo-card-container .promo-card-small-text {
+  font-size: 11px;
+  color: #888888;
+  padding: 10px 14px 0;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.promo-card-container .promo-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222222;
+  padding: 4px 14px 14px;
+  margin: 0;
+}
+
+/* ── Footer Copyright ───────────────────────────────────── */
+.field-footer-copyright {
+  margin-top: 24px;
+  font-size: 11.5px;
+  color: #aaaaaa;
+  text-align: left;
+}
+
+.field-footer-copyright p {
+  margin: 0;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* Tablet — stack columns */
 @media (max-width: 768px) {
-  .field-verify-details,
-  .field-continue {
-    max-width: 100% !important;
+  .field-main-content-row {
+    flex-direction: column;
+  }
+
+  .field-loan-summary-left,
+  .field-promotions-right {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .field-promotions-right {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .promo-card-container {
+    flex: 1 1 calc(50% - 7px);
+    min-width: 140px;
   }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
-
-  .field-verify-details,
-  .field-continue {
-    max-width: 100% !important;
-    margin-top: 20px !important;
+  .field-kyc-verification-summary-panell {
+    padding: 12px;
   }
 
-  .field-verify-details > button.button,
-  .field-continue > button.button {
-    width: 100% !important;
-    height: 48px !important;
-    font-size: 14px !important;
-  }
-}
-
-
-/* ============================================
-   INCLUDE field-confirm ALSO
-   ============================================ */
-
-.field-confirm {
-  margin-top: 28px !important;
-  max-width: 280px !important;
-}
-
-/* Buttons */
-.field-confirm > button.button {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-  width: 100% !important;
-  height: 52px !important;
-  padding: 0 24px !important;
-  background: #6b84d9 !important;
-  color: #ffffff !important;
-  font-size: 16px !important;
-  font-weight: 600 !important;
-  border: none !important;
-  border-radius: 10px !important;
-  cursor: pointer !important;
-  transition: background 0.2s, box-shadow 0.2s !important;
-}
-
-/* Arrow */
-.field-confirm > button.button::after {
-  content: "›" !important;
-  font-size: 22px !important;
-  font-weight: 300 !important;
-  line-height: 1 !important;
-  margin-left: 4px !important;
-}
-
-/* Hover */
-.field-confirm > button.button:hover {
-  background: #1c3fca !important;
-  box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
-}
-
-
-/* ============================================
-   RESPONSIVE (ADD ONLY)
-   ============================================ */
-
-@media (max-width: 768px) {
-  .field-confirm {
-    max-width: 100% !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .field-confirm {
-    max-width: 100% !important;
-    margin-top: 20px !important;
+  .field-loan-application-card {
+    padding: 16px;
   }
 
-  .field-confirm > button.button {
-    width: 100% !important;
-    height: 48px !important;
-    font-size: 14px !important;
+  .field-loan-application-numberr2 input[type="text"] {
+    font-size: 18px;
+  }
+
+  .field-loan-amountt2 input[type="text"] {
+    font-size: 17px;
+  }
+
+  .field-promotions-right {
+    flex-direction: column;
+  }
+
+  .promo-card-container {
+    flex: 1 1 100%;
+  }
+
+  .promo-card-container .promo-card-image {
+    height: 120px;
   }
 }
