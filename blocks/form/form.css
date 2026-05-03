@@ -5378,23 +5378,31 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
 
 
 /* ============================================
-   e-Verify Your Income Panel — Full CSS
+   e-Verify Your Income — Complete Corrected CSS
    ============================================ */
+
+/* ---------- Font Import ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 /* ---------- Outer Panel Wrapper ---------- */
 .field-e-verify-your-income {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
-/* Hide the outer panel legend ("e-Verify your income") */
+/* Hide the outer fieldset legend ("e-Verify your income") */
 .field-e-verify-your-income > legend {
   display: none;
 }
 
-/* ---------- Section Cards ---------- */
+/* ============================================
+   BOTH SECTION CARDS — shared card styles
+   ============================================ */
+
 .field-select-bank,
 .field-income-method {
   background: #ffffff;
@@ -5403,132 +5411,148 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
   overflow: hidden;
   padding: 0;
   margin: 0;
+  display: block;
 }
 
 /* ---------- Section Header Gradient Bar ---------- */
 .field-select-bank > legend,
 .field-income-method > legend {
-  display: flex;
-  align-items: center;
+  /* Reset fieldset legend defaults */
+  float: none;
+  display: block;
   width: 100%;
-  padding: 18px 28px;
-  margin: 0;
+  box-sizing: border-box;
+  padding: 20px 32px;
+  margin: 0 0 0 0;
+
+  /* Typography */
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
   font-weight: 600;
   color: #111827;
   letter-spacing: -0.02em;
+  line-height: 1.4;
+
+  /* Gradient background */
   background: linear-gradient(90deg, #F3F6FD 0%, #D0DDFC 100%);
   border-radius: 24px 24px 4px 4px;
-  float: none;
-  box-sizing: border-box;
 }
 
 /* ============================================
    BANK SELECTION SECTION
    ============================================ */
 
-/* Hide the radio group's own legend */
+/* Hide the bank-options radio group legend */
 .field-bank-options > legend {
   display: none;
 }
 
-/* Outer container for bank icons row + dropdown below */
-.field-select-bank {
-  padding-bottom: 24px;
-}
-
-/* Bank radio group — horizontal icon row */
+/* The bank radio group fieldset — horizontal row */
 .field-bank-options {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 4px;
-  padding: 20px 28px 0;
-  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 24px 32px 0 32px;
+  margin: 0;
   border: none;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  flex-wrap: nowrap;
 }
 
-/* Each bank option wrapper */
+.field-bank-options::-webkit-scrollbar {
+  display: none;
+}
+
+/* Each bank radio wrapper — column layout: box on top, label below */
 .field-bank-options .radio-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   cursor: pointer;
-  min-width: 72px;
+  flex-shrink: 0;
+  width: 82px;
   position: relative;
 }
 
-/* Hide native radio input completely */
+/* ---- Hide the native radio input completely ---- */
 .field-bank-options .radio-wrapper input[type="radio"] {
   position: absolute;
+  width: 1px;
+  height: 1px;
   opacity: 0;
-  width: 0;
-  height: 0;
   pointer-events: none;
+  margin: 0;
 }
 
-/* Label — stacks icon box above text */
+/* ---- The label — acts as the whole clickable bank item ---- */
 .field-bank-options .radio-wrapper label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   cursor: pointer;
-  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
   font-weight: 500;
   color: #4B5563;
   text-align: center;
   line-height: 1.3;
+  width: 82px;
 }
 
-/* Bank icon box (pseudo element acts as the icon container) */
+/* ---- Bank icon box — the 60×60 square ---- */
 .field-bank-options .radio-wrapper label::before {
   content: '';
-  display: block;
-  width: 56px;
-  height: 56px;
-  border: 1.5px solid #D2D5DB;
-  border-radius: 14px;
+  display: flex;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border: 1px solid #D2D5DB;
+  border-radius: 12px;
   background-color: #ffffff;
   background-repeat: no-repeat;
-  background-position: center;
-  background-size: 36px 36px;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  background-position: center center;
+  background-size: 32px 32px;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, background-color 0.15s ease, border-width 0.1s ease;
 }
 
-/* ---- Bank Logo URLs — replace with your actual paths ---- */
+/* ---- BANK LOGO URLs — replace each URL with your actual DAM path ---- */
 
-.radio-wrapper:has(input[value="HDFC"]) label::before {
-  background-image: url('/path/to/hdfc-logo.svg'); /* ← Replace with your HDFC logo URL */
+.field-bank-options .radio-wrapper:nth-child(1) label::before {
+  background-image: url('/path/to/hdfc-logo.svg');        /* ← HDFC Bank logo */
 }
 
-.radio-wrapper:has(input[value="ICICI Bank"]) label::before {
-  background-image: url('/path/to/icici-logo.svg'); /* ← Replace with your ICICI logo URL */
+.field-bank-options .radio-wrapper:nth-child(2) label::before {
+  background-image: url('/path/to/icici-logo.svg');       /* ← ICICI Bank logo */
 }
 
-.radio-wrapper:has(input[value="Axis"]) label::before {
-  background-image: url('/path/to/axis-logo.svg'); /* ← Replace with your Axis logo URL */
+.field-bank-options .radio-wrapper:nth-child(3) label::before {
+  background-image: url('/path/to/axis-logo.svg');        /* ← Axis Bank logo */
 }
 
-.radio-wrapper:has(input[value="Kotak"]) label::before {
-  background-image: url('/path/to/kotak-logo.svg'); /* ← Replace with your Kotak logo URL */
+.field-bank-options .radio-wrapper:nth-child(4) label::before {
+  background-image: url('/path/to/kotak-logo.svg');       /* ← Kotak Bank logo */
 }
 
-.radio-wrapper:has(input[value="SBI"]) label::before {
-  background-image: url('/path/to/sbi-logo.svg'); /* ← Replace with your SBI logo URL */
+.field-bank-options .radio-wrapper:nth-child(5) label::before {
+  background-image: url('/path/to/sbi-logo.svg');         /* ← SBI logo */
 }
 
-.radio-wrapper:has(input[value="Bank of Baroda "]) label::before {
-  background-image: url('/path/to/bob-logo.svg'); /* ← Replace with your Bank of Baroda logo URL */
+.field-bank-options .radio-wrapper:nth-child(6) label::before {
+  background-image: url('/path/to/bob-logo.svg');         /* ← Bank of Baroda logo */
 }
 
-.radio-wrapper:has(input[value="IDFC First Bank"]) label::before {
-  background-image: url('/path/to/idfc-logo.svg'); /* ← Replace with your IDFC First Bank logo URL */
+.field-bank-options .radio-wrapper:nth-child(7) label::before {
+  background-image: url('/path/to/idfc-logo.svg');        /* ← IDFC First Bank logo */
 }
 
-/* ---- Selected state for bank ---- */
+/* ---- Selected bank — blue border + blue bg tint ---- */
 .field-bank-options .radio-wrapper input[type="radio"]:checked + label::before {
   border-color: #1C3FCA;
   border-width: 2px;
@@ -5540,7 +5564,7 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
   font-weight: 600;
 }
 
-/* Blue dot indicator below selected bank icon */
+/* Blue dot indicator below selected bank */
 .field-bank-options .radio-wrapper input[type="radio"]:checked + label::after {
   content: '';
   display: block;
@@ -5548,49 +5572,64 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
   height: 6px;
   background: #1C3FCA;
   border-radius: 50%;
-  margin-top: -2px;
+  margin-top: -4px;
+}
+
+/* Hover state */
+.field-bank-options .radio-wrapper label:hover::before {
+  border-color: #93A8F0;
+  background-color: #F9FAFF;
 }
 
 /* ---- Other Bank Dropdown ---- */
 .field-select-your-bank {
   display: block;
-  padding: 16px 28px 0;
+  padding: 16px 32px 28px 32px;
+  margin: 0;
 }
 
 .field-select-your-bank label {
-  display: none;
+  display: none; /* Hide the "Select Bank" label — not in design */
 }
 
 .field-select-your-bank select {
-  appearance: none;
-  -webkit-appearance: none;
   display: block;
   width: 220px;
+  height: 44px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   border: 1px solid #D2D5DB;
   border-radius: 10px;
-  padding: 11px 40px 11px 14px;
-  font-size: 14px;
+  padding: 10px 40px 10px 14px;
   font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
   color: #374151;
   background-color: #ffffff;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   cursor: pointer;
+  box-sizing: border-box;
   transition: border-color 0.15s;
+}
+
+.field-select-your-bank select:hover {
+  border-color: #93A8F0;
 }
 
 .field-select-your-bank select:focus {
   outline: none;
   border-color: #1C3FCA;
-  box-shadow: 0 0 0 3px rgba(28, 63, 202, 0.08);
+  box-shadow: 0 0 0 3px rgba(28, 63, 202, 0.10);
 }
 
 /* ============================================
-   INCOME VERIFICATION METHOD SECTION
+   INCOME METHOD SECTION
    ============================================ */
 
-/* Hide the radio group legend */
+/* Hide the verify-methods legend */
 .field-verify-methods > legend {
   display: none;
 }
@@ -5599,49 +5638,52 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
 .field-verify-methods {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  padding: 20px 28px 28px;
+  gap: 16px;
+  padding: 24px 32px 32px 32px;
+  margin: 0;
   border: none;
 }
 
-/* Each method card */
+/* ---- Each method card ---- */
 .field-verify-methods .radio-wrapper {
   position: relative;
-  border: 1px solid #D2D5DB;
-  border-radius: 18px;
-  padding: 16px 16px 14px;
-  background: #ffffff;
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  min-height: 68px;
+  border: 1px solid #D2D5DB;
+  border-radius: 20px;
+  padding: 20px 20px 16px 20px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  min-height: 90px;
+  box-sizing: border-box;
 }
 
-/* Hide native radio */
+/* ---- Hide native radio ---- */
 .field-verify-methods .radio-wrapper input[type="radio"] {
   position: absolute;
+  width: 1px;
+  height: 1px;
   opacity: 0;
-  width: 0;
-  height: 0;
   pointer-events: none;
 }
 
-/* Label with custom radio dot */
+/* ---- Label with custom radio circle ---- */
 .field-verify-methods .radio-wrapper label {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
   gap: 10px;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
   color: #111827;
   cursor: pointer;
-  line-height: 1.4;
+  line-height: 1.5;
   letter-spacing: -0.01em;
 }
 
-/* Custom radio circle */
+/* ---- Custom radio circle (via ::before on label) ---- */
 .field-verify-methods .radio-wrapper label::before {
   content: '';
   flex-shrink: 0;
@@ -5650,43 +5692,51 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
   border-radius: 50%;
   border: 1.5px solid #D2D5DB;
   background: #ffffff;
-  transition: border-color 0.15s, background 0.15s;
-  display: inline-block;
+  box-sizing: border-box;
+  margin-top: 1px;
+  transition: border-color 0.15s, border-width 0.1s;
 }
 
-/* Selected method card */
-.field-verify-methods .radio-wrapper:has(input:checked) {
+/* ---- Selected card state ---- */
+.field-verify-methods .radio-wrapper:has(input[type="radio"]:checked) {
   border-color: #1C3FCA;
-  background: #F3F6FD;
+  border-width: 1.5px;
+  background-color: #F3F6FD;
 }
 
-/* Selected radio dot filled */
+/* ---- Selected radio dot fill ---- */
 .field-verify-methods .radio-wrapper input[type="radio"]:checked + label::before {
   border-color: #1C3FCA;
   border-width: 6px;
   background: #ffffff;
 }
 
-/* "Recommended" badge — only on first option (Account Aggregator) */
+/* ---- Hover on unselected cards ---- */
+.field-verify-methods .radio-wrapper:not(:has(input:checked)):hover {
+  border-color: #93A8F0;
+  background-color: #FAFBFF;
+}
+
+/* ---- "Recommended" green badge — under Account Aggregator card only ---- */
+/* 
+   NOTE: This targets the FIRST radio-wrapper in the verify-methods group.
+   The badge appears below the label text inside the card.
+   We use ::after on the card itself.
+*/
 .field-verify-methods .radio-wrapper:first-child::after {
   content: 'Recommended';
   display: inline-block;
-  background: #00875F;
+  align-self: flex-start;
+  margin-top: 10px;
+  margin-left: 30px; /* aligns under the label text, past the radio circle */
+  background-color: #00875F;
   color: #ffffff;
-  font-size: 11px;
-  font-weight: 500;
   font-family: 'Inter', sans-serif;
-  padding: 3px 14px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 3px 12px;
   border-radius: 20px;
-  margin-left: 30px;
-  width: fit-content;
-  line-height: 1.6;
-}
-
-/* Show badge only when first option is selected */
-.field-verify-methods .radio-wrapper:first-child:not(:has(input:checked))::after {
-  background: #D1FAE5;
-  color: #065F46;
 }
 
 /* ============================================
@@ -5696,42 +5746,59 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
 .field-continue {
   display: block;
   padding: 4px 0 0;
+  margin: 0;
 }
 
-.field-continue button {
+/* Remove any default fieldset/wrapper styling */
+.field-continue fieldset,
+.field-continue .button-wrapper {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.field-continue button,
+.field-continue input[type="submit"],
+.field-continue input[type="button"] {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   background: #1C3FCA;
   color: #ffffff;
+  font-family: 'Inter', sans-serif;
   font-size: 15px;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
   border: none;
   border-radius: 13px;
   padding: 14px 32px;
   cursor: pointer;
-  transition: background 0.15s;
+  min-width: 160px;
+  height: 52px;
+  transition: background-color 0.15s ease;
   letter-spacing: 0;
-  min-width: 180px;
-  justify-content: center;
+  box-sizing: border-box;
 }
 
-.field-continue button:hover {
-  background: #1535b0;
+.field-continue button:hover,
+.field-continue input[type="submit"]:hover {
+  background-color: #1535b0;
 }
 
-.field-continue button:active {
-  background: #1230a0;
+.field-continue button:active,
+.field-continue input[type="submit"]:active {
+  background-color: #1230a0;
   transform: scale(0.99);
 }
 
-/* Arrow icon after button text */
-.field-continue button::after {
+/* Arrow icon appended after button text */
+.field-continue button::after,
+.field-continue input[type="submit"]::after {
   content: '';
   display: inline-block;
   width: 18px;
   height: 18px;
+  flex-shrink: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M4 10h12M12 6l4 4-4 4' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
@@ -5739,29 +5806,30 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
 }
 
 /* ============================================
-   RESPONSIVE — Mobile
+   RESPONSIVE
    ============================================ */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .field-verify-methods {
     grid-template-columns: 1fr;
+    padding: 16px 20px 24px;
   }
+}
 
-  .field-bank-options {
-    gap: 8px;
-    padding: 16px 16px 0;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
+@media (max-width: 600px) {
   .field-select-bank > legend,
   .field-income-method > legend {
     font-size: 14px;
-    padding: 14px 16px;
+    padding: 16px 20px;
+  }
+
+  .field-bank-options {
+    padding: 20px 20px 0;
+    gap: 12px;
   }
 
   .field-select-your-bank {
-    padding: 14px 16px 0;
+    padding: 14px 20px 20px;
   }
 
   .field-select-your-bank select {
@@ -5769,7 +5837,7 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
   }
 
   .field-verify-methods {
-    padding: 16px;
+    padding: 16px 20px 20px;
   }
 }
 
