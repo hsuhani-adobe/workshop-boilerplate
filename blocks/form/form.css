@@ -5841,3 +5841,147 @@ main .form form .field-continue > button.button::after {
   }
 }
 
+/* ============================================
+   FIXES ONLY — add these on top of your existing CSS
+   ============================================ */
+
+/* ---- FIX 1: Section header — stop it being clipped, show full gradient bar ---- */
+main .form form .field-select-bank,
+main .form form .field-income-method {
+  overflow: visible;
+  border-radius: 24px;
+}
+
+main .form form .field-select-bank > legend.field-label,
+main .form form .field-income-method > legend.field-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  float: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 20px 32px !important;
+  margin: 0 0 0 -1px !important; /* compensate for fieldset border */
+  font-family: 'Inter', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.4 !important;
+  background: linear-gradient(90deg, #F3F6FD 0%, #D0DDFC 100%) !important;
+  border-radius: 23px 23px 4px 4px !important;
+  /* Critical: fieldset legends need these to behave like block elements */
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+/* Bank icon in select-bank header */
+main .form form .field-select-bank > legend.field-label::before {
+  content: '' !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  width: 28px !important;
+  height: 28px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='%234F6FDF' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='3' y1='22' x2='21' y2='22'/%3E%3Cline x1='6' y1='18' x2='6' y2='11'/%3E%3Cline x1='10' y1='18' x2='10' y2='11'/%3E%3Cline x1='14' y1='18' x2='14' y2='11'/%3E%3Cline x1='18' y1='18' x2='18' y2='11'/%3E%3Cpolygon points='12 2 2 7 22 7'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+}
+
+/* Verify icon in income-method header */
+main .form form .field-income-method > legend.field-label::before {
+  content: '' !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  width: 28px !important;
+  height: 28px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='%234F6FDF' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpolyline points='9 12 11 14 15 10'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+}
+
+/* ---- FIX 2: Native radio completely hidden and replaced ---- */
+
+/* Step 1: completely kill the native radio — size 0, not just opacity */
+main .form form .field-verify-methods .radio-wrapper input[type="radio"] {
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+/* Step 2: custom radio circle on label::before — reset all */
+main .form form .field-verify-methods .radio-wrapper > label.field-label::before {
+  content: '' !important;
+  display: inline-flex !important;
+  flex-shrink: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid #D2D5DB !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  box-sizing: border-box !important;
+  vertical-align: middle !important;
+  transition: border-color 0.15s, border-width 0.1s !important;
+}
+
+/* Step 3: selected state — thick border creates filled dot illusion */
+main .form form .field-verify-methods .radio-wrapper input[type="radio"]:checked + label.field-label::before {
+  border: 6px solid #1C3FCA !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+/* Step 4: selected card background */
+main .form form .field-verify-methods .radio-wrapper:has(input[type="radio"]:checked) {
+  border: 1.5px solid #1C3FCA !important;
+  background-color: #F3F6FD !important;
+}
+
+/* Step 5: unselected cards */
+main .form form .field-verify-methods .radio-wrapper:not(:has(input[type="radio"]:checked)) {
+  border: 1px solid #D2D5DB !important;
+  background-color: #ffffff !important;
+}
+
+/* ---- FIX 3: Recommended badge visible & contained ---- */
+main .form form .field-verify-methods .radio-wrapper[data-id="verify-methods"] {
+  overflow: visible !important;
+}
+
+main .form form .field-verify-methods .radio-wrapper[data-id="verify-methods"]::after {
+  content: 'Recommended' !important;
+  display: block !important;
+  background-color: #00875F !important;
+  color: #ffffff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  padding: 3px 12px !important;
+  border-radius: 20px !important;
+  margin-top: 10px !important;
+  margin-left: 30px !important;
+  line-height: 1.6 !important;
+  width: fit-content !important;
+  white-space: nowrap !important;
+}
+
+/* ---- FIX 4: card height consistent — all 3 same height ---- */
+main .form form .field-verify-methods {
+  align-items: stretch !important;
+}
+
+main .form form .field-verify-methods .radio-wrapper {
+  height: 100% !important;
+}
