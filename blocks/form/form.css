@@ -5794,6 +5794,12 @@ main .form form .field-verify-methods .radio-wrapper[data-id="verify-methods"]::
   cursor: pointer !important;
 }
 
+.field-customer-details .field-verify-personal button:hover,
+.field-customer-details .field-verify-work button:hover {
+  background: #1C3FCA !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(28, 63, 202, 0.25) !important;
+}
 
 /* ============================================
    CONTINUE BUTTON
