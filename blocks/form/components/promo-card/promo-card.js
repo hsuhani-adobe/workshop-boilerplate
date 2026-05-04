@@ -16,7 +16,10 @@
 /**
  * Decorates Promo Card component
  */
-const FALLBACK_IMAGE = 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg';
+const FALLBACK_IMAGES = {
+  'promo-card':   'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_1.jpeg',
+  'promo-card-2': 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg',
+};
 
 export default async function decorate(fieldDiv, fieldJson) {
   fieldDiv.classList.add('promo-card-container');
@@ -24,10 +27,11 @@ export default async function decorate(fieldDiv, fieldJson) {
   const titleText = fieldJson?.title || '';
   const smallTextValue = fieldJson?.smallText || '';
 
-  // Use image from fieldJson if explicitly set, else fallback to image_2
-  const imageUrl = fieldJson?.image?.trim()
-    ? fieldJson.image.trim()
-    : FALLBACK_IMAGE;
+  // Pick fallback based on which card type this is
+  const viewType = fieldJson?.['fd:viewType'] || 'promo-card';
+  const fallback = FALLBACK_IMAGES[viewType] ?? FALLBACK_IMAGES['promo-card'];
+
+  const imageUrl = fieldJson?.image?.trim() ? fieldJson.image.trim() : fallback;
 
   const image = document.createElement('img');
   image.className = 'promo-card-image';

@@ -18,32 +18,44 @@
           }
         }
       }
+    },
+    {
+      "title": "Promo Card 2",
+      "id": "promo-card-2",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/fd/components/form/textinput/v1/textinput",
+            "template": {
+              "jcr:title": "Promo Card 2",
+              "fieldType": "text-input",
+              "fd:viewType": "promo-card-2",
+              "smallText": "Buy a new",
+              "title": "Health Insurance",
+              "image": "https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
     {
       "id": "promo-card",
       "fields": [
-        {
-          "component": "tab",
-          "label": "Basic",
-          "name": "basic"
-        },
-        {
-          "component": "text-input",
-          "name": "smallText",
-          "label": "Small Text"
-        },
-        {
-          "component": "text-input",
-          "name": "title",
-          "label": "Title"
-        },
-        {
-          "component": "text-input",
-          "name": "image",
-          "label": "Image Path"
-        }
+        { "component": "tab", "label": "Basic", "name": "basic" },
+        { "component": "text-input", "name": "smallText", "label": "Small Text" },
+        { "component": "text-input", "name": "title", "label": "Title" },
+        { "component": "text-input", "name": "image", "label": "Image Path" }
+      ]
+    },
+    {
+      "id": "promo-card-2",
+      "fields": [
+        { "component": "tab", "label": "Basic", "name": "basic" },
+        { "component": "text-input", "name": "smallText", "label": "Small Text" },
+        { "component": "text-input", "name": "title", "label": "Title" },
+        { "component": "text-input", "name": "image", "label": "Image Path" }
       ]
     }
   ]
