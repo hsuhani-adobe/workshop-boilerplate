@@ -38,3 +38,90 @@
     margin-top: 8px;
     line-height: 1.2;
 }
+
+
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   6. RIGHT COLUMN — Promo Cards
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.field-promotions-right {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px;
+  align-self: start;
+  position: sticky;
+  top: 16px;
+}
+
+.promo-card-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: var(--radius-lg) !important;
+  border: none !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  text-align: left !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.promo-card-container:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Individual card backgrounds */
+.field-promo-card1777106717593 {
+  background-color: var(--hdfc-promo-1-bg) !important;
+}
+
+.field-promo-card-18703026471777106744307 {
+  background-color: var(--hdfc-promo-2-bg) !important;
+}
+
+.promo-card-image {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: unset !important;
+  object-position: unset !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  flex-shrink: 0;
+}
+
+/* Broken image fallback — still shows the coloured card */
+.promo-card-image[src=""],
+.promo-card-image:not([src]) {
+  height: 60px !important;
+  opacity: 0;
+}
+
+.promo-card-small-text {
+  display: block !important;
+  margin: 0 !important;
+  padding: 10px 14px 2px !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: var(--hdfc-blue-primary) !important;
+  line-height: 1.4 !important;
+}
+
+.promo-card-title {
+  display: block !important;
+  margin: 0 !important;
+  padding: 2px 14px 16px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: var(--hdfc-text-primary) !important;
+  line-height: 1.3 !important;
+}
