@@ -313,7 +313,6 @@ function resendOtp() {
 
 
 
-
 /**
  * Calls Final Submission API and updates Loan Application Number field
  * @param {number|string} loanAmount
@@ -325,7 +324,7 @@ function callFinalSubmission(loanAmount, tenure) {
 
   console.log("Calling API with:", loanAmount, tenure);
 
-  // ✅ Basic validation
+  // ✅ Validation
   if (!loanAmount || !tenure) {
     alert("Please enter loan amount and tenure");
     return;
@@ -344,9 +343,7 @@ function callFinalSubmission(loanAmount, tenure) {
     }),
   })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network error");
-      }
+      if (!response.ok) throw new Error("Network error");
       return response.json();
     })
     .then((data) => {
@@ -358,20 +355,16 @@ function callFinalSubmission(loanAmount, tenure) {
 
         const acknowledgementId = data?.responseString?.acknowledgementId;
 
-        // 🔍 Target input field (by name)
-        let inputField = document.querySelector(
-          'input[name="loan_application_number"]'
+        // 🎯 TARGET USING NAME ONLY (NO ID / DATA-ID)
+        const inputField = document.querySelector(
+          '[name="loan_application_number"]'
         );
-
-        // 🔁 Fallback: try by ID if name doesn't work
-        if (!inputField) {
-          inputField = document.getElementById("textinput-ba41c43112"); // replace if needed
-        }
 
         if (inputField) {
           inputField.value = acknowledgementId ? String(acknowledgementId) : "";
 
-          // 🔥 Important: trigger change event so AEM updates state
+          // 🔥 Trigger change so AEM detects update
+          inputField.dispatchEvent(new Event("input", { bubbles: true }));
           inputField.dispatchEvent(new Event("change", { bubbles: true }));
 
           // Optional UX
@@ -379,7 +372,7 @@ function callFinalSubmission(loanAmount, tenure) {
 
           console.log("✅ Loan Application Number set:", acknowledgementId);
         } else {
-          console.error("❌ loan_application_number field not found");
+          console.error("❌ Field with name 'loan_application_number' not found");
         }
 
       } else {
