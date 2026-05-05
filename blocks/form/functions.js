@@ -321,7 +321,7 @@ function resendOtp() {
  */
 function callFinalSubmission(loanAmount, tenure, globals) {
 
-  const API_URL = "https://loan-backend-mock.onrender.com/tier1/finalSubmission";
+  const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
 
   // Basic validation (optional but recommended)
   if (!loanAmount || !tenure) {
@@ -352,21 +352,18 @@ function callFinalSubmission(loanAmount, tenure, globals) {
     })
     .then((data) => {
 
-      // ✅ Success case
-      if (data?.status?.responseCode === "0") {
+    // ✅ Success case
+if (data?.status?.responseCode === "0") {
 
-        const { vkycLink, acknowledgementId } = data.responseString || {};
+  const acknowledgementId = data?.responseString?.acknowledgementId;
 
-        globals.functions.setProperty("vkycLink", {
-          value: vkycLink || "",
-        });
+  // Set value safely
+  globals.functions.setProperty("loan_application_number", {
+    value: acknowledgementId ? String(acknowledgementId) : "",
+  });
 
-        globals.functions.setProperty("acknowledgementId", {
-          value: acknowledgementId || "",
-        });
-
-        console.log("Success:", data);
-      }
+  console.log("Success:", data);
+}
 
       // ❌ API error case
       else {
