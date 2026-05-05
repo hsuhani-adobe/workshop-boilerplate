@@ -142,30 +142,34 @@ export default async function decorate(fieldDiv, fieldJson) {
         return val >= AMOUNT_MIN ? val : AMOUNT_DEFAULT;
     }
 
-    /* ══════════════════════════════════════
-       EDS BUBBLE SYNC  — fixed
-       Correctly positions bubble using 0→1 fraction of the track.
-    ══════════════════════════════════════ */
-    function syncEDSBubble(rangeInput, wrapperEl, displayText) {
-        const min      = parseFloat(rangeInput.min)   || 0;
-        const max      = parseFloat(rangeInput.max)   || 100;
-        const step     = parseFloat(rangeInput.step)  || 1;
-        const value    = parseFloat(rangeInput.value);
+   /*   EDS BUBBLE SYNC — patched
+   getBoundingClientRect() returns 0 before first paint,
+   so we fall back to a hardcoded bubble width if needed.
+   Also uses the correct native range fraction formula.
+══════════════════════════════════════ */
+function syncEDSBubble(rangeInput, wrapperEl, displayText) {
+    const min   = parseFloat(rangeInput.min)  || 0;
+    const max   = parseFloat(rangeInput.max)  || 100;
+    const step  = parseFloat(rangeInput.step) || 1;
+    const value = parseFloat(rangeInput.value);
 
-        const totalSteps   = Math.ceil((max - min) / step);
-        const currentSteps = Math.ceil((value - min) / step);
+    const totalSteps   = Math.ceil((max - min) / step);
+    const currentSteps = Math.ceil((value - min) / step);
 
-        wrapperEl.style.setProperty('--total-steps',   totalSteps);
-        wrapperEl.style.setProperty('--current-steps', currentSteps);
+    wrapperEl.style.setProperty('--total-steps',   totalSteps);
+    wrapperEl.style.setProperty('--current-steps', currentSteps);
 
-        const bubble = wrapperEl.querySelector('.range-bubble');
-        if (bubble) {
+    const bubble = wrapperEl.querySelector('.range-bubble');
+    if (bubble) {
+        bubble.textContent = displayText;
+        /* Use rAF so bubble width is available after paint */
+        requestAnimationFrame(() => {
             const fraction = max > min ? (value - min) / (max - min) : 0;
-            const bw       = bubble.getBoundingClientRect().width || 31;
-            bubble.style.left  = `calc(${fraction * 100}% - ${fraction * bw}px)`;
-            bubble.textContent = displayText;
-        }
+            const bw       = bubble.getBoundingClientRect().width || 36;
+            bubble.style.left = `calc(${fraction * 100}% - ${fraction * bw}px)`;
+        });
     }
+}
 
     /* ══════════════════════════════════════
        DYNAMIC TICK GENERATOR
@@ -228,111 +232,108 @@ export default async function decorate(fieldDiv, fieldJson) {
         if (taxInput) taxInput.value = formatINR(TAXES_FLAT);
     }
 
-    /* ══════════════════════════════════════
-       SETUP AMOUNT SLIDER
-    ══════════════════════════════════════ */
-    function setupAmountSlider() {
-        const fieldDiv   = document.querySelector('.field-loan-amount-slider');
-        if (!fieldDiv) return null;
-        const wrapper    = fieldDiv.querySelector('.range-widget-wrapper.decorated');
-        if (!wrapper) return null;
-        const rangeInput = wrapper.querySelector('input[type="range"]');
-        const amountInr  = document.querySelector('input[name="loan_amount_inr"]');
-        if (!rangeInput) return null;
+    /*══════════════════════════════════════
+   SETUP AMOUNT SLIDER — patched
+   Writes value into input box on every slider move.
+══════════════════════════════════════ */
+function setupAmountSlider() {
+    const fieldDiv   = document.querySelector('.field-loan-amount-slider');
+    if (!fieldDiv) return null;
+    const wrapper    = fieldDiv.querySelector('.range-widget-wrapper.decorated');
+    if (!wrapper) return null;
+    const rangeInput = wrapper.querySelector('input[type="range"]');
+    const amountInr  = document.querySelector('input[name="loan_amount_inr"]');
+    if (!rangeInput) return null;
 
-        /* Apply attrs */
-        rangeInput.min   = AMOUNT_MIN;
-        rangeInput.max   = amountMax;
-        rangeInput.step  = AMOUNT_STEP;
-        rangeInput.value = clamp(currentAmount, AMOUNT_MIN, amountMax, AMOUNT_STEP);
+    rangeInput.min   = AMOUNT_MIN;
+    rangeInput.max   = amountMax;
+    rangeInput.step  = AMOUNT_STEP;
+    rangeInput.value = clamp(currentAmount, AMOUNT_MIN, amountMax, AMOUNT_STEP);
 
-        /* Min / max labels */
-        const minLabel = wrapper.querySelector('.range-min');
-        const maxLabel = wrapper.querySelector('.range-max');
-        if (minLabel) minLabel.textContent = amountBubbleLabel(AMOUNT_MIN);
-        if (maxLabel) maxLabel.textContent = amountBubbleLabel(amountMax);
+    const minLabel = wrapper.querySelector('.range-min');
+    const maxLabel = wrapper.querySelector('.range-max');
+    if (minLabel) minLabel.textContent = amountBubbleLabel(AMOUNT_MIN);
+    if (maxLabel) maxLabel.textContent = amountBubbleLabel(amountMax);
 
-        rebuildAmountTicks(wrapper);
-        syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(parseFloat(rangeInput.value)));
+    rebuildAmountTicks(wrapper);
+    syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(parseFloat(rangeInput.value)));
 
-        /* Reflect slider value into input box immediately */
+    /* ✅ Write value into input box on init */
+    if (amountInr) amountInr.value = formatINR(currentAmount);
+
+    rangeInput.addEventListener('input', () => {
+        currentAmount = clamp(parseFloat(rangeInput.value), AMOUNT_MIN, amountMax, AMOUNT_STEP);
+        syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(currentAmount));
+        /* ✅ Always write to input box — no activeElement guard */
         if (amountInr) amountInr.value = formatINR(currentAmount);
+        updateSummary();
+    });
 
-        /* Slider → input box + summary */
-        rangeInput.addEventListener('input', () => {
-            currentAmount = clamp(parseFloat(rangeInput.value), AMOUNT_MIN, amountMax, AMOUNT_STEP);
-            syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(currentAmount));
-            /* Always update input box to match slider */
-            if (amountInr) amountInr.value = formatINR(currentAmount);
-            updateSummary();
-        });
+    return function setAmountSlider(val) {
+        val              = clamp(val, AMOUNT_MIN, amountMax, AMOUNT_STEP);
+        currentAmount    = val;
+        rangeInput.value = val;
+        syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(val));
+        /* ✅ Keep input box in sync when setter is called */
+        if (amountInr) amountInr.value = formatINR(val);
+    };
+}
 
-        /* Setter: called by input box / public API to drive the slider */
-        return function setAmountSlider(val) {
-            val = clamp(val, AMOUNT_MIN, amountMax, AMOUNT_STEP);
-            currentAmount    = val;
-            rangeInput.value = val;
-            syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(val));
-            if (amountInr) amountInr.value = formatINR(val);
-        };
-    }
+    /* ═════════════════════════════════════
+   SETUP TENURE SLIDER — patched
+   Writes value into input box on every slider move.
+══════════════════════════════════════ */
+function setupTenureSlider() {
+    const fieldDiv   = document.querySelector('.field-loan-tenure-slider');
+    if (!fieldDiv) return null;
+    const wrapper    = fieldDiv.querySelector('.range-widget-wrapper.decorated');
+    if (!wrapper) return null;
+    const rangeInput = wrapper.querySelector('input[type="range"]');
+    const tenureInp  = document.querySelector('input[name="loan_tenure_months"]');
+    if (!rangeInput) return null;
 
-    /* ══════════════════════════════════════
-       SETUP TENURE SLIDER
-    ══════════════════════════════════════ */
-    function setupTenureSlider() {
-        const fieldDiv   = document.querySelector('.field-loan-tenure-slider');
-        if (!fieldDiv) return null;
-        const wrapper    = fieldDiv.querySelector('.range-widget-wrapper.decorated');
-        if (!wrapper) return null;
-        const rangeInput = wrapper.querySelector('input[type="range"]');
-        const tenureInp  = document.querySelector('input[name="loan_tenure_months"]');
-        if (!rangeInput) return null;
+    rangeInput.min   = TENURE_MIN;
+    rangeInput.max   = TENURE_MAX;
+    rangeInput.step  = TENURE_STEP;
+    rangeInput.value = TENURE_DEFAULT;
 
-        rangeInput.min   = TENURE_MIN;
-        rangeInput.max   = TENURE_MAX;
-        rangeInput.step  = TENURE_STEP;
-        rangeInput.value = TENURE_DEFAULT;
+    const minLabel = wrapper.querySelector('.range-min');
+    const maxLabel = wrapper.querySelector('.range-max');
+    if (minLabel) minLabel.textContent = '12m';
+    if (maxLabel) maxLabel.textContent = '84m';
 
-        const minLabel = wrapper.querySelector('.range-min');
-        const maxLabel = wrapper.querySelector('.range-max');
-        if (minLabel) minLabel.textContent = '12m';
-        if (maxLabel) maxLabel.textContent = '84m';
+    wrapper.querySelectorAll('.rs-tick').forEach(el => el.remove());
+    [24, 36, 48, 60, 72].forEach(v => {
+        const pct  = ((v - TENURE_MIN) / (TENURE_MAX - TENURE_MIN)) * 100;
+        const span = document.createElement('span');
+        span.className   = 'rs-tick';
+        span.textContent = v + 'm';
+        span.style.left  = pct + '%';
+        wrapper.appendChild(span);
+    });
 
-        /* Static tenure ticks */
-        wrapper.querySelectorAll('.rs-tick').forEach(el => el.remove());
-        [24, 36, 48, 60, 72].forEach(v => {
-            const pct  = ((v - TENURE_MIN) / (TENURE_MAX - TENURE_MIN)) * 100;
-            const span = document.createElement('span');
-            span.className   = 'rs-tick';
-            span.textContent = v + 'm';
-            span.style.left  = pct + '%';
-            wrapper.appendChild(span);
-        });
+    syncEDSBubble(rangeInput, wrapper, TENURE_DEFAULT + 'm');
 
-        syncEDSBubble(rangeInput, wrapper, TENURE_DEFAULT + 'm');
+    /* ✅ Write value into input box on init */
+    if (tenureInp) tenureInp.value = TENURE_DEFAULT + ' months';
 
-        /* Reflect slider value into input box immediately */
-        if (tenureInp) tenureInp.value = TENURE_DEFAULT + ' months';
+    rangeInput.addEventListener('input', () => {
+        currentTenure = clamp(parseFloat(rangeInput.value), TENURE_MIN, TENURE_MAX, TENURE_STEP);
+        syncEDSBubble(rangeInput, wrapper, currentTenure + 'm');
+        /* ✅ Always write to input box */
+        if (tenureInp) tenureInp.value = currentTenure + ' months';
+        updateSummary();
+    });
 
-        /* Slider → input box + summary */
-        rangeInput.addEventListener('input', () => {
-            currentTenure = clamp(parseFloat(rangeInput.value), TENURE_MIN, TENURE_MAX, TENURE_STEP);
-            syncEDSBubble(rangeInput, wrapper, currentTenure + 'm');
-            /* Always update input box to match slider */
-            if (tenureInp) tenureInp.value = currentTenure + ' months';
-            updateSummary();
-        });
-
-        /* Setter: called by input box to drive the slider */
-        return function setTenureSlider(val) {
-            val = clamp(val, TENURE_MIN, TENURE_MAX, TENURE_STEP);
-            currentTenure    = val;
-            rangeInput.value = val;
-            syncEDSBubble(rangeInput, wrapper, val + 'm');
-            if (tenureInp) tenureInp.value = val + ' months';
-        };
-    }
+    return function setTenureSlider(val) {
+        val              = clamp(val, TENURE_MIN, TENURE_MAX, TENURE_STEP);
+        currentTenure    = val;
+        rangeInput.value = val;
+        syncEDSBubble(rangeInput, wrapper, val + 'm');
+        /* ✅ Keep input box in sync when setter is called */
+        if (tenureInp) tenureInp.value = val + ' months';
+    };
+}
 
     /* ══════════════════════════════════════
        WIRE AMOUNT NUMBER INPUT
