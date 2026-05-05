@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp
+  startOtpTimer,resendOtp,callFinalSubmission
 };
 
 
@@ -308,4 +308,60 @@ function resendOtp() {
   }
 
   return `${attemptsLeft}/${totalAttempts} attempts `;
+}
+
+
+
+
+/**
+ * Calls the Final Submission API
+ * @param {number} loanAmount - Loan amount
+ * @param {number} tenure - Tenure in months
+ * @param {scope} globals - Global object (injected by AEM Forms)
+ * @return {Promise}
+ */
+async function callFinalSubmission(loanAmount, tenure, globals) {
+  const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        requestString: {
+          loanAmount: loanAmount,
+          tenure: tenure,
+        },
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // Check API-level success
+    if (data.status?.responseCode === "0") {
+      const { vkycLink, acknowledgementId } = data.responseString;
+
+      // Set values into your form fields using globals
+      globals.functions.setProperty("vkycLink", { value: vkycLink });
+      globals.functions.setProperty("acknowledgementId", { value: acknowledgementId });
+
+      console.log("Submission successful:", data);
+      return data;
+    } else {
+      console.error("API Error:", data.status?.errorDesc);
+      globals.functions.markFieldAsInvalid(
+        "loanAmount",
+        data.status?.errorDesc || "Submission failed"
+      );
+    }
+  } catch (error) {
+    console.error("Network/fetch error:", error);
+    throw error;
+  }
 }
