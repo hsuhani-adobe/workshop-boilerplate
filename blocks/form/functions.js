@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp,
+  startOtpTimer,resendOtp, callFinalSubmission,
 };
 
 
@@ -314,54 +314,74 @@ function resendOtp() {
 
 
 /**
- * Calls the Final Submission API
- * @param {number} loanAmount - Loan amount
- * @param {number} tenure - Tenure in months
- * @param {scope} globals - Global object (injected by AEM Forms)
- * @returns {Promise}
+ * Calls Final Submission API and updates form fields
+ * @param {number} loanAmount
+ * @param {number} tenure
+ * @param {object} globals
  */
- export async function callFinalSubmission(loanAmount, tenure, globals) {
+function callFinalSubmission(loanAmount, tenure, globals) {
+
   const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
 
-  try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+  // Basic validation (optional but recommended)
+  if (!loanAmount || !tenure) {
+    globals.functions.markFieldAsInvalid(
+      "loanAmount",
+      "Please enter loan amount and tenure"
+    );
+    return;
+  }
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      requestString: {
+        loanAmount: loanAmount,
+        tenure: tenure,
       },
-      body: JSON.stringify({
-        requestString: {
-          loanAmount: loanAmount,
-          tenure: tenure,
-        },
-      }),
-    });
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network error");
+      }
+      return response.json();
+    })
+    .then((data) => {
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+      // ✅ Success case
+      if (data?.status?.responseCode === "0") {
 
-    const data = await response.json();
+        const { vkycLink, acknowledgementId } = data.responseString || {};
 
-    // Check API-level success
-    if (data.status?.responseCode === "0") {
-      const { vkycLink, acknowledgementId } = data.responseString;
+        globals.functions.setProperty("vkycLink", {
+          value: vkycLink || "",
+        });
 
-      // Set values into your form fields using globals
-      globals.functions.setProperty("vkycLink", { value: vkycLink });
-      globals.functions.setProperty("acknowledgementId", { value: acknowledgementId });
+        globals.functions.setProperty("acknowledgementId", {
+          value: acknowledgementId || "",
+        });
 
-      console.log("Submission successful:", data);
-      return data;
-    } else {
-      console.error("API Error:", data.status?.errorDesc);
+        console.log("Success:", data);
+      }
+
+      // ❌ API error case
+      else {
+        globals.functions.markFieldAsInvalid(
+          "loanAmount",
+          data?.status?.errorDesc || "Submission failed"
+        );
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+
       globals.functions.markFieldAsInvalid(
         "loanAmount",
-        data.status?.errorDesc || "Submission failed"
+        "Something went wrong"
       );
-    }
-  } catch (error) {
-    console.error("Network/fetch error:", error);
-    throw error;
-  }
+    });
 }
