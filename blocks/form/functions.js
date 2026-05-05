@@ -386,12 +386,12 @@ function callFinalSubmission(loanAmount, tenure) {
 }
 
 
-
 /**
- * Calls Tier2 InitiateCustomerIdentification API
+ * Tier2: Initiate Customer Identification
+ * Uses mobile + (PAN OR DOB) and sets OTP in UI
  * @param {string} mobileNo
- * @param {string} dateOfBirth  (optional)
- * @param {string} panNumber    (optional)
+ * @param {string} dateOfBirth
+ * @param {string} panNumber
  */
 function callInitiateCustomerIdentification(mobileNo, dateOfBirth, panNumber) {
 
@@ -399,17 +399,24 @@ function callInitiateCustomerIdentification(mobileNo, dateOfBirth, panNumber) {
 
   console.log("Inputs:", { mobileNo, dateOfBirth, panNumber });
 
-  // ✅ Validation
+  // Basic check (authoring already handles main validation)
   if (!mobileNo) {
-    alert("Please enter mobile number");
+    alert("Mobile number is required");
     return;
   }
 
-  if (!dateOfBirth && !panNumber) {
-    alert("Enter either Date of Birth or PAN Number");
-    return;
+  // ✅ Build request → ONLY ONE (PAN or DOB)
+  const requestString = {
+    mobileNo: mobileNo
+  };
+
+  if (panNumber && panNumber.trim() !== "") {
+    requestString.panNumber = panNumber.trim();
+  } else if (dateOfBirth && dateOfBirth.trim() !== "") {
+    requestString.dateOfBirth = dateOfBirth.trim();
   }
 
+  // 🚀 API Call
   fetch(API_URL, {
     method: "POST",
     headers: {
@@ -417,31 +424,31 @@ function callInitiateCustomerIdentification(mobileNo, dateOfBirth, panNumber) {
     },
     body: JSON.stringify({
       contextParam: {},
-      requestString: {
-        mobileNo: mobileNo,
-        dateOfBirth: dateOfBirth || "",
-        panNumber: panNumber || ""
-      }
+      requestString: requestString
     }),
   })
-    .then((res) => {
-      if (!res.ok) throw new Error("Network error");
-      return res.json();
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network error");
+      }
+      return response.json();
     })
     .then((data) => {
 
       console.log("API Response:", data);
 
-      // ✅ Success case
+      // ✅ Success
       if (data?.status?.responseCode === "0") {
 
         const otp = data?.responseString?.otp;
         const partnerJourneyID = data?.contextParam?.partnerJourneyID;
 
-        // 🎯 Set OTP field
+        // 🎯 Set OTP field (name-based targeting only)
         const otpField = document.querySelector('[name="otp"]');
         if (otpField) {
-          otpField.value = otp || "";
+          otpField.value = otp ? String(otp) : "";
+
+          // 🔥 trigger AEM reactivity
           otpField.dispatchEvent(new Event("input", { bubbles: true }));
           otpField.dispatchEvent(new Event("change", { bubbles: true }));
         }
@@ -449,18 +456,18 @@ function callInitiateCustomerIdentification(mobileNo, dateOfBirth, panNumber) {
         // 🎯 Set Partner Journey ID (optional hidden field)
         const journeyField = document.querySelector('[name="partner_journey_id"]');
         if (journeyField) {
-          journeyField.value = partnerJourneyID || "";
+          journeyField.value = partnerJourneyID ? String(partnerJourneyID) : "";
           journeyField.dispatchEvent(new Event("change", { bubbles: true }));
         }
 
-        console.log("✅ OTP + Journey ID set");
+        console.log("✅ Tier2 Initiation Success");
 
       } else {
         alert(data?.status?.errorDesc || "API failed");
       }
     })
-    .catch((err) => {
-      console.error("❌ Error:", err);
-      alert("Something went wrong");
+    .catch((error) => {
+      console.error("❌ Error:", error);
+      alert("Something went wrong. Please try again.");
     });
 }
