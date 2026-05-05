@@ -134,15 +134,15 @@ export default async function decorate(fieldDiv, fieldJson) {
        state change so boxes stay in sync
        with slider bubble at all times.
     ══════════════════════════════════════ */
-    function writeAmountBox() {
-        const el = document.querySelector('input[name="loan_amount_inr"]');
-        if (el) el.value = formatINR(currentAmount);
-    }
+  function writeAmountBox() {
+    const el = document.querySelector('input[name="loan_amount_inr"]');
+    if (el && el.dataset.editing !== 'true') el.value = currentAmount;
+}
 
-    function writeTenureBox() {
-        const el = document.querySelector('input[name="loan_tenure_months"]');
-        if (el) el.value = currentTenure + ' months';
-    }
+function writeTenureBox() {
+    const el = document.querySelector('input[name="loan_tenure_months"]');
+    if (el && el.dataset.editing !== 'true') el.value = currentTenure;
+}
 
     /* ══════════════════════════════════════
        READ OFFER AMOUNT FROM BANNER
