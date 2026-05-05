@@ -130,21 +130,17 @@ export default async function decorate(fieldDiv, fieldJson) {
 
     /* ══════════════════════════════════════
        WRITE TO INPUT BOXES
-       Single source of truth — always called
-       after any state change.
+       Always write — no activeElement guard.
+       ₹ and "months" always visible.
     ══════════════════════════════════════ */
     function writeAmountBox() {
         const el = document.querySelector('input[name="loan_amount_inr"]');
-        if (el && document.activeElement !== el) {
-            el.value = formatINR(currentAmount);
-        }
+        if (el) el.value = formatINR(currentAmount);
     }
 
     function writeTenureBox() {
         const el = document.querySelector('input[name="loan_tenure_months"]');
-        if (el && document.activeElement !== el) {
-            el.value = currentTenure + ' months';
-        }
+        if (el) el.value = currentTenure + ' months';
     }
 
     /* ══════════════════════════════════════
@@ -159,8 +155,6 @@ export default async function decorate(fieldDiv, fieldJson) {
 
     /* ══════════════════════════════════════
        EDS BUBBLE SYNC
-       rAF ensures getBoundingClientRect has
-       real width after first paint.
     ══════════════════════════════════════ */
     function syncEDSBubble(rangeInput, wrapperEl, displayText) {
         const min  = parseFloat(rangeInput.min)  || 0;
@@ -182,7 +176,6 @@ export default async function decorate(fieldDiv, fieldJson) {
             bubble.style.left = `calc(${fraction * 100}% - ${fraction * bw}px)`;
         };
 
-        /* Try immediately; rAF catches the first-paint case */
         applyPosition();
         requestAnimationFrame(applyPosition);
     }
@@ -260,14 +253,12 @@ export default async function decorate(fieldDiv, fieldJson) {
 
         rebuildAmountTicks(wrapper);
         syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(parseFloat(rangeInput.value)));
-
-        /* ✅ Write initial value to box right away */
         writeAmountBox();
 
         rangeInput.addEventListener('input', () => {
             currentAmount = clamp(parseFloat(rangeInput.value), AMOUNT_MIN, amountMax, AMOUNT_STEP);
             syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(currentAmount));
-            writeAmountBox();   /* ✅ always update box on drag */
+            writeAmountBox();
             updateSummary();
         });
 
@@ -275,7 +266,7 @@ export default async function decorate(fieldDiv, fieldJson) {
             currentAmount    = clamp(val, AMOUNT_MIN, amountMax, AMOUNT_STEP);
             rangeInput.value = currentAmount;
             syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(currentAmount));
-            writeAmountBox();   /* ✅ update box when setter called */
+            writeAmountBox();
         };
     }
 
@@ -310,14 +301,12 @@ export default async function decorate(fieldDiv, fieldJson) {
         });
 
         syncEDSBubble(rangeInput, wrapper, TENURE_DEFAULT + 'm');
-
-        /* ✅ Write initial value to box right away */
         writeTenureBox();
 
         rangeInput.addEventListener('input', () => {
             currentTenure = clamp(parseFloat(rangeInput.value), TENURE_MIN, TENURE_MAX, TENURE_STEP);
             syncEDSBubble(rangeInput, wrapper, currentTenure + 'm');
-            writeTenureBox();   /* ✅ always update box on drag */
+            writeTenureBox();
             updateSummary();
         });
 
@@ -325,23 +314,22 @@ export default async function decorate(fieldDiv, fieldJson) {
             currentTenure    = clamp(val, TENURE_MIN, TENURE_MAX, TENURE_STEP);
             rangeInput.value = currentTenure;
             syncEDSBubble(rangeInput, wrapper, currentTenure + 'm');
-            writeTenureBox();   /* ✅ update box when setter called */
+            writeTenureBox();
         };
     }
 
     /* ══════════════════════════════════════
        WIRE AMOUNT NUMBER INPUT
-       focus  → show raw number for editing
-       input  → live update slider + summary
-       blur   → reformat display
+       ₹ always visible — stripToNumber extracts
+       the raw value for calculation.
     ══════════════════════════════════════ */
     function wireAmountInput(setAmountSlider) {
         const input = document.querySelector('input[name="loan_amount_inr"]');
         if (!input) return;
 
         input.addEventListener('focus', () => {
-            /* Show plain number so user can edit cleanly */
-            input.value = String(currentAmount);
+            /* Keep ₹ formatting visible on focus */
+            input.value = formatINR(currentAmount);
         });
 
         input.addEventListener('input', () => {
@@ -357,7 +345,6 @@ export default async function decorate(fieldDiv, fieldJson) {
             if (!raw || raw < AMOUNT_MIN) raw = AMOUNT_MIN;
             if (raw > amountMax)          raw = amountMax;
             if (setAmountSlider) setAmountSlider(raw);
-            /* Reformat after editing */
             input.value = formatINR(currentAmount);
             updateSummary();
         });
@@ -367,21 +354,20 @@ export default async function decorate(fieldDiv, fieldJson) {
 
     /* ══════════════════════════════════════
        WIRE TENURE NUMBER INPUT
-       focus  → show raw number for editing
-       input  → live update slider + summary
-       blur   → reformat display
+       "months" always visible — stripToNumber
+       extracts the raw value for calculation.
     ══════════════════════════════════════ */
     function wireTenureInput(setTenureSlider) {
         const input = document.querySelector('input[name="loan_tenure_months"]');
         if (!input) return;
 
         input.addEventListener('focus', () => {
-            /* Show plain number so user can edit cleanly */
-            input.value = String(currentTenure);
+            /* Keep "months" suffix visible on focus */
+            input.value = currentTenure + ' months';
         });
 
         input.addEventListener('input', () => {
-            const raw = parseInt(input.value, 10);
+            const raw = parseInt(stripToNumber(input.value), 10);
             if (raw >= TENURE_MIN && raw <= TENURE_MAX) {
                 if (setTenureSlider) setTenureSlider(raw);
                 updateSummary();
@@ -393,7 +379,6 @@ export default async function decorate(fieldDiv, fieldJson) {
             if (!raw || raw < TENURE_MIN) raw = TENURE_MIN;
             if (raw > TENURE_MAX)         raw = TENURE_MAX;
             if (setTenureSlider) setTenureSlider(raw);
-            /* Reformat after editing */
             input.value = currentTenure + ' months';
             updateSummary();
         });
@@ -426,6 +411,8 @@ export default async function decorate(fieldDiv, fieldJson) {
             if (currentAmount > amountMax) {
                 if (setAmountSlider) setAmountSlider(amountMax);
             }
+
+            writeAmountBox();
             updateSummary();
         }
 
@@ -454,12 +441,10 @@ export default async function decorate(fieldDiv, fieldJson) {
         wireTenureInput(setTenureSlider);
         watchBannerField(setAmountSlider);
 
-        /* ✅ Write boxes + summary before first paint */
         writeAmountBox();
         writeTenureBox();
         updateSummary();
 
-        /* ✅ Re-sync after layout so bubble positions are accurate */
         requestAnimationFrame(() => {
             if (setAmountSlider) setAmountSlider(currentAmount);
             if (setTenureSlider) setTenureSlider(currentTenure);
