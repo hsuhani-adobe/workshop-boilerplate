@@ -132,48 +132,23 @@ export default async function decorate(fieldDiv, fieldJson) {
        WRITE TO INPUT BOXES
        Always writes — called after every
        state change so boxes stay in sync
-       with slider bubble at all times.
-    ══════════════════════════════════════ */
+       with slider bubble at all times.*/
 function writeAmountBox() {
     const el = document.querySelector('input[name="loan_amount_inr"]');
-    if (!el) return;
-    if (el.dataset.editing !== 'true') {
-        el.value = currentAmount;
-        getOrCreateOverlay(el).textContent = formatINR(currentAmount);
+    if (el && el.dataset.editing !== 'true') {
+        el.type = 'text';  // temporarily switch to text
+        el.value = formatINR(currentAmount);
+        el.type = 'number'; // won't revert visually in most browsers
     }
 }
 
 function writeTenureBox() {
     const el = document.querySelector('input[name="loan_tenure_months"]');
-    if (!el) return;
-    if (el.dataset.editing !== 'true') {
-        el.value = currentTenure;
-        getOrCreateOverlay(el).textContent = currentTenure + ' months';
+    if (el && el.dataset.editing !== 'true') {
+        el.type = 'text';
+        el.value = currentTenure + ' months';
+        el.type = 'number';
     }
-}
-
-function getOrCreateOverlay(input) {
-    let overlay = input.parentElement.querySelector('.input-display-overlay');
-    if (!overlay) {
-        overlay = document.createElement('span');
-        overlay.className = 'input-display-overlay';
-        Object.assign(overlay.style, {
-            position:      'absolute',
-            top:           '0', left: '0',
-            width:         '100%', height: '100%',
-            display:       'flex',
-            alignItems:    'center',
-            paddingLeft:   '12px',
-            pointerEvents: 'none',
-            background:    'white',
-            fontSize:      'inherit',
-            color:         'inherit',
-            boxSizing:     'border-box',
-        });
-        input.parentElement.style.position = 'relative';
-        input.parentElement.appendChild(overlay);
-    }
-    return overlay;
 }
     /* ══════════════════════════════════════
        READ OFFER AMOUNT FROM BANNER
@@ -394,14 +369,7 @@ function getOrCreateOverlay(input) {
 
 
         // inside wireAmountInput, add:
-input.addEventListener('focus', () => {
-    const o = input.parentElement.querySelector('.input-display-overlay');
-    if (o) o.style.display = 'none';
-});
-input.addEventListener('blur', () => {
-    const o = input.parentElement.querySelector('.input-display-overlay');
-    if (o) o.style.display = 'flex';
-});
+
 
 // inside wireTenureInput, add the same focus/blur block
     }
@@ -447,15 +415,7 @@ input.addEventListener('blur', () => {
 
 
 
-        // inside wireAmountInput, add:
-input.addEventListener('focus', () => {
-    const o = input.parentElement.querySelector('.input-display-overlay');
-    if (o) o.style.display = 'none';
-});
-input.addEventListener('blur', () => {
-    const o = input.parentElement.querySelector('.input-display-overlay');
-    if (o) o.style.display = 'flex';
-});
+
 
 // inside wireTenureInput, add the same focus/blur block
     }
