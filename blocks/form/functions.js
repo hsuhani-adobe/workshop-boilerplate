@@ -312,20 +312,21 @@ function resendOtp() {
 
 
 
-
-/**
- * Calls Final Submission API and updates form fields
- * @param {number} loanAmount
- * @param {number} tenure
- * @param {object} globals
- */
 function callFinalSubmission(loanAmount, tenure, globals) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
 
-  // Basic validation (optional but recommended)
+  // ✅ store reference BEFORE async
+  const formFunctions = globals?.functions;
+
+  if (!formFunctions) {
+    console.error("globals.functions is undefined ❌");
+    return;
+  }
+
+  // Validation
   if (!loanAmount || !tenure) {
-    globals.functions.markFieldAsInvalid(
+    formFunctions.markFieldAsInvalid(
       "loanAmount",
       "Please enter loan amount and tenure"
     );
@@ -352,22 +353,19 @@ function callFinalSubmission(loanAmount, tenure, globals) {
     })
     .then((data) => {
 
-    // ✅ Success case
-if (data?.status?.responseCode === "0") {
+      if (data?.status?.responseCode === "0") {
 
-  const acknowledgementId = data?.responseString?.acknowledgementId;
+        const acknowledgementId = data?.responseString?.acknowledgementId;
 
-  // Set value safely
-  globals.functions.setProperty("loan_application_number", {
-    value: acknowledgementId ? String(acknowledgementId) : "",
-  });
+        // ✅ use stored reference
+        formFunctions.setProperty("loan_application_number", {
+          value: String(acknowledgementId || ""),
+        });
 
-  console.log("Success:", data);
-}
+        console.log("Success:", acknowledgementId);
 
-      // ❌ API error case
-      else {
-        globals.functions.markFieldAsInvalid(
+      } else {
+        formFunctions.markFieldAsInvalid(
           "loanAmount",
           data?.status?.errorDesc || "Submission failed"
         );
@@ -376,11 +374,11 @@ if (data?.status?.responseCode === "0") {
     .catch((error) => {
       console.error("Error:", error);
 
-      globals.functions.markFieldAsInvalid(
+      formFunctions.markFieldAsInvalid(
         "loanAmount",
         "Something went wrong"
       );
     });
 
-    console.log("working api")
+  console.log("working api");
 }
