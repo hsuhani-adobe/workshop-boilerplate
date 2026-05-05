@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callFinalSubmission, callInitiateCustomerIdentification,
+  startOtpTimer,resendOtp, callFinalSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails,
 };
 
 
@@ -473,6 +473,101 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
 
       } else {
         alert(data?.status?.errorDesc || "API failed");
+      }
+    })
+    .catch((error) => {
+      console.error("❌ Error:", error);
+      alert("Something went wrong. Please try again.");
+    });
+}
+
+
+
+
+
+
+
+/**
+ * Tier2: Verify OTP and Fetch Customer Details
+ * Fills Full Name (Aadhar) and Address (Aadhar)
+ * @param {string} mobileNo
+ * @param {string} otp
+ */
+function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
+
+  const API_URL = "https://loan-backend-mock.onrender.com/tier2/VerifyOTPAndGetDemogDetails";
+
+  // 🎯 Get partnerJourneyID from hidden field
+  const journeyField = document.querySelector('[name="partner_journey_id"]');
+  const partnerJourneyID = journeyField ? journeyField.value : "";
+
+  console.log("Inputs:", { mobileNo, otp, partnerJourneyID });
+
+  // ✅ Basic validation
+  if (!mobileNo || !otp || !partnerJourneyID) {
+    alert("Missing mobile number, OTP, or session");
+    return;
+  }
+
+  // 🚀 API Call
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      contextParam: {},
+      requestString: {
+        mobileNo: mobileNo,
+        passwordValue: otp,
+        partnerJourneyID: partnerJourneyID
+      }
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network error");
+      }
+      return response.json();
+    })
+    .then((data) => {
+
+      console.log("API Response:", data);
+
+      // ✅ Success case
+      if (data?.status?.responseCode === "0") {
+
+        const customer = data?.responseString?.OfferDemogDetails?.[0];
+
+        if (!customer) {
+          alert("Customer data not found");
+          return;
+        }
+
+        // 🎯 Fill Full Name (Aadhar)
+        const nameField = document.querySelector('[name="fullname_adhar"]');
+        if (nameField) {
+          nameField.value = customer.fullName ? String(customer.fullName) : "";
+
+          // Trigger AEM update
+          nameField.dispatchEvent(new Event("input", { bubbles: true }));
+          nameField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        // 🎯 Fill Address (Aadhar)
+        const addressField = document.querySelector('[name="address_aadhar"]');
+        if (addressField) {
+          addressField.value = customer.address ? String(customer.address) : "";
+
+          // Trigger AEM update
+          addressField.dispatchEvent(new Event("input", { bubbles: true }));
+          addressField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        console.log("✅ Aadhar details filled successfully");
+
+      } else {
+        alert(data?.status?.errorDesc || "OTP verification failed");
       }
     })
     .catch((error) => {
