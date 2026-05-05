@@ -486,10 +486,12 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
 
 
 
-
 /**
  * Tier2: Verify OTP and Fetch Customer Details
- * Fills Full Name (Aadhar) and Address (Aadhar)
+ * Works with mobileNo + OTP (no partnerJourneyID)
+ * Fills:
+ * - fullname_adhar
+ * - address_aadhar
  * @param {string} mobileNo
  * @param {string} otp
  */
@@ -497,15 +499,11 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/VerifyOTPAndGetDemogDetails";
 
-  // 🎯 Get partnerJourneyID from hidden field
-  const journeyField = document.querySelector('[name="partner_journey_id"]');
-  const partnerJourneyID = journeyField ? journeyField.value : "";
-
-  console.log("Inputs:", { mobileNo, otp, partnerJourneyID });
+  console.log("Inputs:", { mobileNo, otp });
 
   // ✅ Basic validation
-  if (!mobileNo || !otp || !partnerJourneyID) {
-    alert("Missing mobile number, OTP, or session");
+  if (!mobileNo || !otp) {
+    alert("Please enter mobile number and OTP");
     return;
   }
 
@@ -519,8 +517,7 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
       contextParam: {},
       requestString: {
         mobileNo: mobileNo,
-        passwordValue: otp,
-        partnerJourneyID: partnerJourneyID
+        passwordValue: otp
       }
     }),
   })
@@ -547,9 +544,8 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
         // 🎯 Fill Full Name (Aadhar)
         const nameField = document.querySelector('[name="fullname_adhar"]');
         if (nameField) {
-          nameField.value = customer.fullName ? String(customer.fullName) : "";
+          nameField.value = customer.fullName || "";
 
-          // Trigger AEM update
           nameField.dispatchEvent(new Event("input", { bubbles: true }));
           nameField.dispatchEvent(new Event("change", { bubbles: true }));
         }
@@ -557,14 +553,13 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
         // 🎯 Fill Address (Aadhar)
         const addressField = document.querySelector('[name="address_aadhar"]');
         if (addressField) {
-          addressField.value = customer.address ? String(customer.address) : "";
+          addressField.value = customer.address || "";
 
-          // Trigger AEM update
           addressField.dispatchEvent(new Event("input", { bubbles: true }));
           addressField.dispatchEvent(new Event("change", { bubbles: true }));
         }
 
-        console.log("✅ Aadhar details filled successfully");
+        console.log("✅ Customer details filled successfully");
 
       } else {
         alert(data?.status?.errorDesc || "OTP verification failed");
