@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp,callFinalSubmission
+  startOtpTimer,resendOtp,
 };
 
 
@@ -320,7 +320,7 @@ function resendOtp() {
  * @param {scope} globals - Global object (injected by AEM Forms)
  * @returns {Promise}
  */
-async function callFinalSubmission(loanAmount, tenure, globals) {
+ export async function callFinalSubmission(loanAmount, tenure, globals) {
   const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
 
   try {
