@@ -309,30 +309,25 @@ function resendOtp() {
 
   return `${attemptsLeft}/${totalAttempts} attempts `;
 }
+
+
+
+
+
 /**
- * Calls Final Submission API and updates form fields
- * @param {number} loanAmount
- * @param {number} tenure
- * @param {object} form (AEM Form Object)
+ * Calls Final Submission API and updates Loan Application Number field
+ * @param {number|string} loanAmount
+ * @param {number|string} tenure
  */
-function callFinalSubmission(loanAmount, tenure, form) {
+function callFinalSubmission(loanAmount, tenure) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
 
-  console.log("Form Object:", form);
+  console.log("Calling API with:", loanAmount, tenure);
 
-  // ❌ If form still undefined → rule is wrong
-  if (!form) {
-    console.error("Form object not received ❌");
-    return;
-  }
-
-  // ✅ Validation
+  // ✅ Basic validation
   if (!loanAmount || !tenure) {
-    form.markFieldAsInvalid(
-      "loanAmount",
-      "Please enter loan amount and tenure"
-    );
+    alert("Please enter loan amount and tenure");
     return;
   }
 
@@ -348,37 +343,51 @@ function callFinalSubmission(loanAmount, tenure, form) {
       },
     }),
   })
-    .then((res) => {
-      if (!res.ok) throw new Error("Network error");
-      return res.json();
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network error");
+      }
+      return response.json();
     })
     .then((data) => {
 
       console.log("API Response:", data);
 
+      // ✅ Success case
       if (data?.status?.responseCode === "0") {
 
         const acknowledgementId = data?.responseString?.acknowledgementId;
 
-        form.setProperty("loan_application_number", {
-          value: String(acknowledgementId || ""),
-        });
+        // 🔍 Target input field (by name)
+        let inputField = document.querySelector(
+          'input[name="loan_application_number"]'
+        );
 
-        console.log("Ack ID Set:", acknowledgementId);
+        // 🔁 Fallback: try by ID if name doesn't work
+        if (!inputField) {
+          inputField = document.getElementById("textinput-ba41c43112"); // replace if needed
+        }
+
+        if (inputField) {
+          inputField.value = acknowledgementId ? String(acknowledgementId) : "";
+
+          // 🔥 Important: trigger change event so AEM updates state
+          inputField.dispatchEvent(new Event("change", { bubbles: true }));
+
+          // Optional UX
+          inputField.readOnly = true;
+
+          console.log("✅ Loan Application Number set:", acknowledgementId);
+        } else {
+          console.error("❌ loan_application_number field not found");
+        }
 
       } else {
-        form.markFieldAsInvalid(
-          "loanAmount",
-          data?.status?.errorDesc || "Submission failed"
-        );
+        alert(data?.status?.errorDesc || "Submission failed");
       }
     })
-    .catch((err) => {
-      console.error("Error:", err);
-
-      form.markFieldAsInvalid(
-        "loanAmount",
-        "Something went wrong"
-      );
+    .catch((error) => {
+      console.error("❌ Error:", error);
+      alert("Something went wrong. Please try again.");
     });
 }
