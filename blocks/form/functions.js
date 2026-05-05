@@ -321,7 +321,7 @@ function resendOtp() {
  */
 function callFinalSubmission(loanAmount, tenure, globals) {
 
-  const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
+  const API_URL = "https://loan-backend-mock.onrender.com/tier1/finalSubmission";
 
   // Basic validation (optional but recommended)
   if (!loanAmount || !tenure) {
