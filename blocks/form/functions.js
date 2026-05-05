@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callFinalSubmission,
+  startOtpTimer,resendOtp, callFinalSubmission, callInitiateCustomerIdentification,
 };
 
 
@@ -382,5 +382,85 @@ function callFinalSubmission(loanAmount, tenure) {
     .catch((error) => {
       console.error("❌ Error:", error);
       alert("Something went wrong. Please try again.");
+    });
+}
+
+
+
+/**
+ * Calls Tier2 InitiateCustomerIdentification API
+ * @param {string} mobileNo
+ * @param {string} dateOfBirth  (optional)
+ * @param {string} panNumber    (optional)
+ */
+function callInitiateCustomerIdentification(mobileNo, dateOfBirth, panNumber) {
+
+  const API_URL = "https://loan-backend-mock.onrender.com/tier2/InitiateCustomerIdentification";
+
+  console.log("Inputs:", { mobileNo, dateOfBirth, panNumber });
+
+  // ✅ Validation
+  if (!mobileNo) {
+    alert("Please enter mobile number");
+    return;
+  }
+
+  if (!dateOfBirth && !panNumber) {
+    alert("Enter either Date of Birth or PAN Number");
+    return;
+  }
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      contextParam: {},
+      requestString: {
+        mobileNo: mobileNo,
+        dateOfBirth: dateOfBirth || "",
+        panNumber: panNumber || ""
+      }
+    }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Network error");
+      return res.json();
+    })
+    .then((data) => {
+
+      console.log("API Response:", data);
+
+      // ✅ Success case
+      if (data?.status?.responseCode === "0") {
+
+        const otp = data?.responseString?.otp;
+        const partnerJourneyID = data?.contextParam?.partnerJourneyID;
+
+        // 🎯 Set OTP field
+        const otpField = document.querySelector('[name="otp"]');
+        if (otpField) {
+          otpField.value = otp || "";
+          otpField.dispatchEvent(new Event("input", { bubbles: true }));
+          otpField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        // 🎯 Set Partner Journey ID (optional hidden field)
+        const journeyField = document.querySelector('[name="partner_journey_id"]');
+        if (journeyField) {
+          journeyField.value = partnerJourneyID || "";
+          journeyField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        console.log("✅ OTP + Journey ID set");
+
+      } else {
+        alert(data?.status?.errorDesc || "API failed");
+      }
+    })
+    .catch((err) => {
+      console.error("❌ Error:", err);
+      alert("Something went wrong");
     });
 }
