@@ -309,19 +309,23 @@ function resendOtp() {
 
   return `${attemptsLeft}/${totalAttempts} attempts `;
 }
-
 /**
- * Calls Final Submission API and updates form fields (AEM EDS compatible)
+ * Calls Final Submission API and updates form fields
  * @param {number} loanAmount
  * @param {number} tenure
+ * @param {object} form (AEM Form Object)
  */
-function callFinalSubmission(loanAmount, tenure) {
+function callFinalSubmission(loanAmount, tenure, form) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
 
-  const form = this; // ✅ AEM form context
-
   console.log("Form Object:", form);
+
+  // ❌ If form still undefined → rule is wrong
+  if (!form) {
+    console.error("Form object not received ❌");
+    return;
+  }
 
   // ✅ Validation
   if (!loanAmount || !tenure) {
@@ -331,9 +335,6 @@ function callFinalSubmission(loanAmount, tenure) {
     );
     return;
   }
-
-  // Optional: Clear previous errors
-  form.setProperty("loanAmount", { errorMessage: "" });
 
   fetch(API_URL, {
     method: "POST",
@@ -347,54 +348,37 @@ function callFinalSubmission(loanAmount, tenure) {
       },
     }),
   })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network error");
-      }
-      return response.json();
+    .then((res) => {
+      if (!res.ok) throw new Error("Network error");
+      return res.json();
     })
     .then((data) => {
 
       console.log("API Response:", data);
 
-      // ✅ Success case
       if (data?.status?.responseCode === "0") {
 
         const acknowledgementId = data?.responseString?.acknowledgementId;
 
-        // ✅ Set Loan Application Number
         form.setProperty("loan_application_number", {
           value: String(acknowledgementId || ""),
         });
 
-        console.log("Loan Application Number Set:", acknowledgementId);
-
-        // 🔥 Optional UX improvements
-        form.setProperty("loan_application_number", {
-          readOnly: true
-        });
-
-        form.setProperty("submit_button", {
-          enabled: false
-        });
+        console.log("Ack ID Set:", acknowledgementId);
 
       } else {
-        // ❌ API error
         form.markFieldAsInvalid(
           "loanAmount",
           data?.status?.errorDesc || "Submission failed"
         );
       }
     })
-    .catch((error) => {
-
-      console.error("Error:", error);
+    .catch((err) => {
+      console.error("Error:", err);
 
       form.markFieldAsInvalid(
         "loanAmount",
-        "Something went wrong. Please try again."
+        "Something went wrong"
       );
     });
-
-  console.log("Final Submission API triggered 🚀");
 }
