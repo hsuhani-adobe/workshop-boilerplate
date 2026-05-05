@@ -318,7 +318,7 @@ function resendOtp() {
  * @param {number} loanAmount - Loan amount
  * @param {number} tenure - Tenure in months
  * @param {scope} globals - Global object (injected by AEM Forms)
- * @return {Promise}
+ * @returns {Promise}
  */
 async function callFinalSubmission(loanAmount, tenure, globals) {
   const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
