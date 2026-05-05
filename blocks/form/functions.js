@@ -453,7 +453,7 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
         const partnerJourneyID = data?.contextParam?.partnerJourneyID;
 
         // 🎯 Set OTP field
-        const otpField = document.querySelector('[name="otp"]');
+        const otpField = document.querySelector('[name="otp_code"]');
         if (otpField) {
           otpField.value = otp ? String(otp) : "";
 
