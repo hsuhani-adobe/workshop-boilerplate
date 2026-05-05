@@ -7896,3 +7896,16 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
 
 
 
+/* PAN success message */
+.field-verify-pan {
+  display: none;
+  font-size: 12px;
+  color: green;
+}
+
+/* PAN error message */
+.field-pan-error {
+  display: none;
+  font-size: 12px;
+  color: red;
+}

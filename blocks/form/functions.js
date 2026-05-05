@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callFinalSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails,
+  startOtpTimer,resendOtp, callFinalSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry,
 };
 
 
@@ -568,5 +568,83 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
     .catch((error) => {
       console.error("❌ Error:", error);
       alert("Something went wrong. Please try again.");
+    });
+}
+
+
+
+/**
+ * PAN Verification Function
+ * @param {string} mobileNo
+ * @param {string} pan_no
+ */
+function callPANEnquiry(mobileNo, pan_no) {
+
+  const API_URL = "https://loan-backend-mock.onrender.com/tier2/PANEnquiry";
+
+  console.log("Inputs:", { mobileNo, pan_no });
+
+  // 🎯 Get full name (auto-filled earlier)
+  const nameField = document.querySelector('[name="fullname_adhar"]');
+  const fullName = nameField ? nameField.value.trim() : "";
+
+  // 🎯 Target wrappers (AEM safe)
+  const successWrapper = document.querySelector('.field-verify-pan');
+  const errorWrapper = document.querySelector('.field-pan-error');
+
+  // 🔄 Reset messages
+  if (successWrapper) successWrapper.style.display = "none";
+  if (errorWrapper) errorWrapper.style.display = "none";
+
+  // ✅ Basic validation
+  if (!mobileNo || !pan_no || !fullName) {
+    console.warn("Missing input values");
+    if (errorWrapper) errorWrapper.style.display = "block";
+    return;
+  }
+
+  // 🚀 Call API
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      contextParam: {},
+      requestString: {
+        mobileNo: mobileNo,
+        panNumber: pan_no,
+        fullName: fullName
+      }
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error("Network error");
+      return response.json();
+    })
+    .then((data) => {
+
+      console.log("PAN API Response:", data);
+
+      if (data?.status?.responseCode === "0") {
+
+        // ✅ SUCCESS
+        if (successWrapper) successWrapper.style.display = "block";
+        if (errorWrapper) errorWrapper.style.display = "none";
+
+      } else {
+
+        // ❌ FAILURE
+        if (errorWrapper) errorWrapper.style.display = "block";
+        if (successWrapper) successWrapper.style.display = "none";
+      }
+    })
+    .catch((error) => {
+
+      console.error("PAN API Error:", error);
+
+      // ❌ ERROR CASE
+      if (errorWrapper) errorWrapper.style.display = "block";
+      if (successWrapper) successWrapper.style.display = "none";
     });
 }
