@@ -384,4 +384,6 @@ function callFinalSubmission(loanAmount, tenure, globals) {
         "Something went wrong"
       );
     });
+
+    console.log("working api")
 }
