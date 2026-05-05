@@ -130,8 +130,9 @@ export default async function decorate(fieldDiv, fieldJson) {
 
     /* ══════════════════════════════════════
        WRITE TO INPUT BOXES
-       Always write — no activeElement guard.
-       ₹ and "months" always visible.
+       Always writes — called after every
+       state change so boxes stay in sync
+       with slider bubble at all times.
     ══════════════════════════════════════ */
     function writeAmountBox() {
         const el = document.querySelector('input[name="loan_amount_inr"]');
@@ -198,7 +199,7 @@ export default async function decorate(fieldDiv, fieldJson) {
     function rebuildAmountTicks(wrapper) {
         wrapper.querySelectorAll('.rs-tick').forEach(el => el.remove());
         buildAmountTicks(AMOUNT_MIN, amountMax).forEach(t => {
-            const span = document.createElement('span');
+            const span       = document.createElement('span');
             span.className   = 'rs-tick';
             span.textContent = t.label;
             span.style.left  = ((t.value - AMOUNT_MIN) / (amountMax - AMOUNT_MIN) * 100) + '%';
@@ -252,7 +253,7 @@ export default async function decorate(fieldDiv, fieldJson) {
         if (maxLabel) maxLabel.textContent = amountBubbleLabel(amountMax);
 
         rebuildAmountTicks(wrapper);
-        syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(parseFloat(rangeInput.value)));
+        syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(currentAmount));
         writeAmountBox();
 
         rangeInput.addEventListener('input', () => {
@@ -293,7 +294,7 @@ export default async function decorate(fieldDiv, fieldJson) {
 
         wrapper.querySelectorAll('.rs-tick').forEach(el => el.remove());
         [24, 36, 48, 60, 72].forEach(v => {
-            const span = document.createElement('span');
+            const span       = document.createElement('span');
             span.className   = 'rs-tick';
             span.textContent = v + 'm';
             span.style.left  = ((v - TENURE_MIN) / (TENURE_MAX - TENURE_MIN) * 100) + '%';
@@ -320,16 +321,23 @@ export default async function decorate(fieldDiv, fieldJson) {
 
     /* ══════════════════════════════════════
        WIRE AMOUNT NUMBER INPUT
-       ₹ always visible — stripToNumber extracts
-       the raw value for calculation.
+       No focus handler — box always shows
+       live formatted value.
+       User types raw digits; ₹ prefix and
+       existing digits handled via stripToNumber.
     ══════════════════════════════════════ */
     function wireAmountInput(setAmountSlider) {
         const input = document.querySelector('input[name="loan_amount_inr"]');
         if (!input) return;
 
-        input.addEventListener('focus', () => {
-            /* Keep ₹ formatting visible on focus */
-            input.value = formatINR(currentAmount);
+        input.addEventListener('keydown', (e) => {
+            /* On first meaningful key, clear the box so user types fresh */
+            if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+                if (input.dataset.editing !== 'true') {
+                    input.value          = '';
+                    input.dataset.editing = 'true';
+                }
+            }
         });
 
         input.addEventListener('input', () => {
@@ -341,11 +349,11 @@ export default async function decorate(fieldDiv, fieldJson) {
         });
 
         input.addEventListener('blur', () => {
+            input.dataset.editing = 'false';
             let raw = stripToNumber(input.value);
             if (!raw || raw < AMOUNT_MIN) raw = AMOUNT_MIN;
             if (raw > amountMax)          raw = amountMax;
             if (setAmountSlider) setAmountSlider(raw);
-            input.value = formatINR(currentAmount);
             updateSummary();
         });
 
@@ -354,16 +362,21 @@ export default async function decorate(fieldDiv, fieldJson) {
 
     /* ══════════════════════════════════════
        WIRE TENURE NUMBER INPUT
-       "months" always visible — stripToNumber
-       extracts the raw value for calculation.
+       No focus handler — box always shows
+       live formatted value.
     ══════════════════════════════════════ */
     function wireTenureInput(setTenureSlider) {
         const input = document.querySelector('input[name="loan_tenure_months"]');
         if (!input) return;
 
-        input.addEventListener('focus', () => {
-            /* Keep "months" suffix visible on focus */
-            input.value = currentTenure + ' months';
+        input.addEventListener('keydown', (e) => {
+            /* On first meaningful key, clear the box so user types fresh */
+            if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+                if (input.dataset.editing !== 'true') {
+                    input.value          = '';
+                    input.dataset.editing = 'true';
+                }
+            }
         });
 
         input.addEventListener('input', () => {
@@ -375,11 +388,11 @@ export default async function decorate(fieldDiv, fieldJson) {
         });
 
         input.addEventListener('blur', () => {
+            input.dataset.editing = 'false';
             let raw = parseInt(stripToNumber(input.value), 10);
             if (!raw || raw < TENURE_MIN) raw = TENURE_MIN;
             if (raw > TENURE_MAX)         raw = TENURE_MAX;
             if (setTenureSlider) setTenureSlider(raw);
-            input.value = currentTenure + ' months';
             updateSummary();
         });
 
