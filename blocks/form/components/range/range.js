@@ -58,282 +58,6 @@ export default async function decorate(fieldDiv, fieldJson) {
  *  3. Loan Tenure slider ↔ months number input sync
  *  4. Live EMI calculation → summary card update
  */
-
-(function () {
-    'use strict';
-
-    /* ══════════════════════════════════════
-       CONFIG — update these to match your product
-    ══════════════════════════════════════ */
-    const CFG = {
-        amount: {
-            min:   50000,
-            max:   1500000,
-            step:  10000,
-            ticks: [50000, 200000, 400000, 600000, 800000, 1000000, 1200000, 1500000],
-            tickLabels: ['50K', '2L', '4L', '6L', '8L', '10L', '12L', '15L'],
-            format: v => '₹' + Number(v).toLocaleString('en-IN'),
-            bubbleFormat: v => {
-                if (v >= 100000) return (v / 100000).toFixed(v % 100000 === 0 ? 0 : 1) + 'L';
-                return (v / 1000).toFixed(0) + 'K';
-            },
-            defaultValue: 1500000,
-        },
-        tenure: {
-            min:   12,
-            max:   84,
-            step:  1,
-            ticks: [12, 24, 36, 48, 60, 72, 84],
-            tickLabels: ['12m', '24m', '36m', '48m', '60m', '72m', '84m'],
-            format: v => v + ' months',
-            bubbleFormat: v => v + 'm',
-            defaultValue: 84,
-        },
-    };
-
-    const RATE_ANNUAL = 10.97;  /* % annual interest rate */
-    const TAXES_FLAT  = 4000;   /* ₹ flat taxes */
-
-    /* ══════════════════════════════════════
-       UTILITIES
-    ══════════════════════════════════════ */
-    function formatINR(v) {
-        return '₹' + Number(v).toLocaleString('en-IN');
-    }
-
-    function calcEMI(principal, annualRate, months) {
-        const r = annualRate / 12 / 100;
-        if (r === 0) return Math.round(principal / months);
-        return Math.round(principal * r * Math.pow(1 + r, months) / (Math.pow(1 + r, months) - 1));
-    }
-
-    /* Map real value → 0..1 fraction */
-    function toFraction(value, min, max) {
-        return Math.max(0, Math.min(1, (value - min) / (max - min)));
-    }
-
-    /* Map 0..1 fraction → real value (snapped to step) */
-    function fromFraction(frac, min, max, step) {
-        const raw = min + frac * (max - min);
-        return Math.round(raw / step) * step;
-    }
-
-    /* ══════════════════════════════════════
-       SLIDER CLASS
-    ══════════════════════════════════════ */
-    class RangeSlider {
-        constructor(wrapperEl, cfg, onChange) {
-            this.wrapper   = wrapperEl;
-            this.cfg       = cfg;
-            this.onChange  = onChange;
-            this.value     = cfg.defaultValue;
-
-            this.input     = wrapperEl.querySelector('input[type="range"]');
-            this.bubble    = wrapperEl.querySelector('.range-bubble');
-            this.minLabel  = wrapperEl.querySelector('.range-min');
-            this.maxLabel  = wrapperEl.querySelector('.range-max');
-
-            this._setupDOM();
-            this._setupRange();
-            this._bindEvents();
-            this.setValue(this.value);
-        }
-
-        _setupDOM() {
-            /* Replace EDS min/max text with our labels */
-            if (this.minLabel) this.minLabel.textContent = this.cfg.tickLabels[0];
-            if (this.maxLabel) this.maxLabel.textContent = this.cfg.tickLabels[this.cfg.tickLabels.length - 1];
-
-            /* Inject fill div */
-            this.fillEl = document.createElement('div');
-            this.fillEl.className = 'rs-track-fill';
-            this.wrapper.appendChild(this.fillEl);
-
-            /* Inject mid-point tick labels */
-            const { ticks, tickLabels, min, max } = this.cfg;
-            ticks.forEach((tick, i) => {
-                if (i === 0 || i === ticks.length - 1) return; /* skip first/last — handled by min/max labels */
-                const pct = toFraction(tick, min, max) * 100;
-                const el = document.createElement('span');
-                el.className = 'rs-tick';
-                el.textContent = tickLabels[i];
-                el.style.left = pct + '%';
-                this.wrapper.appendChild(el);
-            });
-        }
-
-        _setupRange() {
-            /* Override EDS default range attrs */
-            this.input.min   = 0;
-            this.input.max   = 1000; /* high resolution */
-            this.input.step  = 1;
-        }
-
-        _bindEvents() {
-            this.input.addEventListener('input', () => {
-                const frac  = parseInt(this.input.value) / 1000;
-                const val   = fromFraction(frac, this.cfg.min, this.cfg.max, this.cfg.step);
-                this._updateVisuals(val);
-                if (this.onChange) this.onChange(val);
-            });
-        }
-
-        setValue(val) {
-            val = Math.max(this.cfg.min, Math.min(this.cfg.max, val));
-            this.value = val;
-            const frac = toFraction(val, this.cfg.min, this.cfg.max);
-            this.input.value = Math.round(frac * 1000);
-            this._updateVisuals(val);
-        }
-
-        _updateVisuals(val) {
-            this.value = val;
-            const frac   = toFraction(val, this.cfg.min, this.cfg.max);
-            const pct    = frac * 100;
-
-            /* Fill bar */
-            this.fillEl.style.width = pct + '%';
-
-            /* Bubble */
-            if (this.bubble) {
-                /* Offset so bubble stays inside track edges */
-                const thumbHalf = 11; /* half of 22px thumb */
-                const trackW    = this.input.offsetWidth || this.wrapper.offsetWidth;
-                const thumbPos  = (trackW - 2 * thumbHalf) * frac + thumbHalf;
-                this.bubble.style.left = thumbPos + 'px';
-                this.bubble.textContent = this.cfg.bubbleFormat(val);
-            }
-        }
-    }
-
-    /* ══════════════════════════════════════
-       SUMMARY CARD UPDATE
-    ══════════════════════════════════════ */
-    function updateSummary(amount, tenure) {
-        const emi = calcEMI(amount, RATE_ANNUAL, tenure);
-
-        /* Heading */
-        const heading = document.querySelector('.field-offer-summary-heading p');
-        if (heading) {
-            heading.innerHTML =
-                'Avail XPRESS Personal Loan of' +
-                '<span class="lo-amount-large">' + formatINR(amount) + '</span>';
-        }
-
-        const emiInput  = document.querySelector('[name="emi_amount"]');
-        const roiInput  = document.querySelector('[name="rate_of_interest"]');
-        const taxInput  = document.querySelector('[name="taxes"]');
-
-        if (emiInput)  emiInput.value  = formatINR(emi);
-        if (roiInput)  roiInput.value  = RATE_ANNUAL + '%';
-        if (taxInput)  taxInput.value  = formatINR(TAXES_FLAT);
-    }
-
-    /* ══════════════════════════════════════
-       WRAP SUMMARY FIELDS IN GRID CONTAINER
-    ══════════════════════════════════════ */
-    function buildSummaryGrid() {
-        const panel   = document.querySelector('.field-loan-summary-panel');
-        if (!panel) return;
-
-        const emi     = panel.querySelector('.field-emi-amount');
-        const roi     = panel.querySelector('.field-rate-of-interest');
-        const taxes   = panel.querySelector('.field-taxes');
-        const note    = panel.querySelector('.field-principal-offer-note');
-
-        if (!emi || !roi || !taxes) return;
-
-        /* Create grid wrapper */
-        const grid = document.createElement('div');
-        grid.className = 'lo-fields-grid';
-
-        /* Insert before the note strip */
-        panel.insertBefore(grid, note || null);
-        grid.appendChild(emi);
-        grid.appendChild(roi);
-        grid.appendChild(taxes);
-    }
-
-    /* ══════════════════════════════════════
-       INIT
-    ══════════════════════════════════════ */
-    function init() {
-        /* Build summary grid layout */
-        buildSummaryGrid();
-
-        /* Get DOM elements */
-        const amountWrapper = document.querySelector('.field-loan-amount-slider .range-widget-wrapper');
-        const tenureWrapper = document.querySelector('.field-loan-tenure-slider .range-widget-wrapper');
-        const amountInput   = document.querySelector('[name="loan_amount_inr"]');
-        const tenureInput   = document.querySelector('[name="loan_tenure_months"]');
-
-        if (!amountWrapper || !tenureWrapper) {
-            console.warn('range-slider.js: Could not find range widget wrappers.');
-            return;
-        }
-
-        let currentAmount = CFG.amount.defaultValue;
-        let currentTenure = CFG.tenure.defaultValue;
-
-        /* Instantiate sliders */
-        const amountSlider = new RangeSlider(amountWrapper, CFG.amount, (val) => {
-            currentAmount = val;
-            if (amountInput) amountInput.value = CFG.amount.format(val);
-            updateSummary(currentAmount, currentTenure);
-        });
-
-        const tenureSlider = new RangeSlider(tenureWrapper, CFG.tenure, (val) => {
-            currentTenure = val;
-            if (tenureInput) tenureInput.value = CFG.tenure.format(val);
-            updateSummary(currentAmount, currentTenure);
-        });
-
-        /* Number input → slider sync */
-        if (amountInput) {
-            amountInput.addEventListener('change', () => {
-                const raw = parseFloat(amountInput.value.replace(/[^0-9]/g, '')) || CFG.amount.min;
-                currentAmount = Math.max(CFG.amount.min, Math.min(CFG.amount.max, raw));
-                amountInput.value = CFG.amount.format(currentAmount);
-                amountSlider.setValue(currentAmount);
-                updateSummary(currentAmount, currentTenure);
-            });
-        }
-
-        if (tenureInput) {
-            tenureInput.addEventListener('change', () => {
-                const raw = parseInt(tenureInput.value) || CFG.tenure.min;
-                currentTenure = Math.max(CFG.tenure.min, Math.min(CFG.tenure.max, raw));
-                tenureInput.value = CFG.tenure.format(currentTenure);
-                tenureSlider.setValue(currentTenure);
-                updateSummary(currentAmount, currentTenure);
-            });
-        }
-
-        /* Set initial display values */
-        if (amountInput) amountInput.value = CFG.amount.format(currentAmount);
-        if (tenureInput) tenureInput.value = CFG.tenure.format(currentTenure);
-        updateSummary(currentAmount, currentTenure);
-
-        /* Re-render bubble positions after fonts/layout settle */
-        requestAnimationFrame(() => {
-            amountSlider.setValue(currentAmount);
-            tenureSlider.setValue(currentTenure);
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-
-})();
-
-
-
-
-
-
 (function () {
     'use strict';
 
@@ -351,13 +75,44 @@ export default async function decorate(fieldDiv, fieldJson) {
 
     const TAXES_FLAT     = 4000;
 
+    /**
+     * RATE SLAB TABLE
+     * upTo   : offer amount upper bound (inclusive), in INR
+     * rate   : annual interest rate in %
+     * Rows must be in ascending order of upTo.
+     * The last row acts as the catch-all for any amount above it.
+     */
+    const RATE_SLABS = [
+        { upTo:  100000, rate: 16.00 },   // up to ₹1L
+        { upTo:  300000, rate: 14.50 },   // ₹1L – ₹3L
+        { upTo:  500000, rate: 13.50 },   // ₹3L – ₹5L
+        { upTo:  750000, rate: 12.50 },   // ₹5L – ₹7.5L
+        { upTo: 1000000, rate: 11.75 },   // ₹7.5L – ₹10L
+        { upTo: 1250000, rate: 11.25 },   // ₹10L – ₹12.5L
+        { upTo: 1500000, rate: 10.97 },   // ₹12.5L – ₹15L
+    ];
+
     /* ══════════════════════════════════════
-       STATE  (rate is now dynamic)
+       STATE
     ══════════════════════════════════════ */
     let currentAmount = AMOUNT_DEFAULT;
     let currentTenure = TENURE_DEFAULT;
     let amountMax     = AMOUNT_DEFAULT;
-    let rateAnnual    = 10.97;          /* ← live variable; overwritten by API */
+    let rateAnnual    = 10.97;   /* recalculated on every offer update */
+
+    /* ══════════════════════════════════════
+       RATE LOOKUP FROM SLAB TABLE
+       Pass the API offer amount → returns correct annual rate.
+    ══════════════════════════════════════ */
+    function getRateForAmount(amount) {
+        for (let i = 0; i < RATE_SLABS.length; i++) {
+            if (amount <= RATE_SLABS[i].upTo) {
+                return RATE_SLABS[i].rate;
+            }
+        }
+        /* Fallback: return rate of highest slab */
+        return RATE_SLABS[RATE_SLABS.length - 1].rate;
+    }
 
     /* ══════════════════════════════════════
        UTILITIES
@@ -382,28 +137,6 @@ export default async function decorate(fieldDiv, fieldJson) {
             principal * r * Math.pow(1 + r, months) /
             (Math.pow(1 + r, months) - 1)
         );
-    }
-
-    /* ══════════════════════════════════════
-       DYNAMIC TICK GENERATOR
-       Builds ~6 evenly-spaced ticks between MIN and MAX,
-       so checkpoints always make sense for any offer value.
-    ══════════════════════════════════════ */
-    function buildAmountTicks(min, max) {
-        const ticks = [];
-        const range = max - min;
-
-        /* Choose a "nice" step: nearest round number that gives 5-7 ticks */
-        const rawStep = range / 6;
-        const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
-        const niceStep = Math.ceil(rawStep / magnitude) * magnitude;
-
-        for (let v = min + niceStep; v < max; v += niceStep) {
-            const rounded = Math.round(v / niceStep) * niceStep;
-            if (rounded <= min || rounded >= max) continue;
-            ticks.push({ value: rounded, label: amountBubbleLabel(rounded) });
-        }
-        return ticks;
     }
 
     /* ══════════════════════════════════════
@@ -432,32 +165,60 @@ export default async function decorate(fieldDiv, fieldJson) {
     }
 
     /* ══════════════════════════════════════
-       EDS BUBBLE SYNC
+       EDS BUBBLE SYNC  (fixed positioning)
+       Uses getBoundingClientRect width of the TRACK,
+       not the bubble, so left% maps correctly.
     ══════════════════════════════════════ */
     function syncEDSBubble(rangeInput, wrapperEl, displayText) {
-        const step    = parseFloat(rangeInput.step)  || 1;
-        const max     = parseFloat(rangeInput.max)   || 100;
-        const min     = parseFloat(rangeInput.min)   || 0;
-        const value   = parseFloat(rangeInput.value);
-        const current = Math.ceil((value - min) / step);
-        const total   = Math.ceil((max - min) / step);
+        const min   = parseFloat(rangeInput.min)   || 0;
+        const max   = parseFloat(rangeInput.max)   || 100;
+        const step  = parseFloat(rangeInput.step)  || 1;
+        const value = parseFloat(rangeInput.value);
 
-        wrapperEl.style.setProperty('--total-steps',   total);
-        wrapperEl.style.setProperty('--current-steps', current);
+        const totalSteps   = Math.ceil((max - min) / step);
+        const currentSteps = Math.ceil((value - min) / step);
+
+        wrapperEl.style.setProperty('--total-steps',   totalSteps);
+        wrapperEl.style.setProperty('--current-steps', currentSteps);
 
         const bubble = wrapperEl.querySelector('.range-bubble');
         if (bubble) {
-            const bw     = bubble.getBoundingClientRect().width || 31;
-            const pct    = total > 0 ? (current / total) * 100 : 0;
-            const offset = total > 0 ? (current / total) * bw  : 0;
-            bubble.style.left  = `calc(${pct}% - ${offset}px)`;
+            /* Fraction 0→1 along the track */
+            const fraction = max > min ? (value - min) / (max - min) : 0;
+            const bw = bubble.getBoundingClientRect().width || 31;
+            /*
+             * Standard range-thumb formula:
+             *   left = fraction * (trackWidth - thumbWidth) / trackWidth * 100%
+             * Since we only have % here, a good approximation is:
+             *   left = fraction * 100% minus a pixel correction proportional to fraction.
+             */
+            bubble.style.left  = `calc(${fraction * 100}% - ${fraction * bw}px)`;
             bubble.textContent = displayText;
         }
     }
 
     /* ══════════════════════════════════════
+       DYNAMIC TICK GENERATOR
+       Builds ~6 evenly-spaced ticks for any min→max range.
+    ══════════════════════════════════════ */
+    function buildAmountTicks(min, max) {
+        const ticks    = [];
+        const range    = max - min;
+        const rawStep  = range / 6;
+        const mag      = Math.pow(10, Math.floor(Math.log10(rawStep)));
+        const niceStep = Math.ceil(rawStep / mag) * mag;
+
+        for (let v = min + niceStep; v < max; v += niceStep) {
+            const rounded = Math.round(v / niceStep) * niceStep;
+            if (rounded > min && rounded < max) {
+                ticks.push({ value: rounded, label: amountBubbleLabel(rounded) });
+            }
+        }
+        return ticks;
+    }
+
+    /* ══════════════════════════════════════
        REBUILD AMOUNT TICKS IN DOM
-       Called on init AND whenever amountMax changes.
     ══════════════════════════════════════ */
     function rebuildAmountTicks(wrapper) {
         wrapper.querySelectorAll('.rs-tick').forEach(el => el.remove());
@@ -473,9 +234,12 @@ export default async function decorate(fieldDiv, fieldJson) {
 
     /* ══════════════════════════════════════
        UPDATE SUMMARY CARD
-       Uses live rateAnnual — updates whenever amount/tenure/rate change.
+       Rate is always derived fresh from currentAmount via slab table.
     ══════════════════════════════════════ */
     function updateSummary() {
+        /* Derive rate from offer amount (amountMax = offer amount from API) */
+        rateAnnual = getRateForAmount(amountMax);
+
         const emi = calcEMI(currentAmount, rateAnnual, currentTenure);
 
         const heading = document.querySelector('.field-offer-summary-heading p');
@@ -488,7 +252,6 @@ export default async function decorate(fieldDiv, fieldJson) {
         const emiInput = document.querySelector('input[name="emi_amount"]');
         if (emiInput) emiInput.value = formatINR(emi);
 
-        /* Rate of interest — always reflects what the API sent */
         const roiInput = document.querySelector('input[name="rate_of_interest"]');
         if (roiInput) roiInput.value = rateAnnual + '%';
 
@@ -543,7 +306,7 @@ export default async function decorate(fieldDiv, fieldJson) {
     }
 
     /* ══════════════════════════════════════
-       SETUP TENURE SLIDER  (unchanged logic)
+       SETUP TENURE SLIDER
     ══════════════════════════════════════ */
     function setupTenureSlider() {
         const fieldDiv   = document.querySelector('.field-loan-tenure-slider');
@@ -564,7 +327,6 @@ export default async function decorate(fieldDiv, fieldJson) {
         if (minLabel) minLabel.textContent = '12m';
         if (maxLabel) maxLabel.textContent = '84m';
 
-        /* Static tenure ticks */
         wrapper.querySelectorAll('.rs-tick').forEach(el => el.remove());
         [24, 36, 48, 60, 72].forEach(v => {
             const pct  = ((v - TENURE_MIN) / (TENURE_MAX - TENURE_MIN)) * 100;
@@ -669,7 +431,6 @@ export default async function decorate(fieldDiv, fieldJson) {
 
     /* ══════════════════════════════════════
        WATCH BANNER FIELD
-       Handles API-driven updates after init.
     ══════════════════════════════════════ */
     function watchBannerField(setAmountSlider) {
         const bannerInput = document.querySelector('input[name="loan_offer_banner"]');
@@ -680,6 +441,9 @@ export default async function decorate(fieldDiv, fieldJson) {
             if (newMax === amountMax) return;
             amountMax = newMax;
 
+            /* Recalculate rate for new offer amount */
+            rateAnnual = getRateForAmount(amountMax);
+
             const rangeInput = document.querySelector('.field-loan-amount-slider input[type="range"]');
             const wrapper    = document.querySelector('.field-loan-amount-slider .range-widget-wrapper.decorated');
             if (!rangeInput || !wrapper) return;
@@ -689,7 +453,7 @@ export default async function decorate(fieldDiv, fieldJson) {
             const maxLabel = wrapper.querySelector('.range-max');
             if (maxLabel) maxLabel.textContent = amountBubbleLabel(amountMax);
 
-            rebuildAmountTicks(wrapper);   /* ← uses dynamic tick generator */
+            rebuildAmountTicks(wrapper);
 
             if (currentAmount > amountMax) {
                 currentAmount = amountMax;
@@ -716,6 +480,7 @@ export default async function decorate(fieldDiv, fieldJson) {
         if (!amountLoaded || !tenureLoaded) { setTimeout(init, 100); return; }
 
         amountMax     = getOfferAmountFromBanner();
+        rateAnnual    = getRateForAmount(amountMax);   /* ← rate set at init too */
         currentAmount = Math.min(amountMax, AMOUNT_DEFAULT);
         currentTenure = TENURE_DEFAULT;
 
@@ -736,30 +501,27 @@ export default async function decorate(fieldDiv, fieldJson) {
 
     /* ══════════════════════════════════════
        PUBLIC API
-       Your previous API's success handler should call:
-         window.loanOffer.setOfferAmount(140000, 13.5)
-                                         ↑ amount  ↑ rate from API
+       Call from your previous API success handler:
+         window.loanOffer.setOfferAmount(140000)
+       Rate is auto-calculated internally from the slab table.
     ══════════════════════════════════════ */
     window.loanOffer = {
-        setOfferAmount: function (amount, rate) {
+        setOfferAmount: function (amount) {
+            amountMax  = typeof amount === 'number' ? amount : stripToNumber(amount);
 
-            /* 1. Update live rate if API provides it */
-            if (typeof rate === 'number' && rate > 0) {
-                rateAnnual = rate;
-            }
+            /* Derive rate from slab table — no API needed */
+            rateAnnual = getRateForAmount(amountMax);
 
-            /* 2. Update banner input */
+            currentAmount = Math.min(currentAmount, amountMax);
+
+            /* Update banner input */
             const bannerInput = document.querySelector('input[name="loan_offer_banner"]');
             if (bannerInput) {
-                bannerInput.value = amount;
+                bannerInput.value = amountMax;
                 bannerInput.dispatchEvent(new Event('change'));
             }
 
-            /* 3. Update amountMax + clamp currentAmount */
-            amountMax     = typeof amount === 'number' ? amount : stripToNumber(amount);
-            currentAmount = Math.min(currentAmount, amountMax);
-
-            /* 4. Update slider */
+            /* Update slider */
             const rangeInput = document.querySelector('.field-loan-amount-slider input[type="range"]');
             const wrapper    = document.querySelector('.field-loan-amount-slider .range-widget-wrapper.decorated');
             if (rangeInput && wrapper) {
@@ -769,15 +531,15 @@ export default async function decorate(fieldDiv, fieldJson) {
                 const maxLabel = wrapper.querySelector('.range-max');
                 if (maxLabel) maxLabel.textContent = amountBubbleLabel(amountMax);
 
-                rebuildAmountTicks(wrapper);   /* ← dynamic ticks for new MAX */
+                rebuildAmountTicks(wrapper);
                 syncEDSBubble(rangeInput, wrapper, amountBubbleLabel(currentAmount));
             }
 
-            /* 5. Update amount input display */
+            /* Update amount input display */
             const amountInr = document.querySelector('input[name="loan_amount_inr"]');
             if (amountInr) amountInr.value = formatINR(currentAmount);
 
-            /* 6. Recalculate EMI with new rate + amount */
+            /* Recalculate EMI with new rate */
             updateSummary();
         }
     };
