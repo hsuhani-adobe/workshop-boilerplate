@@ -7892,3 +7892,52 @@ fieldset.panel-wrapper.field-work-email > legend.field-label::before {
 fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
   background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 17h16M2 8.5h16' stroke='%234F6FDF' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M10 3L2 8.5h16L10 3z' stroke='%234F6FDF' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M4.5 8.5V17M8.5 8.5V17M11.5 8.5V17M15.5 8.5V17' stroke='%234F6FDF' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") !important;
 }
+
+
+
+
+
+   /*9. VIEW LOAN ELIGIBILITY BUTTON
+   ============================================================= */
+.field-view-loan-eligibility2 {
+  grid-column: 1 / 5 !important;
+  margin-top: 20px !important;
+}
+
+.field-view-loan-eligibility2 > button.button[type="submit"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  height: 52px !important;
+  padding: 0 24px !important;
+  background: #6b84d9 !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background 0.2s, box-shadow 0.2s !important;
+  letter-spacing: 0.01em !important;
+}
+
+.field-view-loan-eligibility2 > button.button[type="submit"]::after {
+  content: "›" !important;
+  font-size: 22px !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+  margin-left: 4px !important;
+}
+
+.field-view-loan-eligibility2 > button.button[type="submit"]:hover {
+  background: #1c3fca !important;
+  box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
+}
+
+.field-view-loan-eligibility2 > button.button[type="submit"]:active {
+  background: #1633a8 !important;
+}
