@@ -385,35 +385,44 @@ function callFinalSubmission(loanAmount, tenure) {
     });
 }
 
-
 /**
  * Tier2: Initiate Customer Identification
- * Uses mobile + (PAN OR DOB) and sets OTP in UI
+ * Uses mobile + (PAN OR DOB)
+ * DOB is read directly from calendar field
  * @param {string} mobileNo
- * @param {string} dateOfBirth
- * @param {string} panNumber
+ * @param {string} pan_no
  */
-function callInitiateCustomerIdentification(mobileNo, dateOfBirth, panNumber) {
+function callInitiateCustomerIdentification(mobileNo, pan_no) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/InitiateCustomerIdentification";
 
-  console.log("Inputs:", { mobileNo, dateOfBirth, panNumber });
+  // 🎯 Get DOB directly from calendar field (AEM safe)
+  const dobField = document.querySelector('[name="date_of_birth"]');
+  const date_of_birth = dobField ? dobField.value : "";
 
-  // Basic check (authoring already handles main validation)
+  console.log("Inputs:", { mobileNo, pan_no, date_of_birth });
+
+  // ✅ Basic validation
   if (!mobileNo) {
     alert("Mobile number is required");
     return;
   }
 
-  // ✅ Build request → ONLY ONE (PAN or DOB)
+  // ✅ Build request
   const requestString = {
     mobileNo: mobileNo
   };
 
-  if (panNumber && panNumber.trim() !== "") {
-    requestString.panNumber = panNumber.trim();
-  } else if (dateOfBirth && dateOfBirth.trim() !== "") {
-    requestString.dateOfBirth = dateOfBirth.trim();
+  // Only one will be present
+  if (pan_no && pan_no.trim() !== "") {
+    requestString.panNumber = pan_no.trim();
+  } 
+  else if (date_of_birth && date_of_birth.trim() !== "") {
+    requestString.dateOfBirth = date_of_birth.trim();
+  } 
+  else {
+    alert("Enter PAN or Date of Birth");
+    return;
   }
 
   // 🚀 API Call
@@ -437,18 +446,18 @@ function callInitiateCustomerIdentification(mobileNo, dateOfBirth, panNumber) {
 
       console.log("API Response:", data);
 
-      // ✅ Success
+      // ✅ Success case
       if (data?.status?.responseCode === "0") {
 
         const otp = data?.responseString?.otp;
         const partnerJourneyID = data?.contextParam?.partnerJourneyID;
 
-        // 🎯 Set OTP field (name-based targeting only)
+        // 🎯 Set OTP field
         const otpField = document.querySelector('[name="otp"]');
         if (otpField) {
           otpField.value = otp ? String(otp) : "";
 
-          // 🔥 trigger AEM reactivity
+          // 🔥 Trigger AEM reactivity
           otpField.dispatchEvent(new Event("input", { bubbles: true }));
           otpField.dispatchEvent(new Event("change", { bubbles: true }));
         }
