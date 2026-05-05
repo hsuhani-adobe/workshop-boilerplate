@@ -310,28 +310,30 @@ function resendOtp() {
   return `${attemptsLeft}/${totalAttempts} attempts `;
 }
 
-
-
-function callFinalSubmission(loanAmount, tenure, globals) {
+/**
+ * Calls Final Submission API and updates form fields (AEM EDS compatible)
+ * @param {number} loanAmount
+ * @param {number} tenure
+ */
+function callFinalSubmission(loanAmount, tenure) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
 
-  // ✅ store reference BEFORE async
-  const formFunctions = globals?.functions;
+  const form = this; // ✅ AEM form context
 
-  if (!formFunctions) {
-    console.error("globals.functions is undefined ❌");
-    return;
-  }
+  console.log("Form Object:", form);
 
-  // Validation
+  // ✅ Validation
   if (!loanAmount || !tenure) {
-    formFunctions.markFieldAsInvalid(
+    form.markFieldAsInvalid(
       "loanAmount",
       "Please enter loan amount and tenure"
     );
     return;
   }
+
+  // Optional: Clear previous errors
+  form.setProperty("loanAmount", { errorMessage: "" });
 
   fetch(API_URL, {
     method: "POST",
@@ -353,32 +355,46 @@ function callFinalSubmission(loanAmount, tenure, globals) {
     })
     .then((data) => {
 
+      console.log("API Response:", data);
+
+      // ✅ Success case
       if (data?.status?.responseCode === "0") {
 
         const acknowledgementId = data?.responseString?.acknowledgementId;
 
-        // ✅ use stored reference
-        formFunctions.setProperty("loan_application_number", {
+        // ✅ Set Loan Application Number
+        form.setProperty("loan_application_number", {
           value: String(acknowledgementId || ""),
         });
 
-        console.log("Success:", acknowledgementId);
+        console.log("Loan Application Number Set:", acknowledgementId);
+
+        // 🔥 Optional UX improvements
+        form.setProperty("loan_application_number", {
+          readOnly: true
+        });
+
+        form.setProperty("submit_button", {
+          enabled: false
+        });
 
       } else {
-        formFunctions.markFieldAsInvalid(
+        // ❌ API error
+        form.markFieldAsInvalid(
           "loanAmount",
           data?.status?.errorDesc || "Submission failed"
         );
       }
     })
     .catch((error) => {
+
       console.error("Error:", error);
 
-      formFunctions.markFieldAsInvalid(
+      form.markFieldAsInvalid(
         "loanAmount",
-        "Something went wrong"
+        "Something went wrong. Please try again."
       );
     });
 
-  console.log("working api");
+  console.log("Final Submission API triggered 🚀");
 }
