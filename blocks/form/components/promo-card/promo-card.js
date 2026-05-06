@@ -1,8 +1,8 @@
 const FALLBACK_IMAGE = 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_1.jpeg';
 
 const IMAGE_BY_ID = {
-  'textinput-4a65bf8dd8': 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_1.jpeg',
-  'textinput-7423f9feac': 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg',
+  'textinput-9fda00af06': 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_1.jpeg',
+  'textinput-c11a1f0f56': 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg',
 };
 
 export default async function decorate(fieldDiv, fieldJson) {
