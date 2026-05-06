@@ -8006,13 +8006,8 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
 }
 
 
-
-/* ================= Submit Button ================= */
-.field-otp-submit2 {
-  margin-top: 28px !important;
-}
-
-.field-otp-submit2 > button.button[type="button"] {
+/* ================= Submit OTP2 Button ================= */
+div.field-otp-submit2 > button#button-314e764f45 {
   display: inline-flex !important;
   flex-direction: row !important;
   justify-content: center !important;
@@ -8024,7 +8019,6 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
   background: #1c3fca !important;
   color: #ffffff !important;
   font-family: 'Inter', inherit !important;
-  font-style: normal !important;
   font-size: 16px !important;
   font-weight: 600 !important;
   line-height: 24px !important;
@@ -8035,11 +8029,14 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
   transition: background 0.2s, box-shadow 0.2s !important;
 }
 
-.field-otp-submit2 > button.button[type="button"]:hover {
+div.field-otp-submit2 > button#button-314e764f45:hover {
   background: #6b84d9 !important;
   box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
 }
 
+div.field-otp-submit2 > button#button-314e764f45:active {
+  background: #1633a8 !important;
+}
 .field-otp-submit2 > button.button[type="button"]:active {
   background: #1633a8 !important;
 }
