@@ -661,7 +661,7 @@ function callPANEnquiry(mobileNo, pan_no) {
  */
 function callGetBureauOffer(mobileNo, monthlyIncome, bankName, verificationMethod) {
 
-  const API_URL = "https://loan-backend-mock.onrender.com/GetBureauOffer";
+  const API_URL = "https://loan-backend-mock.onrender.com/tier2/GetBureauOffer";
 
   console.log("Inputs:", { mobileNo, monthlyIncome, bankName, verificationMethod });
 
