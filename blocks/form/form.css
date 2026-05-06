@@ -8267,3 +8267,24 @@ fieldset.field-email-otp-verification .button-wrapper .button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
+
+
+
+
+/* Hide invalid OTP message initially */
+.field-inavalid-otp {
+  display: none !important;
+}
+
+/* Style error text */
+.field-inavalid-otp p {
+  color: red !important;
+  font-size: 12px !important;
+  margin-top: 4px !important;
+}
+
+/* Disabled button style */
+button[name="submit_otpp"]:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}

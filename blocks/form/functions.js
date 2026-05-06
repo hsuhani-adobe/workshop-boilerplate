@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,
+  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,callValidateEmailOTP,
 };
 
 
@@ -914,5 +914,107 @@ function callGenerateEmailOTP(email) {
     .catch((err) => {
       console.error("❌ Error:", err);
       alert("Something went wrong");
+    });
+}
+
+
+
+
+/**
+ * Validate Email OTP
+ * - Shows error text if invalid
+ * - Disables submit button if invalid
+ * - Enables button if valid
+ * @param {string} email
+ * @param {string} otp
+ */
+function callValidateEmailOTP(email, otp) {
+
+  const API_URL = "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP";
+
+  console.log("Inputs:", { email, otp });
+
+  // 🎯 Elements
+  const errorWrapper = document.querySelector('[data-id="text-d79db67206"]');
+  const submitBtn = document.querySelector('button[name="submit_otpp"]');
+
+  // 🔒 Ensure initial state
+  if (errorWrapper) errorWrapper.style.display = "none";
+
+  // ❗ Basic validation
+  if (!email || !otp) {
+    alert("Enter email and OTP");
+    return;
+  }
+
+  // 🚀 API Call
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      contextParam: {},
+      requestString: {
+        email: email,
+        otp: otp
+      }
+    })
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network error");
+      }
+      return response.json();
+    })
+    .then((data) => {
+
+      console.log("API Response:", data);
+
+      // ✅ SUCCESS (OTP correct)
+      if (data?.status?.responseCode === "0") {
+
+        // Hide error message
+        if (errorWrapper) {
+          errorWrapper.style.display = "none";
+        }
+
+        // Enable submit button
+        if (submitBtn) {
+          submitBtn.disabled = false;
+        }
+
+        console.log("✅ OTP verified successfully");
+
+      } 
+      
+      // ❌ FAILURE (OTP incorrect)
+      else {
+
+        // Show error message
+        if (errorWrapper) {
+          errorWrapper.style.display = "block";
+        }
+
+        // Disable submit button
+        if (submitBtn) {
+          submitBtn.disabled = true;
+        }
+
+        console.log("❌ Invalid OTP");
+      }
+    })
+    .catch((error) => {
+
+      console.error("❌ Error:", error);
+
+      // Show error + disable button
+      if (errorWrapper) {
+        errorWrapper.style.display = "block";
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+      }
     });
 }
