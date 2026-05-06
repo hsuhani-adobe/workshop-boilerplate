@@ -8289,9 +8289,9 @@ fieldset.field-email-otp-verification .button-wrapper .button:disabled {
 
 /* Style error text */
 .field-inavalid-otp p {
-  color: red;
-  font-size: 12px;
-  margin-top: 4px;
+  color: red !important ;
+  font-size: 12px !important;
+  margin-top: 4px !important;
 }
 
 /* Disabled button style */

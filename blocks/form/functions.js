@@ -494,9 +494,8 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
  * - address_aadhar
  * @param {string} mobileNo
  * @param {string} otp
-
- */
-function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
+*/
+ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/VerifyOTPAndGetDemogDetails";
 
@@ -504,15 +503,28 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
   const otpWrapper = document.querySelector('.field-otp-status');
   const otpField   = document.querySelector('[name="otp_status"]');
+  const submitBtn  = document.querySelector('button[name="otp_submit2"]');
+  const otpInput   = document.querySelector('[data-id="textinput-d8e61b9fd5"] input');
 
-  // Always hide on fresh call via class
+  // ── Re-enable submit when user edits OTP (registered only once) ──────────
+  if (otpInput && !otpInput.dataset.listenerAttached) {
+    otpInput.addEventListener("input", () => {
+      if (submitBtn) submitBtn.disabled = false;
+      if (otpWrapper) otpWrapper.classList.remove("visible");
+    });
+    otpInput.dataset.listenerAttached = "true";
+  }
+
+  // ── Always hide error on fresh call ─────────────────────────────────────
   if (otpWrapper) otpWrapper.classList.remove('visible');
 
+  // ── Guard ────────────────────────────────────────────────────────────────
   if (!mobileNo || !otp) {
     alert("Please enter mobile number and OTP");
     return;
   }
 
+  // ── Helper ───────────────────────────────────────────────────────────────
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
     if (!el) return;
@@ -522,6 +534,7 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
     el.dispatchEvent(new Event("blur",   { bubbles: true }));
   }
 
+  // ── API Call ─────────────────────────────────────────────────────────────
   fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -551,8 +564,9 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
           return;
         }
 
-        // Hide OTP error on success
+        // Hide error + keep submit enabled
         if (otpWrapper) otpWrapper.classList.remove('visible');
+        if (submitBtn) submitBtn.disabled = false;
 
         setField("fullname_adhar", customer.fullName);
         setField("address_aadhar", customer.address);
@@ -561,21 +575,25 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
       } else {
 
-        // ❌ OTP INCORRECT — show via class so !important CSS works
+        // ❌ Invalid OTP — show error + disable submit
         if (otpWrapper) otpWrapper.classList.add('visible');
+        if (submitBtn) submitBtn.disabled = true;
 
         if (otpField) {
           otpField.value = data?.status?.errorDesc || "Invalid OTP";
           otpField.dispatchEvent(new Event("input",  { bubbles: true }));
           otpField.dispatchEvent(new Event("change", { bubbles: true }));
         }
+
+        console.log("❌ Invalid OTP");
       }
     })
     .catch((error) => {
       console.error("❌ Error:", error);
 
-      // Show error on network failure too
+      // Network error — show error + disable submit
       if (otpWrapper) otpWrapper.classList.add('visible');
+      if (submitBtn) submitBtn.disabled = true;
 
       if (otpField) {
         otpField.value = "Something went wrong";
@@ -584,7 +602,6 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
       }
     });
 }
-
 
 /**
  * PAN Verification Function
