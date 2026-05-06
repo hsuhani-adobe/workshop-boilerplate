@@ -501,13 +501,18 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
   console.log("Inputs:", { mobileNo, otp });
 
-  // ✅ Basic validation
+  // 🎯 OTP status wrapper
+  const otpWrapper = document.querySelector('.field-otp-status');
+  const otpField = document.querySelector('[name="otp_status"]');
+
+  // Hide initially
+  if (otpWrapper) otpWrapper.style.display = "none";
+
   if (!mobileNo || !otp) {
     alert("Please enter mobile number and OTP");
     return;
   }
 
-  // 🚀 API Call
   fetch(API_URL, {
     method: "POST",
     headers: {
@@ -531,7 +536,6 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
       console.log("API Response:", data);
 
-      // ✅ Success case
       if (data?.status?.responseCode === "0") {
 
         const customer = data?.responseString?.OfferDemogDetails?.[0];
@@ -541,36 +545,50 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
           return;
         }
 
-        // 🎯 Fill Full Name (Aadhar)
+        // ✅ Hide OTP error if success
+        if (otpWrapper) otpWrapper.style.display = "none";
+
+        // 🎯 Fill Name
         const nameField = document.querySelector('[name="fullname_adhar"]');
         if (nameField) {
           nameField.value = customer.fullName || "";
-
           nameField.dispatchEvent(new Event("input", { bubbles: true }));
           nameField.dispatchEvent(new Event("change", { bubbles: true }));
         }
 
-        // 🎯 Fill Address (Aadhar)
+        // 🎯 Fill Address
         const addressField = document.querySelector('[name="address_aadhar"]');
         if (addressField) {
           addressField.value = customer.address || "";
-
           addressField.dispatchEvent(new Event("input", { bubbles: true }));
           addressField.dispatchEvent(new Event("change", { bubbles: true }));
         }
 
-        console.log("✅ Customer details filled successfully");
+        console.log("✅ Customer details filled");
 
       } else {
-        alert(data?.status?.errorDesc || "OTP verification failed");
+
+        // ❌ OTP incorrect → show message in field
+        if (otpWrapper) otpWrapper.style.display = "block";
+
+        if (otpField) {
+          otpField.value = data?.status?.errorDesc || "Invalid OTP";
+
+          otpField.dispatchEvent(new Event("input", { bubbles: true }));
+          otpField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
       }
     })
     .catch((error) => {
       console.error("❌ Error:", error);
-      alert("Something went wrong. Please try again.");
+
+      if (otpWrapper) otpWrapper.style.display = "block";
+
+      if (otpField) {
+        otpField.value = "Something went wrong";
+      }
     });
 }
-
 
 
 /**

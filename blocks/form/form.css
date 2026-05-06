@@ -7929,3 +7929,16 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
   font-weight: 600;
   margin: 4px 0 0;
 }
+
+
+
+/* Hide OTP status field initially */
+.field-otp-status {
+  display: none;
+}
+
+/* Make input text red when shown */
+.field-otp-status input {
+  color: red;
+  font-size: 12px;
+}
