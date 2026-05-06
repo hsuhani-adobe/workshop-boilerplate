@@ -934,87 +934,57 @@ function callValidateEmailOTP(email, otp) {
 
   console.log("Inputs:", { email, otp });
 
-  // 🎯 Elements
   const errorWrapper = document.querySelector('[data-id="text-d79db67206"]');
   const submitBtn = document.querySelector('button[name="submit_otpp"]');
 
-  // 🔒 Ensure initial state
-  if (errorWrapper) errorWrapper.style.display = "none";
+  // ── Helpers ──────────────────────────────────────────────────────────────
+  function showError() {
+    if (errorWrapper) errorWrapper.classList.add("visible");
+    if (submitBtn) submitBtn.disabled = true;
+  }
 
-  // ❗ Basic validation
+  function hideError() {
+    if (errorWrapper) errorWrapper.classList.remove("visible");
+  }
+
+  // ── Initial state ────────────────────────────────────────────────────────
+  hideError();
+
+  // ── Guard ────────────────────────────────────────────────────────────────
   if (!email || !otp) {
     alert("Enter email and OTP");
     return;
   }
 
-  // 🚀 API Call
+  // ── API Call ─────────────────────────────────────────────────────────────
   fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       contextParam: {},
-      requestString: {
-        email: email,
-        otp: otp
-      }
+      requestString: { email, otp }
     })
   })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network error");
-      }
+      if (!response.ok) throw new Error("Network error");
       return response.json();
     })
     .then((data) => {
-
       console.log("API Response:", data);
 
-      // ✅ SUCCESS (OTP correct)
       if (data?.status?.responseCode === "0") {
-
-        // Hide error message
-        if (errorWrapper) {
-          errorWrapper.style.display = "none";
-        }
-
-        // Enable submit button
-        if (submitBtn) {
-          submitBtn.disabled = false;
-        }
-
+        // ✅ Valid OTP
+        hideError();
+        if (submitBtn) submitBtn.disabled = false;
         console.log("✅ OTP verified successfully");
-
-      } 
-      
-      // ❌ FAILURE (OTP incorrect)
-      else {
-
-        // Show error message
-        if (errorWrapper) {
-          errorWrapper.style.display = "block";
-        }
-
-        // Disable submit button
-        if (submitBtn) {
-          submitBtn.disabled = true;
-        }
-
+      } else {
+        // ❌ Invalid OTP
+        showError();
         console.log("❌ Invalid OTP");
       }
     })
     .catch((error) => {
-
       console.error("❌ Error:", error);
-
-      // Show error + disable button
-      if (errorWrapper) {
-        errorWrapper.style.display = "block";
-      }
-
-      if (submitBtn) {
-        submitBtn.disabled = true;
-      }
+      showError();
     });
 }
