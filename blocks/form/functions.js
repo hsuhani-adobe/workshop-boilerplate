@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callFinalSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,
+  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,
 };
 
 
@@ -318,7 +318,7 @@ function resendOtp() {
  * @param {number|string} loanAmount
  * @param {number|string} tenure
  */
-function callFinalSubmission(loanAmount, tenure) {
+function callSubmission(loanAmount, tenure) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
 
