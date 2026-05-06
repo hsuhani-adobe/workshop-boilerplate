@@ -650,35 +650,33 @@ function callPANEnquiry(mobileNo, pan_no) {
 }
 
 
-
 /**
  * Get Bureau Offer + Populate All Fields (AEM Safe)
- * @param {string} mobileNo
- * @param {string|number} monthlyIncome
- * @param {string} verificationMethod
+ * Uses data-id for bank selection
  */
 function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/GetBureauOffer";
 
- 
+  // 🎯 Get selected bank using data-id
+  const selectedRadio = document.querySelector('[data-id^="bank-options"] input[type="radio"]:checked');
+  const bankName = selectedRadio ? selectedRadio.value.trim() : "";
 
   console.log("Inputs:", { mobileNo, monthlyIncome, bankName, verificationMethod });
 
-  // ✅ Basic validation
-  if (!mobileNo || !monthlyIncome || !verificationMethod) {
+  // ✅ Validation
+  if (!mobileNo || !monthlyIncome || !bankName || !verificationMethod) {
     alert("All fields are required");
     return;
   }
 
-  // 🔧 Helper: set value + trigger AEM reactivity
+  // 🔧 Helper (AEM reactive)
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
     if (!el) return;
 
     el.value = value ?? "";
 
-    // Trigger AEM listeners
     el.dispatchEvent(new Event("input", { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
     el.dispatchEvent(new Event("blur", { bubbles: true }));
@@ -723,13 +721,13 @@ function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
         // 📌 Other Details
         setField("inquiry_source", r.enquirySource);
 
-        // Convert schedule array → readable string
+        // Charges → string
         const charges = (r.scheduleOfCharges || [])
           .map(c => `${c.chargeType}: ${c.amount}`)
           .join(" | ");
         setField("schedule_of_charges", charges);
 
-        // Static / derived
+        // Static
         setField("type_of_loan", "Personal Loan");
 
         // 🏦 Salary Account Details
