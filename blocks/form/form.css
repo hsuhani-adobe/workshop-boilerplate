@@ -8302,7 +8302,6 @@ button[name="submit_otpp"]:disabled {
 
 
 
-
 /* ================= Back Buttons ================= */
 
 div.field-back > button#button-896d8a5c12,
@@ -8316,7 +8315,9 @@ div.field-back-review > button#button-1383f22471 {
   padding: 14px 20px !important;
   gap: 4px !important;
   height: 52px !important;
-  width: 100% !important;
+  width: auto !important;        /* ✅ Auto width */
+  min-width: 120px !important;   /* ✅ Minimum size */
+  max-width: 160px !important;   /* ✅ Prevent stretching */
   border-radius: 13px !important;
   font-family: 'Inter', sans-serif !important;
   font-weight: 600 !important;
@@ -8324,7 +8325,7 @@ div.field-back-review > button#button-1383f22471 {
   line-height: 24px !important;
   cursor: pointer !important;
   transition: background 0.15s ease, opacity 0.15s ease !important;
-  border: none !important;        /* ✅ No border */
+  border: none !important;
   box-sizing: border-box !important;
   background: transparent !important;
   color: #1C3FCA !important;
