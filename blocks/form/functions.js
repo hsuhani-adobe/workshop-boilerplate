@@ -494,6 +494,7 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
  * - address_aadhar
  * @param {string} mobileNo
  * @param {string} otp
+
  */
 function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
@@ -501,18 +502,32 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
   console.log("Inputs:", { mobileNo, otp });
 
-  // 🎯 OTP status wrapper
+  // 🎯 OTP status elements
   const otpWrapper = document.querySelector('.field-otp-status');
   const otpField = document.querySelector('[name="otp_status"]');
 
-  // Hide initially
+  // 🔄 Always hide initially
   if (otpWrapper) otpWrapper.style.display = "none";
 
+  // ❗ Basic validation
   if (!mobileNo || !otp) {
     alert("Please enter mobile number and OTP");
     return;
   }
 
+  // 🔧 Helper for AEM-safe value setting
+  function setField(name, value) {
+    const el = document.querySelector(`[name="${name}"]`);
+    if (!el) return;
+
+    el.value = value || "";
+
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+    el.dispatchEvent(new Event("blur", { bubbles: true }));
+  }
+
+  // 🚀 API Call
   fetch(API_URL, {
     method: "POST",
     headers: {
@@ -536,6 +551,7 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
       console.log("API Response:", data);
 
+      // ✅ SUCCESS
       if (data?.status?.responseCode === "0") {
 
         const customer = data?.responseString?.OfferDemogDetails?.[0];
@@ -545,30 +561,20 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
           return;
         }
 
-        // ✅ Hide OTP error if success
+        // Hide OTP error if success
         if (otpWrapper) otpWrapper.style.display = "none";
 
-        // 🎯 Fill Name
-        const nameField = document.querySelector('[name="fullname_adhar"]');
-        if (nameField) {
-          nameField.value = customer.fullName || "";
-          nameField.dispatchEvent(new Event("input", { bubbles: true }));
-          nameField.dispatchEvent(new Event("change", { bubbles: true }));
-        }
+        // 🎯 Fill fields
+        setField("fullname_adhar", customer.fullName);
+        setField("address_aadhar", customer.address);
 
-        // 🎯 Fill Address
-        const addressField = document.querySelector('[name="address_aadhar"]');
-        if (addressField) {
-          addressField.value = customer.address || "";
-          addressField.dispatchEvent(new Event("input", { bubbles: true }));
-          addressField.dispatchEvent(new Event("change", { bubbles: true }));
-        }
+        console.log("✅ Customer details filled successfully");
 
-        console.log("✅ Customer details filled");
+      } 
+      
+      // ❌ OTP INCORRECT
+      else {
 
-      } else {
-
-        // ❌ OTP incorrect → show message in field
         if (otpWrapper) otpWrapper.style.display = "block";
 
         if (otpField) {
@@ -586,6 +592,9 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
       if (otpField) {
         otpField.value = "Something went wrong";
+
+        otpField.dispatchEvent(new Event("input", { bubbles: true }));
+        otpField.dispatchEvent(new Event("change", { bubbles: true }));
       }
     });
 }
