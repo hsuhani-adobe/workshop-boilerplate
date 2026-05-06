@@ -648,3 +648,103 @@ function callPANEnquiry(mobileNo, pan_no) {
       if (successWrapper) successWrapper.style.display = "none";
     });
 }
+
+
+
+
+/**
+ * Calls GetBureauOffer API and fills offer details
+ * @param {string} mobileNo
+ * @param {string} monthlyIncome
+ * @param {string} bankName
+ * @param {string} verificationMethod
+ */
+function callGetBureauOffer(mobileNo, monthlyIncome, bankName, verificationMethod) {
+
+  const API_URL = "https://loan-backend-mock.onrender.com/GetBureauOffer";
+
+  console.log("Inputs:", { mobileNo, monthlyIncome, bankName, verificationMethod });
+
+  // ✅ Basic validation
+  if (!mobileNo || !monthlyIncome || !bankName || !verificationMethod) {
+    alert("All fields are required");
+    return;
+  }
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      contextParam: {},
+      requestString: {
+        mobileNo: mobileNo,
+        monthlyIncome: monthlyIncome,
+        bankName: bankName,
+        verificationMethod: verificationMethod
+      }
+    }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Network error");
+      return res.json();
+    })
+    .then((data) => {
+
+      console.log("API Response:", data);
+
+      if (data?.status?.responseCode === "0") {
+
+        const response = data?.responseString;
+
+        // 🎯 Extract values
+        const offerAmount = response?.offerAmount;
+        const emi = response?.emi;
+        const tenure = response?.tenure;
+        const interestRate = response?.interestRate;
+        const processingFees = response?.processingFees;
+
+        // 🎯 Set fields (name-based targeting)
+
+        const offerField = document.querySelector('[name="offer_amount"]');
+        if (offerField) {
+          offerField.value = offerAmount || "";
+          offerField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        const emiField = document.querySelector('[name="emi"]');
+        if (emiField) {
+          emiField.value = emi || "";
+          emiField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        const tenureField = document.querySelector('[name="tenure"]');
+        if (tenureField) {
+          tenureField.value = tenure || "";
+          tenureField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        const rateField = document.querySelector('[name="interest_rate"]');
+        if (rateField) {
+          rateField.value = interestRate ? interestRate + "%" : "";
+          rateField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        const feeField = document.querySelector('[name="processing_fees"]');
+        if (feeField) {
+          feeField.value = processingFees || "";
+          feeField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        console.log("✅ Bureau Offer Loaded");
+
+      } else {
+        alert(data?.status?.errorDesc || "Failed to fetch offer");
+      }
+    })
+    .catch((err) => {
+      console.error("❌ Error:", err);
+      alert("Something went wrong");
+    });
+}
