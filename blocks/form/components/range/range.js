@@ -135,20 +135,12 @@ export default async function decorate(fieldDiv, fieldJson) {
        with slider bubble at all times.*/
 function writeAmountBox() {
     const el = document.querySelector('input[name="loan_amount_inr"]');
-    if (el && el.dataset.editing !== 'true') {
-        el.type = 'text';  // temporarily switch to text
-        el.value = formatINR(currentAmount);
-        el.type = 'number'; // won't revert visually in most browsers
-    }
+    if (el && el.dataset.editing !== 'true') el.value = currentAmount;
 }
 
 function writeTenureBox() {
     const el = document.querySelector('input[name="loan_tenure_months"]');
-    if (el && el.dataset.editing !== 'true') {
-        el.type = 'text';
-        el.value = currentTenure + ' months';
-        el.type = 'number';
-    }
+    if (el && el.dataset.editing !== 'true') el.value = currentTenure;
 }
     /* ══════════════════════════════════════
        READ OFFER AMOUNT FROM BANNER
