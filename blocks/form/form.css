@@ -8073,3 +8073,197 @@ div.field-verify-details > button#button-b3b5cbc8d9:hover {
 div.field-verify-details > button#button-b3b5cbc8d9:active {
   background: #1633a8 !important;
 }
+
+
+
+
+/* ─── OTP Panel Container ─── */
+fieldset.field-email-otp-verification {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  gap: 40px;
+  width: 640px;
+  max-width: 100%;
+  background: #FFFFFF;
+  box-shadow: 0px 1px 2px -1px rgba(16, 24, 40, 0.1),
+              0px 1px 3px rgba(16, 24, 40, 0.1);
+  border-radius: 20px;
+  border: none;
+  box-sizing: border-box;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ─── Legend (Panel Title) ─── */
+fieldset.field-email-otp-verification > legend {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 36px;
+  letter-spacing: -0.02em;
+  color: #111827;
+  text-align: center;
+  padding: 0;
+  margin-bottom: 0;
+  float: none;
+  width: 100%;
+}
+
+/* ─── Subtitle / Info Text ─── */
+fieldset.field-email-otp-verification .field-otp-verification-info p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #4B5563;
+  margin: 0;
+}
+
+/* ─── OTP Input Field Wrapper ─── */
+fieldset.field-email-otp-verification .field-email-otp {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ─── OTP Input Label (visually hidden – label is in legend) ─── */
+fieldset.field-email-otp-verification .field-email-otp .field-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #374151;
+}
+
+/* ─── OTP Input Element ─── */
+fieldset.field-email-otp-verification .field-email-otp input[type="password"],
+fieldset.field-email-otp-verification .field-email-otp input[type="text"] {
+  width: 100%;
+  height: 60px;
+  padding: 16px 12px;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  border: 1px solid #D2D5DB;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 28px;
+  letter-spacing: 0.25em;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+fieldset.field-email-otp-verification .field-email-otp input:focus {
+  border-color: #1C3FCA;
+  box-shadow: 0 0 0 3px rgba(28, 63, 202, 0.12);
+}
+
+/* ─── Show/Hide Password Toggle Icon ─── */
+fieldset.field-email-otp-verification #togglePassword {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 20px;
+  color: #6B7280;
+}
+
+/* Make the input wrapper relative so icon positions correctly */
+fieldset.field-email-otp-verification .field-email-otp {
+  position: relative;
+}
+
+/* ─── Helper / Description Text ─── */
+fieldset.field-email-otp-verification .field-description {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #6B7280;
+}
+
+/* ─── Resend OTP Timer Text ─── */
+fieldset.field-email-otp-verification .field-resend-otp-timer-text p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #6B7280;
+  margin: 0;
+}
+
+/* Bold the countdown number inside the timer text */
+fieldset.field-email-otp-verification .field-resend-otp-timer-text p strong,
+fieldset.field-email-otp-verification .field-resend-otp-timer-text p span {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ─── Button Wrappers ─── */
+fieldset.field-email-otp-verification .button-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+/* ─── All Buttons — Shared Base ─── */
+fieldset.field-email-otp-verification .button-wrapper .button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 20px;
+  gap: 4px;
+  height: 52px;
+  width: 100%;
+  border-radius: 13px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+  border: none;
+  box-sizing: border-box;
+}
+
+/* ─── Submit Button (Primary) ─── */
+fieldset.field-email-otp-verification .field-submit-otpp .button {
+  background: #1C3FCA;
+  color: #FFFFFF;
+}
+
+fieldset.field-email-otp-verification .field-submit-otpp .button:hover {
+  background: #1635b0;
+}
+
+fieldset.field-email-otp-verification .field-submit-otpp .button:active {
+  background: #122d99;
+}
+
+/* ─── Back Button (Tertiary) ─── */
+fieldset.field-email-otp-verification .field-back-email .button {
+  background: transparent;
+  color: #1C3FCA;
+  border: 1px solid #D2D5DB;
+}
+
+fieldset.field-email-otp-verification .field-back-email .button:hover {
+  background: #f0f3fd;
+}
+
+fieldset.field-email-otp-verification .field-back-email .button:active {
+  background: #e4e9fa;
+}
+
+/* ─── Disabled State (both buttons) ─── */
+fieldset.field-email-otp-verification .button-wrapper .button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
