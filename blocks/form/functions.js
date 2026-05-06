@@ -936,6 +936,7 @@ function callValidateEmailOTP(email, otp) {
 
   const errorWrapper = document.querySelector('[data-id="text-d79db67206"]');
   const submitBtn = document.querySelector('button[name="submit_otpp"]');
+  const otpInput = document.querySelector('[data-id="textinput-ed810a56e2"] input');
 
   // ── Helpers ──────────────────────────────────────────────────────────────
   function showError() {
@@ -945,6 +946,15 @@ function callValidateEmailOTP(email, otp) {
 
   function hideError() {
     if (errorWrapper) errorWrapper.classList.remove("visible");
+  }
+
+  // ── Re-enable submit when user edits OTP (registered only once) ──────────
+  if (otpInput && !otpInput.dataset.listenerAttached) {
+    otpInput.addEventListener("input", () => {
+      if (submitBtn) submitBtn.disabled = false;
+      hideError();
+    });
+    otpInput.dataset.listenerAttached = "true";
   }
 
   // ── Initial state ────────────────────────────────────────────────────────
