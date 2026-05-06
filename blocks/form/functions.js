@@ -659,16 +659,14 @@ function callPANEnquiry(mobileNo, pan_no) {
  */
 function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
 
-  const API_URL = "https://loan-backend-mock.onrender.com/GetBureauOffer";
+  const API_URL = "https://loan-backend-mock.onrender.com/tier2/GetBureauOffer";
 
-  // 🎯 Get selected bank from radio group (name has space → use quotes)
-  const selectedBank = document.querySelector('input[name="bank options"]:checked');
-  const bankName = selectedBank ? selectedBank.value : "";
+ 
 
   console.log("Inputs:", { mobileNo, monthlyIncome, bankName, verificationMethod });
 
   // ✅ Basic validation
-  if (!mobileNo || !monthlyIncome || !bankName || !verificationMethod) {
+  if (!mobileNo || !monthlyIncome || !verificationMethod) {
     alert("All fields are required");
     return;
   }
