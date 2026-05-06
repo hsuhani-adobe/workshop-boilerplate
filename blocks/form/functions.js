@@ -836,6 +836,8 @@ function callFinalSubmission(mobileNo, loanAmount, tenure) {
 
 /**
  * Calls generateEmailOTP API
+ *
+ * Calls generateEmailOTP API and fills OTP using data-id
  * @param {string} email
  */
 function callGenerateEmailOTP(email) {
@@ -844,22 +846,35 @@ function callGenerateEmailOTP(email) {
 
   console.log("Email:", email);
 
-  // ✅ Basic validation
+  // ❗ Validation
   if (!email) {
     alert("Please enter email");
     return;
   }
 
-  // 🔧 Helper (AEM reactive)
-  function setField(name, value) {
-    const el = document.querySelector(`[name="${email_otp}"]`);
-    if (!el) return;
+  // 🔧 AEM-safe setter using data-id wrapper
+  function setOTP(value) {
+    const wrapper = document.querySelector('[data-id="textinput-ed810a56e2"]');
+    if (!wrapper) {
+      console.warn("OTP wrapper not found");
+      return;
+    }
 
-    el.value = value || "";
+    const input = wrapper.querySelector('input[name="email_otp"]');
+    if (!input) {
+      console.warn("OTP input not found");
+      return;
+    }
 
-    el.dispatchEvent(new Event("input", { bubbles: true }));
-    el.dispatchEvent(new Event("change", { bubbles: true }));
-    el.dispatchEvent(new Event("blur", { bubbles: true }));
+    input.value = value || "";
+
+    // 🔥 Trigger AEM reactivity
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+    input.dispatchEvent(new Event("blur", { bubbles: true }));
+
+    // 🎯 Optional: focus field after setting
+    input.focus();
   }
 
   // 🚀 API Call
@@ -887,10 +902,10 @@ function callGenerateEmailOTP(email) {
 
         const otp = data?.responseString?.otp;
 
-        // 🎯 Optional: store OTP in a field (for testing)
-        setField("email_otp", otp);
+        // 🎯 Set OTP in your field
+        setOTP(otp);
 
-        alert("OTP sent successfully");
+        console.log("✅ OTP set successfully:", otp);
 
       } else {
         alert(data?.status?.errorDesc || "Failed to generate OTP");
