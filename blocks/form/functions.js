@@ -651,17 +651,19 @@ function callPANEnquiry(mobileNo, pan_no) {
 
 
 
-
 /**
- * Calls GetBureauOffer API and fills offer details
+ * Get Bureau Offer + Populate All Fields (AEM Safe)
  * @param {string} mobileNo
- * @param {string} monthlyIncome
- * @param {string} bankName
+ * @param {string|number} monthlyIncome
  * @param {string} verificationMethod
  */
-function callGetBureauOffer(mobileNo, monthlyIncome, bankName, verificationMethod) {
+function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
 
-  const API_URL = "https://loan-backend-mock.onrender.com/tier2/GetBureauOffer";
+  const API_URL = "https://loan-backend-mock.onrender.com/GetBureauOffer";
+
+  // 🎯 Get selected bank from radio group (name has space → use quotes)
+  const selectedBank = document.querySelector('input[name="bank options"]:checked');
+  const bankName = selectedBank ? selectedBank.value : "";
 
   console.log("Inputs:", { mobileNo, monthlyIncome, bankName, verificationMethod });
 
@@ -671,23 +673,38 @@ function callGetBureauOffer(mobileNo, monthlyIncome, bankName, verificationMetho
     return;
   }
 
+  // 🔧 Helper: set value + trigger AEM reactivity
+  function setField(name, value) {
+    const el = document.querySelector(`[name="${name}"]`);
+    if (!el) return;
+
+    el.value = value ?? "";
+
+    // Trigger AEM listeners
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+    el.dispatchEvent(new Event("blur", { bubbles: true }));
+  }
+
+  // 🚀 API call
   fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       contextParam: {},
       requestString: {
-        mobileNo: mobileNo,
-        monthlyIncome: monthlyIncome,
-        bankName: bankName,
-        verificationMethod: verificationMethod
+        mobileNo,
+        monthlyIncome,
+        bankName,
+        verificationMethod
       }
-    }),
+    })
   })
     .then((res) => {
-      if (!res.ok) throw new Error("Network error");
+      if (!res.ok) {
+        console.error("Status:", res.status);
+        throw new Error("API not found");
+      }
       return res.json();
     })
     .then((data) => {
@@ -696,48 +713,36 @@ function callGetBureauOffer(mobileNo, monthlyIncome, bankName, verificationMetho
 
       if (data?.status?.responseCode === "0") {
 
-        const response = data?.responseString;
+        const r = data.responseString || {};
 
-        // 🎯 Extract values
-        const offerAmount = response?.offerAmount;
-        const emi = response?.emi;
-        const tenure = response?.tenure;
-        const interestRate = response?.interestRate;
-        const processingFees = response?.processingFees;
+        // 🔢 Loan Details
+        setField("loan_amount", r.offerAmount);
+        setField("emi_amount", r.emi);
+        setField("tenure", r.tenure);
+        setField("processing_fee", r.processingFees);
+        setField("interest_rate", r.interestRate);
 
-        // 🎯 Set fields (name-based targeting)
+        // 📌 Other Details
+        setField("inquiry_source", r.enquirySource);
 
-        const offerField = document.querySelector('[name="offer_amount"]');
-        if (offerField) {
-          offerField.value = offerAmount || "";
-          offerField.dispatchEvent(new Event("change", { bubbles: true }));
-        }
+        // Convert schedule array → readable string
+        const charges = (r.scheduleOfCharges || [])
+          .map(c => `${c.chargeType}: ${c.amount}`)
+          .join(" | ");
+        setField("schedule_of_charges", charges);
 
-        const emiField = document.querySelector('[name="emi"]');
-        if (emiField) {
-          emiField.value = emi || "";
-          emiField.dispatchEvent(new Event("change", { bubbles: true }));
-        }
+        // Static / derived
+        setField("type_of_loan", "Personal Loan");
 
-        const tenureField = document.querySelector('[name="tenure"]');
-        if (tenureField) {
-          tenureField.value = tenure || "";
-          tenureField.dispatchEvent(new Event("change", { bubbles: true }));
-        }
+        // 🏦 Salary Account Details
+        setField("salary_account_number", r.salaryAccountDetails?.accountNumber);
+        setField("ifsc", r.salaryAccountDetails?.ifsc);
+        setField("bank_name", r.salaryAccountDetails?.bankName);
 
-        const rateField = document.querySelector('[name="interest_rate"]');
-        if (rateField) {
-          rateField.value = interestRate ? interestRate + "%" : "";
-          rateField.dispatchEvent(new Event("change", { bubbles: true }));
-        }
+        // 🎯 Banner
+        setField("loan_offer_banner", `₹ ${r.offerAmount}`);
 
-        const feeField = document.querySelector('[name="processing_fees"]');
-        if (feeField) {
-          feeField.value = processingFees || "";
-          feeField.dispatchEvent(new Event("change", { bubbles: true }));
-        }
-
-        console.log("✅ Bureau Offer Loaded");
+        console.log("✅ All fields populated successfully");
 
       } else {
         alert(data?.status?.errorDesc || "Failed to fetch offer");
