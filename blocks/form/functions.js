@@ -716,17 +716,12 @@ function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
        
         
         setField("processing_fee", r.processingFees);
-        setField("interest_rate", r.interestRate);
+        
 
         // 📌 Other Details
         setField("inquiry_source", r.enquirySource);
 
-        // Charges → string
-        const charges = (r.scheduleOfCharges || [])
-          .map(c => `${c.chargeType}: ${c.amount}`)
-          .join(" | ");
-        setField("schedule_of_charges", charges);
-
+       
         // Static
         setField("type_of_loan", "Personal Loan");
 
