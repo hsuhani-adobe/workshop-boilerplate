@@ -7932,10 +7932,10 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
 
 
 .field-otp-status {
-  display: none;
+  display: none !important;
 }
 
 .field-otp-status input {
-  color: red;
-  font-size: 12px;
+  color: red !important;
+  font-size: 12px !important;
 }
