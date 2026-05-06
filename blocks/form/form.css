@@ -7930,12 +7930,29 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
   margin: 4px 0 0;
 }
 
-
+/* Hide OTP status field by default */
 .field-otp-status {
-  display: none !important;
+    display: none !important;
 }
 
+/* Show only when OTP is incorrect */
+.field-otp-status.visible {
+    display: block !important;
+}
+
+/* Red error message styling */
+.field-otp-status input[type="text"],
 .field-otp-status input {
-  color: red !important;
-  font-size: 12px !important;
+    color: red !important;
+    font-size: 12px !important;
+    border: none !important;
+    background: transparent !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+/* Hide the label */
+.field-otp-status .field-label {
+    display: none !important;
 }

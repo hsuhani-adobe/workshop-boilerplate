@@ -502,37 +502,29 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
   console.log("Inputs:", { mobileNo, otp });
 
-  // 🎯 OTP status elements
   const otpWrapper = document.querySelector('.field-otp-status');
-  const otpField = document.querySelector('[name="otp_status"]');
+  const otpField   = document.querySelector('[name="otp_status"]');
 
-  // 🔄 Always hide initially
-  if (otpWrapper) otpWrapper.style.display = "none";
+  // Always hide on fresh call via class
+  if (otpWrapper) otpWrapper.classList.remove('visible');
 
-  // ❗ Basic validation
   if (!mobileNo || !otp) {
     alert("Please enter mobile number and OTP");
     return;
   }
 
-  // 🔧 Helper for AEM-safe value setting
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
     if (!el) return;
-
     el.value = value || "";
-
-    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("input",  { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
-    el.dispatchEvent(new Event("blur", { bubbles: true }));
+    el.dispatchEvent(new Event("blur",   { bubbles: true }));
   }
 
-  // 🚀 API Call
   fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       contextParam: {},
       requestString: {
@@ -542,9 +534,7 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
     }),
   })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network error");
-      }
+      if (!response.ok) throw new Error("Network error");
       return response.json();
     })
     .then((data) => {
@@ -561,26 +551,22 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
           return;
         }
 
-        // Hide OTP error if success
-        if (otpWrapper) otpWrapper.style.display = "none";
+        // Hide OTP error on success
+        if (otpWrapper) otpWrapper.classList.remove('visible');
 
-        // 🎯 Fill fields
         setField("fullname_adhar", customer.fullName);
         setField("address_aadhar", customer.address);
 
         console.log("✅ Customer details filled successfully");
 
-      } 
-      
-      // ❌ OTP INCORRECT
-      else {
+      } else {
 
-        if (otpWrapper) otpWrapper.style.display = "block";
+        // ❌ OTP INCORRECT — show via class so !important CSS works
+        if (otpWrapper) otpWrapper.classList.add('visible');
 
         if (otpField) {
           otpField.value = data?.status?.errorDesc || "Invalid OTP";
-
-          otpField.dispatchEvent(new Event("input", { bubbles: true }));
+          otpField.dispatchEvent(new Event("input",  { bubbles: true }));
           otpField.dispatchEvent(new Event("change", { bubbles: true }));
         }
       }
@@ -588,12 +574,12 @@ function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
     .catch((error) => {
       console.error("❌ Error:", error);
 
-      if (otpWrapper) otpWrapper.style.display = "block";
+      // Show error on network failure too
+      if (otpWrapper) otpWrapper.classList.add('visible');
 
       if (otpField) {
         otpField.value = "Something went wrong";
-
-        otpField.dispatchEvent(new Event("input", { bubbles: true }));
+        otpField.dispatchEvent(new Event("input",  { bubbles: true }));
         otpField.dispatchEvent(new Event("change", { bubbles: true }));
       }
     });
