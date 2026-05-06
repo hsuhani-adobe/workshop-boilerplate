@@ -8252,29 +8252,43 @@ fieldset.field-email-otp-verification .field-submit-otpp .button:hover {
 fieldset.field-email-otp-verification .field-submit-otpp .button:active {
   background: #122d99;
 }
+/* ================= Back Email Button ================= */
 
-/* ─── Back Button (Tertiary) ─── */
-fieldset.field-email-otp-verification .field-back-email .button {
-  background: transparent;
-  color: #1C3FCA;
-  border: 1px solid #D2D5DB;
+div.field-back-email > button#button-0c31638563 {
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 14px 20px !important;
+  gap: 4px !important;
+  height: 52px !important;
+  width: auto !important;
+  min-width: 120px !important;
+  max-width: 160px !important;
+  border-radius: 13px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  cursor: pointer !important;
+  transition: background 0.15s ease, opacity 0.15s ease !important;
+  border: none !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  color: #1C3FCA !important;
 }
 
-fieldset.field-email-otp-verification .field-back-email .button:hover {
-  background: #f0f3fd;
+div.field-back-email > button#button-0c31638563:hover {
+  background: #f0f3fd !important;
 }
 
-fieldset.field-email-otp-verification .field-back-email .button:active {
-  background: #e4e9fa;
+div.field-back-email > button#button-0c31638563:active {
+  background: #e4e9fa !important;
 }
 
-/* ─── Disabled State (both buttons) ─── */
-fieldset.field-email-otp-verification .button-wrapper .button:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
+div.field-back-email > button#button-0c31638563:disabled {
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
 }
-
-
 
 
 /* Hide invalid OTP message initially */
