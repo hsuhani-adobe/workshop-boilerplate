@@ -8290,12 +8290,67 @@ fieldset.field-email-otp-verification .button-wrapper .button:disabled {
 /* Style error text */
 .field-inavalid-otp p {
   color: red !important ;
-  font-size: 12px !important;
-  margin-top: 4px !important;
+  font-size: 14px !important;
+  margin-top: 2px !important;
 }
 
 /* Disabled button style */
 button[name="submit_otpp"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+
+
+
+/* ================= Back Buttons ================= */
+
+div.field-back > button#button-896d8a5c12,
+div.field-back-cdetails > button#button-6c4f76951a,
+div.field-backincome > button#button-58ff304a32,
+div.field-backoffer > button#button-ffe9d3a123,
+div.field-back-review > button#button-1383f22471 {
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 14px 20px !important;
+  gap: 4px !important;
+  height: 52px !important;
+  width: 100% !important;
+  border-radius: 13px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  cursor: pointer !important;
+  transition: background 0.15s ease, opacity 0.15s ease !important;
+  border: none !important;        /* ✅ No border */
+  box-sizing: border-box !important;
+  background: transparent !important;
+  color: #1C3FCA !important;
+}
+
+div.field-back > button#button-896d8a5c12:hover,
+div.field-back-cdetails > button#button-6c4f76951a:hover,
+div.field-backincome > button#button-58ff304a32:hover,
+div.field-backoffer > button#button-ffe9d3a123:hover,
+div.field-back-review > button#button-1383f22471:hover {
+  background: #f0f3fd !important;
+}
+
+div.field-back > button#button-896d8a5c12:active,
+div.field-back-cdetails > button#button-6c4f76951a:active,
+div.field-backincome > button#button-58ff304a32:active,
+div.field-backoffer > button#button-ffe9d3a123:active,
+div.field-back-review > button#button-1383f22471:active {
+  background: #e4e9fa !important;
+}
+
+div.field-back > button#button-896d8a5c12:disabled,
+div.field-back-cdetails > button#button-6c4f76951a:disabled,
+div.field-backincome > button#button-58ff304a32:disabled,
+div.field-backoffer > button#button-ffe9d3a123:disabled,
+div.field-back-review > button#button-1383f22471:disabled {
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
 }
