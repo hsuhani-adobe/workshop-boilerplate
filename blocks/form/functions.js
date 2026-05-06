@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callFinalSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,
+  startOtpTimer,resendOtp, callFinalSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,
 };
 
 
@@ -722,6 +722,7 @@ function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
         setField("inquiry_source", r.enquirySource);
 
        
+
         // Static
         setField("type_of_loan", "Personal Loan");
 
@@ -737,6 +738,79 @@ function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
 
       } else {
         alert(data?.status?.errorDesc || "Failed to fetch offer");
+      }
+    })
+    .catch((err) => {
+      console.error("❌ Error:", err);
+      alert("Something went wrong");
+    });
+}
+
+
+/**
+ * Calls FinalSubmission API and fills Loan Application Number
+ * @param {string} mobileNo
+ * @param {string|number} loanAmount
+ * @param {string|number} tenure
+ */
+function callFinalSubmission(mobileNo, loanAmount, tenure) {
+
+  const API_URL = "https://loan-backend-mock.onrender.com/tier2/FinalSubmission";
+
+  console.log("Inputs:", { mobileNo, loanAmount, tenure });
+
+  // ✅ Basic validation
+  if (!mobileNo || !loanAmount || !tenure) {
+    alert("All fields are required");
+    return;
+  }
+
+  // 🔧 Helper (AEM reactive)
+  function setField(name, value) {
+    const el = document.querySelector(`[name="${name}"]`);
+    if (!el) return;
+
+    el.value = value ?? "";
+
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+    el.dispatchEvent(new Event("blur", { bubbles: true }));
+  }
+
+  // 🚀 API Call
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      contextParam: {},
+      requestString: {
+        mobileNo,
+        loanAmount,
+        tenure
+      }
+    })
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("API error");
+      return res.json();
+    })
+    .then((data) => {
+
+      console.log("API Response:", data);
+
+      if (data?.status?.responseCode === "0") {
+
+        const acknowledgementId = data?.responseString?.acknowledgementId;
+
+        // 🎯 Set value in your field
+        setField("loan_application_numberr2", acknowledgementId);
+
+        console.log("✅ Loan Application Number set:", acknowledgementId);
+
+      } else {
+        alert(data?.status?.errorDesc || "Submission failed");
       }
     })
     .catch((err) => {
