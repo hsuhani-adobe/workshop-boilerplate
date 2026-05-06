@@ -3249,7 +3249,10 @@ remove default fieldset style
   color: #6b7280 !important;
   cursor: pointer !important;
 }
-
+/* Hide all labels inside OTP verification panel */
+[data-id="panelcontainer-fcd7d7b69e"] .field-label {
+  display: none !important;
+}
 /* ================= Status row ================= */
 .field-otp-status,
 .field-timer,
@@ -3313,6 +3316,8 @@ remove default fieldset style
   font-weight: 600 !important;
   cursor: pointer !important;
 }
+
+
 
 /* ================= Submit Button ================= */
 .field-submit-otp {
