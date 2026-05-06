@@ -831,3 +831,73 @@ function callFinalSubmission(mobileNo, loanAmount, tenure) {
       alert("Something went wrong");
     });
 }
+
+
+
+/**
+ * Calls generateEmailOTP API
+ * @param {string} email
+ */
+function callGenerateEmailOTP(email) {
+
+  const API_URL = "https://loan-backend-mock.onrender.com/tier2/generateEmailOTP";
+
+  console.log("Email:", email);
+
+  // ✅ Basic validation
+  if (!email) {
+    alert("Please enter email");
+    return;
+  }
+
+  // 🔧 Helper (AEM reactive)
+  function setField(name, value) {
+    const el = document.querySelector(`[name="${email_otp}"]`);
+    if (!el) return;
+
+    el.value = value || "";
+
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+    el.dispatchEvent(new Event("blur", { bubbles: true }));
+  }
+
+  // 🚀 API Call
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      contextParam: {},
+      requestString: {
+        email: email
+      }
+    })
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("API error");
+      return res.json();
+    })
+    .then((data) => {
+
+      console.log("API Response:", data);
+
+      if (data?.status?.responseCode === "0") {
+
+        const otp = data?.responseString?.otp;
+
+        // 🎯 Optional: store OTP in a field (for testing)
+        setField("email_otp", otp);
+
+        alert("OTP sent successfully");
+
+      } else {
+        alert(data?.status?.errorDesc || "Failed to generate OTP");
+      }
+    })
+    .catch((err) => {
+      console.error("❌ Error:", err);
+      alert("Something went wrong");
+    });
+}
