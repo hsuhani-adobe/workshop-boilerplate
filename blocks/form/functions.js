@@ -713,8 +713,8 @@ function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
 
         // 🔢 Loan Details
         setField("loan_amount", r.offerAmount);
-        setField("emi_amount", r.emi);
-        setField("tenure", r.tenure);
+       
+        
         setField("processing_fee", r.processingFees);
         setField("interest_rate", r.interestRate);
 
