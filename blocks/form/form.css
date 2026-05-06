@@ -5475,8 +5475,7 @@ main .form form .field-income-method > legend.field-label::before {
    BANK OPTIONS
    ============================================ */
 
-main .form form .field-bank-options,
-main .form form .field-bank-options2 {
+main .form form .field-bank-options{
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -5490,18 +5489,15 @@ main .form form .field-bank-options2 {
   background: transparent;
 }
 
-main .form form .field-bank-options,
-main .form form .field-bank-options2 {
+main .form form .field-bank-options::-webkit-scrollbar {
   display: none;
 }
 
-main .form form .field-bank-options,
-main .form form .field-bank-options2 {
+main .form form .field-bank-options > legend.field-label {
   display: none;
 }
 
-main .form form .field-bank-options,
-main .form form .field-bank-options2 {
+main .form form .field-bank-options .radio-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -5515,8 +5511,7 @@ main .form form .field-bank-options2 {
   background: transparent;
 }
 
-main .form form .field-bank-options,
-main .form form .field-bank-options2 .radio-wrapper input[type="radio"] {
+main .form form .field-bank-options .radio-wrapper input[type="radio"] {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -5525,8 +5520,7 @@ main .form form .field-bank-options2 .radio-wrapper input[type="radio"] {
   margin: 0;
 }
 
-main .form form .field-bank-options,
-main .form form .field-bank-options2 .radio-wrapper > label.field-label {
+main .form form .field-bank-options .radio-wrapper > label.field-label {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -5545,8 +5539,7 @@ main .form form .field-bank-options2 .radio-wrapper > label.field-label {
 }
 
 /* Icon box */
-main .form form .field-bank-options,
-main .form form .field-bank-options2  .radio-wrapper > label.field-label::before {
+main .form form .field-bank-options .radio-wrapper > label.field-label::before {
   content: '';
   display: block;
   width: 60px;
@@ -5585,19 +5578,16 @@ main .form form .field-bank-options .radio-wrapper[data-id="bank-options-6"] > l
 }
 
 /* Selected bank */
-main .form form .field-bank-options,
-main .form form .field-bank-options2 .radio-wrapper input[type="radio"]:checked + label.field-label {
+main .form form .field-bank-options .radio-wrapper input[type="radio"]:checked + label.field-label {
   color: #1C3FCA;
   font-weight: 600;
 }
-main .form form .field-bank-options,
-main .form form .field-bank-options2 .radio-wrapper input[type="radio"]:checked + label.field-label::before {
+main .form form .field-bank-options .radio-wrapper input[type="radio"]:checked + label.field-label::before {
   border-color: #1C3FCA;
   border-width: 2px;
   background-color: #F3F6FD;
 }
-main .form form .field-bank-options,
-main .form form .field-bank-options2  .radio-wrapper input[type="radio"]:checked + label.field-label::after {
+main .form form .field-bank-options .radio-wrapper input[type="radio"]:checked + label.field-label::after {
   content: '';
   display: block;
   width: 6px;
@@ -5607,8 +5597,7 @@ main .form form .field-bank-options2  .radio-wrapper input[type="radio"]:checked
   margin-top: -4px;
 }
 
-main .form form .field-bank-options,
-main .form form .field-bank-options2  .radio-wrapper > label.field-label:hover::before {
+main .form form .field-bank-options .radio-wrapper > label.field-label:hover::before {
   border-color: #93A8F0;
 }
 
