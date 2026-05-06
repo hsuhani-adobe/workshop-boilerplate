@@ -7956,3 +7956,91 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
 .field-otp-status .field-label {
     display: none !important;
 }
+
+
+
+/* =============================================================
+   9. VIEW LOAN ELIGIBILITY BUTTON
+   ============================================================= */
+.field-generateotp {
+  grid-column: 1 / 5 !important;
+  margin-top: 20px !important;
+}
+
+.field-generateotp > button.button[type="button"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  height: 52px !important;
+  padding: 0 24px !important;
+  background: #6b84d9 !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background 0.2s, box-shadow 0.2s !important;
+  letter-spacing: 0.01em !important;
+}
+
+.field-generateotp > button.button[type="button"]::after {
+  content: "›" !important;
+  font-size: 22px !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+  margin-left: 4px !important;
+}
+
+.field-generateotp > button.button[type="button"]:hover {
+  background: #1c3fca !important;
+  box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
+}
+
+.field-generateotp > button.button[type="button"]:active {
+  background: #1633a8 !important;
+}
+
+
+
+
+/* ================= Submit Button ================= */
+.field-otp_submit2 {
+  margin-top: 28px !important;
+  max-width: 280px !important;
+}
+
+.field-otp_submit2 > button.button[type="button"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  height: 52px !important;
+  padding: 0 24px !important;
+  background: #6b84d9 !important;
+  color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: background 0.2s, box-shadow 0.2s !important;
+}
+
+.field-otp_submit2 > button.button[type="button"]::after {
+  content: "›" !important;
+  font-size: 22px !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+  margin-left: 4px !important;
+}
+
+.field-otp_submit2 > button.button[type="button"]:hover {
+  background: #1c3fca !important;
+  box-shadow: 0 4px 14px rgba(28, 63, 202, 0.3) !important;
+}
