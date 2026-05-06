@@ -3193,6 +3193,7 @@ remove default fieldset style
 
 /* ================= Common labels ================= */
 .field-otp-verification-panel label.field-label {
+  display: none !important;
   color: #374151 !important;
   font-weight: 400 !important;
   font-size: 14px !important;
