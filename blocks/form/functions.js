@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callFinalSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry,
+  startOtpTimer,resendOtp, callFinalSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,
 };
 
 
