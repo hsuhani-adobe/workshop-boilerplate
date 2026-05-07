@@ -506,11 +506,14 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
   const nextBtn    = document.querySelector('button[name="next"]');
   const otpInput   = document.querySelector('[data-id="textinput-d8e61b9fd5"] input');
 
+  // 🔥 Hide Next button initially
+  if (nextBtn) nextBtn.style.display = "none";
+
   // ── Re-enable submit when user edits OTP ────────────────────────────────
   if (otpInput && !otpInput.dataset.listenerAttached) {
     otpInput.addEventListener("input", () => {
       if (submitBtn) submitBtn.disabled = false;
-      if (nextBtn) nextBtn.disabled = true; // keep next disabled until verified
+      if (nextBtn) nextBtn.style.display = "none"; // ❗ hide again on edit
       if (otpWrapper) otpWrapper.classList.remove("visible");
     });
     otpInput.dataset.listenerAttached = "true";
@@ -544,14 +547,13 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
       otpField.dispatchEvent(new Event("change", { bubbles: true }));
     }
 
-    // Fallback (very important for AEM UI)
+    // Fallback UI
     if (otpWrapper) {
       otpWrapper.classList.add("visible");
 
       const msgEl = otpWrapper.querySelector(".field-description") || otpWrapper;
       msgEl.innerText = message;
 
-      // Optional styling
       msgEl.style.color = isError ? "red" : "green";
     }
   }
@@ -587,9 +589,10 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
         }
 
         if (submitBtn) submitBtn.disabled = false;
-        if (nextBtn) nextBtn.disabled = false; // ✅ enable next
 
-        // ✅ SUCCESS MESSAGE (FIXED)
+        // ✅ SHOW NEXT BUTTON
+        if (nextBtn) nextBtn.style.display = "block";
+
         updateOtpMessage("OTP verified successfully", false);
 
         setField("fullname_adhar", customer.fullName);
@@ -601,7 +604,9 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
 
         // ❌ INVALID OTP
         if (submitBtn) submitBtn.disabled = true;
-        if (nextBtn) nextBtn.disabled = true;
+
+        // ❗ HIDE NEXT BUTTON
+        if (nextBtn) nextBtn.style.display = "none";
 
         updateOtpMessage(data?.status?.errorDesc || "Invalid OTP", true);
 
@@ -612,11 +617,14 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
       console.error("❌ Error:", error);
 
       if (submitBtn) submitBtn.disabled = true;
-      if (nextBtn) nextBtn.disabled = true;
+
+      // ❗ HIDE NEXT BUTTON
+      if (nextBtn) nextBtn.style.display = "none";
 
       updateOtpMessage("Something went wrong", true);
     });
 }
+
 /**
  * PAN Verification Function
  * @param {string} mobileNo
