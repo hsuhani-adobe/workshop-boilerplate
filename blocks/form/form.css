@@ -8623,3 +8623,10 @@ div.field-next > button#button-508dd41726:disabled {
   opacity: 0.45 !important;
   cursor: not-allowed !important;
 }
+
+/* Hide resend button wrapper initially */
+.field-resend-otp-email {
+  display: none  !important;
+}
+
+/* Hide invalid OTP message initially */
