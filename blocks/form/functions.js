@@ -982,7 +982,7 @@ function callValidateEmailOTP(email, otp) {
   hideError();
 
   // ── Guard ────────────────────────────────────────────────────────────────
-  if (!email || !otp) {
+  if (!otp) {
     alert("Enter email and OTP");
     return;
   }
