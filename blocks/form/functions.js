@@ -8,7 +8,7 @@
 function getFullName(firstname, lastname) {
   return `${firstname} ${lastname}`.trim();
 }
-
+ 
 /**
  * Custom submit function
  * @param {scope} globals
@@ -22,7 +22,7 @@ function submitFormArrayToString(globals) {
   });
   globals.functions.submitForm(data, true, 'application/json');
 }
-
+ 
 /**
  * Calculate the number of days between two dates.
  * @param {*} endDate
@@ -32,16 +32,16 @@ function submitFormArrayToString(globals) {
 function days(endDate, startDate) {
   const start = typeof startDate === 'string' ? new Date(startDate) : startDate;
   const end = typeof endDate === 'string' ? new Date(endDate) : endDate;
-
+ 
   // return zero if dates are valid
   if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
     return 0;
   }
-
+ 
   const diffInMs = Math.abs(end.getTime() - start.getTime());
   return Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 }
-
+ 
 /**
 * Masks the first 5 digits of the mobile number with *
 * @param {*} mobileNumber
@@ -55,15 +55,15 @@ function maskMobileNumber(mobileNumber) {
   // Mask first 5 digits and keep the rest
   return ` ${'*'.repeat(5)}${value.substring(5)}`;
 }
-
+ 
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,callValidateEmailOTP,handleProceedButton,initOtpTimer,
+  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,callValidateEmailOTP,handleProceedButton,initOtpTimer,
 };
-
-
-
+ 
+ 
+ 
 function calcEMI(principal, annualRate, months) {
     const r = annualRate / 12 / 100;
     if (r === 0) return Math.round(principal / months);
@@ -79,29 +79,29 @@ function calcEMI(principal, annualRate, months) {
  */
 function validateDOBAndToggleText(dob) {
     const textComponent = document.querySelector(".field-dob-validation");
-
+ 
     if (!textComponent) return;
-
+ 
     // Hide initially when no dob
     if (!dob) {
         textComponent.style.setProperty('display', 'none', 'important');
         return;
     }
-
+ 
     let birthDate;
-
+ 
     try {
         // ✅ Case 1: YYYY-MM-DD (EDS standard)
         if (dob.includes("-")) {
             birthDate = new Date(dob);
         }
-
+ 
         // ✅ Case 2: DD/MM/YYYY or M/D/YY
         else if (dob.includes("/")) {
             const parts = dob.split("/");
-
+ 
             let day, month, year;
-
+ 
             // Detect format safely
             if (parts[2].length === 4) {
                 // DD/MM/YYYY
@@ -113,56 +113,56 @@ function validateDOBAndToggleText(dob) {
                 month = parseInt(parts[0], 10) - 1;
                 day = parseInt(parts[1], 10);
                 year = parseInt(parts[2], 10);
-
+ 
                 if (year < 100) {
                     year += (year > 50 ? 1900 : 2000);
                 }
             }
-
+ 
             birthDate = new Date(year, month, day);
         }
-
+ 
         // ❌ Invalid date fallback
         if (!birthDate || isNaN(birthDate.getTime())) {
             textComponent.style.setProperty('display', 'none', 'important');
             return;
         }
-
+ 
         const today = new Date();
-
+ 
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
-
+ 
         if (
             monthDiff < 0 ||
             (monthDiff === 0 && today.getDate() < birthDate.getDate())
         ) {
             age--;
         }
-
+ 
         // ✅ FINAL CONDITION
         if (age < 21) {
             textComponent.style.setProperty('display', 'block', 'important');
         } else {
             textComponent.style.setProperty('display', 'none', 'important');
         }
-
+ 
         console.log("DOB:", dob);
         console.log("Parsed:", birthDate);
         console.log("Age:", age);
-
+ 
     } catch (e) {
         console.error("DOB parsing error:", e);
         textComponent.style.setProperty('display', 'none', 'important');
     }
 }
-
-
-
-
+ 
+ 
+ 
+ 
 // let timerInterval = null;
 // let timerValue = 40;
-
+ 
 // /**
 //  * Starts a 40 second countdown timer
 //  * Updates timer field and shows/hides resend OTP button automatically
@@ -170,55 +170,55 @@ function validateDOBAndToggleText(dob) {
 //  */
 // function startOtpTimer() {
 //   timerValue = 40;
-
+ 
 //   if (timerInterval) {
 //     clearInterval(timerInterval);
 //   }
-
+ 
 //   // Get elements using exact name attributes from your HTML
 //   const timerInput = document.querySelector('input[name="timer"]');
 //   const timerWrapper = document.querySelector('.field-timer');
 //   const resendWrapper = document.querySelector('.field-resend-otp');
 //   const resendBtn = document.querySelector('button[name="resend_otp"]');
-
+ 
 //   // Make sure timer is visible and resend is hidden at start
 //   if (timerWrapper) timerWrapper.style.display = '';
 //   if (resendWrapper) resendWrapper.style.display = 'none';
 //   if (resendBtn) resendBtn.disabled = true;
-
+ 
 //   timerInterval = setInterval(() => {
 //     timerValue--;
-
+ 
 //     // Update timer input value
 //     if (timerInput) {
 //       timerInput.value = `Resend OTP in ${timerValue}s`;
 //     }
-
+ 
 //     if (timerValue <= 0) {
 //       clearInterval(timerInterval);
 //       timerInterval = null;
-
+ 
 //       // Hide timer field using exact class from HTML
 //       if (timerWrapper) timerWrapper.style.display = 'none';
-
+ 
 //       // Show and enable resend OTP button using exact class from HTML
 //       if (resendWrapper) resendWrapper.style.display = '';
 //       if (resendBtn) resendBtn.display = ;
 //     }
 //   }, 1000);
-
+ 
 //   return `Resend OTP in ${timerValue}s`;
 // }
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
 let timerInterval = null;
 let timerValue = 40;
 let attemptsLeft = 3;
 const totalAttempts = 3;
-
+ 
 /**
  * Starts a 40 second countdown timer
  * Updates timer field and shows/hides resend OTP button automatically
@@ -226,16 +226,16 @@ const totalAttempts = 3;
  */
 function startOtpTimer() {
   timerValue = 40;
-
+ 
   if (timerInterval) {
     clearInterval(timerInterval);
   }
-
+ 
   const timerInput = document.querySelector('input[name="timer"]');
   const timerWrapper = timerInput?.closest('.field-wrapper');
   const resendBtn = document.querySelector('button[name="resend_otp"]');
   const resendWrapper = resendBtn?.closest('.field-wrapper');
-
+ 
   // Show timer, hide resend at start
   if (timerWrapper) timerWrapper.style.setProperty('display', '', 'important');
   if (resendWrapper) {
@@ -244,23 +244,23 @@ function startOtpTimer() {
     resendWrapper.style.setProperty('display', 'none', 'important');
   }
   if (resendBtn) resendBtn.disabled = true;
-
+ 
   timerInterval = setInterval(() => {
     timerValue--;
-
+ 
     if (timerInput) {
       timerInput.value = `Resend OTP in ${timerValue} secs`;
     }
-
+ 
     if (timerValue <= 0) {
       clearInterval(timerInterval);
       timerInterval = null;
-
+ 
       // Hide timer
       if (timerWrapper) {
         timerWrapper.style.setProperty('display', 'none', 'important');
       }
-
+ 
       // Show resend button only if attempts remain
       if (attemptsLeft > 0) {
         if (resendWrapper) {
@@ -272,12 +272,12 @@ function startOtpTimer() {
       }
     }
   }, 1000);
-
+ 
   return `Resend OTP in ${timerValue} secs`;
 }
-
-
-
+ 
+ 
+ 
 /**
  * Handles resend OTP click - decreases attempts and restarts timer
  * @returns {string} updated attempts display value
@@ -286,18 +286,18 @@ function resendOtp() {
   const attemptsInput = document.querySelector('input[name="otp_attempts_left"]');
   const resendBtn = document.querySelector('button[name="resend_otp"]');
   const resendWrapper = resendBtn?.closest('.field-wrapper');
-
+ 
   // Decrease attempts
   attemptsLeft--;
-
+ 
   // Update attempts field display
   if (attemptsInput) {
     attemptsInput.value = `${attemptsLeft}/${totalAttempts} attempts lef`;
   }
-
+ 
   // Always restart timer on a valid click
   startOtpTimer();
-
+ 
   // After last click (attemptsLeft === 0), disable button permanently
   if (attemptsLeft <= 0) {
     if (resendWrapper) {
@@ -306,30 +306,30 @@ function resendOtp() {
     if (resendBtn) resendBtn.disabled = true;
     return `0/${totalAttempts} attempts left`;
   }
-
+ 
   return `${attemptsLeft}/${totalAttempts} attempts `;
 }
-
-
-
-
+ 
+ 
+ 
+ 
 /**
  * Calls Final Submission API and updates Loan Application Number field
  * @param {number|string} loanAmount
  * @param {number|string} tenure
  */
 function callSubmission(loanAmount, tenure) {
-
+ 
   const API_URL = "https://loan-backend-mock.onrender.com/finalSubmission";
-
+ 
   console.log("Calling API with:", loanAmount, tenure);
-
+ 
   // ✅ Validation
   if (!loanAmount || !tenure) {
     alert("Please enter loan amount and tenure");
     return;
   }
-
+ 
   fetch(API_URL, {
     method: "POST",
     headers: {
@@ -347,34 +347,34 @@ function callSubmission(loanAmount, tenure) {
       return response.json();
     })
     .then((data) => {
-
+ 
       console.log("API Response:", data);
-
+ 
       // ✅ Success case
       if (data?.status?.responseCode === "0") {
-
+ 
         const acknowledgementId = data?.responseString?.acknowledgementId;
-
+ 
         // 🎯 TARGET USING NAME ONLY (NO ID / DATA-ID)
         const inputField = document.querySelector(
           '[name="loan_application_number"]'
         );
-
+ 
         if (inputField) {
           inputField.value = acknowledgementId ? String(acknowledgementId) : "";
-
+ 
           // 🔥 Trigger change so AEM detects update
           inputField.dispatchEvent(new Event("input", { bubbles: true }));
           inputField.dispatchEvent(new Event("change", { bubbles: true }));
-
+ 
           // Optional UX
           inputField.readOnly = true;
-
+ 
           console.log("✅ Loan Application Number set:", acknowledgementId);
         } else {
           console.error("❌ Field with name 'loan_application_number' not found");
         }
-
+ 
       } else {
         alert(data?.status?.errorDesc || "Submission failed");
       }
@@ -384,7 +384,7 @@ function callSubmission(loanAmount, tenure) {
       alert("Something went wrong. Please try again.");
     });
 }
-
+ 
 /**
  * Tier2: Initiate Customer Identification
  * Uses mobile + (PAN OR DOB)
@@ -393,38 +393,38 @@ function callSubmission(loanAmount, tenure) {
  * @param {string} pan_no
  */
 function callInitiateCustomerIdentification(mobileNo, pan_no) {
-
+ 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/InitiateCustomerIdentification";
-
+ 
   // 🎯 Get DOB directly from calendar field (AEM safe)
   const dobField = document.querySelector('[name="date_of_birth"]');
   const date_of_birth = dobField ? dobField.value : "";
-
+ 
   console.log("Inputs:", { mobileNo, pan_no, date_of_birth });
-
+ 
   // ✅ Basic validation
   if (!mobileNo) {
     alert("Mobile number is required");
     return;
   }
-
+ 
   // ✅ Build request
   const requestString = {
     mobileNo: mobileNo
   };
-
+ 
   // Only one will be present
   if (pan_no && pan_no.trim() !== "") {
     requestString.panNumber = pan_no.trim();
-  } 
+  }
   else if (date_of_birth && date_of_birth.trim() !== "") {
     requestString.dateOfBirth = date_of_birth.trim();
-  } 
+  }
   else {
     alert("Enter PAN or Date of Birth");
     return;
   }
-
+ 
   // 🚀 API Call
   fetch(API_URL, {
     method: "POST",
@@ -443,34 +443,34 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
       return response.json();
     })
     .then((data) => {
-
+ 
       console.log("API Response:", data);
-
+ 
       // ✅ Success case
       if (data?.status?.responseCode === "0") {
-
+ 
         const otp = data?.responseString?.otp;
         const partnerJourneyID = data?.contextParam?.partnerJourneyID;
-
+ 
         // 🎯 Set OTP field
         const otpField = document.querySelector('[name="otp_code"]');
         if (otpField) {
           otpField.value = otp ? String(otp) : "";
-
+ 
           // 🔥 Trigger AEM reactivity
           otpField.dispatchEvent(new Event("input", { bubbles: true }));
           otpField.dispatchEvent(new Event("change", { bubbles: true }));
         }
-
+ 
         // 🎯 Set Partner Journey ID (optional hidden field)
         const journeyField = document.querySelector('[name="partner_journey_id"]');
         if (journeyField) {
           journeyField.value = partnerJourneyID ? String(partnerJourneyID) : "";
           journeyField.dispatchEvent(new Event("change", { bubbles: true }));
         }
-
+ 
         console.log("✅ Tier2 Initiation Success");
-
+ 
       } else {
         alert(data?.status?.errorDesc || "API failed");
       }
@@ -480,12 +480,12 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
       alert("Something went wrong. Please try again.");
     });
 }
-
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
+ 
 /**
  * Tier2: Verify OTP and Fetch Customer Details
  * Works with mobileNo + OTP (no partnerJourneyID)
@@ -495,20 +495,20 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
  * @param {string} mobileNo
  * @param {string} otp
 */function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
-
+ 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/VerifyOTPAndGetDemogDetails";
-
+ 
   console.log("Inputs:", { mobileNo, otp });
-
+ 
   const otpWrapper = document.querySelector('.field-otp-status');
   const otpField   = document.querySelector('[name="otp_status"]');
   const submitBtn  = document.querySelector('button[name="otp_submit2"]');
   const nextBtn    = document.querySelector('button#button-508dd41726');
   const otpInput   = document.querySelector('[data-id="textinput-d8e61b9fd5"] input');
-
+ 
   // ── Hide Next button initially ───────────────────────────────────────────
   if (nextBtn) nextBtn.classList.remove("visible");
-
+ 
   // ── Re-enable submit when user edits OTP ────────────────────────────────
   if (otpInput && !otpInput.dataset.listenerAttached) {
     otpInput.addEventListener("input", () => {
@@ -518,16 +518,16 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
     });
     otpInput.dataset.listenerAttached = "true";
   }
-
+ 
   // ── Hide error on fresh call ─────────────────────────────────────────────
   if (otpWrapper) otpWrapper.classList.remove('visible');
-
+ 
   // ── Guard ────────────────────────────────────────────────────────────────
   if (!mobileNo || !otp) {
     alert("Please enter mobile number and OTP");
     return;
   }
-
+ 
   // ── Helper: set field value ──────────────────────────────────────────────
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
@@ -537,7 +537,7 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
     el.dispatchEvent(new Event("change", { bubbles: true }));
     el.dispatchEvent(new Event("blur",   { bubbles: true }));
   }
-
+ 
   // ── Helper: show OTP message ─────────────────────────────────────────────
   function updateOtpMessage(message, isError = false) {
     if (otpField) {
@@ -546,7 +546,7 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
       otpField.dispatchEvent(new Event("input",  { bubbles: true }));
       otpField.dispatchEvent(new Event("change", { bubbles: true }));
     }
-
+ 
     if (otpWrapper) {
       otpWrapper.classList.add("visible");
       const msgEl = otpWrapper.querySelector(".field-description") || otpWrapper;
@@ -554,7 +554,7 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
       msgEl.style.color = isError ? "red" : "green";
     }
   }
-
+ 
   // ── API Call ─────────────────────────────────────────────────────────────
   fetch(API_URL, {
     method: "POST",
@@ -572,161 +572,161 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
       return response.json();
     })
     .then((data) => {
-
+ 
       console.log("API Response:", data);
-
+ 
       // ✅ SUCCESS
       if (data?.status?.responseCode === "0") {
-
+ 
         const customer = data?.responseString?.OfferDemogDetails?.[0];
-
+ 
         if (!customer) {
           alert("Customer data not found");
           return;
         }
-
+ 
         if (submitBtn) submitBtn.disabled = false;
-
+ 
         // ✅ Show Next button via class
         if (nextBtn) nextBtn.classList.add("visible");
-
+ 
         updateOtpMessage("OTP verified successfully", false);
-
+ 
         setField("fullname_adhar", customer.fullName);
         setField("address_aadhar", customer.address);
-
+ 
         console.log("✅ Customer details filled successfully");
-
+ 
       } else {
-
+ 
         // ❌ Invalid OTP
         if (submitBtn) submitBtn.disabled = true;
         if (nextBtn) nextBtn.classList.remove("visible");
-
+ 
         updateOtpMessage(data?.status?.errorDesc || "Invalid OTP", true);
-
+ 
         console.log("❌ Invalid OTP");
       }
     })
     .catch((error) => {
       console.error("❌ Error:", error);
-
+ 
       if (submitBtn) submitBtn.disabled = true;
       if (nextBtn) nextBtn.classList.remove("visible");
-
+ 
       updateOtpMessage("Something went wrong", true);
     });
 }
-
+ 
 /**
-//  * PAN Verification Function
-//  * @param {string} mobileNo
-//  * @param {string} pan_no
-//  
-// function callPANEnquiry(mobileNo, pan_no) {
-
-//   const API_URL = "https://loan-backend-mock.onrender.com/tier2/PANEnquiry";
-
-//   console.log("Inputs:", { mobileNo, pan_no });
-
-//   // 🎯 Get full name (auto-filled earlier)
-//   const nameField = document.querySelector('[name="fullname_adhar"]');
-//   const fullName = nameField ? nameField.value.trim() : "";
-
-//   // 🎯 Target wrappers (AEM safe)
-//   const successWrapper = document.querySelector('.field-verify-pan');
-//   const errorWrapper = document.querySelector('.field-pan-error');
-
-//   // 🔄 Reset messages
-//   if (successWrapper) successWrapper.style.display = "none";
-//   if (errorWrapper) errorWrapper.style.display = "none";
-
-//   // ✅ Basic validation
-//   if (!mobileNo || !pan_no || !fullName) {
-//     console.warn("Missing input values");
-//     if (errorWrapper) errorWrapper.style.display = "block";
-//     return;
-//   }
-
-//   // 🚀 Call API
-//   fetch(API_URL, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       contextParam: {},
-//       requestString: {
-//         mobileNo: mobileNo,
-//         panNumber: pan_no,
-//         fullName: fullName
-//       }
-//     }),
-//   })
-//     .then((response) => {
-//       if (!response.ok) throw new Error("Network error");
-//       return response.json();
-//     })
-//     .then((data) => {
-
-//       console.log("PAN API Response:", data);
-
-//       if (data?.status?.responseCode === "0") {
-
-//         // ✅ SUCCESS
-//         if (successWrapper) successWrapper.style.display = "block";
-//         if (errorWrapper) errorWrapper.style.display = "none";
-
-//       } else {
-
-//         // ❌ FAILURE
-//         if (errorWrapper) errorWrapper.style.display = "block";
-//         if (successWrapper) successWrapper.style.display = "none";
-//       }
-//     })
-//     .catch((error) => {
-
-//       console.error("PAN API Error:", error);
-
-//       // ❌ ERROR CASE
-//       if (errorWrapper) errorWrapper.style.display = "block";
-//       if (successWrapper) successWrapper.style.display = "none";
-//     });
-// }
-
-
+ * PAN Verification Function
+ * @param {string} mobileNo
+ * @param {string} pan_no
+ */
+function callPANEnquiry(mobileNo, pan_no) {
+ 
+  const API_URL = "https://loan-backend-mock.onrender.com/tier2/PANEnquiry";
+ 
+  console.log("Inputs:", { mobileNo, pan_no });
+ 
+  // 🎯 Get full name (auto-filled earlier)
+  const nameField = document.querySelector('[name="fullname_adhar"]');
+  const fullName = nameField ? nameField.value.trim() : "";
+ 
+  // 🎯 Target wrappers (AEM safe)
+  const successWrapper = document.querySelector('.field-verify-pan');
+  const errorWrapper = document.querySelector('.field-pan-error');
+ 
+  // 🔄 Reset messages
+  if (successWrapper) successWrapper.style.display = "none";
+  if (errorWrapper) errorWrapper.style.display = "none";
+ 
+  // ✅ Basic validation
+  if (!mobileNo || !pan_no || !fullName) {
+    console.warn("Missing input values");
+    if (errorWrapper) errorWrapper.style.display = "block";
+    return;
+  }
+ 
+  // 🚀 Call API
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      contextParam: {},
+      requestString: {
+        mobileNo: mobileNo,
+        panNumber: pan_no,
+        fullName: fullName
+      }
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error("Network error");
+      return response.json();
+    })
+    .then((data) => {
+ 
+      console.log("PAN API Response:", data);
+ 
+      if (data?.status?.responseCode === "0") {
+ 
+        // ✅ SUCCESS
+        if (successWrapper) successWrapper.style.display = "block";
+        if (errorWrapper) errorWrapper.style.display = "none";
+ 
+      } else {
+ 
+        // ❌ FAILURE
+        if (errorWrapper) errorWrapper.style.display = "block";
+        if (successWrapper) successWrapper.style.display = "none";
+      }
+    })
+    .catch((error) => {
+ 
+      console.error("PAN API Error:", error);
+ 
+      // ❌ ERROR CASE
+      if (errorWrapper) errorWrapper.style.display = "block";
+      if (successWrapper) successWrapper.style.display = "none";
+    });
+}
+ 
+ 
 /**
  * Get Bureau Offer + Populate All Fields (AEM Safe)
  * Uses data-id for bank selection
  */
 function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
-
+ 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/GetBureauOffer";
-
+ 
   // 🎯 Get selected bank using data-id
   const selectedRadio = document.querySelector('[data-id^="bank-options"] input[type="radio"]:checked');
   const bankName = selectedRadio ? selectedRadio.value.trim() : "";
-
+ 
   console.log("Inputs:", { mobileNo, monthlyIncome, bankName, verificationMethod });
-
+ 
   // ✅ Validation
   if (!mobileNo || !monthlyIncome || !bankName || !verificationMethod) {
     alert("All fields are required");
     return;
   }
-
+ 
   // 🔧 Helper (AEM reactive)
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
     if (!el) return;
-
+ 
     el.value = value ?? "";
-
+ 
     el.dispatchEvent(new Event("input", { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
     el.dispatchEvent(new Event("blur", { bubbles: true }));
   }
-
+ 
   // 🚀 API call
   fetch(API_URL, {
     method: "POST",
@@ -749,38 +749,38 @@ function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
       return res.json();
     })
     .then((data) => {
-
+ 
       console.log("API Response:", data);
-
+ 
       if (data?.status?.responseCode === "0") {
-
+ 
         const r = data.responseString || {};
-
+ 
         // 🔢 Loan Details
         setField("loan_amount", r.offerAmount);
        
-        
+       
         setField("processing_fee", r.processingFees);
-        
-
+       
+ 
         // 📌 Other Details
         setField("inquiry_source", r.enquirySource);
-
+ 
        
-
+ 
         // Static
         setField("type_of_loan", "Personal Loan");
-
+ 
         // 🏦 Salary Account Details
         setField("salary_account_number", r.salaryAccountDetails?.accountNumber);
         setField("ifsc", r.salaryAccountDetails?.ifsc);
         setField("bank_name", r.salaryAccountDetails?.bankName);
-
+ 
         // 🎯 Banner
         setField("loan_offer_banner", `₹ ${r.offerAmount}`);
-
+ 
         console.log("✅ All fields populated successfully");
-
+ 
       } else {
         alert(data?.status?.errorDesc || "Failed to fetch offer");
       }
@@ -790,8 +790,8 @@ function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
       alert("Something went wrong");
     });
 }
-
-
+ 
+ 
 /**
  * Calls FinalSubmission API and fills Loan Application Number
  * @param {string} mobileNo
@@ -799,29 +799,29 @@ function callGetBureauOffer(mobileNo, monthlyIncome, verificationMethod) {
  * @param {string|number} tenure
  */
 function callFinalSubmission(mobileNo, loanAmount, tenure) {
-
+ 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/FinalSubmission";
-
+ 
   console.log("Inputs:", { mobileNo, loanAmount, tenure });
-
+ 
   // ✅ Basic validation
   if (!mobileNo || !loanAmount || !tenure) {
     alert("All fields are required");
     return;
   }
-
+ 
   // 🔧 Helper (AEM reactive)
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
     if (!el) return;
-
+ 
     el.value = value ?? "";
-
+ 
     el.dispatchEvent(new Event("input", { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
     el.dispatchEvent(new Event("blur", { bubbles: true }));
   }
-
+ 
   // 🚀 API Call
   fetch(API_URL, {
     method: "POST",
@@ -842,18 +842,18 @@ function callFinalSubmission(mobileNo, loanAmount, tenure) {
       return res.json();
     })
     .then((data) => {
-
+ 
       console.log("API Response:", data);
-
+ 
       if (data?.status?.responseCode === "0") {
-
+ 
         const acknowledgementId = data?.responseString?.acknowledgementId;
-
+ 
         // 🎯 Set value in your field
         setField("loan_application_numberr2", acknowledgementId);
-
+ 
         console.log("✅ Loan Application Number set:", acknowledgementId);
-
+ 
       } else {
         alert(data?.status?.errorDesc || "Submission failed");
       }
@@ -863,9 +863,9 @@ function callFinalSubmission(mobileNo, loanAmount, tenure) {
       alert("Something went wrong");
     });
 }
-
-
-
+ 
+ 
+ 
 /**
  * Calls generateEmailOTP API
  *
@@ -873,29 +873,29 @@ function callFinalSubmission(mobileNo, loanAmount, tenure) {
  * @param {string} email
  */
 function callGenerateEmailOTP(email) {
-
+ 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/generateEmailOTP";
-
+ 
   console.log("Email:", email);
-
+ 
   if (!email) {
     alert("Please enter email");
     return;
   }
-
+ 
   function setOTP(value) {
     const input = document.querySelector('[name="email_otp"]');
     if (!input) return;
-
+ 
     // 🔥 Use requestAnimationFrame (prevents blocking)
     requestAnimationFrame(() => {
       input.value = value || "";
-
+ 
       input.dispatchEvent(new Event("input", { bubbles: true }));
       input.dispatchEvent(new Event("change", { bubbles: true }));
     });
   }
-
+ 
   // 🚀 Async API (non-blocking)
   (async () => {
     try {
@@ -909,62 +909,62 @@ function callGenerateEmailOTP(email) {
           requestString: { email }
         })
       });
-
+ 
       if (!res.ok) throw new Error("API error");
-
+ 
       const data = await res.json();
-
+ 
       console.log("API Response:", data);
-
+ 
       if (data?.status?.responseCode === "0") {
-
+ 
         const otp = data?.responseString?.otp;
-
+ 
         setOTP(otp);
-
+ 
         console.log("✅ OTP set successfully:", otp);
-
+ 
       } else {
         alert(data?.status?.errorDesc || "Failed to generate OTP");
       }
-
+ 
     } catch (err) {
       console.error("❌ Error:", err);
       alert("Something went wrong");
     }
   })();
 }
-
-
-
+ 
+ 
+ 
 // 🔥 global variable (must already exist)
-
-
-
+ 
+ 
+ 
 /**
  * Validate Email OTP
  * - Shows error text if invalid
  * - Disables submit button if invalid
  * - Enables button if valid
- * 
+ *
  *
  */
 function callValidateEmailOTP(otp) {
-
+ 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP";
-
+ 
   otp = String(otp).trim();
-
+ 
   const errorWrapper = document.querySelector('[data-id="text-d79db67206"]');
   const submitBtn = document.querySelector('button[name="submit_otpp"]');
   const otpInput = document.querySelector('[data-id="textinput-ed810a56e2"] input');
   const backBtn = document.querySelector('button[name="back_email"]');
-
+ 
   // ✅ NEW: Verify Mail Button
   const verifyBtn = document.querySelector('[name="verify_work"]');
-
+ 
   const errorTextEl = errorWrapper?.querySelector("p");
-
+ 
   function showError() {
     if (errorWrapper) errorWrapper.style.display = "block";
     if (errorTextEl) {
@@ -974,16 +974,16 @@ function callValidateEmailOTP(otp) {
     if (submitBtn) submitBtn.disabled = true;
     if (backBtn) backBtn.disabled = true;
   }
-
+ 
   function showSuccess() {
     if (errorWrapper) errorWrapper.style.display = "block";
     if (errorTextEl) {
       errorTextEl.textContent = "OTP verified successfully";
     }
-
+ 
     if (submitBtn) submitBtn.disabled = false;
     if (backBtn) backBtn.disabled = false;
-
+ 
     // ✅ UPDATE VERIFY BUTTON HERE
     if (verifyBtn) {
       verifyBtn.textContent = "Verified";
@@ -991,11 +991,11 @@ function callValidateEmailOTP(otp) {
       verifyBtn.classList.add("verified");
     }
   }
-
+ 
   function hideMessage() {
     if (errorWrapper) errorWrapper.style.display = "none";
   }
-
+ 
   if (otpInput && !otpInput.dataset.listenerAttached) {
     otpInput.addEventListener("input", () => {
       hideMessage();
@@ -1003,16 +1003,16 @@ function callValidateEmailOTP(otp) {
     });
     otpInput.dataset.listenerAttached = "true";
   }
-
+ 
   hideMessage();
-
+ 
   if (!otp) {
     showError();
     return;
   }
-
+ 
   if (submitBtn) submitBtn.disabled = true;
-
+ 
   fetch(API_URL, {
     method: "POST",
     headers: {
@@ -1038,56 +1038,56 @@ function callValidateEmailOTP(otp) {
       showError();
     });
 }
-
+ 
 function handleProceedButton() {
-
+ 
   console.log("Proceed clicked");
-
+ 
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
     if (!el) {
       console.warn(`⚠️ Field not found: ${name}`);
       return;
     }
-
+ 
     // Step 1: set immediately
     el.value = value || "";
     el.setAttribute("value", value || "");
-
+ 
     // Step 2: trigger events
     el.dispatchEvent(new Event("input", { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
-
+ 
     // Step 3: 🔥 FORCE EDS re-sync (this is the key)
     setTimeout(() => {
       el.value = value || "";
       el.setAttribute("value", value || "");
-
+ 
       el.dispatchEvent(new Event("input", { bubbles: true }));
       el.dispatchEvent(new Event("change", { bubbles: true }));
-
+ 
       console.log(`✅ FINAL SET [${name}] = ${value}`);
     }, 50);
   }
-
+ 
   // ✅ Read correct values
   const loanAmount     = document.querySelector('[name="loan_amount_inr"]')?.value;
   const tenure         = document.querySelector('[name="loan_tenure_months"]')?.value;
   const emiAmount      = document.querySelector('[name="emi_amount"]')?.value;
   const rateOfInterest = document.querySelector('[name="rate_of_interest"]')?.value;
-
+ 
   console.log("Values:", { loanAmount, tenure, emiAmount, rateOfInterest });
-
+ 
   // ✅ Set values
   setField("loan_amountr", loanAmount);
   setField("tenurer", tenure);
   setField("emi_amountr", emiAmount);
   setField("rateOFinterestr", rateOfInterest);
-
+ 
   console.log("✅ Data transferred successfully");
 }
-
-
+ 
+ 
 // Prevent form reload
 document.addEventListener("click", function (e) {
   if (e.target && e.target.name === "proceed_button") {
@@ -1095,80 +1095,80 @@ document.addEventListener("click", function (e) {
     handleProceedButton();
   }
 });
-
+ 
 function initOtpTimer() {
   const TIMER_DURATION = 30;
   const MAX_RESEND_CLICKS = 3;
-
+ 
   const timerTextWrapper = document.querySelector('[data-id="text-55edb44cad"]');
   const resendBtnWrapper = document.querySelector('[data-id="button-ae34ef57ad"]');
   const resendBtn = document.querySelector('[name="resend_otp_mail"]');
   const invalidOtpMsg = document.querySelector('[data-id="text-d79db67206"]');
   const backBtn = document.querySelector('[name="back_email"]'); // ✅ added
-
+ 
   if (!timerTextWrapper || !resendBtnWrapper || !resendBtn) {
     console.error("Missing required elements");
     return;
   }
-
+ 
   let countdown = null;
   let resendClickCount = 0;
-
+ 
   function setTimerText(seconds) {
     const target = timerTextWrapper.querySelector("p");
     if (!target) return;
-
+ 
     target.textContent =
       seconds > 0
         ? `Resend OTP in ${seconds} second${seconds !== 1 ? "s" : ""}`
         : "You can now resend the OTP.";
   }
-
+ 
   function disableResend() {
     resendBtn.disabled = true;
     resendBtnWrapper.classList.add("disabled");
   }
-
+ 
   function enableResend() {
     if (resendClickCount < MAX_RESEND_CLICKS) {
       resendBtn.disabled = false;
       resendBtnWrapper.classList.remove("disabled");
     }
   }
-
+ 
   function disableResendForever() {
     resendBtn.disabled = true;
     resendBtnWrapper.classList.add("disabled");
-
+ 
     const target = timerTextWrapper.querySelector("p");
     if (target) {
       target.textContent = "Maximum OTP resend attempts reached.";
     }
-
+ 
     // ✅ ENABLE BACK BUTTON HERE
     if (backBtn) {
       backBtn.disabled = false;
     }
   }
-
+ 
   function startTimer() {
     if (countdown) clearInterval(countdown);
-
+ 
     disableResend();
-
+ 
     if (invalidOtpMsg) invalidOtpMsg.style.display = "none";
-
+ 
     let secondsLeft = TIMER_DURATION;
     setTimerText(secondsLeft);
-
+ 
     countdown = setInterval(() => {
       secondsLeft--;
       setTimerText(secondsLeft);
-
+ 
       if (secondsLeft <= 0) {
         clearInterval(countdown);
         countdown = null;
-
+ 
         if (resendClickCount >= MAX_RESEND_CLICKS) {
           disableResendForever();
         } else {
@@ -1177,37 +1177,38 @@ function initOtpTimer() {
       }
     }, 1000);
   }
-
+ 
   resendBtn.addEventListener("click", (e) => {
     e.preventDefault();
-
+ 
     if (resendClickCount >= MAX_RESEND_CLICKS) {
       disableResendForever();
       return;
     }
-
+ 
     resendClickCount++;
-
+ 
     if (resendClickCount >= MAX_RESEND_CLICKS) {
       disableResendForever();
     }
-
+ 
     startTimer();
   });
-
+ 
   // Initial state
   disableResend();
-
+ 
   // ❗ Optional (recommended): keep back disabled initially
   if (backBtn) {
     backBtn.disabled = true;
   }
-
+ 
   startTimer();
 }
-
+ 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initOtpTimer);
 } else {
   initOtpTimer();
 }
+ 
