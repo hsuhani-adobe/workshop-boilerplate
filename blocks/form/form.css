@@ -8484,7 +8484,7 @@ legend.field-label.accordion-legend[for="panelcontainer-dfec8b6c50"]::before {
 /* ================= Next Button ================= */
 
 div.field-next > button#button-508dd41726 {
- 
+  display: none !important;
   justify-content: center !important;
   align-items: center !important;
   padding: 14px 20px !important;
