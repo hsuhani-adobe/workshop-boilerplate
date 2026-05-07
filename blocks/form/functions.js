@@ -1032,50 +1032,55 @@ function callValidateEmailOTP(email, otp) {
 }
 
 
+// ── Handle Proceed Button ────────────────────────────────────────────────
+function handleProceedButton() {
 
-/**
- * Handle Proceed Button Click
- * Reads values from Loan Summary Panel and writes to Personal Details Panel
- * @param {string/number} loanAmount     - loan amount from loan summary panel
- * @param {string/number} tenure         - tenure in months from loan summary panel
- * @param {string/number} emiAmount      - emi amount from loan summary panel
- * @param {string/number} rateOfInterest - rate of interest from loan summary panel
- */
-function handleProceedButton(loanAmount, tenure, emiAmount, rateOfInterest) {
+  console.log("Proceed clicked");
 
-  console.log("Proceed clicked. Values:", { loanAmount, tenure, emiAmount, rateOfInterest });
-
-  // ── Helper ───────────────────────────────────────────────────────────────
+  // ── Helper (AEM-safe field update) ─────────────────────────────────────
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
-    if (!el)    { console.warn(`⚠️ Field not found: ${name}`); return; }
-    if (!value) { console.warn(`⚠️ Empty value for: ${name}`); return; }
-    el.value = value;
+    if (!el) {
+      console.warn(`⚠️ Field not found: ${name}`);
+      return;
+    }
+
+    el.value = value || "";
+    el.setAttribute("value", value || "");
+
+    // Trigger AEM updates
     el.dispatchEvent(new Event("input",  { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
     el.dispatchEvent(new Event("blur",   { bubbles: true }));
+
     console.log(`✅ Set [${name}] = ${value}`);
   }
 
-  // ── Write to Personal Details Panel ──────────────────────────────────────
+  // ── Read values from Loan Offer Panel ──────────────────────────────────
+  const loanAmount     = document.querySelector('[name="loan_amount_inr"]')?.value;
+  const tenure         = document.querySelector('[name="loan_tenure_months"]')?.value;
+  const emiAmount      = document.querySelector('[name="emi_amount"]')?.value;
+  const rateOfInterest = document.querySelector('[name="rate_of_interest"]')?.value;
+
+  console.log("Values:", { loanAmount, tenure, emiAmount, rateOfInterest });
+
+  // ── Write values to Personal Details Panel ─────────────────────────────
   setField("loan_amountr",    loanAmount);
   setField("tenurer",         tenure);
   setField("emi_amountr",     emiAmount);
   setField("rateOFinterestr", rateOfInterest);
 
-  console.log("✅ Done");
+  console.log("✅ Data transferred successfully");
 }
 
-// ── Attach to proceed button ──────────────────────────────────────────────
+
+// ── Attach Click Event (Prevent form reload) ─────────────────────────────
 document.addEventListener("click", function (e) {
+
   if (e.target && e.target.name === "proceed_button") {
 
-    // ── Read from Loan Summary Panel ────────────────────────────────────
-    const loanAmount     = document.querySelector('[name="loan_amount"]')?.value;
-    const tenure         = document.querySelector('[name="tenure_in_months"]')?.value;
-    const emiAmount      = document.querySelector('[name="emi_amount"]')?.value;
-    const rateOfInterest = document.querySelector('[name="rate_of_interest"]')?.value;
+    e.preventDefault(); // 🔥 VERY IMPORTANT (stops page refresh)
 
-    handleProceedButton(loanAmount, tenure, emiAmount, rateOfInterest);
+    handleProceedButton();
   }
 });
