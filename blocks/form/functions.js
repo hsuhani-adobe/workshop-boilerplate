@@ -59,8 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,callValidateEmailOTP,handleProceedButton,
-   initOtpTimer,
+  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,callValidateEmailOTP,handleProceedButton,initOtpTimer,
 };
 
 
@@ -1085,33 +1084,38 @@ document.addEventListener("click", function (e) {
 });
 
 
-
 function initOtpTimer() {
   const TIMER_DURATION = 30;
   const MAX_RESEND_CLICKS = 3;
 
   const timerTextWrapper = document.querySelector('[data-id="text-55edb44cad"]');
   const resendBtnWrapper = document.querySelector('[data-id="button-b0b7708f67"]');
-  const resendBtn        = document.querySelector('[data-id="button-b0b7708f67"] [name="resend_otp_email"]');
-  const submitBtn        = document.querySelector('[name="submit_otpp"]');
-  const otpInput         = document.querySelector('[name="email_otp"]');
-  const invalidOtpMsg    = document.querySelector('[data-id="text-d79db67206"]');
+  const resendBtn = document.querySelector('[name="resend_otp_email"]');
+  const submitBtn = document.querySelector('[name="submit_otpp"]');
+  const otpInput = document.querySelector('[name="email_otp"]');
+  const invalidOtpMsg = document.querySelector('[data-id="text-d79db67206"]');
+
+  // Safety check
+  if (!timerTextWrapper || !resendBtnWrapper || !resendBtn || !submitBtn || !otpInput) {
+    console.error("OTP Timer: Missing required elements");
+    return;
+  }
 
   let countdown = null;
   let resendClickCount = 0;
 
   function setTimerText(seconds) {
-    const target = timerTextWrapper.querySelector("p p");
-    if (target) {
-      target.textContent =
-        seconds > 0
-          ? `Resend OTP in ${seconds} second${seconds !== 1 ? "s" : ""}`
-          : "You can now resend the OTP.";
-    }
+    const target = timerTextWrapper.querySelector("p"); // FIXED
+    if (!target) return;
+
+    target.textContent =
+      seconds > 0
+        ? `Resend OTP in ${seconds} second${seconds !== 1 ? "s" : ""}`
+        : "You can now resend the OTP.";
   }
 
   function showResendBtnWrapper() {
-    resendBtnWrapper.style.display = "";
+    resendBtnWrapper.style.display = "block";
   }
 
   function hideResendBtnWrapper() {
@@ -1121,15 +1125,20 @@ function initOtpTimer() {
   function disableResendForever() {
     resendBtn.disabled = true;
     hideResendBtnWrapper();
-    const target = timerTextWrapper.querySelector("p p");
-    if (target) target.textContent = "Maximum OTP resend attempts reached.";
+
+    const target = timerTextWrapper.querySelector("p");
+    if (target) {
+      target.textContent = "Maximum OTP resend attempts reached.";
+    }
   }
 
   function startTimer() {
     if (countdown) clearInterval(countdown);
 
     hideResendBtnWrapper();
-    invalidOtpMsg.style.display = "none";
+
+    if (invalidOtpMsg) invalidOtpMsg.style.display = "none";
+
     otpInput.value = "";
     submitBtn.disabled = true;
 
@@ -1153,11 +1162,18 @@ function initOtpTimer() {
     }, 1000);
   }
 
+  // OTP validation (length + numeric)
   otpInput.addEventListener("input", () => {
-    submitBtn.disabled = otpInput.value.trim().length !== 6;
+    const value = otpInput.value.trim();
+    const isValid = /^[0-9]{6}$/.test(value);
+
+    submitBtn.disabled = !isValid;
   });
 
-  resendBtn.addEventListener("click", () => {
+  resendBtn.addEventListener("click", (e) => {
+    e.preventDefault(); // IMPORTANT FIX
+    if (resendClickCount >= MAX_RESEND_CLICKS) return;
+
     resendClickCount++;
     startTimer();
   });
@@ -1165,6 +1181,7 @@ function initOtpTimer() {
   startTimer();
 }
 
+// Init safely
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initOtpTimer);
 } else {
