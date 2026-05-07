@@ -1083,6 +1083,7 @@ document.addEventListener("click", function (e) {
   }
 });
 
+
 function initOtpTimer() {
   const TIMER_DURATION = 30;
   const MAX_RESEND_CLICKS = 3;
@@ -1090,7 +1091,6 @@ function initOtpTimer() {
   const timerTextWrapper = document.querySelector('[data-id="text-55edb44cad"]');
   const resendBtnWrapper = document.querySelector('[data-id="button-ae34ef57ad"]');
   const resendBtn = document.querySelector('[name="resend_otp_mail"]');
-  const submitBtn = document.querySelector('[name="submit_otpp"]');
   const invalidOtpMsg = document.querySelector('[data-id="text-d79db67206"]');
 
   if (!timerTextWrapper || !resendBtnWrapper || !resendBtn) {
@@ -1117,8 +1117,11 @@ function initOtpTimer() {
   }
 
   function enableResend() {
-    resendBtn.disabled = false;
-    resendBtnWrapper.classList.remove("disabled");
+    // Only enable if limit not reached
+    if (resendClickCount < MAX_RESEND_CLICKS) {
+      resendBtn.disabled = false;
+      resendBtnWrapper.classList.remove("disabled");
+    }
   }
 
   function disableResendForever() {
@@ -1149,10 +1152,11 @@ function initOtpTimer() {
         clearInterval(countdown);
         countdown = null;
 
-        if (resendClickCount < MAX_RESEND_CLICKS) {
-          enableResend();
-        } else {
+        // 🔥 STRICT CHECK HERE
+        if (resendClickCount >= MAX_RESEND_CLICKS) {
           disableResendForever();
+        } else {
+          enableResend();
         }
       }
     }, 1000);
@@ -1161,9 +1165,19 @@ function initOtpTimer() {
   resendBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    if (resendClickCount >= MAX_RESEND_CLICKS) return;
+    // 🔥 HARD STOP after 3 clicks
+    if (resendClickCount >= MAX_RESEND_CLICKS) {
+      disableResendForever();
+      return;
+    }
 
     resendClickCount++;
+
+    // Immediately disable if this was the last allowed click
+    if (resendClickCount >= MAX_RESEND_CLICKS) {
+      disableResendForever();
+    }
+
     startTimer();
   });
 
