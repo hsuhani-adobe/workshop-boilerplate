@@ -1083,7 +1083,6 @@ document.addEventListener("click", function (e) {
   }
 });
 
-
 function initOtpTimer() {
   const TIMER_DURATION = 30;
   const MAX_RESEND_CLICKS = 3;
@@ -1092,10 +1091,9 @@ function initOtpTimer() {
   const resendBtnWrapper = document.querySelector('[data-id="button-ae34ef57ad"]');
   const resendBtn = document.querySelector('[name="resend_otp_mail"]');
   const submitBtn = document.querySelector('[name="submit_otpp"]');
-  const otpInput = document.querySelector('[name="email_otp"]');
   const invalidOtpMsg = document.querySelector('[data-id="text-d79db67206"]');
 
-  if (!timerTextWrapper || !resendBtnWrapper || !resendBtn || !submitBtn || !otpInput) {
+  if (!timerTextWrapper || !resendBtnWrapper || !resendBtn) {
     console.error("Missing required elements");
     return;
   }
@@ -1140,9 +1138,6 @@ function initOtpTimer() {
 
     if (invalidOtpMsg) invalidOtpMsg.style.display = "none";
 
-    otpInput.value = "";
-    submitBtn.disabled = true;
-
     let secondsLeft = TIMER_DURATION;
     setTimerText(secondsLeft);
 
@@ -1163,12 +1158,6 @@ function initOtpTimer() {
     }, 1000);
   }
 
-  // OTP validation (6-digit number)
-  otpInput.addEventListener("input", () => {
-    const value = otpInput.value.trim();
-    submitBtn.disabled = !/^[0-9]{6}$/.test(value);
-  });
-
   resendBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -1183,7 +1172,6 @@ function initOtpTimer() {
   startTimer();
 }
 
-// Init
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initOtpTimer);
 } else {
