@@ -1032,12 +1032,10 @@ function callValidateEmailOTP(email, otp) {
 }
 
 
-// ── Handle Proceed Button ────────────────────────────────────────────────
 function handleProceedButton() {
 
   console.log("Proceed clicked");
 
-  // ── Helper (AEM-safe field update) ─────────────────────────────────────
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
     if (!el) {
@@ -1045,6 +1043,11 @@ function handleProceedButton() {
       return;
     }
 
+    // 🔥 Remove readonly temporarily
+    const wasReadOnly = el.hasAttribute("readonly");
+    if (wasReadOnly) el.removeAttribute("readonly");
+
+    // Set value
     el.value = value || "";
     el.setAttribute("value", value || "");
 
@@ -1053,10 +1056,13 @@ function handleProceedButton() {
     el.dispatchEvent(new Event("change", { bubbles: true }));
     el.dispatchEvent(new Event("blur",   { bubbles: true }));
 
+    // 🔥 Restore readonly
+    if (wasReadOnly) el.setAttribute("readonly", true);
+
     console.log(`✅ Set [${name}] = ${value}`);
   }
 
-  // ── Read values from Loan Offer Panel ──────────────────────────────────
+  // ✅ Get correct values
   const loanAmount     = document.querySelector('[name="loan_amount_inr"]')?.value;
   const tenure         = document.querySelector('[name="loan_tenure_months"]')?.value;
   const emiAmount      = document.querySelector('[name="emi_amount"]')?.value;
@@ -1064,23 +1070,23 @@ function handleProceedButton() {
 
   console.log("Values:", { loanAmount, tenure, emiAmount, rateOfInterest });
 
-  // ── Write values to Personal Details Panel ─────────────────────────────
-  setField("loan_amountr",    loanAmount);
-  setField("tenurer",         tenure);
-  setField("emi_amountr",     emiAmount);
+  // 🚨 Clean EMI (remove ₹ and commas for safety)
+  const cleanEmi = emiAmount?.replace(/[₹,]/g, "");
+
+  // Set values
+  setField("loan_amountr", loanAmount);
+  setField("tenurer", tenure);
+  setField("emi_amountr", emiAmount); // keep ₹ for display
   setField("rateOFinterestr", rateOfInterest);
 
   console.log("✅ Data transferred successfully");
 }
 
 
-// ── Attach Click Event (Prevent form reload) ─────────────────────────────
+// Prevent form submit reload
 document.addEventListener("click", function (e) {
-
   if (e.target && e.target.name === "proceed_button") {
-
-    e.preventDefault(); // 🔥 VERY IMPORTANT (stops page refresh)
-
+    e.preventDefault();
     handleProceedButton();
   }
 });
