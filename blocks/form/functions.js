@@ -1085,18 +1085,19 @@ document.addEventListener("click", function (e) {
 
 
 
+
+
 function initOtpTimer() {
   const TIMER_DURATION = 30;
   const MAX_RESEND_CLICKS = 3;
 
-  // Targeted using data-id attributes
-  const timerTextWrapper = document.querySelector('[data-id="text-55edb44cad"]');
-  const resendBtnWrapper = document.querySelector('[data-id="button-b0b7708f67"]').closest('.field-resend-otp-email') 
-                           || document.querySelector('[data-id="button-b0b7708f67"]').parentElement;
-  const resendBtn        = document.querySelector('[name="resend_otp_email"]');
-  const submitBtn        = document.querySelector('[name="submit_otpp"]');
-  const otpInput         = document.querySelector('[name="email_otp"]');
-  const invalidOtpMsg    = document.querySelector('[data-id="text-d79db67206"]');
+  // Exact IDs and class names from your HTML
+  const timerTextWrapper  = document.getElementById("text-55edb44cad");        // "Resend OTP in 30 seconds"
+  const resendBtnWrapper  = document.querySelector(".field-resend-otp-email"); // wrapper div around resend button
+  const resendBtn         = document.getElementById("button-b0b7708f67");      // Resend OTP button
+  const submitBtn         = document.getElementById("submit-5ede64fcde");      // Submit button
+  const otpInput          = document.getElementById("textinput-ed810a56e2");   // OTP input field
+  const invalidOtpMsg     = document.getElementById("text-d79db67206");        // Invalid OTP message
 
   let countdown = null;
   let resendClickCount = 0;
@@ -1113,17 +1114,17 @@ function initOtpTimer() {
     }
   }
 
-  function showResendBtnWrapper() {
+  function showResendBtn() {
     resendBtnWrapper.style.display = "";
   }
 
-  function hideResendBtnWrapper() {
+  function hideResendBtn() {
     resendBtnWrapper.style.display = "none";
   }
 
   function disableResendForever() {
     resendBtn.disabled = true;
-    hideResendBtnWrapper();
+    hideResendBtn();
     const innerP = timerTextWrapper.querySelector("p > p");
     const target = innerP || timerTextWrapper.querySelector("p");
     if (target) target.textContent = "Maximum OTP resend attempts reached.";
@@ -1132,7 +1133,7 @@ function initOtpTimer() {
   function startTimer() {
     if (countdown) clearInterval(countdown);
 
-    hideResendBtnWrapper();
+    hideResendBtn();
     invalidOtpMsg.style.display = "none";
     otpInput.value = "";
     submitBtn.disabled = true;
@@ -1149,7 +1150,7 @@ function initOtpTimer() {
         countdown = null;
 
         if (resendClickCount < MAX_RESEND_CLICKS) {
-          showResendBtnWrapper();
+          showResendBtn();
         } else {
           disableResendForever();
         }
