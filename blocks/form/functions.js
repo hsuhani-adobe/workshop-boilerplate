@@ -506,9 +506,10 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
   const submitBtn  = document.querySelector('button[name="otp_submit2"]');
   const otpInput   = document.querySelector('[data-id="textinput-d8e61b9fd5"] input');
 
-  // ── When user edits OTP: only hide error, do NOT re-enable button ────────
+  // ── Re-enable submit when user edits OTP (registered only once) ──────────
   if (otpInput && !otpInput.dataset.listenerAttached) {
     otpInput.addEventListener("input", () => {
+      if (submitBtn) submitBtn.disabled = false;
       if (otpWrapper) otpWrapper.classList.remove("visible");
     });
     otpInput.dataset.listenerAttached = "true";
@@ -553,7 +554,7 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
 
       console.log("API Response:", data);
 
-      // ✅ SUCCESS — only place where submit is enabled
+      // ✅ SUCCESS
       if (data?.status?.responseCode === "0") {
 
         const customer = data?.responseString?.OfferDemogDetails?.[0];
@@ -563,8 +564,9 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
           return;
         }
 
+        // Hide error + keep submit enabled
         if (otpWrapper) otpWrapper.classList.remove('visible');
-        if (submitBtn) submitBtn.disabled = false;  // ✅ enabled only here
+        if (submitBtn) submitBtn.disabled = false;
 
         setField("fullname_adhar", customer.fullName);
         setField("address_aadhar", customer.address);
