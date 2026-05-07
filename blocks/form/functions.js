@@ -1084,6 +1084,8 @@ document.addEventListener("click", function (e) {
 });
 
 
+
+
 function initOtpTimer() {
   const TIMER_DURATION = 30;
   const MAX_RESEND_CLICKS = 3;
@@ -1095,9 +1097,8 @@ function initOtpTimer() {
   const otpInput = document.querySelector('[name="email_otp"]');
   const invalidOtpMsg = document.querySelector('[data-id="text-d79db67206"]');
 
-  // Safety check
   if (!timerTextWrapper || !resendBtnWrapper || !resendBtn || !submitBtn || !otpInput) {
-    console.error("OTP Timer: Missing required elements");
+    console.error("Missing required elements");
     return;
   }
 
@@ -1105,7 +1106,7 @@ function initOtpTimer() {
   let resendClickCount = 0;
 
   function setTimerText(seconds) {
-    const target = timerTextWrapper.querySelector("p"); // FIXED
+    const target = timerTextWrapper.querySelector("p");
     if (!target) return;
 
     target.textContent =
@@ -1114,17 +1115,19 @@ function initOtpTimer() {
         : "You can now resend the OTP.";
   }
 
-  function showResendBtnWrapper() {
-    resendBtnWrapper.style.display = "block";
+  function disableResend() {
+    resendBtn.disabled = true;
+    resendBtnWrapper.classList.add("disabled");
   }
 
-  function hideResendBtnWrapper() {
-    resendBtnWrapper.style.display = "none";
+  function enableResend() {
+    resendBtn.disabled = false;
+    resendBtnWrapper.classList.remove("disabled");
   }
 
   function disableResendForever() {
     resendBtn.disabled = true;
-    hideResendBtnWrapper();
+    resendBtnWrapper.classList.add("disabled");
 
     const target = timerTextWrapper.querySelector("p");
     if (target) {
@@ -1135,7 +1138,7 @@ function initOtpTimer() {
   function startTimer() {
     if (countdown) clearInterval(countdown);
 
-    hideResendBtnWrapper();
+    disableResend();
 
     if (invalidOtpMsg) invalidOtpMsg.style.display = "none";
 
@@ -1154,7 +1157,7 @@ function initOtpTimer() {
         countdown = null;
 
         if (resendClickCount < MAX_RESEND_CLICKS) {
-          showResendBtnWrapper();
+          enableResend();
         } else {
           disableResendForever();
         }
@@ -1162,29 +1165,27 @@ function initOtpTimer() {
     }, 1000);
   }
 
-  // OTP validation (length + numeric)
   otpInput.addEventListener("input", () => {
     const value = otpInput.value.trim();
-    const isValid = /^[0-9]{6}$/.test(value);
-
-    submitBtn.disabled = !isValid;
+    submitBtn.disabled = !/^[0-9]{6}$/.test(value);
   });
 
   resendBtn.addEventListener("click", (e) => {
-    e.preventDefault(); // IMPORTANT FIX
+    e.preventDefault();
+
     if (resendClickCount >= MAX_RESEND_CLICKS) return;
 
     resendClickCount++;
     startTimer();
   });
 
+  // Start with disabled state
+  disableResend();
   startTimer();
 }
 
-// Init safely
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initOtpTimer);
 } else {
   initOtpTimer();
 }
-

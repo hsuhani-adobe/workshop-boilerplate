@@ -8624,9 +8624,19 @@ div.field-next > button#button-508dd41726:disabled {
   cursor: not-allowed !important;
 }
 
-/* Hide resend button wrapper initially */
-.field-resend-otp-email {
-  display: none  !important;
+/* Base resend button (optional styling) */
+[data-id="button-b0b7708f67"] button {
+  cursor: pointer;
 }
 
-/* Hide invalid OTP message initially */
+/* Disabled state */
+[data-id="button-b0b7708f67"] button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Optional: greyed wrapper look */
+[data-id="button-b0b7708f67"].disabled {
+  opacity: 0.6;
+}
