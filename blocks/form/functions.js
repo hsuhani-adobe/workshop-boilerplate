@@ -949,47 +949,55 @@ function callGenerateEmailOTP(email) {
  * 
  *
  */
-
-/**
- * Validate Email OTP
- * - Shows error text if invalid
- * - Disables submit button if invalid
- * - Enables button if valid
- * 
- * @param {string/number} otp*/
- function callValidateEmailOTP(otp) {
+function callValidateEmailOTP(otp) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP";
 
-  otp = String(otp).trim(); // ✅ safer
-
-  console.log("OTP:", otp);
+  otp = String(otp).trim();
 
   const errorWrapper = document.querySelector('[data-id="text-d79db67206"]');
   const submitBtn = document.querySelector('button[name="submit_otpp"]');
   const otpInput = document.querySelector('[data-id="textinput-ed810a56e2"] input');
+  const backBtn = document.querySelector('button[name="back_email"]');
+
+  const errorTextEl = errorWrapper?.querySelector("p");
 
   function showError() {
-    errorWrapper?.classList.add("visible");
+    if (errorWrapper) errorWrapper.style.display = "block";
+    if (errorTextEl) {
+      errorTextEl.textContent =
+        "Invalid OTP. Please go back and check the email you have entered.";
+    }
     if (submitBtn) submitBtn.disabled = true;
+    if (backBtn) backBtn.disabled = true; // ❌ disabled on error
   }
 
-  function hideError() {
-    errorWrapper?.classList.remove("visible");
+  function showSuccess() {
+    if (errorWrapper) errorWrapper.style.display = "block";
+    if (errorTextEl) {
+      errorTextEl.textContent = "OTP verified successfully";
+    }
+    if (submitBtn) submitBtn.disabled = false;
+    if (backBtn) backBtn.disabled = false; // ✅ enable back button
   }
 
+  function hideMessage() {
+    if (errorWrapper) errorWrapper.style.display = "none";
+  }
+
+  // Reset message on typing (no change to OTP field itself)
   if (otpInput && !otpInput.dataset.listenerAttached) {
     otpInput.addEventListener("input", () => {
-      hideError();
+      hideMessage();
       if (submitBtn) submitBtn.disabled = false;
     });
     otpInput.dataset.listenerAttached = "true";
   }
 
-  hideError();
+  hideMessage();
 
   if (!otp) {
-    showError(); // ✅ better UX
+    showError();
     return;
   }
 
@@ -1013,11 +1021,10 @@ function callGenerateEmailOTP(email) {
       console.log("API Response:", data);
 
       if (data?.status?.responseCode === "0") {
-        hideError();
-        if (submitBtn) submitBtn.disabled = false;
         console.log("✅ OTP verified");
+        showSuccess();   // ✅ success flow
       } else {
-        showError();
+        showError();     // ❌ error flow
       }
     })
     .catch((error) => {
