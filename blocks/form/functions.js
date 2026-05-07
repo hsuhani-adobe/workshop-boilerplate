@@ -878,55 +878,41 @@ function callGenerateEmailOTP(email) {
 
   console.log("Email:", email);
 
-  // ❗ Validation
   if (!email) {
     alert("Please enter email");
     return;
   }
 
-  // 🔧 AEM-safe setter using data-id wrapper
   function setOTP(value) {
-    const wrapper = document.querySelector('[data-id="textinput-ed810a56e2"]');
-    if (!wrapper) {
-      console.warn("OTP wrapper not found");
-      return;
-    }
+    const input = document.querySelector('[name="email_otp"]');
+    if (!input) return;
 
-    const input = wrapper.querySelector('input[name="email_otp"]');
-    if (!input) {
-      console.warn("OTP input not found");
-      return;
-    }
+    // 🔥 Use requestAnimationFrame (prevents blocking)
+    requestAnimationFrame(() => {
+      input.value = value || "";
 
-    input.value = value || "";
-
-    // 🔥 Trigger AEM reactivity
-    input.dispatchEvent(new Event("input", { bubbles: true }));
-    input.dispatchEvent(new Event("change", { bubbles: true }));
-    input.dispatchEvent(new Event("blur", { bubbles: true }));
-
-    // 🎯 Optional: focus field after setting
-    input.focus();
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
   }
 
-  // 🚀 API Call
-  fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      contextParam: {},
-      requestString: {
-        email: email
-      }
-    })
-  })
-    .then((res) => {
+  // 🚀 Async API (non-blocking)
+  (async () => {
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          contextParam: {},
+          requestString: { email }
+        })
+      });
+
       if (!res.ok) throw new Error("API error");
-      return res.json();
-    })
-    .then((data) => {
+
+      const data = await res.json();
 
       console.log("API Response:", data);
 
@@ -934,7 +920,6 @@ function callGenerateEmailOTP(email) {
 
         const otp = data?.responseString?.otp;
 
-        // 🎯 Set OTP in your field
         setOTP(otp);
 
         console.log("✅ OTP set successfully:", otp);
@@ -942,11 +927,12 @@ function callGenerateEmailOTP(email) {
       } else {
         alert(data?.status?.errorDesc || "Failed to generate OTP");
       }
-    })
-    .catch((err) => {
+
+    } catch (err) {
       console.error("❌ Error:", err);
       alert("Something went wrong");
-    });
+    }
+  })();
 }
 
 
