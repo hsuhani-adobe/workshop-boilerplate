@@ -1031,7 +1031,6 @@ function callValidateEmailOTP(email, otp) {
     });
 }
 
-
 function handleProceedButton() {
 
   console.log("Proceed clicked");
@@ -1043,26 +1042,27 @@ function handleProceedButton() {
       return;
     }
 
-    // 🔥 Remove readonly temporarily
-    const wasReadOnly = el.hasAttribute("readonly");
-    if (wasReadOnly) el.removeAttribute("readonly");
-
-    // Set value
+    // Step 1: set immediately
     el.value = value || "";
     el.setAttribute("value", value || "");
 
-    // Trigger AEM updates
-    el.dispatchEvent(new Event("input",  { bubbles: true }));
+    // Step 2: trigger events
+    el.dispatchEvent(new Event("input", { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
-    el.dispatchEvent(new Event("blur",   { bubbles: true }));
 
-    // 🔥 Restore readonly
-    if (wasReadOnly) el.setAttribute("readonly", true);
+    // Step 3: 🔥 FORCE EDS re-sync (this is the key)
+    setTimeout(() => {
+      el.value = value || "";
+      el.setAttribute("value", value || "");
 
-    console.log(`✅ Set [${name}] = ${value}`);
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+
+      console.log(`✅ FINAL SET [${name}] = ${value}`);
+    }, 50);
   }
 
-  // ✅ Get correct values
+  // ✅ Read correct values
   const loanAmount     = document.querySelector('[name="loan_amount_inr"]')?.value;
   const tenure         = document.querySelector('[name="loan_tenure_months"]')?.value;
   const emiAmount      = document.querySelector('[name="emi_amount"]')?.value;
@@ -1070,20 +1070,17 @@ function handleProceedButton() {
 
   console.log("Values:", { loanAmount, tenure, emiAmount, rateOfInterest });
 
-  // 🚨 Clean EMI (remove ₹ and commas for safety)
-  const cleanEmi = emiAmount?.replace(/[₹,]/g, "");
-
-  // Set values
+  // ✅ Set values
   setField("loan_amountr", loanAmount);
   setField("tenurer", tenure);
-  setField("emi_amountr", emiAmount); // keep ₹ for display
+  setField("emi_amountr", emiAmount);
   setField("rateOFinterestr", rateOfInterest);
 
   console.log("✅ Data transferred successfully");
 }
 
 
-// Prevent form submit reload
+// Prevent form reload
 document.addEventListener("click", function (e) {
   if (e.target && e.target.name === "proceed_button") {
     e.preventDefault();
