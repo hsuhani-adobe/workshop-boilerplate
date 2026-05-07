@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,callValidateEmailOTP,handleProceedButton,
+  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,callValidateEmailOTP,handleProceedButton,initOtpTimer,
 };
 
 
@@ -1082,3 +1082,99 @@ document.addEventListener("click", function (e) {
     handleProceedButton();
   }
 });
+
+
+
+
+
+function initOtpTimer() {
+  const TIMER_DURATION = 30;
+  const MAX_RESEND_CLICKS = 3;
+
+  // Exact IDs and class names from your HTML
+  const timerTextWrapper  = document.getElementById("text-55edb44cad");        // "Resend OTP in 30 seconds"
+  const resendBtnWrapper  = document.querySelector(".field-resend-otp-email"); // wrapper div around resend button
+  const resendBtn         = document.getElementById("button-b0b7708f67");      // Resend OTP button
+  const submitBtn         = document.getElementById("submit-5ede64fcde");      // Submit button
+  const otpInput          = document.getElementById("textinput-ed810a56e2");   // OTP input field
+  const invalidOtpMsg     = document.getElementById("text-d79db67206");        // Invalid OTP message
+
+  let countdown = null;
+  let resendClickCount = 0;
+
+  // Update the timer text inside the nested <p> tags
+  function setTimerText(seconds) {
+    const innerP = timerTextWrapper.querySelector("p > p");
+    const target = innerP || timerTextWrapper.querySelector("p");
+    if (target) {
+      target.textContent =
+        seconds > 0
+          ? `Resend OTP in ${seconds} second${seconds !== 1 ? "s" : ""}`
+          : "You can now resend the OTP.";
+    }
+  }
+
+  function showResendBtn() {
+    resendBtnWrapper.style.display = "";
+  }
+
+  function hideResendBtn() {
+    resendBtnWrapper.style.display = "none";
+  }
+
+  function disableResendForever() {
+    resendBtn.disabled = true;
+    hideResendBtn();
+    const innerP = timerTextWrapper.querySelector("p > p");
+    const target = innerP || timerTextWrapper.querySelector("p");
+    if (target) target.textContent = "Maximum OTP resend attempts reached.";
+  }
+
+  function startTimer() {
+    if (countdown) clearInterval(countdown);
+
+    hideResendBtn();
+    invalidOtpMsg.style.display = "none";
+    otpInput.value = "";
+    submitBtn.disabled = true;
+
+    let secondsLeft = TIMER_DURATION;
+    setTimerText(secondsLeft);
+
+    countdown = setInterval(() => {
+      secondsLeft--;
+      setTimerText(secondsLeft);
+
+      if (secondsLeft <= 0) {
+        clearInterval(countdown);
+        countdown = null;
+
+        if (resendClickCount < MAX_RESEND_CLICKS) {
+          showResendBtn();
+        } else {
+          disableResendForever();
+        }
+      }
+    }, 1000);
+  }
+
+  // Enable Submit only when exactly 6 digits are entered
+  otpInput.addEventListener("input", () => {
+    submitBtn.disabled = otpInput.value.trim().length !== 6;
+  });
+
+  // Resend OTP button click
+  resendBtn.addEventListener("click", () => {
+    resendClickCount++;
+    startTimer();
+  });
+
+  // Start timer on page load
+  startTimer();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initOtpTimer);
+} else {
+  initOtpTimer();
+}
