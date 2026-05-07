@@ -4235,7 +4235,7 @@ fieldset.panel-wrapper.field-customer-details {
   border: none !important;
   background: transparent !important;
   width: 100% !important;
-  display: flex !important;
+  display: flex ;
   flex-direction: column !important;
   gap: 16px !important;
 }
