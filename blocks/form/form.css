@@ -5571,7 +5571,7 @@ main .form form .field-bank-options .radio-wrapper[data-id="bank-options-2"] > l
   background-image: url('/path/to/axis-logo.svg');        /* ← Axis */
 }
 main .form form .field-bank-options .radio-wrapper[data-id="bank-options-3"] > label::before {
-  background-image: url('/path/to/kotak-logo.svg');       /* ← Kotak */
+  background-image: url('https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/KOTAKBANK.NS.png');       /* ← Kotak */
 }
 main .form form .field-bank-options .radio-wrapper[data-id="bank-options-4"] > label::before {
   background-image: url('/path/to/sbi-logo.svg');         /* ← SBI */
