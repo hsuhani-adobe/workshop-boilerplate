@@ -1084,15 +1084,13 @@ document.addEventListener("click", function (e) {
 });
 
 
-
-
 function initOtpTimer() {
   const TIMER_DURATION = 30;
   const MAX_RESEND_CLICKS = 3;
 
   const timerTextWrapper = document.querySelector('[data-id="text-55edb44cad"]');
-  const resendBtnWrapper = document.querySelector('[data-id="button-b0b7708f67"]');
-  const resendBtn = document.querySelector('[name="resend_otp_email"]');
+  const resendBtnWrapper = document.querySelector('[data-id="button-ae34ef57ad"]');
+  const resendBtn = document.querySelector('[name="resend_otp_mail"]');
   const submitBtn = document.querySelector('[name="submit_otpp"]');
   const otpInput = document.querySelector('[name="email_otp"]');
   const invalidOtpMsg = document.querySelector('[data-id="text-d79db67206"]');
@@ -1165,6 +1163,7 @@ function initOtpTimer() {
     }, 1000);
   }
 
+  // OTP validation (6-digit number)
   otpInput.addEventListener("input", () => {
     const value = otpInput.value.trim();
     submitBtn.disabled = !/^[0-9]{6}$/.test(value);
@@ -1179,11 +1178,12 @@ function initOtpTimer() {
     startTimer();
   });
 
-  // Start with disabled state
+  // Initial state
   disableResend();
   startTimer();
 }
 
+// Init
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initOtpTimer);
 } else {

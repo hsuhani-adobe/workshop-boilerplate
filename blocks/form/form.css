@@ -8625,18 +8625,16 @@ div.field-next > button#button-508dd41726:disabled {
 }
 
 /* Base resend button (optional styling) */
-[data-id="button-b0b7708f67"] button {
-  cursor: pointer;
-}
 
-/* Disabled state */
-[data-id="button-b0b7708f67"] button:disabled {
+
+/* Disable resend button */
+[data-id="button-ae34ef57ad"] button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* Optional: greyed wrapper look */
-[data-id="button-b0b7708f67"].disabled {
+/* Optional wrapper disabled look */
+[data-id="button-ae34ef57ad"].disabled {
   opacity: 0.6;
 }
