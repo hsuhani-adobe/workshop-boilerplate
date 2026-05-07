@@ -968,9 +968,6 @@ function callValidateEmailOTP(otp) {
   const otpInput = document.querySelector('[data-id="textinput-ed810a56e2"] input');
   const backBtn = document.querySelector('button[name="back_email"]');
 
-  // ✅ NEW: Verify Mail Button
-  const verifyBtn = document.querySelector('[name="verify_work"]');
-
   const errorTextEl = errorWrapper?.querySelector("p");
 
   function showError() {
@@ -980,7 +977,7 @@ function callValidateEmailOTP(otp) {
         "Invalid OTP. Please go back and check the email you have entered.";
     }
     if (submitBtn) submitBtn.disabled = true;
-    if (backBtn) backBtn.disabled = true;
+    if (backBtn) backBtn.disabled = true; // ❌ disabled on error
   }
 
   function showSuccess() {
@@ -988,22 +985,15 @@ function callValidateEmailOTP(otp) {
     if (errorTextEl) {
       errorTextEl.textContent = "OTP verified successfully";
     }
-
     if (submitBtn) submitBtn.disabled = false;
-    if (backBtn) backBtn.disabled = false;
-
-    // ✅ UPDATE VERIFY BUTTON HERE
-    if (verifyBtn) {
-      verifyBtn.textContent = "Verified";
-      verifyBtn.disabled = true;
-      verifyBtn.classList.add("verified");
-    }
+    if (backBtn) backBtn.disabled = false; // ✅ enable back button
   }
 
   function hideMessage() {
     if (errorWrapper) errorWrapper.style.display = "none";
   }
 
+  // Reset message on typing (no change to OTP field itself)
   if (otpInput && !otpInput.dataset.listenerAttached) {
     otpInput.addEventListener("input", () => {
       hideMessage();
@@ -1036,13 +1026,17 @@ function callValidateEmailOTP(otp) {
       return response.json();
     })
     .then((data) => {
+      console.log("API Response:", data);
+
       if (data?.status?.responseCode === "0") {
-        showSuccess();   // ✅ success case
+        console.log("✅ OTP verified");
+        showSuccess();   // ✅ success flow
       } else {
-        showError();     // ❌ error case
+        showError();     // ❌ error flow
       }
     })
-    .catch(() => {
+    .catch((error) => {
+      console.error("❌ Error:", error);
       showError();
     });
 }
