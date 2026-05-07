@@ -940,23 +940,26 @@ function callGenerateEmailOTP(email) {
 // 🔥 global variable (must already exist)
 
 
+
 /**
  * Validate Email OTP
- * - Takes only OTP as input
- * - Uses stored activeEmail internally
+ * - Shows error text if invalid
+ * - Disables submit button if invalid
+ * - Enables button if valid
+ * 
  * @param {string} otp
  */
-function callValidateEmailOTP(otp) {
+function callValidateEmailOTP(email, otp) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP";
 
-  console.log("Inputs:", { email: activeEmail, otp });
+  console.log("Inputs:", { email, otp });
 
   const errorWrapper = document.querySelector('[data-id="text-d79db67206"]');
   const submitBtn = document.querySelector('button[name="submit_otpp"]');
   const otpInput = document.querySelector('[data-id="textinput-ed810a56e2"] input');
 
-  // ── Helpers ─────────────────────────────────────────
+  // ── Helpers ──────────────────────────────────────────────────────────────
   function showError() {
     if (errorWrapper) errorWrapper.classList.add("visible");
     if (submitBtn) submitBtn.disabled = true;
@@ -966,7 +969,7 @@ function callValidateEmailOTP(otp) {
     if (errorWrapper) errorWrapper.classList.remove("visible");
   }
 
-  // Re-enable on typing
+  // ── Re-enable submit when user edits OTP (registered only once) ──────────
   if (otpInput && !otpInput.dataset.listenerAttached) {
     otpInput.addEventListener("input", () => {
       if (submitBtn) submitBtn.disabled = false;
@@ -975,24 +978,22 @@ function callValidateEmailOTP(otp) {
     otpInput.dataset.listenerAttached = "true";
   }
 
+  // ── Initial state ────────────────────────────────────────────────────────
   hideError();
 
-  // ── Guard ───────────────────────────────────────────
-  if (!activeEmail || !otp) {
-    alert("Enter OTP");
+  // ── Guard ────────────────────────────────────────────────────────────────
+  if (!email || !otp) {
+    alert("Enter email and OTP");
     return;
   }
 
-  // ── API Call ────────────────────────────────────────
+  // ── API Call ─────────────────────────────────────────────────────────────
   fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       contextParam: {},
-      requestString: {
-        email: activeEmail, // 🔥 from stored value
-        otp: otp            // 🔥 from parameter
-      }
+      requestString: { email, otp }
     })
   })
     .then((response) => {
@@ -1000,18 +1001,15 @@ function callValidateEmailOTP(otp) {
       return response.json();
     })
     .then((data) => {
-
       console.log("API Response:", data);
 
       if (data?.status?.responseCode === "0") {
-        // ✅ SUCCESS
+        // ✅ Valid OTP
         hideError();
         if (submitBtn) submitBtn.disabled = false;
-
         console.log("✅ OTP verified successfully");
-
       } else {
-        // ❌ INVALID
+        // ❌ Invalid OTP
         showError();
         console.log("❌ Invalid OTP");
       }
@@ -1020,8 +1018,7 @@ function callValidateEmailOTP(otp) {
       console.error("❌ Error:", error);
       showError();
     });
-}
-
+}  
 
 function handleProceedButton() {
 
