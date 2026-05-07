@@ -8638,3 +8638,11 @@ div.field-next > button#button-508dd41726:disabled {
 [data-id="button-ae34ef57ad"].disabled {
   opacity: 0.6;
 }
+
+
+[data-id="button-9c36eb9c61"] button.verified {
+  color: #28a745;              /* green text */
+  border: 2px solid #28a745;  /* green border */
+  background-color: transparent;
+  cursor: not-allowed;
+}
