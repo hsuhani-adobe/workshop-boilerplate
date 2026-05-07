@@ -8602,7 +8602,7 @@ div.field-next > button#button-508dd41726 {
   transition: background 0.15s ease, opacity 0.15s ease !important;
   border: none !important;
   box-sizing: border-box !important;
-  background: tra!important;
+  background: grey !important;
   color: #1C3FCA !important;
 }
 
@@ -8641,15 +8641,8 @@ div.field-next > button#button-508dd41726:disabled {
 
 
 [data-id="button-9c36eb9c61"] button.verified {
-  color: #28a745 !important;              /* green text */
-  border: 2px solid #28a745 !important;  /* green border */
-  background-color: transparent !important;
-  cursor: not-allowed !important;
-}
-
-[data-id="button-c2cb721d12"] button.verified-pan {
-  background-color:transparent!important;   /* green background */
-  border: 2px solid #28a745 !important;   /* green border */
-  color: #28a745 !important;              /* white text */
-  cursor: not-allowed !important;
+  color: #28a745;              /* green text */
+  border: 2px solid #28a745;  /* green border */
+  background-color: transparent;
+  cursor: not-allowed;
 }
