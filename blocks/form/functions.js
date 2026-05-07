@@ -677,6 +677,15 @@ function callPANEnquiry(mobileNo, pan_no) {
         if (successWrapper) successWrapper.style.display = "block";
         if (errorWrapper) errorWrapper.style.display = "none";
 
+        // ✅ UPDATE VERIFY PAN BUTTON
+        const verifyPanBtn = document.querySelector('[name="verify_personal"]');
+
+        if (verifyPanBtn) {
+          verifyPanBtn.textContent = "Verified PAN";
+          verifyPanBtn.disabled = true;
+          verifyPanBtn.classList.add("verified-pan");
+        }
+
       } else {
 
         // ❌ FAILURE
@@ -693,7 +702,6 @@ function callPANEnquiry(mobileNo, pan_no) {
       if (successWrapper) successWrapper.style.display = "none";
     });
 }
-
 
 /**
  * Get Bureau Offer + Populate All Fields (AEM Safe)
