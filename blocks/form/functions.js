@@ -1033,53 +1033,49 @@ function callValidateEmailOTP(email, otp) {
 
 
 
-
 /**
  * Handle Proceed Button Click
- * - Reads values from Loan Summary Panel
- * - Writes values to Personal Details Panel (Item 1)
- * @param {string} loanAmount      - value from loan summary loan amount field
- * @param {string} tenure          - value from loan summary tenure field
- * @param {string} emiAmount       - value from loan summary emi_amount field
- * @param {string} rateOfInterest  - value from loan summary rate_of_interest field
+ * Reads values from Loan Summary Panel and writes to Personal Details Panel
+ * @param {string} loanAmount     - loan amount from loan summary panel
+ * @param {string} tenure         - tenure in months from loan summary panel
+ * @param {string} emiAmount      - emi amount from loan summary panel
+ * @param {string} rateOfInterest - rate of interest from loan summary panel
  */
 function handleProceedButton(loanAmount, tenure, emiAmount, rateOfInterest) {
 
   console.log("Proceed clicked. Values:", { loanAmount, tenure, emiAmount, rateOfInterest });
 
-  // ── Helper: set field value and trigger EDS events ───────────────────────
+  // ── Helper ───────────────────────────────────────────────────────────────
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
-    if (!el) {
-      console.warn(`⚠️ Field not found: ${name}`);
-      return;
-    }
-    el.value = value || "";
+    if (!el)    { console.warn(`⚠️ Field not found: ${name}`); return; }
+    if (!value) { console.warn(`⚠️ Empty value for: ${name}`); return; }
+    el.value = value;
     el.dispatchEvent(new Event("input",  { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
     el.dispatchEvent(new Event("blur",   { bubbles: true }));
     console.log(`✅ Set [${name}] = ${value}`);
   }
 
-  // ── Write to Personal Details Panel (Item 1) ─────────────────────────────
+  // ── Write to Personal Details Panel ──────────────────────────────────────
   setField("loan_amountr",    loanAmount);
   setField("tenurer",         tenure);
   setField("emi_amountr",     emiAmount);
   setField("rateOFinterestr", rateOfInterest);
 
-  console.log("✅ All values copied to Personal Details Panel");
+  console.log("✅ Done");
 }
 
-// ── Attach click handler to proceed button ───────────────────────────────
-$(document).on("click", '[name="proceed_button"]', function () {
+// ── Attach to proceed button ──────────────────────────────────────────────
+document.addEventListener("click", function (e) {
+  if (e.target && e.target.name === "proceed_button") {
 
-  // ── Read from Loan Summary Panel ─────────────────────────────────────────
-  const loanAmount     = $('[name="loan_amount"]').val();
-  const tenure         = $('[name="tenure_in_months"]').val();
-  const emiAmount      = $('[name="emi_amount"]').val();
-  const rateOfInterest = $('[name="rate_of_interest"]').val();
+    // ── Read from Loan Summary Panel ────────────────────────────────────
+    const loanAmount     = document.querySelector('[name="loan_amount"]')?.value;
+    const tenure         = document.querySelector('[name="tenure_in_months"]')?.value;
+    const emiAmount      = document.querySelector('[name="emi_amount"]')?.value;
+    const rateOfInterest = document.querySelector('[name="rate_of_interest"]')?.value;
 
-  console.log("Reading from Loan Summary Panel:", { loanAmount, tenure, emiAmount, rateOfInterest });
-
-  handleProceedButton(loanAmount, tenure, emiAmount, rateOfInterest);
+    handleProceedButton(loanAmount, tenure, emiAmount, rateOfInterest);
+  }
 });
