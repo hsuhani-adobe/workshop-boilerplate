@@ -8461,3 +8461,9 @@ div.field-verify-mail2 > button#button-9503cdf2e0:active {
   outline: none !important;
   border-color: #16a34a !important;
 }
+
+
+
+legend.field-label.accordion-legend[for="panelcontainer-3efc41fc71"]::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='3.5' y='2.5' width='21' height='23' rx='2' stroke='%234F6FDF' stroke-width='1.75'/%3E%3Ccircle cx='14' cy='10' r='3' stroke='%234F6FDF' stroke-width='1.75'/%3E%3Cpath d='M8 19.5c0-3.314 2.686-5 6-5s6 1.686 6 5' stroke='%234F6FDF' stroke-width='1.75' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+}
