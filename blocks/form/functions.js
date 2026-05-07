@@ -956,14 +956,12 @@ function callGenerateEmailOTP(email) {
  * - Disables submit button if invalid
  * - Enables button if valid
  * 
- * @param {string} otp
- */
-function callValidateEmailOTP(otp) {
+ * @param {string/number} otp*/
+ function callValidateEmailOTP(otp) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP";
 
-  // Ensure it's a clean string
-  otp = otp?.trim();
+  otp = String(otp).trim(); // ✅ safer
 
   console.log("OTP:", otp);
 
@@ -971,7 +969,6 @@ function callValidateEmailOTP(otp) {
   const submitBtn = document.querySelector('button[name="submit_otpp"]');
   const otpInput = document.querySelector('[data-id="textinput-ed810a56e2"] input');
 
-  // ── Helpers ─────────────────────────
   function showError() {
     errorWrapper?.classList.add("visible");
     if (submitBtn) submitBtn.disabled = true;
@@ -981,7 +978,6 @@ function callValidateEmailOTP(otp) {
     errorWrapper?.classList.remove("visible");
   }
 
-  // ── Attach listener once ────────────
   if (otpInput && !otpInput.dataset.listenerAttached) {
     otpInput.addEventListener("input", () => {
       hideError();
@@ -990,20 +986,15 @@ function callValidateEmailOTP(otp) {
     otpInput.dataset.listenerAttached = "true";
   }
 
-  // ── Initial reset ───────────────────
   hideError();
 
-  // ── Guard ──────────────────────────
   if (!otp) {
-    alert("Please enter OTP");
-    showError();
+    showError(); // ✅ better UX
     return;
   }
 
-  // Disable button during API call
   if (submitBtn) submitBtn.disabled = true;
 
-  // ── API Call ───────────────────────
   fetch(API_URL, {
     method: "POST",
     headers: {
@@ -1011,9 +1002,7 @@ function callValidateEmailOTP(otp) {
     },
     body: JSON.stringify({
       contextParam: {},
-      requestString: {
-        otp: otp   // ✅ ONLY OTP
-      }
+      requestString: { otp }
     })
   })
     .then((response) => {
@@ -1024,21 +1013,18 @@ function callValidateEmailOTP(otp) {
       console.log("API Response:", data);
 
       if (data?.status?.responseCode === "0") {
-        // ✅ Valid OTP
         hideError();
         if (submitBtn) submitBtn.disabled = false;
-        console.log("✅ OTP verified successfully");
+        console.log("✅ OTP verified");
       } else {
-        // ❌ Invalid OTP
         showError();
-        console.log("❌ Invalid OTP");
       }
     })
     .catch((error) => {
       console.error("❌ Error:", error);
       showError();
     });
-} 
+}
 
 function handleProceedButton() {
 
