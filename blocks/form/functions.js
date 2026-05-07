@@ -958,11 +958,11 @@ function callGenerateEmailOTP(email) {
  * 
  * @param {string} otp
  */
-function callValidateEmailOTP(email, otp) {
+function callValidateEmailOTP( otp) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP";
 
-  console.log("Inputs:", { email, otp });
+  console.log("Inputs:", {  otp });
 
   const errorWrapper = document.querySelector('[data-id="text-d79db67206"]');
   const submitBtn = document.querySelector('button[name="submit_otpp"]');
