@@ -5562,25 +5562,25 @@ main .form form .field-bank-options .radio-wrapper > label.field-label::before {
 
 /* ---- Bank Logos by data-id ---- */
 main .form form .field-bank-options .radio-wrapper[data-id="bank-options"] > label::before {
-  background-image: url('/path/to/hdfc-logo.svg');        /* ← HDFC */
+  background-image: url('https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/HDB.svg');        /* ← HDFC */
 }
 main .form form .field-bank-options .radio-wrapper[data-id="bank-options-1"] > label::before {
-  background-image: url('/path/to/icici-logo.svg');       /* ← ICICI */
+  background-image: url('https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/IBN.svg');       /* ← ICICI */
 }
 main .form form .field-bank-options .radio-wrapper[data-id="bank-options-2"] > label::before {
-  background-image: url('/path/to/axis-logo.svg');        /* ← Axis */
+  background-image: url('https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/AXISBANK.BO.svg');        /* ← Axis */
 }
 main .form form .field-bank-options .radio-wrapper[data-id="bank-options-3"] > label::before {
   background-image: url('https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/KOTAKBANK.NS.png');       /* ← Kotak */
 }
 main .form form .field-bank-options .radio-wrapper[data-id="bank-options-4"] > label::before {
-  background-image: url('/path/to/sbi-logo.svg');         /* ← SBI */
+  background-image: url('https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/SBILIFE.NS.svg');         /* ← SBI */
 }
 main .form form .field-bank-options .radio-wrapper[data-id="bank-options-5"] > label::before {
-  background-image: url('/path/to/bob-logo.svg');         /* ← Bank of Baroda */
+  background-image: url('https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/BANKBARODA.NS.svg');         /* ← Bank of Baroda */
 }
 main .form form .field-bank-options .radio-wrapper[data-id="bank-options-6"] > label::before {
-  background-image: url('/path/to/idfc-logo.svg');        /* ← IDFC First */
+  background-image: url('https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/IDFCFIRSTB.NS.png');        /* ← IDFC First */
 }
 
 /* Selected bank */
