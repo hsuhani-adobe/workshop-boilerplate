@@ -949,6 +949,15 @@ function callGenerateEmailOTP(email) {
  * 
  * @param {string} otp
  */
+
+/**
+ * Validate Email OTP
+ * - Shows error text if invalid
+ * - Disables submit button if invalid
+ * - Enables button if valid
+ * 
+ * @param {string} otp
+ */
 function callValidateEmailOTP(email, otp) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP";
