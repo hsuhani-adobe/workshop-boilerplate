@@ -1030,3 +1030,43 @@ function callValidateEmailOTP(email, otp) {
       showError();
     });
 }
+
+
+
+
+
+function handleProceedButton() {
+
+  // ── Read from Loan Summary Panel ─────────────────────────────────────────
+  const loanAmount     = $('[name="loan_amount"]').val();
+  const tenure         = $('[name="tenure_in_months"]').val();
+  const emiAmount      = $('[name="emi_amount"]').val();
+  const rateOfInterest = $('[name="rate_of_interest"]').val();
+
+  console.log("Loan Summary Values:", { loanAmount, tenure, emiAmount, rateOfInterest });
+
+  // ── Write to Personal Details Panel ──────────────────────────────────────
+  function setField(name, value) {
+    const el = document.querySelector(`[name="${name}"]`);
+    if (!el) {
+      console.warn(`Field not found: ${name}`);
+      return;
+    }
+    el.value = value || "";
+    el.dispatchEvent(new Event("input",  { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+    el.dispatchEvent(new Event("blur",   { bubbles: true }));
+  }
+
+  setField("loan_amountr",    loanAmount);
+  setField("tenurer",         tenure);
+  setField("emi_amountr",     emiAmount);
+  setField("rateOFinterestr", rateOfInterest);
+
+  console.log("✅ Values copied to Personal Details Panel");
+}
+
+// ── Attach to proceed button ──────────────────────────────────────────────
+$(document).on("click", '[name="proceed_button"]', function () {
+  handleProceedButton();
+});
