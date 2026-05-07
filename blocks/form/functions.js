@@ -504,27 +504,27 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
   const otpWrapper = document.querySelector('.field-otp-status');
   const otpField   = document.querySelector('[name="otp_status"]');
   const submitBtn  = document.querySelector('button[name="otp_submit2"]');
+  const nextBtn    = document.querySelector('button[name="next"]'); // ✅ NEW
   const otpInput   = document.querySelector('[data-id="textinput-d8e61b9fd5"] input');
 
-  // ── Re-enable submit when user edits OTP (registered only once) ──────────
+  // ── Re-enable submit when user edits OTP ────────────────────────────────
   if (otpInput && !otpInput.dataset.listenerAttached) {
     otpInput.addEventListener("input", () => {
       if (submitBtn) submitBtn.disabled = false;
+      if (nextBtn) nextBtn.disabled = true; // ❗ keep next disabled until re-verify
       if (otpWrapper) otpWrapper.classList.remove("visible");
     });
     otpInput.dataset.listenerAttached = "true";
   }
 
-  // ── Always hide error on fresh call ─────────────────────────────────────
+  // Hide error initially
   if (otpWrapper) otpWrapper.classList.remove('visible');
 
-  // ── Guard ────────────────────────────────────────────────────────────────
   if (!mobileNo || !otp) {
     alert("Please enter mobile number and OTP");
     return;
   }
 
-  // ── Helper ───────────────────────────────────────────────────────────────
   function setField(name, value) {
     const el = document.querySelector(`[name="${name}"]`);
     if (!el) return;
@@ -534,7 +534,7 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
     el.dispatchEvent(new Event("blur",   { bubbles: true }));
   }
 
-  // ── API Call ─────────────────────────────────────────────────────────────
+  // ── API Call ────────────────────────────────────────────────────────────
   fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -564,9 +564,17 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
           return;
         }
 
-        // Hide error + keep submit enabled
+        // UI updates
         if (otpWrapper) otpWrapper.classList.remove('visible');
         if (submitBtn) submitBtn.disabled = false;
+        if (nextBtn) nextBtn.disabled = false; // ✅ ENABLE next button
+
+        // ✅ SUCCESS MESSAGE
+        if (otpField) {
+          otpField.value = "OTP verified successfully";
+          otpField.dispatchEvent(new Event("input",  { bubbles: true }));
+          otpField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
 
         setField("fullname_adhar", customer.fullName);
         setField("address_aadhar", customer.address);
@@ -575,9 +583,10 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
 
       } else {
 
-        // ❌ Invalid OTP — show error + disable submit
+        // ❌ INVALID OTP
         if (otpWrapper) otpWrapper.classList.add('visible');
         if (submitBtn) submitBtn.disabled = true;
+        if (nextBtn) nextBtn.disabled = true; // ❗ DISABLE next button
 
         if (otpField) {
           otpField.value = data?.status?.errorDesc || "Invalid OTP";
@@ -591,9 +600,9 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
     .catch((error) => {
       console.error("❌ Error:", error);
 
-      // Network error — show error + disable submit
       if (otpWrapper) otpWrapper.classList.add('visible');
       if (submitBtn) submitBtn.disabled = true;
+      if (nextBtn) nextBtn.disabled = true; // ❗ DISABLE next on error
 
       if (otpField) {
         otpField.value = "Something went wrong";
