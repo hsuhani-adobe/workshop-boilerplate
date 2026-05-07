@@ -1090,7 +1090,6 @@ document.addEventListener("click", function (e) {
   }
 });
 
-
 function initOtpTimer() {
   const TIMER_DURATION = 30;
   const MAX_RESEND_CLICKS = 3;
@@ -1099,6 +1098,7 @@ function initOtpTimer() {
   const resendBtnWrapper = document.querySelector('[data-id="button-ae34ef57ad"]');
   const resendBtn = document.querySelector('[name="resend_otp_mail"]');
   const invalidOtpMsg = document.querySelector('[data-id="text-d79db67206"]');
+  const backBtn = document.querySelector('[name="back_email"]'); // ✅ added
 
   if (!timerTextWrapper || !resendBtnWrapper || !resendBtn) {
     console.error("Missing required elements");
@@ -1124,7 +1124,6 @@ function initOtpTimer() {
   }
 
   function enableResend() {
-    // Only enable if limit not reached
     if (resendClickCount < MAX_RESEND_CLICKS) {
       resendBtn.disabled = false;
       resendBtnWrapper.classList.remove("disabled");
@@ -1138,6 +1137,11 @@ function initOtpTimer() {
     const target = timerTextWrapper.querySelector("p");
     if (target) {
       target.textContent = "Maximum OTP resend attempts reached.";
+    }
+
+    // ✅ ENABLE BACK BUTTON HERE
+    if (backBtn) {
+      backBtn.disabled = false;
     }
   }
 
@@ -1159,7 +1163,6 @@ function initOtpTimer() {
         clearInterval(countdown);
         countdown = null;
 
-        // 🔥 STRICT CHECK HERE
         if (resendClickCount >= MAX_RESEND_CLICKS) {
           disableResendForever();
         } else {
@@ -1172,7 +1175,6 @@ function initOtpTimer() {
   resendBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    // 🔥 HARD STOP after 3 clicks
     if (resendClickCount >= MAX_RESEND_CLICKS) {
       disableResendForever();
       return;
@@ -1180,7 +1182,6 @@ function initOtpTimer() {
 
     resendClickCount++;
 
-    // Immediately disable if this was the last allowed click
     if (resendClickCount >= MAX_RESEND_CLICKS) {
       disableResendForever();
     }
@@ -1190,6 +1191,12 @@ function initOtpTimer() {
 
   // Initial state
   disableResend();
+
+  // ❗ Optional (recommended): keep back disabled initially
+  if (backBtn) {
+    backBtn.disabled = true;
+  }
+
   startTimer();
 }
 
