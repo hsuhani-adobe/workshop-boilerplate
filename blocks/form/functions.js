@@ -494,8 +494,7 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
  * - address_aadhar
  * @param {string} mobileNo
  * @param {string} otp
-*/
- function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
+*/function callVerifyOTPAndGetDemogDetails(mobileNo, otp) {
 
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/VerifyOTPAndGetDemogDetails";
 
@@ -504,20 +503,20 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
   const otpWrapper = document.querySelector('.field-otp-status');
   const otpField   = document.querySelector('[name="otp_status"]');
   const submitBtn  = document.querySelector('button[name="otp_submit2"]');
-  const nextBtn    = document.querySelector('button[name="next"]'); // ✅ NEW
+  const nextBtn    = document.querySelector('button[name="next"]');
   const otpInput   = document.querySelector('[data-id="textinput-d8e61b9fd5"] input');
 
   // ── Re-enable submit when user edits OTP ────────────────────────────────
   if (otpInput && !otpInput.dataset.listenerAttached) {
     otpInput.addEventListener("input", () => {
       if (submitBtn) submitBtn.disabled = false;
-      if (nextBtn) nextBtn.disabled = true; // ❗ keep next disabled until re-verify
+      if (nextBtn) nextBtn.disabled = true; // keep next disabled until verified
       if (otpWrapper) otpWrapper.classList.remove("visible");
     });
     otpInput.dataset.listenerAttached = "true";
   }
 
-  // Hide error initially
+  // Hide message initially
   if (otpWrapper) otpWrapper.classList.remove('visible');
 
   if (!mobileNo || !otp) {
@@ -532,6 +531,29 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
     el.dispatchEvent(new Event("input",  { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
     el.dispatchEvent(new Event("blur",   { bubbles: true }));
+  }
+
+  // 🔥 Helper to show message reliably
+  function updateOtpMessage(message, isError = false) {
+
+    if (otpField) {
+      otpField.value = message;
+      otpField.setAttribute("value", message);
+
+      otpField.dispatchEvent(new Event("input", { bubbles: true }));
+      otpField.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    // Fallback (very important for AEM UI)
+    if (otpWrapper) {
+      otpWrapper.classList.add("visible");
+
+      const msgEl = otpWrapper.querySelector(".field-description") || otpWrapper;
+      msgEl.innerText = message;
+
+      // Optional styling
+      msgEl.style.color = isError ? "red" : "green";
+    }
   }
 
   // ── API Call ────────────────────────────────────────────────────────────
@@ -564,17 +586,11 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
           return;
         }
 
-        // UI updates
-        if (otpWrapper) otpWrapper.classList.remove('visible');
         if (submitBtn) submitBtn.disabled = false;
-        if (nextBtn) nextBtn.disabled = false; // ✅ ENABLE next button
+        if (nextBtn) nextBtn.disabled = false; // ✅ enable next
 
-        // ✅ SUCCESS MESSAGE
-        if (otpField) {
-          otpField.value = "OTP verified successfully";
-          otpField.dispatchEvent(new Event("input",  { bubbles: true }));
-          otpField.dispatchEvent(new Event("change", { bubbles: true }));
-        }
+        // ✅ SUCCESS MESSAGE (FIXED)
+        updateOtpMessage("OTP verified successfully", false);
 
         setField("fullname_adhar", customer.fullName);
         setField("address_aadhar", customer.address);
@@ -584,15 +600,10 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
       } else {
 
         // ❌ INVALID OTP
-        if (otpWrapper) otpWrapper.classList.add('visible');
         if (submitBtn) submitBtn.disabled = true;
-        if (nextBtn) nextBtn.disabled = true; // ❗ DISABLE next button
+        if (nextBtn) nextBtn.disabled = true;
 
-        if (otpField) {
-          otpField.value = data?.status?.errorDesc || "Invalid OTP";
-          otpField.dispatchEvent(new Event("input",  { bubbles: true }));
-          otpField.dispatchEvent(new Event("change", { bubbles: true }));
-        }
+        updateOtpMessage(data?.status?.errorDesc || "Invalid OTP", true);
 
         console.log("❌ Invalid OTP");
       }
@@ -600,18 +611,12 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
     .catch((error) => {
       console.error("❌ Error:", error);
 
-      if (otpWrapper) otpWrapper.classList.add('visible');
       if (submitBtn) submitBtn.disabled = true;
-      if (nextBtn) nextBtn.disabled = true; // ❗ DISABLE next on error
+      if (nextBtn) nextBtn.disabled = true;
 
-      if (otpField) {
-        otpField.value = "Something went wrong";
-        otpField.dispatchEvent(new Event("input",  { bubbles: true }));
-        otpField.dispatchEvent(new Event("change", { bubbles: true }));
-      }
+      updateOtpMessage("Something went wrong", true);
     });
 }
-
 /**
  * PAN Verification Function
  * @param {string} mobileNo
