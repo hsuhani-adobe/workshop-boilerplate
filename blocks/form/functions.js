@@ -1036,10 +1036,10 @@ function callValidateEmailOTP(email, otp) {
 /**
  * Handle Proceed Button Click
  * Reads values from Loan Summary Panel and writes to Personal Details Panel
- * @param {string} loanAmount     - loan amount from loan summary panel
- * @param {string} tenure         - tenure in months from loan summary panel
- * @param {string} emiAmount      - emi amount from loan summary panel
- * @param {string} rateOfInterest - rate of interest from loan summary panel
+ * @param {string/number} loanAmount     - loan amount from loan summary panel
+ * @param {string/number} tenure         - tenure in months from loan summary panel
+ * @param {string/number} emiAmount      - emi amount from loan summary panel
+ * @param {string/number} rateOfInterest - rate of interest from loan summary panel
  */
 function handleProceedButton(loanAmount, tenure, emiAmount, rateOfInterest) {
 
