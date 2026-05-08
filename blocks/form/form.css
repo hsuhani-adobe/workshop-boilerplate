@@ -3193,7 +3193,7 @@ field-kyc-verification-summary-panel* {
 
 /* ================= Common labels ================= */
 .field-otp-verification-panel label.field-label {
-  display: none !important;
+
   color: #374151 !important;
   font-weight: 400 !important;
   font-size: 14px !important;
@@ -5440,7 +5440,7 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
     flex: 0 0 100% !important;
   }}
 
-
+/* 
 
 .field-confirm button.button[name="confirm"] {
   display: inline-flex !important;
@@ -5481,7 +5481,7 @@ fieldset.panel-wrapper.field-customer-details > .text-wrapper.field-fullname-adh
 
 .field-confirm button.button[name="confirm"]:active {
   background: #1633a8 !important;
-}
+} */
 
 
 
