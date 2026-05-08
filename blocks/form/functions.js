@@ -62,15 +62,7 @@ export {
 };
  
  
- 
-function calcEMI(principal, annualRate, months) {
-    const r = annualRate / 12 / 100;
-    if (r === 0) return Math.round(principal / months);
-    return Math.round(
-        principal * r * Math.pow(1 + r, months) /
-        (Math.pow(1 + r, months) - 1)
-    );
-}
+
 /**
  * Validates the given date of birth and toggles the visibility of the DOB validation text component
  * @param {*} dob - Date of birth (can be YYYY-MM-DD or DD/MM/YYYY or M/D/YY)
