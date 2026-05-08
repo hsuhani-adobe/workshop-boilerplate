@@ -58,8 +58,7 @@ function maskMobileNumber(mobileNumber) {
  
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,callValidateEmailOTP,handleProceedButton,
+  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,callVerifyOTPAndGetDemogDetails,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,handleProceedButton,
 };
  
  
@@ -948,96 +947,96 @@ function callGenerateEmailOTP(email) {
  * - Enables button if valid
  *
  *
- */
-function callValidateEmailOTP(otp) {
+//  */
+// function callValidateEmailOTP(otp) {
  
-  const API_URL = "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP";
+//   const API_URL = "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP";
  
-  otp = String(otp).trim();
+//   otp = String(otp).trim();
  
-  const errorWrapper = document.querySelector('[data-id="text-d79db67206"]');
-  const submitBtn = document.querySelector('button[name="submit_otpp"]');
-  const otpInput = document.querySelector('[data-id="textinput-ed810a56e2"] input');
-  const backBtn = document.querySelector('button[name="back_email"]');
+//   const errorWrapper = document.querySelector('[data-id="text-d79db67206"]');
+//   const submitBtn = document.querySelector('button[name="submit_otpp"]');
+//   const otpInput = document.querySelector('[data-id="textinput-ed810a56e2"] input');
+//   const backBtn = document.querySelector('button[name="back_email"]');
  
-  // ✅ NEW: Verify Mail Button
-  const verifyBtn = document.querySelector('[name="verify_work"]');
+//   // ✅ NEW: Verify Mail Button
+//   const verifyBtn = document.querySelector('[name="verify_work"]');
  
-  const errorTextEl = errorWrapper?.querySelector("p");
+//   const errorTextEl = errorWrapper?.querySelector("p");
  
-  function showError() {
-    if (errorWrapper) errorWrapper.style.display = "block";
-    if (errorTextEl) {
-      errorTextEl.textContent =
-        "Invalid OTP. Please go back and check the email you have entered.";
-    }
-    if (submitBtn) submitBtn.disabled = true;
-    if (backBtn) backBtn.disabled = true;
-  }
+//   function showError() {
+//     if (errorWrapper) errorWrapper.style.display = "block";
+//     if (errorTextEl) {
+//       errorTextEl.textContent =
+//         "Invalid OTP. Please go back and check the email you have entered.";
+//     }
+//     if (submitBtn) submitBtn.disabled = true;
+//     if (backBtn) backBtn.disabled = true;
+//   }
  
-  function showSuccess() {
-    if (errorWrapper) errorWrapper.style.display = "block";
-    if (errorTextEl) {
-      errorTextEl.textContent = "OTP verified successfully";
-    }
+//   function showSuccess() {
+//     if (errorWrapper) errorWrapper.style.display = "block";
+//     if (errorTextEl) {
+//       errorTextEl.textContent = "OTP verified successfully";
+//     }
  
-    if (submitBtn) submitBtn.disabled = false;
-    if (backBtn) backBtn.disabled = false;
+//     if (submitBtn) submitBtn.disabled = false;
+//     if (backBtn) backBtn.disabled = false;
  
-    // ✅ UPDATE VERIFY BUTTON HERE
-    if (verifyBtn) {
-      verifyBtn.textContent = "Verified";
-      verifyBtn.disabled = true;
-      verifyBtn.classList.add("verified");
-    }
-  }
+//     // ✅ UPDATE VERIFY BUTTON HERE
+//     if (verifyBtn) {
+//       verifyBtn.textContent = "Verified";
+//       verifyBtn.disabled = true;
+//       verifyBtn.classList.add("verified");
+//     }
+//   }
  
-  function hideMessage() {
-    if (errorWrapper) errorWrapper.style.display = "none";
-  }
+//   function hideMessage() {
+//     if (errorWrapper) errorWrapper.style.display = "none";
+//   }
  
-  if (otpInput && !otpInput.dataset.listenerAttached) {
-    otpInput.addEventListener("input", () => {
-      hideMessage();
-      if (submitBtn) submitBtn.disabled = false;
-    });
-    otpInput.dataset.listenerAttached = "true";
-  }
+//   if (otpInput && !otpInput.dataset.listenerAttached) {
+//     otpInput.addEventListener("input", () => {
+//       hideMessage();
+//       if (submitBtn) submitBtn.disabled = false;
+//     });
+//     otpInput.dataset.listenerAttached = "true";
+//   }
  
-  hideMessage();
+//   hideMessage();
  
-  if (!otp) {
-    showError();
-    return;
-  }
+//   if (!otp) {
+//     showError();
+//     return;
+//   }
  
-  if (submitBtn) submitBtn.disabled = true;
+//   if (submitBtn) submitBtn.disabled = true;
  
-  fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      contextParam: {},
-      requestString: { otp }
-    })
-  })
-    .then((response) => {
-      if (!response.ok) throw new Error("Network error");
-      return response.json();
-    })
-    .then((data) => {
-      if (data?.status?.responseCode === "0") {
-        showSuccess();   // ✅ success case
-      } else {
-        showError();     // ❌ error case
-      }
-    })
-    .catch(() => {
-      showError();
-    });
-}
+//   fetch(API_URL, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       contextParam: {},
+//       requestString: { otp }
+//     })
+//   })
+//     .then((response) => {
+//       if (!response.ok) throw new Error("Network error");
+//       return response.json();
+//     })
+//     .then((data) => {
+//       if (data?.status?.responseCode === "0") {
+//         showSuccess();   // ✅ success case
+//       } else {
+//         showError();     // ❌ error case
+//       }
+//     })
+//     .catch(() => {
+//       showError();
+//     });
+// }
  
 function handleProceedButton() {
  
