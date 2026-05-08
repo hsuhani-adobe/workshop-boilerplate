@@ -59,7 +59,7 @@ function maskMobileNumber(mobileNumber) {
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,
-  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails, callPANEnquiry, callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,callValidateEmailOTP,handleProceedButton,initOtpTimer,
+  startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,  callVerifyOTPAndGetDemogDetails,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,callValidateEmailOTP,handleProceedButton,
 };
  
  
@@ -618,81 +618,81 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
     });
 }
  
-/**
- * PAN Verification Function
- * @param {string} mobileNo
- * @param {string} pan_no
- */
-function callPANEnquiry(mobileNo, pan_no) {
+// /**
+//  * PAN Verification Function
+//  * @param {string} mobileNo
+//  * @param {string} pan_no
+//  */
+// function callPANEnquiry(mobileNo, pan_no) {
  
-  const API_URL = "https://loan-backend-mock.onrender.com/tier2/PANEnquiry";
+//   const API_URL = "https://loan-backend-mock.onrender.com/tier2/PANEnquiry";
  
-  console.log("Inputs:", { mobileNo, pan_no });
+//   console.log("Inputs:", { mobileNo, pan_no });
  
-  // 🎯 Get full name (auto-filled earlier)
-  const nameField = document.querySelector('[name="fullname_adhar"]');
-  const fullName = nameField ? nameField.value.trim() : "";
+//   // 🎯 Get full name (auto-filled earlier)
+//   const nameField = document.querySelector('[name="fullname_adhar"]');
+//   const fullName = nameField ? nameField.value.trim() : "";
  
-  // 🎯 Target wrappers (AEM safe)
-  const successWrapper = document.querySelector('.field-verify-pan');
-  const errorWrapper = document.querySelector('.field-pan-error');
+//   // 🎯 Target wrappers (AEM safe)
+//   const successWrapper = document.querySelector('.field-verify-pan');
+//   const errorWrapper = document.querySelector('.field-pan-error');
  
-  // 🔄 Reset messages
-  if (successWrapper) successWrapper.style.display = "none";
-  if (errorWrapper) errorWrapper.style.display = "none";
+//   // 🔄 Reset messages
+//   if (successWrapper) successWrapper.style.display = "none";
+//   if (errorWrapper) errorWrapper.style.display = "none";
  
-  // ✅ Basic validation
-  if (!mobileNo || !pan_no || !fullName) {
-    console.warn("Missing input values");
-    if (errorWrapper) errorWrapper.style.display = "block";
-    return;
-  }
+//   // ✅ Basic validation
+//   if (!mobileNo || !pan_no || !fullName) {
+//     console.warn("Missing input values");
+//     if (errorWrapper) errorWrapper.style.display = "block";
+//     return;
+//   }
  
-  // 🚀 Call API
-  fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      contextParam: {},
-      requestString: {
-        mobileNo: mobileNo,
-        panNumber: pan_no,
-        fullName: fullName
-      }
-    }),
-  })
-    .then((response) => {
-      if (!response.ok) throw new Error("Network error");
-      return response.json();
-    })
-    .then((data) => {
+//   // 🚀 Call API
+//   fetch(API_URL, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       contextParam: {},
+//       requestString: {
+//         mobileNo: mobileNo,
+//         panNumber: pan_no,
+//         fullName: fullName
+//       }
+//     }),
+//   })
+//     .then((response) => {
+//       if (!response.ok) throw new Error("Network error");
+//       return response.json();
+//     })
+//     .then((data) => {
  
-      console.log("PAN API Response:", data);
+//       console.log("PAN API Response:", data);
  
-      if (data?.status?.responseCode === "0") {
+//       if (data?.status?.responseCode === "0") {
  
-        // ✅ SUCCESS
-        if (successWrapper) successWrapper.style.display = "block";
-        if (errorWrapper) errorWrapper.style.display = "none";
+//         // ✅ SUCCESS
+//         if (successWrapper) successWrapper.style.display = "block";
+//         if (errorWrapper) errorWrapper.style.display = "none";
  
-      } else {
+//       } else {
  
-        // ❌ FAILURE
-        if (errorWrapper) errorWrapper.style.display = "block";
-        if (successWrapper) successWrapper.style.display = "none";
-      }
-    })
-    .catch((error) => {
+//         // ❌ FAILURE
+//         if (errorWrapper) errorWrapper.style.display = "block";
+//         if (successWrapper) successWrapper.style.display = "none";
+//       }
+//     })
+//     .catch((error) => {
  
-      console.error("PAN API Error:", error);
+//       console.error("PAN API Error:", error);
  
-      // ❌ ERROR CASE
-      if (errorWrapper) errorWrapper.style.display = "block";
-      if (successWrapper) successWrapper.style.display = "none";
-    });
-}
+//       // ❌ ERROR CASE
+//       if (errorWrapper) errorWrapper.style.display = "block";
+//       if (successWrapper) successWrapper.style.display = "none";
+//     });
+// }
  
  
 /**
@@ -1096,119 +1096,119 @@ document.addEventListener("click", function (e) {
   }
 });
  
-function initOtpTimer() {
-  const TIMER_DURATION = 30;
-  const MAX_RESEND_CLICKS = 3;
+// function initOtpTimer() {
+//   const TIMER_DURATION = 30;
+//   const MAX_RESEND_CLICKS = 3;
  
-  const timerTextWrapper = document.querySelector('[data-id="text-55edb44cad"]');
-  const resendBtnWrapper = document.querySelector('[data-id="button-ae34ef57ad"]');
-  const resendBtn = document.querySelector('[name="resend_otp_mail"]');
-  const invalidOtpMsg = document.querySelector('[data-id="text-d79db67206"]');
-  const backBtn = document.querySelector('[name="back_email"]'); // ✅ added
+//   const timerTextWrapper = document.querySelector('[data-id="text-55edb44cad"]');
+//   const resendBtnWrapper = document.querySelector('[data-id="button-ae34ef57ad"]');
+//   const resendBtn = document.querySelector('[name="resend_otp_mail"]');
+//   const invalidOtpMsg = document.querySelector('[data-id="text-d79db67206"]');
+//   const backBtn = document.querySelector('[name="back_email"]'); // ✅ added
  
-  if (!timerTextWrapper || !resendBtnWrapper || !resendBtn) {
-    console.error("Missing required elements");
-    return;
-  }
+//   if (!timerTextWrapper || !resendBtnWrapper || !resendBtn) {
+//     console.error("Missing required elements");
+//     return;
+//   }
  
-  let countdown = null;
-  let resendClickCount = 0;
+//   let countdown = null;
+//   let resendClickCount = 0;
  
-  function setTimerText(seconds) {
-    const target = timerTextWrapper.querySelector("p");
-    if (!target) return;
+//   function setTimerText(seconds) {
+//     const target = timerTextWrapper.querySelector("p");
+//     if (!target) return;
  
-    target.textContent =
-      seconds > 0
-        ? `Resend OTP in ${seconds} second${seconds !== 1 ? "s" : ""}`
-        : "You can now resend the OTP.";
-  }
+//     target.textContent =
+//       seconds > 0
+//         ? `Resend OTP in ${seconds} second${seconds !== 1 ? "s" : ""}`
+//         : "You can now resend the OTP.";
+//   }
  
-  function disableResend() {
-    resendBtn.disabled = true;
-    resendBtnWrapper.classList.add("disabled");
-  }
+//   function disableResend() {
+//     resendBtn.disabled = true;
+//     resendBtnWrapper.classList.add("disabled");
+//   }
  
-  function enableResend() {
-    if (resendClickCount < MAX_RESEND_CLICKS) {
-      resendBtn.disabled = false;
-      resendBtnWrapper.classList.remove("disabled");
-    }
-  }
+//   function enableResend() {
+//     if (resendClickCount < MAX_RESEND_CLICKS) {
+//       resendBtn.disabled = false;
+//       resendBtnWrapper.classList.remove("disabled");
+//     }
+//   }
  
-  function disableResendForever() {
-    resendBtn.disabled = true;
-    resendBtnWrapper.classList.add("disabled");
+//   function disableResendForever() {
+//     resendBtn.disabled = true;
+//     resendBtnWrapper.classList.add("disabled");
  
-    const target = timerTextWrapper.querySelector("p");
-    if (target) {
-      target.textContent = "Maximum OTP resend attempts reached.";
-    }
+//     const target = timerTextWrapper.querySelector("p");
+//     if (target) {
+//       target.textContent = "Maximum OTP resend attempts reached.";
+//     }
  
-    // ✅ ENABLE BACK BUTTON HERE
-    if (backBtn) {
-      backBtn.disabled = false;
-    }
-  }
+//     // ✅ ENABLE BACK BUTTON HERE
+//     if (backBtn) {
+//       backBtn.disabled = false;
+//     }
+//   }
  
-  function startTimer() {
-    if (countdown) clearInterval(countdown);
+//   function startTimer() {
+//     if (countdown) clearInterval(countdown);
  
-    disableResend();
+//     disableResend();
  
-    if (invalidOtpMsg) invalidOtpMsg.style.display = "none";
+//     if (invalidOtpMsg) invalidOtpMsg.style.display = "none";
  
-    let secondsLeft = TIMER_DURATION;
-    setTimerText(secondsLeft);
+//     let secondsLeft = TIMER_DURATION;
+//     setTimerText(secondsLeft);
  
-    countdown = setInterval(() => {
-      secondsLeft--;
-      setTimerText(secondsLeft);
+//     countdown = setInterval(() => {
+//       secondsLeft--;
+//       setTimerText(secondsLeft);
  
-      if (secondsLeft <= 0) {
-        clearInterval(countdown);
-        countdown = null;
+//       if (secondsLeft <= 0) {
+//         clearInterval(countdown);
+//         countdown = null;
  
-        if (resendClickCount >= MAX_RESEND_CLICKS) {
-          disableResendForever();
-        } else {
-          enableResend();
-        }
-      }
-    }, 1000);
-  }
+//         if (resendClickCount >= MAX_RESEND_CLICKS) {
+//           disableResendForever();
+//         } else {
+//           enableResend();
+//         }
+//       }
+//     }, 1000);
+//   }
  
-  resendBtn.addEventListener("click", (e) => {
-    e.preventDefault();
+//   resendBtn.addEventListener("click", (e) => {
+//     e.preventDefault();
  
-    if (resendClickCount >= MAX_RESEND_CLICKS) {
-      disableResendForever();
-      return;
-    }
+//     if (resendClickCount >= MAX_RESEND_CLICKS) {
+//       disableResendForever();
+//       return;
+//     }
  
-    resendClickCount++;
+//     resendClickCount++;
  
-    if (resendClickCount >= MAX_RESEND_CLICKS) {
-      disableResendForever();
-    }
+//     if (resendClickCount >= MAX_RESEND_CLICKS) {
+//       disableResendForever();
+//     }
  
-    startTimer();
-  });
+//     startTimer();
+//   });
  
-  // Initial state
-  disableResend();
+//   // Initial state
+//   disableResend();
  
-  // ❗ Optional (recommended): keep back disabled initially
-  if (backBtn) {
-    backBtn.disabled = true;
-  }
+//   // ❗ Optional (recommended): keep back disabled initially
+//   if (backBtn) {
+//     backBtn.disabled = true;
+//   }
  
-  startTimer();
-}
+//   startTimer();
+// }
  
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initOtpTimer);
-} else {
-  initOtpTimer();
-}
+// if (document.readyState === "loading") {
+//   document.addEventListener("DOMContentLoaded", initOtpTimer);
+// } else {
+//   initOtpTimer();
+// }
  
