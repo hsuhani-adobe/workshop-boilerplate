@@ -3151,8 +3151,8 @@ field-kyc-verification-summary-panel* {
   padding: 0 !important;
 }
 
-remove default fieldset style
 .field-otp-verification-panel fieldset {
+
   border: none !important;
   padding: 0 !important;
   margin: 0 !important;
