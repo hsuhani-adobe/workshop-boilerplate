@@ -1,3 +1,18 @@
+/* ── Right column wrapper ── */
+.field-promotions-right {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  align-self: start !important;
+  position: sticky !important;
+  top: 16px !important;
+  width: 100% !important;
+}
+
+.field-promotions-right > legend.field-label {
+  display: none !important;
+}
+
 /* ── Promo card container ── */
 .promo-card-container {
   display: flex !important;
@@ -20,17 +35,17 @@
   transform: translateY(-3px) !important;
 }
 
-/* ── Card 1: purple-lavender bg ── */
-.field-promo-card1776935317975 {
+/* ── Card 1: lavender bg ── */
+.field-promo-card1777106717593 {
   background: #eeeaf8 !important;
 }
 
-/* ── Card 2: pink-blush bg ── */
-[class*="field-promo-card"]:not(.field-promo-card1776935317975) {
+/* ── Card 2: pink bg ── */
+.field-promo-card-18703026471777106744307 {
   background: #fceef4 !important;
 }
 
-/* ── Image: full natural size, no crop ── */
+/* ── Image: full, no crop ── */
 .promo-card-container .promo-card-image {
   width: 100% !important;
   height: auto !important;
@@ -41,7 +56,7 @@
   flex-shrink: 0 !important;
 }
 
-/* ── Small subtitle text ── */
+/* ── Subtitle ("Open a new", "Buy a new") ── */
 .promo-card-container .promo-card-small-text {
   display: block !important;
   margin: 0 !important;
@@ -61,15 +76,4 @@
   font-weight: 700 !important;
   color: #111827 !important;
   line-height: 1.3 !important;
-}
-
-/* ── Right column wrapper ── */
-.field-promotions-right {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 16px !important;
-  align-self: start !important;
-  position: sticky !important;
-  top: 16px !important;
-  width: 100% !important;
 }
