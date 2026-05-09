@@ -8153,7 +8153,7 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
   width: 272px !important;
   height: 52px !important;
 
-  background: red !important;
+  background: var(--hdfc-blue-info-border) !important;
   color: #ffffff !important;
 
   font-family: 'Inter', sans-serif !important;
