@@ -1764,7 +1764,7 @@ field-kyc-verification-summary-panel* {
   font-weight: 700 !important;
   color: #1a1a2e !important;
   border: none !important;
-  background: transparent !important;
+  background: white!important;
   padding: 0 !important;
   height: auto !important;
   min-height: unset !important;
@@ -1786,7 +1786,7 @@ field-kyc-verification-summary-panel* {
   font-weight: 700 !important;
   color: #1a1a2e !important;
   border: none !important;
-  background: transparent !important;
+  background: white !important;
   padding: 0 !important;
   height: auto !important;
   min-height: unset !important;
