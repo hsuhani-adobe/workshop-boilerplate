@@ -125,3 +125,38 @@
   color: var(--hdfc-text-primary) !important;
   line-height: 1.3 !important;
 }
+/* ── Promo card container ── */
+.promo-card-container {
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  background: #f5f3fb !important;
+  border: 2px solid transparent !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  transition: border-color 0.15s ease !important;
+}
+
+.promo-card-container:hover {
+  border-color: #c4b5f4 !important;
+}
+
+.promo-card-container.is-selected {
+  border-color: #6b4fcf !important;
+}
+
+/* ── Image fills the card — no text below ── */
+.promo-card-container .promo-card-image {
+  width: 100% !important;
+  height: 220px !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* ── Hide the empty text and title elements ── */
+.promo-card-container .promo-card-small-text,
+.promo-card-container .promo-card-title {
+  display: none !important;
+}
