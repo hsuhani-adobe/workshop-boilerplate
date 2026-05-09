@@ -58,7 +58,7 @@ function maskMobileNumber(mobileNumber) {
  
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,callVerifyOTPAndGetDemogDetails,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,handleProceedButton,
+  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,callVerifyOTPAndGetDemogDetails,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,handleProceedButton,callPANEnquiry,
 };
  
  
@@ -609,11 +609,11 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
     });
 }
  
-// /**
-//  * PAN Verification Function
-//  * @param {string} mobileNo
-//  * @param {string} pan_no
-//  */
+/**
+  * PAN Verification Function
+  * @param {string} mobileNo
+ * @param {string} pan_no
+  */
  function callPANEnquiry(mobileNo, pan_no) {
  
   const API_URL = "https://loan-backend-mock.onrender.com/tier2/PANEnquiry";
