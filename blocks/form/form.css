@@ -1520,7 +1520,7 @@ field-kyc-verification-summary-panel* {
   CRITICAL: Reset ALL inputs to be fully visible and editable.
   AEM EDS sometimes applies its own input styles that hide the field.
 */
-.field-kyc-verification-summary-panel input[type="text"] {
+.field-kyc-verification-summary-panel input[type="number"] {
   -webkit-appearance: none !important;
   appearance: none !important;
   display: block !important;
@@ -1545,17 +1545,17 @@ field-kyc-verification-summary-panel* {
   visibility: visible !important;
 }
 
-.field-kyc-verification-summary-panel input[type="text"]:focus {
+.field-kyc-verification-summary-panel input[type="number"]:focus {
   outline: none !important;
   border-color: var(--hdfc-input-focus) !important;
   box-shadow: 0 0 0 3px rgba(74, 63, 143, 0.12) !important;
 }
 
-.field-kyc-verification-summary-panel input[type="text"]:hover:not(:focus) {
+.field-kyc-verification-summary-panel input[type="number"]:hover:not(:focus) {
   border-color: #a0a8c0 !important;
 }
 
-.field-kyc-verification-summary-panel input[type="text"]::placeholder {
+.field-kyc-verification-summary-panel input[type="number"]::placeholder {
   color: var(--hdfc-text-muted);
   font-weight: 400;
 }
