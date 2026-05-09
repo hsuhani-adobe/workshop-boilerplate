@@ -8074,9 +8074,9 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
 
 /* PAN success message */
 .field-panText {
-  display: none ;
+  display: none !important ;
   font-size: 12px;
-  color: green;
+  color: green !important;
 }
 
 /* PAN error message */
@@ -8091,8 +8091,8 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
 /* PAN Error Message */
 .field-PANerror p,
 .field-PANerror p p {
-  color: #d32f2f;
-  font-size: 12px;
+  color: #d32f2f !important;
+  font-size: 12px !important;
   font-weight: 600;
   margin: 4px 0 0;
 }
@@ -8100,8 +8100,8 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
 /* PAN Success Message */
 .field-panText p,
 .field-panText p p {
-  color: #2e7d32;       /* green */
-  font-size: 12px;
+  color: #2e7d32 !important;       /* green */
+  font-size: 12px !important;
   font-weight: 600;
   margin: 4px 0 0;
 }
