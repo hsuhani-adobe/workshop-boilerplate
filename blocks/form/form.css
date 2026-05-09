@@ -8439,21 +8439,26 @@ div.field-back-email > button#button-0c31638563:disabled {
 }
 
 
-/* Hide invalid OTP message initially */
-.field-inavalid-otp {
-  display: none;
+/* ── Hide label ── */
+.field-inavalid-otpp label.field-label {
+  display: none !important;
 }
 
-/* Show when JS adds this class */
-.field-inavalid-otp.visible {
-  display: block !important;
-}
-
-/* Style error text */
-.field-inavalid-otp p {
-  color: red !important ;
-  font-size: 14px !important;
-  margin-top: 2px !important;
+/* ── Hide the input box, show only the value as red text ── */
+.field-inavalid-otpp input[type="text"] {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  height: auto !important;
+  min-height: unset !important;
+  pointer-events: none !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  color: #dc2626 !important;
+  line-height: 1.5 !important;
+  width: 100% !important;
 }
 
 /* Disabled button style */
