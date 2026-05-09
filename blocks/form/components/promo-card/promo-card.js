@@ -12,20 +12,35 @@ const CARD_CONFIG = {
     image: 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg'
   }
 };
-export default function decorate(fieldDiv, fieldJson, parentElement, formId) {
-  const img = fieldDiv.querySelector('.promo-card-image');
-  const smallText = fieldDiv.querySelector('.promo-card-small-text');
-  const title = fieldDiv.querySelector('.promo-card-title');
 
-  if (fieldDiv.classList.contains('field-promo-card1777106717593')) {
-    img.src = 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_1.jpeg';
-    smallText.textContent = 'Open a new';
-    title.textContent = 'Recurring Deposit';
-  } else if (fieldDiv.classList.contains('field-promo-card-18703026471777106744307')) {
-    img.src = 'https://author-p96753-e1523920.adobeaemcloud.com/content/dam/myhdfc/image_2.jpeg';
-    smallText.textContent = 'Buy a new';
-    title.textContent = 'Health Insurance';
-  }
+export default async function decorate(fieldDiv, fieldJson) {
+  fieldDiv.classList.add('promo-card-container');
+
+  const cardId = fieldDiv.getAttribute('data-id');
+
+  // 🔥 Use config based on actual DOM card
+  const config = CARD_CONFIG[cardId] || {};
+
+  const titleText = config.title || fieldJson?.title || '';
+  const smallTextValue = config.smallText || fieldJson?.smallText || '';
+  const imageUrl = config.image || fieldJson?.image || FALLBACK_IMAGE;
+
+  const image = document.createElement('img');
+  image.className = 'promo-card-image';
+  image.src = imageUrl;
+  image.alt = titleText || 'Promo Card';
+  image.loading = 'eager';
+
+  const smallText = document.createElement('p');
+  smallText.className = 'promo-card-small-text';
+  smallText.textContent = smallTextValue;
+
+  const title = document.createElement('h3');
+  title.className = 'promo-card-title';
+  title.textContent = titleText;
+
+  fieldDiv.innerHTML = '';
+  fieldDiv.append(image, smallText, title);
 
   return fieldDiv;
 }
