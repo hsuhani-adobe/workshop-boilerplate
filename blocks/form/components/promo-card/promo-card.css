@@ -9,46 +9,58 @@
   padding: 0 !important;
   margin: 0 !important;
   border-radius: 20px !important;
-  border: 2px solid transparent !important;
+  border: none !important;
   overflow: hidden !important;
-  background: #f5f3fb !important;
   box-sizing: border-box !important;
   cursor: pointer !important;
-  text-align: left !important;
-  transition: border-color 0.15s ease, transform 0.25s ease !important;
+  transition: transform 0.25s ease !important;
 }
 
 .promo-card-container:hover {
-  border-color: #c4b5f4 !important;
   transform: translateY(-3px) !important;
 }
 
-.promo-card-container.is-selected {
-  border-color: #6b4fcf !important;
+/* ── Card 1: purple-lavender bg ── */
+.field-promo-card1776935317975 {
+  background: #eeeaf8 !important;
 }
 
-/* ── Image fills the card fully ── */
+/* ── Card 2: pink-blush bg ── */
+[class*="field-promo-card"]:not(.field-promo-card1776935317975) {
+  background: #fceef4 !important;
+}
+
+/* ── Image: full natural size, no crop ── */
 .promo-card-container .promo-card-image {
   width: 100% !important;
   height: auto !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   display: block !important;
   margin: 0 !important;
   padding: 0 !important;
   flex-shrink: 0 !important;
 }
 
-/* ── Broken / missing image fallback ── */
-.promo-card-container .promo-card-image[src=""],
-.promo-card-container .promo-card-image:not([src]) {
-  height: 60px !important;
-  opacity: 0 !important;
+/* ── Small subtitle text ── */
+.promo-card-container .promo-card-small-text {
+  display: block !important;
+  margin: 0 !important;
+  padding: 14px 16px 2px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #7b5ea7 !important;
+  line-height: 1.4 !important;
 }
 
-/* ── Hide empty text and title ── */
-.promo-card-container .promo-card-small-text,
+/* ── Bold title ── */
 .promo-card-container .promo-card-title {
-  display: none !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 2px 16px 20px !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  line-height: 1.3 !important;
 }
 
 /* ── Right column wrapper ── */
@@ -59,4 +71,5 @@
   align-self: start !important;
   position: sticky !important;
   top: 16px !important;
+  width: 100% !important;
 }
