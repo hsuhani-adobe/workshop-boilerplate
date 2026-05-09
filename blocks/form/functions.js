@@ -625,8 +625,8 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
   const fullName = nameField ? nameField.value.trim() : "";
  
 //   // 🎯 Target wrappers (AEM safe)
- const successWrapper = document.querySelector('.field-panText');
-  const errorWrapper = document.querySelector('.field-PANerror');
+ const successWrapper = document.querySelector('.field-pantext');
+  const errorWrapper = document.querySelector('.field-panerror');
  
 //   // 🔄 Reset messages
   if (successWrapper) successWrapper.style.display = "none";
