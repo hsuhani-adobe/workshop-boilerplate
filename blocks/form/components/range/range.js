@@ -416,37 +416,63 @@ function writeTenureBox() {
        WATCH BANNER FIELD
     ══════════════════════════════════════ */
     function watchBannerField(setAmountSlider) {
-        const bannerInput = document.querySelector('input[name="loan_offer_banner"]');
-        if (!bannerInput) return;
+    const bannerInput = document.querySelector('input[name="loan_offer_banner"]');
+    if (!bannerInput) return;
 
-        function applyNewMax() {
-            const newMax = getOfferAmountFromBanner();
-            if (newMax === amountMax) return;
-            amountMax = newMax;
+    function applyNewMax() {
+        const newMax = getOfferAmountFromBanner();
+        if (newMax === amountMax) return;
+        amountMax = newMax;
 
-            const rangeInput = document.querySelector('.field-loan-amount-slider input[type="range"]');
-            const wrapper    = document.querySelector('.field-loan-amount-slider .range-widget-wrapper.decorated');
-            if (!rangeInput || !wrapper) return;
+        const rangeInput = document.querySelector('.field-loan-amount-slider input[type="range"]');
+        const wrapper    = document.querySelector('.field-loan-amount-slider .range-widget-wrapper.decorated');
+        if (!rangeInput || !wrapper) return;
 
-            rangeInput.max = amountMax;
-            const maxLabel = wrapper.querySelector('.range-max');
-            if (maxLabel) maxLabel.textContent = amountBubbleLabel(amountMax);
+        rangeInput.max = amountMax;
+        const maxLabel = wrapper.querySelector('.range-max');
+        if (maxLabel) maxLabel.textContent = amountBubbleLabel(amountMax);
 
-            rebuildAmountTicks(wrapper);
+        rebuildAmountTicks(wrapper);
 
-            if (currentAmount > amountMax) {
-                if (setAmountSlider) setAmountSlider(amountMax);
-            }
-
-            writeAmountBox();
-            updateSummary();
+        if (currentAmount > amountMax) {
+            if (setAmountSlider) setAmountSlider(amountMax);
         }
 
-        new MutationObserver(applyNewMax).observe(bannerInput, {
-            attributes: true, attributeFilter: ['value']
-        });
-        bannerInput.addEventListener('change', applyNewMax);
+        writeAmountBox();
+        updateSummary();
     }
+
+    /* ── 1. MutationObserver on the attribute (fires when EDS/AEM sets via setAttribute) ── */
+    new MutationObserver(applyNewMax).observe(bannerInput, {
+        attributes: true, attributeFilter: ['value']
+    });
+
+    /* ── 2. 'change' / 'input' events (fires on manual entry) ── */
+    bannerInput.addEventListener('change', applyNewMax);
+    bannerInput.addEventListener('input',  applyNewMax);
+
+    /* ── 3. Intercept direct .value = "..." assignments via a property descriptor ── */
+    const nativeDescriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+    Object.defineProperty(bannerInput, 'value', {
+        get() {
+            return nativeDescriptor.get.call(this);
+        },
+        set(newVal) {
+            nativeDescriptor.set.call(this, newVal);
+            applyNewMax();          // fires whenever JS does: bannerInput.value = "..."
+        },
+        configurable: true
+    });
+
+    /* ── 4. Polling fallback — catches frameworks that bypass all of the above ── */
+    let lastSeen = bannerInput.value;
+    setInterval(() => {
+        if (bannerInput.value !== lastSeen) {
+            lastSeen = bannerInput.value;
+            applyNewMax();
+        }
+    }, 300);
+}
 
     /* ══════════════════════════════════════
        INIT
