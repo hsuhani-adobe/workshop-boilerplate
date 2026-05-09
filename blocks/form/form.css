@@ -1758,28 +1758,67 @@ field-kyc-verification-summary-panel* {
 /*
   Loan Amount input — display as clean bold value,
   NOT a visible input box (matches reference: just bold "₹15,00,000")
-*/
-.field-loan-amount input {
-  font-size: 1.25rem !important;
+/* ── Loan Application Number ── */
+.field-loan-application-number input[type="text"] {
+  font-size: 1.5rem !important;
   font-weight: 700 !important;
-  color: var(--hdfc-text-primary) !important;
+  color: #1a1a2e !important;
   border: none !important;
   background: transparent !important;
   padding: 0 !important;
-  min-height: unset !important;
   height: auto !important;
+  min-height: unset !important;
   box-shadow: none !important;
-  line-height: 1.3 !important;
-  cursor: text !important;
-  pointer-events: auto !important;
+  outline: none !important;
+  line-height: 1.25 !important;
+  width: 100% !important;
 }
 
-.field-loan-amount input:focus {
+.field-loan-application-number input[type="text"]:focus {
   outline: none !important;
   box-shadow: none !important;
   border: none !important;
 }
 
+/* ── Loan Amount Xpress ── */
+.field-loan-amount-xpress input[type="number"] {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: #1a1a2e !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  height: auto !important;
+  min-height: unset !important;
+  box-shadow: none !important;
+  outline: none !important;
+  line-height: 1.3 !important;
+  width: 100% !important;
+
+  /* hide number input spinner arrows */
+  -moz-appearance: textfield !important;
+  appearance: textfield !important;
+}
+
+.field-loan-amount-xpress input[type="number"]::-webkit-outer-spin-button,
+.field-loan-amount-xpress input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+.field-loan-amount-xpress input[type="number"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* ── Loan Amount label ── */
+.field-loan-amount-xpress label.field-label {
+  font-size: 0.78rem !important;
+  font-weight: 400 !important;
+  color: #6b7280 !important;
+  margin-bottom: 2px !important;
+}
 
 /* ── 5c. Disbursement Note ──────────────────────────────────────────────────── */
 
