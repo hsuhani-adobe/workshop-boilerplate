@@ -1,9 +1,22 @@
-/* ── Promo card container ── */
+/* ── Promotions right column ── */
+.field-promotions-right {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  width: 100% !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.field-promotions-right > legend.field-label {
+  display: none !important;
+}
+
+/* ── Each promo card ── */
 .promo-card-container {
   display: flex !important;
   flex-direction: column !important;
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
   width: 100% !important;
   max-width: 100% !important;
   padding: 0 !important;
@@ -20,28 +33,27 @@
   transform: translateY(-3px) !important;
 }
 
-/* ── Card 1: purple-lavender bg ── */
-.field-promo-card1776935317975 {
+/* ── Card 1 background ── */
+.field-promo-card1777106717593 {
   background: #eeeaf8 !important;
 }
 
-/* ── Card 2: pink-blush bg ── */
-[class*="field-promo-card"]:not(.field-promo-card1776935317975) {
+/* ── Card 2 background ── */
+.field-promo-card-18703026471777106744307 {
   background: #fceef4 !important;
 }
 
-/* ── Image: full natural size, no crop ── */
+/* ── Image: full width, natural height ── */
 .promo-card-container .promo-card-image {
   width: 100% !important;
   height: auto !important;
-  object-fit: contain !important;
   display: block !important;
+  object-fit: contain !important;
   margin: 0 !important;
   padding: 0 !important;
-  flex-shrink: 0 !important;
 }
 
-/* ── Small subtitle text ── */
+/* ── Subtitle ── */
 .promo-card-container .promo-card-small-text {
   display: block !important;
   margin: 0 !important;
@@ -52,7 +64,7 @@
   line-height: 1.4 !important;
 }
 
-/* ── Bold title ── */
+/* ── Title ── */
 .promo-card-container .promo-card-title {
   display: block !important;
   margin: 0 !important;
@@ -63,13 +75,12 @@
   line-height: 1.3 !important;
 }
 
-/* ── Right column wrapper ── */
-.field-promotions-right {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 16px !important;
-  align-self: start !important;
-  position: sticky !important;
-  top: 16px !important;
-  width: 100% !important;
+/* ── Hide default input inside promo card ── */
+.promo-card-container input[type="text"] {
+  display: none !important;
+}
+
+/* ── Hide label above the card ── */
+.promo-card-container > .field-label {
+  display: none !important;
 }
