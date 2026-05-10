@@ -8467,27 +8467,4 @@ button[name="submit_otpp"]:disabled {
   cursor: not-allowed;
 }
 
- */
-/* ── OTP Panel Text Styles ─────────────────────────────── */
-/* ── OTP Panel Text Styles ─────────────────────────────── */
-/* ── Timer — hide label, remove input box ─────────────────────────────── */
-fieldset[data-id="panelcontainer-647b49a7d0"] .field-timer label {
-  display: none !important;
-}
-
-fieldset[data-id="panelcontainer-647b49a7d0"] input[name="timer"] {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* ── Attempts — hide label, remove input box ──────────────────────────── */
-fieldset[data-id="panelcontainer-647b49a7d0"] .field-otp-attempts-left label {
-  display: none !important;
-}
-
-fieldset[data-id="panelcontainer-647b49a7d0"] input[name="otp_attempts_left"] {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-}
+ 
