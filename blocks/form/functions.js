@@ -1274,7 +1274,7 @@ const otpState = {
   TIMER_SECONDS: 30,
 };
 
-export function initWorkEmailOTP() {
+ function initWorkEmailOTP() {
 
   /* =========================================================
      HELPERS
