@@ -67,7 +67,7 @@ function maskMobileNumber(mobileNumber) {
  
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,startOtpTimer,resendOtp,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,handleProceedButton,callPANEnquiry,updateOTPDescription,
+  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,startOtpTimer,resendOtp,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,handleProceedButton,callPANEnquiry,updateOTPDescription,initWorkEmailOTP,
 };
  
  
@@ -1259,318 +1259,310 @@ document.addEventListener("click", function (e) {
 //   document.addEventListener("DOMContentLoaded", initOtpTimer);
 // } else {
 //   initOtpTimer();
-// }
- 
 /**
- * Work Email OTP Verification Handler
- * Targets elements from the outer panel: panelcontainer-487a5832b7
+ * @file functions.js
+ * @description Custom function for Work Email OTP Verification.
+ * Place this file at: /blocks/form/functions.js
+ *
+ * Wiring (Universal Editor Rule Editor):
+ *   Form container → Event: Initialise → Invoke Service → initWorkEmailOTP
  */
 
-(function () {
-  // ─── API URLs ──────────────────────────────────────────────────────────────
-  const GENERATE_OTP_URL =
-    "https://loan-backend-mock.onrender.com/tier2/generateEmailOTP";
-  const VALIDATE_OTP_URL =
-    "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP";
+/* ─── Private Module State ───────────────────────────────────────────────── */
 
-  // ─── State ─────────────────────────────────────────────────────────────────
-  let resendAttempts = 0;
-  const MAX_RESEND_ATTEMPTS = 3;
-  let timerInterval = null;
-  let currentEmail = "";
+/** @private */
+const _otpState = {
+  timerInterval: null,
+  resendCount: 0,
+  MAX_RESEND: 3,
+  TIMER_SECONDS: 30,
+};
 
-  // ─── Element References (scoped to outer panel) ────────────────────────────
-  const outerPanel = document.querySelector(
-    'fieldset[data-id="panelcontainer-487a5832b7"]'
-  );
+/* ─── Single Exported Function ───────────────────────────────────────────── */
 
-  if (!outerPanel) {
-    console.error("Work Email panel not found in DOM.");
-    return;
+/**
+ * Initialises all Work Email OTP verification behaviour.
+ * Attach once on the Form container's Initialise event in the Rule Editor.
+ *
+ * Covers:
+ *  - "Verify Mail" → generates OTP via API, reveals OTP panel, starts timer
+ *  - 30-second countdown → enables "Resend" after expiry
+ *  - "Resend OTP" → re-generates OTP, restarts timer, tracks 3/3 attempts
+ *  - "Submit OTP" → validates OTP via API
+ *      ✓ Success: green "✓ Verified" on Verify Mail button, locks all fields
+ *      ✗ Failure: red "Invalid OTP. Please try again.", re-enables Submit
+ *  - Eye icon → toggles OTP field between password / plain text
+ *
+ * @name initWorkEmailOTP
+ * @param {scope} globals - AEM globals object (form/field instance access).
+ * @return {void}
+ */
+ function initWorkEmailOTP(globals) {
+
+  /* ── Element Resolver ─────────────────────────────────────────────────── */
+
+  /**
+   * Finds an element by its `name` attribute, scoped to the outer Work Email panel.
+   * @param {string} name
+   * @returns {HTMLElement|null}
+   */
+  function getEl(name) {
+    const panel = document.querySelector(
+      'fieldset[data-id="panelcontainer-487a5832b7"]'
+    );
+    return panel ? panel.querySelector(`[name="${name}"]`) : null;
   }
 
-  // Email input & Verify button
-  const emailInput = outerPanel.querySelector(
-    'input[name="work_mail-id"]'
-  );
-  const verifyMailBtn = outerPanel.querySelector(
-    'button[name="verify_work"]'
-  );
-
-  // OTP panel elements
-  const otpPanel = outerPanel.querySelector(
-    'fieldset[data-id="panelcontainer-9163d6401a"]'
-  );
-  const otpInput = outerPanel.querySelector(
-    'input[name="otp_codee_email"]'
-  );
-  const togglePasswordIcon = outerPanel.querySelector("#togglePassword");
-  const invalidOtpText = outerPanel.querySelector(
-    '[data-id="text-eeb45cf991"]'
-  );
-  const resendTimerText = outerPanel.querySelector(
-    '[data-id="text-622da24443"]'
-  );
-  const attemptsText = outerPanel.querySelector(
-    '[data-id="text-ef1817e968"]'
-  );
-  const resendBtn = outerPanel.querySelector('button[name="resend_otp"]');
-  const submitBtn = outerPanel.querySelector('button[name="submit_otp"]');
-
-  // ─── Helpers ───────────────────────────────────────────────────────────────
-
-  function setInvalidOtpMessage(msg, color = "red") {
-    if (!invalidOtpText) return;
-    invalidOtpText.innerHTML = `<p>${msg}</p>`;
-    invalidOtpText.style.color = color;
-    invalidOtpText.style.display = msg ? "block" : "none";
+  /**
+   * Sets the text content of a plain-text wrapper identified by data-id.
+   * @param {string} dataId
+   * @param {string} msg
+   * @param {string} [color]
+   */
+  function setText(dataId, msg, color) {
+    const el = document.querySelector(`[data-id="${dataId}"]`);
+    if (!el) return;
+    el.innerHTML = `<p>${msg}</p>`;
+    el.style.color = color || "";
   }
 
-  function setResendTimerText(msg) {
-    if (!resendTimerText) return;
-    resendTimerText.innerHTML = `<p>${msg}</p>`;
+  /* ── API Calls ────────────────────────────────────────────────────────── */
+
+  async function generateOTP(email) {
+    try {
+      const res = await fetch(
+        "https://loan-backend-mock.onrender.com/tier2/generateEmailOTP",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contextParam: {}, requestString: { email } }),
+        }
+      );
+      const data = await res.json();
+      return data.status?.responseCode === "0"
+        ? { success: true }
+        : { success: false, error: data.status?.errorDesc || "Failed to generate OTP." };
+    } catch {
+      return { success: false, error: "Network error. Please try again." };
+    }
   }
 
-  function setAttemptsText(remaining) {
-    if (!attemptsText) return;
-    attemptsText.innerHTML = `<p>${remaining}/${MAX_RESEND_ATTEMPTS} attempts</p>`;
+  async function validateOTP(email, otp) {
+    try {
+      const res = await fetch(
+        "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contextParam: {}, requestString: { email, otp } }),
+        }
+      );
+      const data = await res.json();
+      return data.status?.responseCode === "0" && data.responseString?.verified
+        ? { success: true }
+        : { success: false, error: data.status?.errorDesc || "Incorrect OTP." };
+    } catch {
+      return { success: false, error: "Network error. Please try again." };
+    }
   }
 
-  function startResendTimer(seconds = 30) {
-    // Disable resend while timer runs
+  /* ── Timer ────────────────────────────────────────────────────────────── */
+
+  function startTimer() {
+    const resendBtn = getEl("resend_otp");
     if (resendBtn) {
       resendBtn.disabled = true;
       resendBtn.style.opacity = "0.5";
       resendBtn.style.cursor = "not-allowed";
     }
 
-    let remaining = seconds;
-    setResendTimerText(`Resend OTP in ${remaining} seconds`);
+    let seconds = _otpState.TIMER_SECONDS;
+    setText("text-622da24443", `Resend OTP in ${seconds} seconds`);
 
-    clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-      remaining -= 1;
-      if (remaining <= 0) {
-        clearInterval(timerInterval);
-        setResendTimerText("You can resend OTP now");
-
-        // Enable resend only if attempts remain
-        if (resendAttempts < MAX_RESEND_ATTEMPTS && resendBtn) {
+    clearInterval(_otpState.timerInterval);
+    _otpState.timerInterval = setInterval(() => {
+      seconds -= 1;
+      if (seconds <= 0) {
+        clearInterval(_otpState.timerInterval);
+        setText("text-622da24443", "You can resend OTP now.");
+        if (_otpState.resendCount < _otpState.MAX_RESEND && resendBtn) {
           resendBtn.disabled = false;
           resendBtn.style.opacity = "1";
           resendBtn.style.cursor = "pointer";
         }
       } else {
-        setResendTimerText(`Resend OTP in ${remaining} seconds`);
+        setText("text-622da24443", `Resend OTP in ${seconds} seconds`);
       }
     }, 1000);
   }
 
-  // ─── Generate OTP API Call ─────────────────────────────────────────────────
+  /* ── Verify Mail Handler ──────────────────────────────────────────────── */
 
-  async function generateOTP(email) {
-    try {
-      const response = await fetch(GENERATE_OTP_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contextParam: {},
-          requestString: { email }
-        })
-      });
+  async function onVerifyClick() {
+    const emailInput = getEl("work_mail-id");
+    const verifyBtn  = getEl("verify_work");
+    const email      = emailInput?.value?.trim();
 
-      const data = await response.json();
+    if (!email) {
+      setText("text-eeb45cf991", "Please enter a valid email address.", "red");
+      return;
+    }
 
-      if (data.status?.responseCode === "0") {
-        return { success: true };
-      } else {
-        return {
-          success: false,
-          error: data.status?.errorDesc || "Failed to generate OTP"
-        };
-      }
-    } catch (err) {
-      console.error("Generate OTP error:", err);
-      return { success: false, error: "Network error. Please try again." };
+    // Reset OTP section state
+    _otpState.resendCount = 0;
+    setText("text-ef1817e968", `${_otpState.MAX_RESEND}/${_otpState.MAX_RESEND} attempts`);
+    setText("text-eeb45cf991", "");
+    const otpInput = getEl("otp_codee_email");
+    if (otpInput) otpInput.value = "";
+
+    if (verifyBtn) { verifyBtn.disabled = true; verifyBtn.textContent = "Sending…"; }
+
+    const result = await generateOTP(email);
+
+    if (verifyBtn) { verifyBtn.disabled = false; verifyBtn.textContent = "Verify Mail"; }
+
+    if (result.success) {
+      // Show OTP panel
+      const otpPanel = document.querySelector(
+        'fieldset[data-id="panelcontainer-9163d6401a"]'
+      );
+      if (otpPanel) otpPanel.style.display = "block";
+
+      // Show Submit button (hidden by default via data-visible="false")
+      const submitWrapper = document.querySelector('[data-id="submit-ba0d5e3685"]');
+      if (submitWrapper) submitWrapper.style.display = "block";
+
+      startTimer();
+    } else {
+      setText("text-eeb45cf991", result.error || "Error generating OTP.", "red");
     }
   }
 
-  // ─── Validate OTP API Call ─────────────────────────────────────────────────
+  /* ── Resend OTP Handler ───────────────────────────────────────────────── */
 
-  async function validateOTP(email, otp) {
-    try {
-      const response = await fetch(VALIDATE_OTP_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contextParam: {},
-          requestString: { email, otp }
-        })
-      });
+  async function onResendClick() {
+    if (_otpState.resendCount >= _otpState.MAX_RESEND) return;
 
-      const data = await response.json();
+    const emailInput = getEl("work_mail-id");
+    const resendBtn  = getEl("resend_otp");
+    const email      = emailInput?.value?.trim();
+    if (!email) return;
 
-      if (data.status?.responseCode === "0" && data.responseString?.verified) {
-        return { success: true };
-      } else {
-        return {
-          success: false,
-          error: data.status?.errorDesc || "Invalid OTP"
-        };
-      }
-    } catch (err) {
-      console.error("Validate OTP error:", err);
-      return { success: false, error: "Network error. Please try again." };
-    }
-  }
+    _otpState.resendCount += 1;
+    const attemptsLeft = _otpState.MAX_RESEND - _otpState.resendCount;
+    setText("text-ef1817e968", `${attemptsLeft}/${_otpState.MAX_RESEND} attempts`);
 
-  // ─── Verify Mail Button Click ──────────────────────────────────────────────
+    const otpInput = getEl("otp_codee_email");
+    if (otpInput) otpInput.value = "";
+    setText("text-eeb45cf991", "");
 
-  if (verifyMailBtn) {
-    verifyMailBtn.addEventListener("click", async () => {
-      const email = emailInput?.value?.trim();
-
-      if (!email) {
-        setInvalidOtpMessage("Please enter a valid email address.", "red");
-        return;
-      }
-
-      currentEmail = email;
-
-      // Reset state on fresh verify
-      resendAttempts = 0;
-      setAttemptsText(MAX_RESEND_ATTEMPTS);
-      setInvalidOtpMessage(""); // clear any old message
-      if (otpInput) otpInput.value = "";
-
-      verifyMailBtn.disabled = true;
-      verifyMailBtn.textContent = "Sending...";
-
-      const result = await generateOTP(email);
-
-      verifyMailBtn.disabled = false;
-      verifyMailBtn.textContent = "Verify Mail";
-
-      if (result.success) {
-        // Show OTP panel
-        if (otpPanel) {
-          otpPanel.style.display = "block";
-          // Make submit button visible
-          if (submitBtn) {
-            submitBtn.closest('[data-id="submit-ba0d5e3685"]')
-              ? (submitBtn.closest('[data-id="submit-ba0d5e3685"]').style.display = "block")
-              : (submitBtn.style.display = "block");
-          }
-        }
-
-        startResendTimer(30);
-      } else {
-        setInvalidOtpMessage(result.error || "Error generating OTP.", "red");
-      }
-    });
-  }
-
-  // ─── Resend OTP Button Click ───────────────────────────────────────────────
-
-  if (resendBtn) {
-    resendBtn.addEventListener("click", async () => {
-      if (resendAttempts >= MAX_RESEND_ATTEMPTS) return;
-
-      resendAttempts += 1;
-      const remaining = MAX_RESEND_ATTEMPTS - resendAttempts;
-      setAttemptsText(remaining);
-
-      if (otpInput) otpInput.value = "";
-      setInvalidOtpMessage("");
-
+    if (resendBtn) {
       resendBtn.disabled = true;
+      resendBtn.textContent = "Sending…";
       resendBtn.style.opacity = "0.5";
-      resendBtn.textContent = "Sending...";
+    }
 
-      const result = await generateOTP(currentEmail);
+    const result = await generateOTP(email);
+    if (resendBtn) resendBtn.textContent = "Resend";
 
-      resendBtn.textContent = "Resend";
-
-      if (result.success) {
-        startResendTimer(30);
-
-        // If max attempts reached, keep button disabled permanently
-        if (resendAttempts >= MAX_RESEND_ATTEMPTS) {
-          resendBtn.disabled = true;
-          resendBtn.style.opacity = "0.4";
-          resendBtn.style.cursor = "not-allowed";
-          setResendTimerText("Maximum resend attempts reached.");
-        }
-      } else {
-        setInvalidOtpMessage(result.error || "Failed to resend OTP.", "red");
-        // Re-enable if not maxed
-        if (resendAttempts < MAX_RESEND_ATTEMPTS) {
-          resendBtn.disabled = false;
-          resendBtn.style.opacity = "1";
-        }
-      }
-    });
-  }
-
-  // ─── Submit OTP Button Click ───────────────────────────────────────────────
-
-  if (submitBtn) {
-    submitBtn.addEventListener("click", async () => {
-      const otp = otpInput?.value?.trim();
-
-      if (!otp) {
-        setInvalidOtpMessage("Please enter the OTP.", "red");
-        return;
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Verifying...";
-      setInvalidOtpMessage("");
-
-      const result = await validateOTP(currentEmail, otp);
-
-      if (result.success) {
-        // ── OTP Verified ────────────────────────────────────────────────────
-        setInvalidOtpMessage("OTP Verified ✓", "green");
-
-        // Mark Verify Mail button as verified (green + tick + disabled)
-        if (verifyMailBtn) {
-          verifyMailBtn.textContent = "✓ Verified";
-          verifyMailBtn.disabled = true;
-          verifyMailBtn.style.backgroundColor = "#16a34a"; // green-600
-          verifyMailBtn.style.color = "#fff";
-          verifyMailBtn.style.borderColor = "#16a34a";
-          verifyMailBtn.style.cursor = "default";
-        }
-
-        // Disable inputs after success
-        if (otpInput) otpInput.disabled = true;
-        if (emailInput) emailInput.disabled = true;
+    if (result.success) {
+      if (_otpState.resendCount >= _otpState.MAX_RESEND) {
+        // No more attempts — lock permanently
         if (resendBtn) {
           resendBtn.disabled = true;
           resendBtn.style.opacity = "0.4";
+          resendBtn.style.cursor = "not-allowed";
         }
-        if (submitBtn) submitBtn.style.display = "none";
-
-        clearInterval(timerInterval);
-        setResendTimerText("");
+        setText("text-622da24443", "Maximum resend attempts reached.");
       } else {
-        // ── Invalid OTP ─────────────────────────────────────────────────────
-        setInvalidOtpMessage("Invalid OTP. Please try again.", "red");
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Submit";
+        startTimer();
       }
-    });
+    } else {
+      setText("text-eeb45cf991", result.error || "Failed to resend OTP.", "red");
+      if (_otpState.resendCount < _otpState.MAX_RESEND && resendBtn) {
+        resendBtn.disabled = false;
+        resendBtn.style.opacity = "1";
+      }
+    }
   }
 
-  // ─── Password Toggle (Show/Hide OTP) ──────────────────────────────────────
+  /* ── Submit OTP Handler ───────────────────────────────────────────────── */
 
-  if (togglePasswordIcon && otpInput) {
-    togglePasswordIcon.addEventListener("click", () => {
-      const isPassword = otpInput.type === "password";
-      otpInput.type = isPassword ? "text" : "password";
-      togglePasswordIcon.classList.toggle("bi-eye", isPassword);
-      togglePasswordIcon.classList.toggle("bi-eye-slash", !isPassword);
-    });
+  async function onSubmitClick() {
+    const emailInput = getEl("work_mail-id");
+    const otpInput   = getEl("otp_codee_email");
+    const submitBtn  = getEl("submit_otp");
+
+    const email = emailInput?.value?.trim();
+    const otp   = otpInput?.value?.trim();
+
+    if (!otp) {
+      setText("text-eeb45cf991", "Please enter the OTP.", "red");
+      return;
+    }
+
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Verifying…"; }
+    setText("text-eeb45cf991", "");
+
+    const result = await validateOTP(email, otp);
+
+    if (result.success) {
+      // ✓ OTP verified
+      setText("text-eeb45cf991", "OTP Verified ✓", "green");
+
+      // Verify Mail button → green tick, disabled
+      const verifyBtn = getEl("verify_work");
+      if (verifyBtn) {
+        verifyBtn.textContent           = "✓ Verified";
+        verifyBtn.disabled              = true;
+        verifyBtn.style.backgroundColor = "#16a34a";
+        verifyBtn.style.color           = "#ffffff";
+        verifyBtn.style.borderColor     = "#16a34a";
+        verifyBtn.style.cursor          = "default";
+      }
+
+      // Lock all OTP controls
+      if (otpInput)   otpInput.disabled        = true;
+      if (emailInput) emailInput.disabled       = true;
+      if (submitBtn)  submitBtn.style.display   = "none";
+
+      const resendBtn = getEl("resend_otp");
+      if (resendBtn) { resendBtn.disabled = true; resendBtn.style.opacity = "0.4"; }
+
+      clearInterval(_otpState.timerInterval);
+      setText("text-622da24443", "");
+
+    } else {
+      // ✗ Invalid OTP
+      setText("text-eeb45cf991", "Invalid OTP. Please try again.", "red");
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Submit"; }
+    }
   }
-})();
+
+  /* ── Toggle Password Visibility ───────────────────────────────────────── */
+
+  function onTogglePassword() {
+    const otpInput = getEl("otp_codee_email");
+    const icon     = document.querySelector("#togglePassword");
+    if (!otpInput) return;
+
+    const isHidden = otpInput.type === "password";
+    otpInput.type  = isHidden ? "text" : "password";
+    if (icon) {
+      icon.classList.toggle("bi-eye",       isHidden);
+      icon.classList.toggle("bi-eye-slash", !isHidden);
+    }
+  }
+
+  /* ── Bind All Listeners ───────────────────────────────────────────────── */
+
+  const verifyBtn  = getEl("verify_work");
+  const resendBtn  = getEl("resend_otp");
+  const submitBtn  = getEl("submit_otp");
+  const toggleIcon = document.querySelector("#togglePassword");
+
+  if (verifyBtn)  verifyBtn.addEventListener("click",  onVerifyClick);
+  if (resendBtn)  resendBtn.addEventListener("click",  onResendClick);
+  if (submitBtn)  submitBtn.addEventListener("click",  onSubmitClick);
+  if (toggleIcon) toggleIcon.addEventListener("click", onTogglePassword);
+}
