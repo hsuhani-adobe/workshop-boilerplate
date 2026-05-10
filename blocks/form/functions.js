@@ -1669,53 +1669,82 @@ const otpState = {
     }
 
     const result = await validateOTP(email, otp);
+if (result.success) {
 
-    if (result.success) {
+  /* VERIFIED */
 
-      /* VERIFIED */
+  setMessage(
+    "text-eeb45cf991",
+    "OTP Verified ✓",
+    "green"
+  );
 
-      setMessage(
-        "text-eeb45cf991",
-        "OTP Verified ✓",
-        "green"
-      );
+  /* VERIFY BUTTON GREEN + DISABLED */
 
-      if (verifyBtn) {
+  if (verifyBtn) {
 
-        verifyBtn.textContent = "✓ Verified";
+    verifyBtn.textContent = "✓ Verified";
 
-        verifyBtn.style.backgroundColor = "#16a34a";
-        verifyBtn.style.borderColor = "#16a34a";
-        verifyBtn.style.color = "#ffffff";
-      }
+    verifyBtn.disabled = true;
 
-      if (submitBtn) {
-        submitBtn.style.display = "block";
-      }
+    verifyBtn.style.backgroundColor = "#16a34a";
+    verifyBtn.style.borderColor = "#16a34a";
+    verifyBtn.style.color = "#ffffff";
+    verifyBtn.style.cursor = "default";
+    verifyBtn.style.opacity = "1";
+  }
 
-    } else {
+  /* DISABLE OTP FIELD */
 
-      /* INVALID */
+  if (otpInput) {
+    otpInput.disabled = true;
+  }
 
-      setMessage(
-        "text-eeb45cf991",
-        "Invalid OTP",
-        "red"
-      );
+  /* DISABLE EMAIL FIELD */
 
-      if (submitBtn) {
-        submitBtn.style.display = "none";
-      }
+  if (emailInput) {
+    emailInput.disabled = true;
+  }
 
-      if (verifyBtn) {
+  /* HIDE SUBMIT BUTTON */
 
-        verifyBtn.textContent = "Verify Mail";
+  if (submitBtn) {
+    submitBtn.style.display = "none";
+  }
 
-        verifyBtn.style.backgroundColor = "";
-        verifyBtn.style.borderColor = "";
-        verifyBtn.style.color = "";
-      }
-    }
+  /* HIDE OTP PANEL */
+
+  const otpPanel = document.querySelector(
+    'fieldset[data-id="panelcontainer-9163d6401a"]'
+  );
+
+  if (otpPanel) {
+    otpPanel.style.display = "none";
+  }
+
+  /* STOP TIMER */
+
+  clearInterval(otpState.timer);
+
+  /* DISABLE RESEND */
+
+  const resendBtn = getEl("resend_otp");
+
+  if (resendBtn) {
+
+    resendBtn.disabled = true;
+
+    resendBtn.style.opacity = "0.4";
+    resendBtn.style.cursor = "not-allowed";
+  }
+
+  /* CLEAR TIMER TEXT */
+
+  setMessage(
+    "text-622da24443",
+    ""
+  );
+}
   }
 
   /* =========================================================
