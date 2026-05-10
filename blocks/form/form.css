@@ -8165,7 +8165,7 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
   padding: 14px 20px !important;
   gap: 4px !important;
 
-  width: 272px !important;
+  width: 250px !important;
   height: 52px !important;
 
   background: var(--hdfc-blue-info-border) !important;
@@ -8439,12 +8439,12 @@ div.field-back-email > button#button-0c31638563:disabled {
 }
 
 
-/* ── Hide label ── 
+ ── Hide label ── 
 .field-inavalid-otpp label.field-label {
   display: none !important;
 }
 
-/* ── Hide the input box, show only the value as red text ── 
+/* ── Hide the input box, show only the value as red text ── */
 .field-inavalid-otpp input[type="text"] {
   border: none !important;
   background: transparent !important;
@@ -8461,7 +8461,7 @@ div.field-back-email > button#button-0c31638563:disabled {
   width: 100% !important;
 }
 
-/* Disabled button style 
+/* Disabled button style */
 button[name="submit_otpp"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
