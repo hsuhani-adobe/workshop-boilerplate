@@ -1261,9 +1261,10 @@ document.addEventListener("click", function (e) {
 //   initOtpTimer();
 /**
  * @/**
+ /**
  * @file functions.js
- * @description Work Email OTP Verification for EDS Forms
- * Place inside: /blocks/form/functions.js
+ * @description Work Email OTP Verification
+ * Place this file in: /blocks/form/functions.js
  */
 
 const otpState = {
@@ -1273,11 +1274,7 @@ const otpState = {
   TIMER_SECONDS: 30,
 };
 
-/* =========================================================
-   MAIN FUNCTION
-========================================================= */
-
- function initWorkEmailOTP() {
+export function initWorkEmailOTP() {
 
   /* =========================================================
      HELPERS
@@ -1291,6 +1288,7 @@ const otpState = {
 
   function getEl(name) {
     const panel = getPanel();
+
     return panel
       ? panel.querySelector(`[name="${name}"]`)
       : null;
@@ -1336,7 +1334,7 @@ const otpState = {
   }
 
   /* =========================================================
-     API CALLS
+     API : GENERATE OTP
   ========================================================= */
 
   async function generateOTP(email) {
@@ -1360,8 +1358,13 @@ const otpState = {
 
       const data = await response.json();
 
+      console.log("Generate OTP Response:", data);
+
       return data?.status?.responseCode === "0"
-        ? { success: true }
+        ? {
+            success: true,
+            otp: data?.responseString?.otp
+          }
         : {
             success: false,
             error:
@@ -1371,12 +1374,18 @@ const otpState = {
 
     } catch (error) {
 
+      console.error(error);
+
       return {
         success: false,
         error: "Network error. Please try again.",
       };
     }
   }
+
+  /* =========================================================
+     API : VALIDATE OTP
+  ========================================================= */
 
   async function validateOTP(email, otp) {
 
@@ -1400,6 +1409,8 @@ const otpState = {
 
       const data = await response.json();
 
+      console.log("Validate OTP Response:", data);
+
       return (
         data?.status?.responseCode === "0" &&
         data?.responseString?.verified
@@ -1413,6 +1424,8 @@ const otpState = {
           };
 
     } catch (error) {
+
+      console.error(error);
 
       return {
         success: false,
@@ -1534,12 +1547,12 @@ const otpState = {
       otpPanel.style.display = "block";
     }
 
-    /* CLEAR OTP INPUT */
+    /* PREFILL OTP */
 
     const otpInput = getEl("otp_codee_email");
 
-    if (otpInput) {
-      otpInput.value = "";
+    if (otpInput && result?.otp) {
+      otpInput.value = result.otp;
     }
 
     /* RESET ATTEMPTS */
@@ -1594,6 +1607,14 @@ const otpState = {
       );
 
       return;
+    }
+
+    /* PREFILL NEW OTP */
+
+    const otpInput = getEl("otp_codee_email");
+
+    if (otpInput && result?.otp) {
+      otpInput.value = result.otp;
     }
 
     const attemptsLeft =
