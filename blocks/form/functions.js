@@ -1273,8 +1273,7 @@ const otpState = {
   MAX_RESEND: 3,
   TIMER_SECONDS: 30,
 };
-
-export function initWorkEmailOTP() {
+ function initWorkEmailOTP() {
 
   /* =========================================================
      HELPERS
