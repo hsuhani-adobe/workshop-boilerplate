@@ -8169,8 +8169,8 @@ fieldset.panel-wrapper.field-loan-typeof > legend.field-label::before {
   padding: 4px 8px !important;
   gap: 4px !important;
 
-  width: 54px !important;
-  height: 28px !important;
+  width: 80px !important;
+  height: 40px !important;
 
   background: #1C3FCA !important;
   border-radius: 16px !important;
