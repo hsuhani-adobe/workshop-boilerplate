@@ -8229,9 +8229,9 @@ div.field-verify-details > button#button-b3b5cbc8d9:active {
 }
 
 
+/* 
 
-
-/* ─── OTP Panel Container ─── */
+/* ─── OTP Panel Container ─── 
 fieldset.field-email-otp-verification {
   display: flex;
   flex-direction: column;
@@ -8250,7 +8250,7 @@ fieldset.field-email-otp-verification {
   position: relative;
 }
 
-/* ─── Legend (Panel Title) ─── */
+/* ─── Legend (Panel Title) ─── 
 fieldset.field-email-otp-verification > legend {
   font-family: 'Inter', sans-serif;
   font-weight: 600;
@@ -8265,7 +8265,7 @@ fieldset.field-email-otp-verification > legend {
   width: 100%;
 }
 
-/* ─── Subtitle / Info Text ─── */
+/* ─── Subtitle / Info Text ─── 
 fieldset.field-email-otp-verification .field-otp-verification-info p {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
@@ -8276,7 +8276,7 @@ fieldset.field-email-otp-verification .field-otp-verification-info p {
   margin: 0;
 }
 
-/* ─── OTP Input Field Wrapper ─── */
+/* ─── OTP Input Field Wrapper ─── 
 fieldset.field-email-otp-verification .field-email-otp {
   display: flex;
   flex-direction: column;
@@ -8294,7 +8294,7 @@ fieldset.field-email-otp-verification .field-email-otp .field-label {
   color: #374151;
 }
 
-/* ─── OTP Input Element ─── */
+/* ─── OTP Input Element ─── 
 fieldset.field-email-otp-verification .field-email-otp input[type="password"],
 fieldset.field-email-otp-verification .field-email-otp input[type="text"] {
   width: 100%;
@@ -8319,7 +8319,7 @@ fieldset.field-email-otp-verification .field-email-otp input:focus {
   box-shadow: 0 0 0 3px rgba(28, 63, 202, 0.12);
 }
 
-/* ─── Show/Hide Password Toggle Icon ─── */
+/* ─── Show/Hide Password Toggle Icon ─── 
 fieldset.field-email-otp-verification #togglePassword {
   position: absolute;
   right: 14px;
@@ -8330,12 +8330,12 @@ fieldset.field-email-otp-verification #togglePassword {
   color: #6B7280;
 }
 
-/* Make the input wrapper relative so icon positions correctly */
+/* Make the input wrapper relative so icon positions correctly 
 fieldset.field-email-otp-verification .field-email-otp {
   position: relative;
 }
 
-/* ─── Helper / Description Text ─── */
+/* ─── Helper / Description Text ─── 
 fieldset.field-email-otp-verification .field-description {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
@@ -8344,7 +8344,7 @@ fieldset.field-email-otp-verification .field-description {
   color: #6B7280;
 }
 
-/* ─── Resend OTP Timer Text ─── */
+/* ─── Resend OTP Timer Text ─── 
 fieldset.field-email-otp-verification .field-resend-otp-timer-text p {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
@@ -8354,20 +8354,20 @@ fieldset.field-email-otp-verification .field-resend-otp-timer-text p {
   margin: 0;
 }
 
-/* Bold the countdown number inside the timer text */
+/* Bold the countdown number inside the timer text 
 fieldset.field-email-otp-verification .field-resend-otp-timer-text p strong,
 fieldset.field-email-otp-verification .field-resend-otp-timer-text p span {
   font-weight: 600;
   color: #111827;
 }
 
-/* ─── Button Wrappers ─── */
+/* ─── Button Wrappers ─── 
 fieldset.field-email-otp-verification .button-wrapper {
   display: flex;
   width: 100%;
 }
 
-/* ─── All Buttons — Shared Base ─── */
+/* ─── All Buttons — Shared Base ─── 
 fieldset.field-email-otp-verification .button-wrapper .button {
   display: inline-flex;
   justify-content: center;
@@ -8387,7 +8387,7 @@ fieldset.field-email-otp-verification .button-wrapper .button {
   box-sizing: border-box;
 }
 
-/* ─── Submit Button (Primary) ─── */
+/* ─── Submit Button (Primary) ─── 
 fieldset.field-email-otp-verification .field-submit-otpp .button {
   background: #1C3FCA;
   color: #FFFFFF;
@@ -8400,7 +8400,7 @@ fieldset.field-email-otp-verification .field-submit-otpp .button:hover {
 fieldset.field-email-otp-verification .field-submit-otpp .button:active {
   background: #122d99;
 }
-/* ================= Back Email Button ================= */
+/* ================= Back Email Button ================= 
 
 div.field-back-email > button#button-0c31638563 {
   display: inline-flex !important;
@@ -8439,12 +8439,12 @@ div.field-back-email > button#button-0c31638563:disabled {
 }
 
 
-/* ── Hide label ── */
+/* ── Hide label ── 
 .field-inavalid-otpp label.field-label {
   display: none !important;
 }
 
-/* ── Hide the input box, show only the value as red text ── */
+/* ── Hide the input box, show only the value as red text ── 
 .field-inavalid-otpp input[type="text"] {
   border: none !important;
   background: transparent !important;
@@ -8461,10 +8461,10 @@ div.field-back-email > button#button-0c31638563:disabled {
   width: 100% !important;
 }
 
-/* Disabled button style */
+/* Disabled button style 
 button[name="submit_otpp"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-
+ */
