@@ -43,17 +43,26 @@ function days(endDate, startDate) {
 }
  
 /**
-* Masks the first 5 digits of the mobile number with *
-* @param {*} mobileNumber
-* @returns {string} returns the mobile number with first 5 digits masked
-*/
+ * @param {*} mobileNumber
+ * @returns {string} returns the mobile number with first 5 digits masked
+ */
 function maskMobileNumber(mobileNumber) {
-  if (!mobileNumber) {
-    return '';
-  }
-  const value = mobileNumber.toString();
-  // Mask first 5 digits and keep the rest
-  return ` ${'*'.repeat(5)}${value.substring(5)}`;
+
+    // Check if value exists
+    if (!mobileNumber) {
+        return '';
+    }
+
+    // Convert input to string and remove spaces
+    const value = mobileNumber.toString().trim();
+
+    // Validate minimum length
+    if (value.length < 10) {
+        return value;
+    }
+
+    // Mask first 5 digits
+    return `${'*'.repeat(5)}${value.substring(5)}`;
 }
  
 // eslint-disable-next-line import/prefer-default-export
