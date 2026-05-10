@@ -1261,7 +1261,7 @@ document.addEventListener("click", function (e) {
 //   initOtpTimer();
 /**
  * @/**
- /**
+/**
  * @file functions.js
  * @description Work Email OTP Verification
  * Place this file in: /blocks/form/functions.js
@@ -1273,6 +1273,7 @@ const otpState = {
   MAX_RESEND: 3,
   TIMER_SECONDS: 30,
 };
+
  function initWorkEmailOTP() {
 
   /* =========================================================
@@ -1567,6 +1568,10 @@ const otpState = {
     );
 
     startTimer();
+
+    /* AUTO VERIFY PREFILLED OTP */
+
+    handleOTPInput();
   }
 
   /* =========================================================
@@ -1630,98 +1635,87 @@ const otpState = {
     );
 
     startTimer();
+
+    /* AUTO VERIFY PREFILLED OTP */
+
+    handleOTPInput();
   }
 
   /* =========================================================
-     SUBMIT OTP
+     AUTO VERIFY OTP
   ========================================================= */
 
-  async function handleSubmitOTP(event) {
-
-    event.preventDefault();
-
-    const emailInput = getEl("work_mail-id");
+  async function handleOTPInput() {
 
     const otpInput = getEl("otp_codee_email");
 
-    const submitBtn = getEl("submit_otp");
+    const emailInput = getEl("work_mail-id");
 
     const verifyBtn = getEl("verify_work");
 
-    const email = emailInput?.value?.trim();
+    const submitBtn = getEl("submit_otp");
 
     const otp = otpInput?.value?.trim();
 
-    if (!otp) {
+    const email = emailInput?.value?.trim();
 
-      setMessage(
-        "text-eeb45cf991",
-        "Please enter OTP.",
-        "red"
-      );
+    if (!otp || otp.length < 6) {
+
+      if (submitBtn) {
+        submitBtn.style.display = "none";
+      }
 
       return;
     }
-
-    disableButton(submitBtn, "Verifying...");
 
     const result = await validateOTP(email, otp);
 
-    if (!result.success) {
+    if (result.success) {
 
-      enableButton(submitBtn, "Submit");
+      /* VERIFIED */
 
       setMessage(
         "text-eeb45cf991",
-        "Invalid OTP. Please try again.",
+        "OTP Verified ✓",
+        "green"
+      );
+
+      if (verifyBtn) {
+
+        verifyBtn.textContent = "✓ Verified";
+
+        verifyBtn.style.backgroundColor = "#16a34a";
+        verifyBtn.style.borderColor = "#16a34a";
+        verifyBtn.style.color = "#ffffff";
+      }
+
+      if (submitBtn) {
+        submitBtn.style.display = "block";
+      }
+
+    } else {
+
+      /* INVALID */
+
+      setMessage(
+        "text-eeb45cf991",
+        "Invalid OTP",
         "red"
       );
 
-      return;
+      if (submitBtn) {
+        submitBtn.style.display = "none";
+      }
+
+      if (verifyBtn) {
+
+        verifyBtn.textContent = "Verify Mail";
+
+        verifyBtn.style.backgroundColor = "";
+        verifyBtn.style.borderColor = "";
+        verifyBtn.style.color = "";
+      }
     }
-
-    /* SUCCESS */
-
-    setMessage(
-      "text-eeb45cf991",
-      "OTP Verified ✓",
-      "green"
-    );
-
-    if (verifyBtn) {
-
-      verifyBtn.textContent = "✓ Verified";
-
-      verifyBtn.disabled = true;
-
-      verifyBtn.style.backgroundColor = "#16a34a";
-      verifyBtn.style.borderColor = "#16a34a";
-      verifyBtn.style.color = "#ffffff";
-      verifyBtn.style.cursor = "default";
-    }
-
-    if (emailInput) {
-      emailInput.disabled = true;
-    }
-
-    if (otpInput) {
-      otpInput.disabled = true;
-    }
-
-    if (submitBtn) {
-      submitBtn.style.display = "none";
-    }
-
-    const resendBtn = getEl("resend_otp");
-
-    disableButton(resendBtn, "Resend");
-
-    clearInterval(otpState.timer);
-
-    setMessage(
-      "text-622da24443",
-      ""
-    );
   }
 
   /* =========================================================
@@ -1748,7 +1742,7 @@ const otpState = {
 
   const resendBtn = getEl("resend_otp");
 
-  const submitBtn = getEl("submit_otp");
+  const otpInput = getEl("otp_codee_email");
 
   if (verifyBtn && !verifyBtn.dataset.bound) {
 
@@ -1770,13 +1764,13 @@ const otpState = {
     );
   }
 
-  if (submitBtn && !submitBtn.dataset.bound) {
+  if (otpInput && !otpInput.dataset.bound) {
 
-    submitBtn.dataset.bound = "true";
+    otpInput.dataset.bound = "true";
 
-    submitBtn.addEventListener(
-      "click",
-      handleSubmitOTP
+    otpInput.addEventListener(
+      "input",
+      handleOTPInput
     );
   }
 
@@ -1800,5 +1794,11 @@ const otpState = {
 
   if (otpPanel) {
     otpPanel.style.display = "none";
+  }
+
+  const submitBtn = getEl("submit_otp");
+
+  if (submitBtn) {
+    submitBtn.style.display = "none";
   }
 }
