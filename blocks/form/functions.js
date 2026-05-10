@@ -67,7 +67,7 @@ function maskMobileNumber(mobileNumber) {
  
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,callVerifyOTPAndGetDemogDetails,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,handleProceedButton,callPANEnquiry,
+  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,startOtpTimer,resendOtp, callSubmission, callInitiateCustomerIdentification,callVerifyOTPAndGetDemogDetails,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,handleProceedButton,callPANEnquiry,updateOTPDescription,
 };
  
  
@@ -210,7 +210,64 @@ function validateDOBAndToggleText(dob) {
 //   return `Resend OTP in ${timerValue}s`;
 // }
  
- 
+ /**
+ * Updates OTP description dynamically with masked mobile number
+ * @param {*} mobileNumber
+ */
+function updateOTPDescription(mobileNumber) {
+
+    // Validate input
+    if (!mobileNumber) {
+        return;
+    }
+
+    // Convert to string
+    const value = mobileNumber.toString().trim();
+
+    // Mask first 5 digits
+    const maskedNumber = `${'*'.repeat(5)}${value.substring(5)}`;
+
+    // Target description element
+    const descriptionElement = document.getElementById(
+        "textinput-50d20aeb3d-description"
+    );
+
+    // Target wrapper element
+    const wrapperElement = document.querySelector(
+        '[data-id="textinput-50d20aeb3d"]'
+    );
+
+    // Message
+    const message =
+        `We have sent an OTP to your mobile number ${maskedNumber}`;
+
+    // Update visible description
+    if (descriptionElement) {
+        descriptionElement.innerHTML = `<p>${message}</p>`;
+    }
+
+    // Update wrapper attributes
+    if (wrapperElement) {
+        wrapperElement.setAttribute(
+            "data-description",
+            `<p>${message}</p>`
+        );
+
+        // Update input title
+        const inputField = wrapperElement.querySelector("input");
+
+        if (inputField) {
+            inputField.setAttribute("title", message);
+        }
+
+        // Update label title
+        const label = wrapperElement.querySelector("label");
+
+        if (label) {
+            label.setAttribute("title", message);
+        }
+    }
+}
  
  
  
