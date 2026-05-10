@@ -47,7 +47,7 @@ function days(endDate, startDate) {
  * @returns {string} returns the mobile number with first 5 digits masked
  */
 function maskMobileNumber(mobileNumber) {
-
+  console.log("working mask")
     // Check if value exists
     if (!mobileNumber) {
         return '';
