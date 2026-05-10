@@ -8470,42 +8470,7 @@ button[name="submit_otpp"]:disabled {
  */
 /* ── OTP Panel Text Styles ─────────────────────────────── */
 /* ── OTP Panel Text Styles ─────────────────────────────── */
-
-/* Enter OTP label */
-fieldset[data-id="panelcontainer-9163d6401a"] .field-label {
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  color: #374151 !important;
-  letter-spacing: 0.01em !important;
-}
-
-/* Invalid OTP error text */
-[data-id="text-eeb45cf991"] p {
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: #DC2626 !important;
-  margin: 0 !important;
-}
-
-/* Resend timer text */
-[data-id="text-622da24443"] p {
-  font-size: 13px !important;
-  font-weight: 400 !important;
-  color: #6B7280 !important;
-  margin: 0 !important;
-}
-
-/* Attempts text */
-[data-id="text-ef1817e968"] p {
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: #374151 !important;
-  margin: 0 !important;
-}
-
-
-/* ── Timer field — hide label, remove input border ────────────────────── */
-fieldset[data-id="panelcontainer-647b49a7d0"] .field-timer .field-label,
+/* ── Timer — hide label, remove input box ─────────────────────────────── */
 fieldset[data-id="panelcontainer-647b49a7d0"] .field-timer label {
   display: none !important;
 }
@@ -8514,15 +8479,9 @@ fieldset[data-id="panelcontainer-647b49a7d0"] input[name="timer"] {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
-  background: transparent !important;
-  padding: 0 !important;
-  font-size: 13px !important;
-  font-weight: 400 !important;
-  color: #6B7280 !important;
 }
 
-/* ── Attempts field — hide label, remove input border ─────────────────── */
-fieldset[data-id="panelcontainer-647b49a7d0"] .field-otp-attempts-left .field-label,
+/* ── Attempts — hide label, remove input box ──────────────────────────── */
 fieldset[data-id="panelcontainer-647b49a7d0"] .field-otp-attempts-left label {
   display: none !important;
 }
@@ -8531,9 +8490,4 @@ fieldset[data-id="panelcontainer-647b49a7d0"] input[name="otp_attempts_left"] {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
-  background: transparent !important;
-  padding: 0 !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: #374151 !important;
 }
