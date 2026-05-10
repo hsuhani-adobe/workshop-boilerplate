@@ -1274,7 +1274,7 @@ const otpState = {
   TIMER_SECONDS: 30,
 };
 
- function initWorkEmailOTP() {
+export function initWorkEmailOTP() {
 
   /* =========================================================
      HELPERS
@@ -1287,6 +1287,7 @@ const otpState = {
   }
 
   function getEl(name) {
+
     const panel = getPanel();
 
     return panel
@@ -1555,8 +1556,6 @@ const otpState = {
       otpInput.value = result.otp;
     }
 
-    /* RESET ATTEMPTS */
-
     setMessage(
       "text-ef1817e968",
       `${otpState.MAX_RESEND}/${otpState.MAX_RESEND} attempts`
@@ -1568,8 +1567,6 @@ const otpState = {
     );
 
     startTimer();
-
-    /* AUTO VERIFY PREFILLED OTP */
 
     handleOTPInput();
   }
@@ -1613,8 +1610,6 @@ const otpState = {
       return;
     }
 
-    /* PREFILL NEW OTP */
-
     const otpInput = getEl("otp_codee_email");
 
     if (otpInput && result?.otp) {
@@ -1635,8 +1630,6 @@ const otpState = {
     );
 
     startTimer();
-
-    /* AUTO VERIFY PREFILLED OTP */
 
     handleOTPInput();
   }
@@ -1662,89 +1655,162 @@ const otpState = {
     if (!otp || otp.length < 6) {
 
       if (submitBtn) {
-        submitBtn.style.display = "none";
+
+        submitBtn.disabled = true;
+
+        submitBtn.style.opacity = "0.5";
+
+        submitBtn.style.cursor = "not-allowed";
       }
 
       return;
     }
 
     const result = await validateOTP(email, otp);
-if (result.success) {
 
-  /* VERIFIED */
+    if (result.success) {
 
-  setMessage(
-    "text-eeb45cf991",
-    "OTP Verified ✓",
-    "green"
-  );
+      setMessage(
+        "text-eeb45cf991",
+        "OTP Verified ✓",
+        "green"
+      );
 
-  /* VERIFY BUTTON GREEN + DISABLED */
+      /* ENABLE SUBMIT BUTTON */
 
-  if (verifyBtn) {
+      if (submitBtn) {
 
-    verifyBtn.textContent = "✓ Verified";
+        submitBtn.disabled = false;
 
-    verifyBtn.disabled = true;
+        submitBtn.style.opacity = "1";
 
-    verifyBtn.style.backgroundColor = "#16a34a";
-    verifyBtn.style.borderColor = "#16a34a";
-    verifyBtn.style.color = "#ffffff";
-    verifyBtn.style.cursor = "default";
-    verifyBtn.style.opacity = "1";
+        submitBtn.style.cursor = "pointer";
+      }
+
+    } else {
+
+      setMessage(
+        "text-eeb45cf991",
+        "Invalid OTP",
+        "red"
+      );
+
+      /* DISABLE SUBMIT BUTTON */
+
+      if (submitBtn) {
+
+        submitBtn.disabled = true;
+
+        submitBtn.style.opacity = "0.5";
+
+        submitBtn.style.cursor = "not-allowed";
+      }
+
+      /* RESET VERIFY BUTTON */
+
+      if (verifyBtn) {
+
+        verifyBtn.textContent = "Verify Mail";
+
+        verifyBtn.style.backgroundColor = "";
+
+        verifyBtn.style.borderColor = "";
+
+        verifyBtn.style.color = "";
+      }
+    }
   }
 
-  /* DISABLE OTP FIELD */
+  /* =========================================================
+     FINAL SUBMIT
+  ========================================================= */
 
-  if (otpInput) {
-    otpInput.disabled = true;
-  }
+  async function handleFinalSubmit(event) {
 
-  /* DISABLE EMAIL FIELD */
+    event.preventDefault();
 
-  if (emailInput) {
-    emailInput.disabled = true;
-  }
+    const verifyBtn = getEl("verify_work");
 
-  /* HIDE SUBMIT BUTTON */
+    const submitBtn = getEl("submit_otp");
 
-  if (submitBtn) {
-    submitBtn.style.display = "none";
-  }
+    const otpInput = getEl("otp_codee_email");
 
-  /* HIDE OTP PANEL */
+    const emailInput = getEl("work_mail-id");
 
-  const otpPanel = document.querySelector(
-    'fieldset[data-id="panelcontainer-9163d6401a"]'
-  );
+    /* VERIFY BUTTON GREEN */
 
-  if (otpPanel) {
-    otpPanel.style.display = "none";
-  }
+    if (verifyBtn) {
 
-  /* STOP TIMER */
+      verifyBtn.textContent = "✓ Verified";
 
-  clearInterval(otpState.timer);
+      verifyBtn.disabled = true;
 
-  /* DISABLE RESEND */
+      verifyBtn.style.backgroundColor = "#16a34a";
 
-  const resendBtn = getEl("resend_otp");
+      verifyBtn.style.borderColor = "#16a34a";
 
-  if (resendBtn) {
+      verifyBtn.style.color = "#ffffff";
 
-    resendBtn.disabled = true;
+      verifyBtn.style.cursor = "default";
 
-    resendBtn.style.opacity = "0.4";
-    resendBtn.style.cursor = "not-allowed";
-  }
+      verifyBtn.style.opacity = "1";
+    }
 
-  /* CLEAR TIMER TEXT */
+    /* DISABLE FIELDS */
 
-  setMessage(
-    "text-622da24443",
-    ""
-  );
-}
+    if (otpInput) {
+      otpInput.disabled = true;
+    }
+
+    if (emailInput) {
+      emailInput.disabled = true;
+    }
+
+    /* HIDE SUBMIT BUTTON */
+
+    if (submitBtn) {
+      submitBtn.style.display = "none";
+    }
+
+    /* HIDE OTP PANEL */
+
+    const otpPanel = document.querySelector(
+      'fieldset[data-id="panelcontainer-9163d6401a"]'
+    );
+
+    if (otpPanel) {
+      otpPanel.style.display = "none";
+    }
+
+    /* STOP TIMER */
+
+    clearInterval(otpState.timer);
+
+    /* DISABLE RESEND */
+
+    const resendBtn = getEl("resend_otp");
+
+    if (resendBtn) {
+
+      resendBtn.disabled = true;
+
+      resendBtn.style.opacity = "0.4";
+
+      resendBtn.style.cursor = "not-allowed";
+    }
+
+    /* CLEAR TIMER TEXT */
+
+    setMessage(
+      "text-622da24443",
+      ""
+    );
+
+    setMessage(
+      "text-eeb45cf991",
+      "OTP Verified Successfully ✓",
+      "green"
+    );
   }
 
   /* =========================================================
@@ -1772,6 +1838,8 @@ if (result.success) {
   const resendBtn = getEl("resend_otp");
 
   const otpInput = getEl("otp_codee_email");
+
+  const submitBtn = getEl("submit_otp");
 
   if (verifyBtn && !verifyBtn.dataset.bound) {
 
@@ -1803,6 +1871,16 @@ if (result.success) {
     );
   }
 
+  if (submitBtn && !submitBtn.dataset.bound) {
+
+    submitBtn.dataset.bound = "true";
+
+    submitBtn.addEventListener(
+      "click",
+      handleFinalSubmit
+    );
+  }
+
   document.addEventListener("click", (event) => {
 
     const toggleIcon =
@@ -1825,9 +1903,12 @@ if (result.success) {
     otpPanel.style.display = "none";
   }
 
-  const submitBtn = getEl("submit_otp");
-
   if (submitBtn) {
-    submitBtn.style.display = "none";
+
+    submitBtn.disabled = true;
+
+    submitBtn.style.opacity = "0.5";
+
+    submitBtn.style.cursor = "not-allowed";
   }
 }
