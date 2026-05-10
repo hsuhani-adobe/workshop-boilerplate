@@ -8439,7 +8439,7 @@ div.field-back-email > button#button-0c31638563:disabled {
 }
 
 
- ── Hide label ── 
+ /*── Hide label ── */
 .field-inavalid-otpp label.field-label {
   display: none !important;
 }
@@ -8501,4 +8501,39 @@ fieldset[data-id="panelcontainer-9163d6401a"] .field-label {
   font-weight: 500 !important;
   color: #374151 !important;
   margin: 0 !important;
+}
+
+
+/* ── Timer field — hide label, remove input border ────────────────────── */
+fieldset[data-id="panelcontainer-647b49a7d0"] .field-timer .field-label,
+fieldset[data-id="panelcontainer-647b49a7d0"] .field-timer label {
+  display: none !important;
+}
+
+fieldset[data-id="panelcontainer-647b49a7d0"] input[name="timer"] {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #6B7280 !important;
+}
+
+/* ── Attempts field — hide label, remove input border ─────────────────── */
+fieldset[data-id="panelcontainer-647b49a7d0"] .field-otp-attempts-left .field-label,
+fieldset[data-id="panelcontainer-647b49a7d0"] .field-otp-attempts-left label {
+  display: none !important;
+}
+
+fieldset[data-id="panelcontainer-647b49a7d0"] input[name="otp_attempts_left"] {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #374151 !important;
 }
