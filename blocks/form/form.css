@@ -8524,3 +8524,31 @@ button[name="submit_otpp"]:disabled {
 
 
 
+
+
+
+
+.email_otp_verification {
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #2f3b52;
+}
+
+.email_otp_verification label,
+.email_otp_verification p,
+.email_otp_verification span,
+.email_otp_verification .field-description {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #2f3b52;
+}
+
+.email_otp_verification input {
+  font-size: 16px;
+  font-weight: 400;
+  color: #1f2937;
+}
