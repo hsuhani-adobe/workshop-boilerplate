@@ -8526,29 +8526,108 @@ button[name="submit_otpp"]:disabled {
 
 
 
-
-
-.email_otp_verification {
-  font-family: "Inter", "Segoe UI", Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.6;
-  color: #2f3b52;
+fieldset[name="email_otp_verification"] {
+  background: #f7f9fc;
+  border: 1px solid #dbe4f0;
+  border-radius: 20px;
+  padding: 32px;
+  margin-top: 20px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+  font-family: "Inter", "Segoe UI", sans-serif;
 }
 
-.email_otp_verification label,
-.email_otp_verification p,
-.email_otp_verification span,
-.email_otp_verification .field-description {
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.6;
-  color: #2f3b52;
+/* Labels */
+fieldset[name="email_otp_verification"] .field-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 10px;
+  display: block;
 }
 
-.email_otp_verification input {
-  font-size: 16px;
-  font-weight: 400;
-  color: #1f2937;
+/* Input Field */
+fieldset[name="email_otp_verification"] input {
+  width: 100%;
+  height: 58px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 0 18px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #000000;
+  background: #ffffff;
+  transition: all 0.3s ease;
+}
+
+fieldset[name="email_otp_verification"] input:focus {
+  outline: none;
+  border-color: #315efb;
+  box-shadow: 0 0 0 4px rgba(49, 94, 251, 0.12);
+}
+
+/* OTP Verified / Text Styling */
+fieldset[name="email_otp_verification"] p {
+  font-size: 17px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Verified Text */
+fieldset[name="email_otp_verification"] .field-invalid-otp p {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* Attempts Text */
+fieldset[name="email_otp_verification"] .field-attempts p {
+  color: #000000;
+  font-weight: 500;
+}
+
+/* Buttons */
+fieldset[name="email_otp_verification"] button {
+  min-width: 180px;
+  height: 52px;
+  border-radius: 14px;
+  border: none;
+  background: #315efb;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+fieldset[name="email_otp_verification"] button:hover {
+  background: #2048d8;
+  transform: translateY(-1px);
+}
+
+/* Resend Button */
+fieldset[name="email_otp_verification"] .field-resend-otp button {
+  background: #e8eeff;
+  color: #315efb;
+  border: 1px solid #c7d5ff;
+}
+
+fieldset[name="email_otp_verification"] .field-resend-otp button:hover {
+  background: #dce6ff;
+}
+
+/* Password Toggle Icon */
+fieldset[name="email_otp_verification"] #togglePassword {
+  position: absolute;
+  right: 18px;
+  top: 58%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+/* OTP Field Wrapper */
+fieldset[name="email_otp_verification"] .field-otp-codee-email {
+  position: relative;
 }
