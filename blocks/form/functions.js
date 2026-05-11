@@ -674,75 +674,268 @@ function callInitiateCustomerIdentification(mobileNo, pan_no) {
       updateOtpMessage("Something went wrong", true);
     });
 }
- 
-/**
-  * PAN Verification Function
-  * @param {string} mobileNo
+ /**
+ * PAN Verification Function
+ * @param {string} mobileNo
  * @param {string} pan_no
-  */
- function callPANEnquiry(mobileNo, pan_no) {
- 
-  const API_URL = "https://loan-backend-mock.onrender.com/tier2/PANEnquiry";
- 
-   console.log("Inputs:", { mobileNo, pan_no });
- 
-  // 🎯 Get full name (auto-filled earlier)
-  const nameField = document.querySelector('[name="fullname_adhar"]');
-  const fullName = nameField ? nameField.value.trim() : "";
- 
-//   // 🎯 Target wrappers (AEM safe)
- const successWrapper = document.querySelector('.field-pantext');
-  const errorWrapper = document.querySelector('.field-panerror');
- 
-//   // 🔄 Reset messages
-  if (successWrapper) successWrapper.style.display = "none";
-  if (errorWrapper) errorWrapper.style.display = "none";
- 
-//
-    // 🚀 Call API
+ */
+
+function callPANEnquiry(mobileNo, pan_no) {
+
+  const API_URL =
+    "https://loan-backend-mock.onrender.com/tier2/PANEnquiry";
+
+  console.log("Inputs:", {
+    mobileNo,
+    pan_no
+  });
+
+  /* =========================================================
+     GET FULL NAME
+  ========================================================= */
+
+  const nameField = document.querySelector(
+    '[name="fullname_adhar"]'
+  );
+
+  const fullName =
+    nameField
+      ? nameField.value.trim()
+      : "";
+
+  /* =========================================================
+     TARGET ELEMENTS
+  ========================================================= */
+
+  const successWrapper = document.querySelector(
+    'fieldset[name="personal_details"] .field-pantext'
+  );
+
+  const errorWrapper = document.querySelector(
+    'fieldset[name="personal_details"] .field-panerror'
+  );
+
+  const verifyBtn = document.querySelector(
+    'fieldset[name="personal_details"] button[name="verify_personal"]'
+  );
+
+  const panInput = document.querySelector(
+    'fieldset[name="personal_details"] input[name="PAN"]'
+  );
+
+  /* =========================================================
+     RESET MESSAGES
+  ========================================================= */
+
+  if (successWrapper) {
+    successWrapper.style.display = "none";
+  }
+
+  if (errorWrapper) {
+    errorWrapper.style.display = "none";
+  }
+
+  /* =========================================================
+     BUTTON LOADING
+  ========================================================= */
+
+  if (verifyBtn) {
+
+    verifyBtn.disabled = true;
+
+    verifyBtn.textContent =
+      "Verifying...";
+
+    verifyBtn.style.opacity =
+      "0.7";
+  }
+
+  /* =========================================================
+     API CALL
+  ========================================================= */
+
   fetch(API_URL, {
+
     method: "POST",
-         headers: {
-       "Content-Type": "application/json",
-     },
-     body: JSON.stringify({
-       contextParam: {},
+
+    headers: {
+      "Content-Type":
+        "application/json",
+    },
+
+    body: JSON.stringify({
+
+      contextParam: {},
+
       requestString: {
+
         mobileNo: mobileNo,
-         panNumber: pan_no,
-         fullName: fullName
-       }     }),
+
+        panNumber: pan_no,
+
+        fullName: fullName
+      }
+    }),
   })
+
     .then((response) => {
-      if (!response.ok) throw new Error("Network error");
+
+      if (!response.ok) {
+        throw new Error("Network error");
+      }
+
       return response.json();
     })
+
     .then((data) => {
- 
-      console.log("PAN API Response:", data);
- 
-      if (data?.status?.responseCode === "0") {
- 
-        // ✅ SUCCESS
-       if (successWrapper) successWrapper.style.display = "block";
-         if (errorWrapper) errorWrapper.style.display = "none";
- 
-       } else {
-          // ❌ FAILURE
-        if (errorWrapper) errorWrapper.style.display = "block";
-        if (successWrapper) successWrapper.style.display = "none";
-       }
-     })
+
+      console.log(
+        "PAN API Response:",
+        data
+      );
+
+      /* =========================================================
+         SUCCESS
+      ========================================================= */
+
+      if (
+        data?.status?.responseCode ===
+        "0"
+      ) {
+
+        /* SHOW SUCCESS */
+
+        if (successWrapper) {
+
+          successWrapper.style.display =
+            "block";
+
+          successWrapper.innerHTML =
+            "<p>PAN verified successfully ✓</p>";
+
+          successWrapper.style.color =
+            "green";
+        }
+
+        if (errorWrapper) {
+          errorWrapper.style.display =
+            "none";
+        }
+
+        /* VERIFIED BUTTON */
+
+        if (verifyBtn) {
+
+          verifyBtn.textContent =
+            "✓ Verified";
+
+          verifyBtn.disabled = true;
+
+          verifyBtn.classList.add(
+            "verified-personal-mail-btn"
+          );
+
+          verifyBtn.style.cursor =
+            "default";
+
+          verifyBtn.style.opacity =
+            "1";
+        }
+
+        /* DISABLE PAN INPUT */
+
+        if (panInput) {
+          panInput.disabled = true;
+        }
+
+      } else {
+
+        /* =========================================================
+           FAILURE
+        ========================================================= */
+
+        if (errorWrapper) {
+
+          errorWrapper.style.display =
+            "block";
+
+          errorWrapper.innerHTML =
+            "<p>PAN not verified . Try again.</p>";
+
+          errorWrapper.style.color =
+            "red";
+        }
+
+        if (successWrapper) {
+          successWrapper.style.display =
+            "none";
+        }
+
+        /* RESET BUTTON */
+
+        if (verifyBtn) {
+
+          verifyBtn.disabled = false;
+
+          verifyBtn.textContent =
+            "Verify PAN";
+
+          verifyBtn.style.opacity =
+            "1";
+
+          verifyBtn.classList.remove(
+            "verified-personal-mail-btn"
+          );
+        }
+      }
+    })
+
     .catch((error) => {
- 
-       console.error("PAN API Error:", error);
- 
-       // ❌ ERROR CASE
-      if (errorWrapper) errorWrapper.style.display = "block";
-      if (successWrapper) successWrapper.style.display = "none";
+
+      console.error(
+        "PAN API Error:",
+        error
+      );
+
+      /* =========================================================
+         ERROR CASE
+      ========================================================= */
+
+      if (errorWrapper) {
+
+        errorWrapper.style.display =
+          "block";
+
+        errorWrapper.innerHTML =
+          "<p>Something went wrong</p>";
+
+        errorWrapper.style.color =
+          "red";
+      }
+
+      if (successWrapper) {
+        successWrapper.style.display =
+          "none";
+      }
+
+      /* RESET BUTTON */
+
+      if (verifyBtn) {
+
+        verifyBtn.disabled = false;
+
+        verifyBtn.textContent =
+          "Verify PAN";
+
+        verifyBtn.style.opacity =
+          "1";
+
+        verifyBtn.classList.remove(
+          "verified-personal-mail-btn"
+        );
+      }
     });
 }
- 
  
 /**
  * Get Bureau Offer + Populate All Fields (AEM Safe)
