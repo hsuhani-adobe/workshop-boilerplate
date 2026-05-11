@@ -8239,46 +8239,48 @@ div.field-verify-details > button#button-b3b5cbc8d9:active {
 
 
 
-/* ================= Verify Personal Mail Button ================= */
+/* ================= VERIFIED PERSONAL MAIL BUTTON ================= */
 
-div.field-verify-personal-mail > button[name="verify_personal_mail"] {
-  display: inline-flex !important;
+div.field-verify-personal-mail 
+button[name="verify_personal_mail"] {
+
+  box-sizing: border-box !important;
+
+  display: flex !important;
   flex-direction: row !important;
   justify-content: center !important;
   align-items: center !important;
-  padding: 14px 20px !important;
-  gap: 4px !important;
 
-  width: 272px !important;
+  padding: 14px 20px !important;
+  gap: 12px !important;
+
+  width: 104px !important;
   height: 52px !important;
 
-  background: #1c3fca !important;
-  color: #ffffff !important;
+  border: 1px solid #1C3FCA !important;
+  border-radius: 13px !important;
 
-  font-family: 'Inter', inherit !important;
-  font-size: 16px !important;
+  background: transparent !important;
+
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal !important;
   font-weight: 600 !important;
+  font-size: 16px !important;
   line-height: 24px !important;
   text-align: center !important;
 
-  border: none !important;
-  border-radius: 13px !important;
+  color: #1C3FCA !important;
 
   cursor: pointer !important;
 
-  transition: background 0.2s,
-              box-shadow 0.2s !important;
-}
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
-div.field-verify-personal-mail > button[name="verify_personal_mail"]:hover {
-  background: #6b84d9 !important;
+  margin: 12px 0;
+  text-decoration: none;
 
-  box-shadow: 0 4px 14px
-    rgba(28, 63, 202, 0.3) !important;
-}
-
-div.field-verify-personal-mail > button[name="verify_personal_mail"]:active {
-  background: #1633a8 !important;
+  box-shadow: none !important;
 }
 /* 
 
