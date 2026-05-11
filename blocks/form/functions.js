@@ -67,7 +67,7 @@ function maskMobileNumber(mobileNumber) {
  
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,startOtpTimer,resendOtp,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,handleProceedButton,callPANEnquiry,updateOTPDescription,initWorkEmailOTP
+  getFullName, days, submitFormArrayToString, maskMobileNumber,validateDOBAndToggleText,startOtpTimer,resendOtp,callGetBureauOffer,callFinalSubmission,callGenerateEmailOTP,handleProceedButton,callPANEnquiry,updateOTPDescription,initWorkEmailOTP,initPersonalEmailOTP,
 };
  
  
@@ -1911,4 +1911,652 @@ const otpState = {
 
     submitBtn.style.cursor = "not-allowed";
   }
+}
+
+
+
+
+
+
+
+/**
+ * =========================================================
+ * PERSONAL EMAIL OTP VERIFICATION
+ * =========================================================
+ * OUTERMOST PANEL :
+ * fieldset[name="personal_details"]
+ */
+
+const personalEmailOtpState = {
+  timer: null,
+  resendCount: 0,
+  MAX_RESEND: 3,
+  TIMER_SECONDS: 30,
+};
+
+
+
+ function initPersonalEmailOTP() {
+
+  /* =========================================================
+     OUTER PANEL
+  ========================================================= */
+
+  const outerPanel = document.querySelector(
+    'fieldset[name="personal_details"]'
+  );
+
+  if (!outerPanel) return;
+
+  /* =========================================================
+     HELPERS
+  ========================================================= */
+
+  function getEl(selector) {
+    return outerPanel.querySelector(selector);
+  }
+
+  function setMessage(dataId, message = "", color = "") {
+
+    const el = outerPanel.querySelector(
+      `[data-id="${dataId}"]`
+    );
+
+    if (!el) return;
+
+    el.innerHTML = message
+      ? `<p>${message}</p>`
+      : "";
+
+    if (color) {
+      el.style.color = color;
+    }
+  }
+
+  function disableButton(btn, text) {
+
+    if (!btn) return;
+
+    btn.disabled = true;
+
+    if (text) {
+      btn.textContent = text;
+    }
+
+    btn.style.opacity = "0.5";
+    btn.style.cursor = "not-allowed";
+  }
+
+  function enableButton(btn, text) {
+
+    if (!btn) return;
+
+    btn.disabled = false;
+
+    if (text) {
+      btn.textContent = text;
+    }
+
+    btn.style.opacity = "1";
+    btn.style.cursor = "pointer";
+  }
+
+  /* =========================================================
+     ELEMENTS
+  ========================================================= */
+
+  const emailInput = getEl(
+    'input[name="email_id"]'
+  );
+
+  const verifyBtn = getEl(
+    'button[name="verify_personal_mail"]'
+  );
+
+  const otpPanel = getEl(
+    'fieldset[name="email_otp_verification"]'
+  );
+
+  const otpInput = getEl(
+    'input[name="otp_codee_email2"]'
+  );
+
+  const resendBtn = getEl(
+    'fieldset[name="email_otp_verification"] button[name="resend_otp"]'
+  );
+
+  const submitBtn = getEl(
+    'fieldset[name="email_otp_verification"] button[name="submit_otp"]'
+  );
+
+  const togglePassword = getEl(
+    '#togglePassword'
+  );
+
+  /* =========================================================
+     API : GENERATE OTP
+  ========================================================= */
+
+  async function generateOTP(email) {
+
+    try {
+
+      const response = await fetch(
+        "https://loan-backend-mock.onrender.com/tier2/generateEmailOTP",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            requestString: {
+              email,
+            },
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+
+      return data?.status?.responseCode === "0"
+        ? {
+            success: true,
+            otp: data?.responseString?.otp,
+          }
+        : {
+            success: false,
+            error:
+              data?.status?.errorDesc ||
+              "Failed to generate OTP",
+          };
+
+    } catch (error) {
+
+      console.error(error);
+
+      return {
+        success: false,
+        error: "Network error",
+      };
+    }
+  }
+
+  /* =========================================================
+     API : VALIDATE OTP
+  ========================================================= */
+
+  async function validateOTP(email, otp) {
+
+    try {
+
+      const response = await fetch(
+        "https://loan-backend-mock.onrender.com/tier2/validateEmailOTP",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            requestString: {
+              email,
+              otp,
+            },
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+
+      return (
+        data?.status?.responseCode === "0" &&
+        data?.responseString?.verified
+      )
+        ? { success: true }
+        : {
+            success: false,
+            error:
+              data?.status?.errorDesc ||
+              "Incorrect OTP",
+          };
+
+    } catch (error) {
+
+      console.error(error);
+
+      return {
+        success: false,
+        error: "Network error",
+      };
+    }
+  }
+
+  /* =========================================================
+     TIMER
+  ========================================================= */
+
+  function startTimer() {
+
+    disableButton(resendBtn, "Resend");
+
+    let seconds =
+      personalEmailOtpState.TIMER_SECONDS;
+
+    setMessage(
+      "text-b431aa306a",
+      `Resend OTP in ${seconds} seconds`
+    );
+
+    clearInterval(
+      personalEmailOtpState.timer
+    );
+
+    personalEmailOtpState.timer =
+      setInterval(() => {
+
+        seconds--;
+
+        if (seconds <= 0) {
+
+          clearInterval(
+            personalEmailOtpState.timer
+          );
+
+          if (
+            personalEmailOtpState.resendCount <
+            personalEmailOtpState.MAX_RESEND
+          ) {
+
+            enableButton(
+              resendBtn,
+              "Resend"
+            );
+
+            setMessage(
+              "text-b431aa306a",
+              "You can resend OTP now."
+            );
+
+          } else {
+
+            disableButton(
+              resendBtn,
+              "Resend"
+            );
+
+            setMessage(
+              "text-b431aa306a",
+              "Maximum resend attempts reached."
+            );
+          }
+
+        } else {
+
+          setMessage(
+            "text-b431aa306a",
+            `Resend OTP in ${seconds} seconds`
+          );
+        }
+
+      }, 1000);
+  }
+
+  /* =========================================================
+     VERIFY MAIL
+  ========================================================= */
+
+  async function handleVerifyMail(event) {
+
+    event.preventDefault();
+
+    const email =
+      emailInput?.value?.trim();
+
+    if (!email) {
+
+      setMessage(
+        "text-09dd6a0744",
+        "Please enter your work mail ID",
+        "red"
+      );
+
+      return;
+    }
+
+    personalEmailOtpState.resendCount = 0;
+
+    disableButton(
+      verifyBtn,
+      "Sending..."
+    );
+
+    const result =
+      await generateOTP(email);
+
+    enableButton(
+      verifyBtn,
+      "Verify Mail"
+    );
+
+    if (!result.success) {
+
+      setMessage(
+        "text-09dd6a0744",
+        result.error,
+        "red"
+      );
+
+      return;
+    }
+
+    /* SHOW OTP PANEL */
+
+    if (otpPanel) {
+
+      otpPanel.hidden = false;
+
+      otpPanel.style.display = "block";
+    }
+
+    /* PREFILL OTP */
+
+    if (otpInput && result?.otp) {
+      otpInput.value = result.otp;
+    }
+
+    setMessage(
+      "text-2b808f4f39",
+      `${personalEmailOtpState.MAX_RESEND}/${personalEmailOtpState.MAX_RESEND} attempts`
+    );
+
+    setMessage(
+      "text-09dd6a0744",
+      ""
+    );
+
+    startTimer();
+
+    handleOTPInput();
+  }
+
+  /* =========================================================
+     RESEND OTP
+  ========================================================= */
+
+  async function handleResendOTP(event) {
+
+    event.preventDefault();
+
+    if (
+      personalEmailOtpState.resendCount >=
+      personalEmailOtpState.MAX_RESEND
+    ) {
+      return;
+    }
+
+    const email =
+      emailInput?.value?.trim();
+
+    if (!email) return;
+
+    personalEmailOtpState.resendCount++;
+
+    disableButton(
+      resendBtn,
+      "Sending..."
+    );
+
+    const result =
+      await generateOTP(email);
+
+    if (!result.success) {
+
+      enableButton(
+        resendBtn,
+        "Resend"
+      );
+
+      setMessage(
+        "text-09dd6a0744",
+        result.error,
+        "red"
+      );
+
+      return;
+    }
+
+    if (otpInput && result?.otp) {
+      otpInput.value = result.otp;
+    }
+
+    const attemptsLeft =
+      personalEmailOtpState.MAX_RESEND -
+      personalEmailOtpState.resendCount;
+
+    setMessage(
+      "text-2b808f4f39",
+      `${attemptsLeft}/${personalEmailOtpState.MAX_RESEND} attempts`
+    );
+
+    setMessage(
+      "text-09dd6a0744",
+      ""
+    );
+
+    startTimer();
+
+    handleOTPInput();
+  }
+
+  /* =========================================================
+     OTP INPUT VALIDATION
+  ========================================================= */
+
+  async function handleOTPInput() {
+
+    const otp =
+      otpInput?.value?.trim();
+
+    const email =
+      emailInput?.value?.trim();
+
+    if (!otp || otp.length < 6) {
+
+      disableButton(submitBtn);
+
+      return;
+    }
+
+    const result =
+      await validateOTP(email, otp);
+
+    if (result.success) {
+
+      setMessage(
+        "text-09dd6a0744",
+        "OTP Verified ✓",
+        "green"
+      );
+
+      enableButton(submitBtn);
+
+    } else {
+
+      setMessage(
+        "text-09dd6a0744",
+        "Invalid OTP",
+        "red"
+      );
+
+      disableButton(submitBtn);
+    }
+  }
+
+  /* =========================================================
+     FINAL SUBMIT
+  ========================================================= */
+
+  async function handleFinalSubmit(event) {
+
+    event.preventDefault();
+
+    /* VERIFY BUTTON */
+
+    verifyBtn.textContent =
+      "✓ Verified";
+
+    verifyBtn.disabled = true;
+
+    verifyBtn.style.backgroundColor =
+      "#16a34a";
+
+    verifyBtn.style.borderColor =
+      "#16a34a";
+
+    verifyBtn.style.color =
+      "#ffffff";
+
+    verifyBtn.style.cursor =
+      "default";
+
+    verifyBtn.style.opacity = "1";
+
+    /* DISABLE INPUTS */
+
+    otpInput.disabled = true;
+
+    emailInput.disabled = true;
+
+    /* HIDE SUBMIT */
+
+    submitBtn.style.display = "none";
+
+    /* HIDE OTP PANEL */
+
+    otpPanel.style.display = "none";
+
+    /* STOP TIMER */
+
+    clearInterval(
+      personalEmailOtpState.timer
+    );
+
+    /* DISABLE RESEND */
+
+    disableButton(resendBtn);
+
+    /* CLEAR TIMER */
+
+    setMessage(
+      "text-b431aa306a",
+      ""
+    );
+
+    setMessage(
+      "text-09dd6a0744",
+      "OTP Verified Successfully ✓",
+      "green"
+    );
+  }
+
+  /* =========================================================
+     PASSWORD TOGGLE
+  ========================================================= */
+
+  function togglePasswordVisibility() {
+
+    if (!otpInput) return;
+
+    otpInput.type =
+      otpInput.type === "password"
+        ? "text"
+        : "password";
+  }
+
+  /* =========================================================
+     EVENT BINDINGS
+  ========================================================= */
+
+  if (
+    verifyBtn &&
+    !verifyBtn.dataset.bound
+  ) {
+
+    verifyBtn.dataset.bound = "true";
+
+    verifyBtn.addEventListener(
+      "click",
+      handleVerifyMail
+    );
+  }
+
+  if (
+    resendBtn &&
+    !resendBtn.dataset.bound
+  ) {
+
+    resendBtn.dataset.bound = "true";
+
+    resendBtn.addEventListener(
+      "click",
+      handleResendOTP
+    );
+  }
+
+  if (
+    otpInput &&
+    !otpInput.dataset.bound
+  ) {
+
+    otpInput.dataset.bound = "true";
+
+    otpInput.addEventListener(
+      "input",
+      handleOTPInput
+    );
+  }
+
+  if (
+    submitBtn &&
+    !submitBtn.dataset.bound
+  ) {
+
+    submitBtn.dataset.bound = "true";
+
+    submitBtn.addEventListener(
+      "click",
+      handleFinalSubmit
+    );
+  }
+
+  if (
+    togglePassword &&
+    !togglePassword.dataset.bound
+  ) {
+
+    togglePassword.dataset.bound =
+      "true";
+
+    togglePassword.addEventListener(
+      "click",
+      togglePasswordVisibility
+    );
+  }
+
+  /* =========================================================
+     INITIAL STATE
+  ========================================================= */
+
+  if (otpPanel) {
+    otpPanel.style.display = "none";
+  }
+
+  disableButton(submitBtn);
 }
