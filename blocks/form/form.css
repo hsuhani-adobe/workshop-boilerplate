@@ -8576,7 +8576,7 @@ fieldset[name="email_otp_verification"] p {
 
 /* Verified Text */
 fieldset[name="email_otp_verification"] .field-invalid-otp p {
-  color: #16a34a;
+  color: #1651a3;
   font-weight: 600;
 }
 
