@@ -2407,26 +2407,40 @@ const personalEmailOtpState = {
 
     event.preventDefault();
 
-    /* VERIFY BUTTON */
+    //* VERIFY BUTTON */
+/* VERIFIED BUTTON STYLING */
 
-    verifyBtn.textContent =
-      "✓ Verified";
+verifyBtn.textContent = "✓ Verified";
 
-    verifyBtn.disabled = true;
+verifyBtn.disabled = true;
 
-    verifyBtn.style.backgroundColor =
-      "#16a34a";
+verifyBtn.style.backgroundColor = "#ffffff";
 
-    verifyBtn.style.borderColor =
-      "#16a34a";
+verifyBtn.style.color = "#1D4ED8";
 
-    verifyBtn.style.color =
-      "#ffffff";
+verifyBtn.style.border = "2px solid #1D4ED8";
 
-    verifyBtn.style.cursor =
-      "default";
+verifyBtn.style.borderRadius = "20px";
 
-    verifyBtn.style.opacity = "1";
+verifyBtn.style.fontWeight = "700";
+
+verifyBtn.style.fontSize = "18px";
+
+verifyBtn.style.padding = "14px 28px";
+
+verifyBtn.style.cursor = "default";
+
+verifyBtn.style.opacity = "1";
+
+verifyBtn.style.display = "flex";
+
+verifyBtn.style.alignItems = "center";
+
+verifyBtn.style.justifyContent = "center";
+
+verifyBtn.style.gap = "8px";
+
+verifyBtn.style.boxShadow = "none";
 
     /* DISABLE INPUTS */
 
